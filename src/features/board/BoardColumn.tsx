@@ -1,18 +1,21 @@
 import { TaskCard } from '../task/TaskCard';
 import { AddCard } from './AddCard';
 import { nowISO } from '../task/today';
+import { resolveLabels } from '../labels/resolveLabels';
 import type { Column } from './taskGrouping';
-import type { TaskRecord } from '../../lib/dataClient';
+import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 
 /** One board column: a section header, its task cards, and an inline add-card
  * composer. New cards append after the current highest sortOrder. Renders +
  * delegates the two mutations up to the board hook. */
 export function BoardColumn({
   column,
+  labels = [],
   onAddTask,
   onToggleDone,
 }: {
   column: Column;
+  labels?: LabelRecord[];
   onAddTask: (input: { sectionId: string; title: string; order: number }) => void;
   onToggleDone: (input: { id: string; done: boolean; now: string }) => void;
 }) {
@@ -28,6 +31,7 @@ export function BoardColumn({
           <TaskCard
             key={task.id}
             task={task}
+            labels={resolveLabels(task.labelIds, labels)}
             onToggleDone={(t) =>
               onToggleDone({ id: t.id, done: t.status !== 'DONE', now: nowISO() })
             }

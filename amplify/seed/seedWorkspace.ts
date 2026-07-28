@@ -1,5 +1,6 @@
 /** Seeds the demo workspace (projects → sections → tasks + subtasks). */
 import { client, OWNER_WRITE } from './seedClient';
+import { seedLabelData } from './seedLabels';
 import { seedProjects, type SeedTask } from './fixtures/workspace';
 
 /** Resolve a day offset (from today) to a YYYY-MM-DD date string. */
@@ -9,12 +10,18 @@ function offsetDate(days: number): string {
   return d.toISOString().slice(0, 10);
 }
 
+/** Map a task's label names to ids via the seeded registry (unknown dropped). */
+function labelIdsFor(task: SeedTask, labelMap: Map<string, string>): string[] {
+  return (task.labels ?? []).map((n) => labelMap.get(n)).filter((x): x is string => !!x);
+}
+
 /** Create one task (+ its subtasks) in a section. */
 async function createTaskWithSubtasks(
   projectId: string,
   sectionId: string,
   task: SeedTask,
   order: number,
+  labelMap: Map<string, string>,
 ): Promise<void> {
   const { data: created, errors } = await client.models.Task.create(
     {
@@ -26,6 +33,7 @@ async function createTaskWithSubtasks(
       priority: task.priority,
       dueDate: task.dueOffsetDays === undefined ? undefined : offsetDate(task.dueOffsetDays),
       sortOrder: order,
+      labelIds: labelIdsFor(task, labelMap),
     },
     OWNER_WRITE,
   );
@@ -48,6 +56,7 @@ async function createTaskWithSubtasks(
 
 /** Create every seed project with its sections + tasks. Returns project count. */
 export async function seedWorkspaceData(): Promise<number> {
+  const labelMap = await seedLabelData();
   for (let p = 0; p < seedProjects.length; p++) {
     const proj = seedProjects[p];
     const { data: project, errors } = await client.models.Project.create(
@@ -75,7 +84,7 @@ export async function seedWorkspaceData(): Promise<number> {
     for (let t = 0; t < proj.tasks.length; t++) {
       const task = proj.tasks[t];
       const sectionId = sectionIds.get(task.section);
-      if (sectionId) await createTaskWithSubtasks(project.id, sectionId, task, t);
+      if (sectionId) await createTaskWithSubtasks(project.id, sectionId, task, t, labelMap);
     }
   }
   console.log(`Seeded ${seedProjects.length} projects.`);

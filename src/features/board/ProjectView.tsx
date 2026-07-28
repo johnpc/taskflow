@@ -23,7 +23,7 @@ import './board.css';
 export function ProjectView() {
   const { id } = useParams<{ id: string }>();
   const project = useProject(id);
-  const { query, columns, addTask, toggleDone } = useBoard(id);
+  const { query, columns, addTask, toggleDone, labels } = useBoard(id);
   const { mode, choose } = useViewMode(id, project.data?.view as ViewMode | undefined);
   useDocumentTitle(project.data?.name ?? 'Project');
 
@@ -50,6 +50,7 @@ export function ProjectView() {
           <BoardContent
             mode={mode}
             columns={columns}
+            labels={labels}
             onAddTask={(input) => addTask.mutate(input)}
             onToggleDone={(input) => toggleDone.mutate(input)}
           />

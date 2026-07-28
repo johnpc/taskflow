@@ -124,6 +124,8 @@ jobs:
             paths: .features-gen/e2e/features/mytasks
           - name: search
             paths: .features-gen/e2e/features/search
+          - name: labels
+            paths: .features-gen/e2e/features/labels
     steps:
       - uses: actions/checkout@v4
 

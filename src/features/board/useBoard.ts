@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchBoard, ensureDefaultSections } from './boardApi';
 import { groupTasksBySection } from './taskGrouping';
 import { createTask, setTaskDone } from '../task/tasksApi';
+import { useLabels } from '../labels/useLabels';
 
 /** Board data for a project: loads sections + tasks, ensures default columns
  * exist, and exposes them grouped into columns plus the task mutations the
@@ -40,5 +41,7 @@ export function useBoard(projectId: string) {
     onSuccess: invalidate,
   });
 
-  return { query, columns, addTask, toggleDone };
+  const labels = useLabels().query.data ?? [];
+
+  return { query, columns, addTask, toggleDone, labels };
 }

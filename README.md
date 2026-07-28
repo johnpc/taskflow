@@ -26,6 +26,7 @@ iOS and Android.
 | **Tasks**     | Title, notes, priority (Low→High), due dates with overdue/today/upcoming cues | ✅     |
 | **Subtasks**  | Break a task into a checklist with its own done-count                         | ✅     |
 | **Comments**  | Discuss and log activity on any task                                          | ✅     |
+| **Labels**    | Reusable colored tags; apply on task detail, chips render on every card       | ✅     |
 | **My Tasks**  | Everything open across all projects, grouped by due date                      | ✅     |
 | **Search**    | Live substring search across every task's title and notes                     | ✅     |
 | **Complete**  | One-tap complete on the board and in lists, with a strike-through state       | ✅     |

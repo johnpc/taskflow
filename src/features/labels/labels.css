@@ -1,0 +1,52 @@
+.label-chips {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.label-chip {
+  font-size: 0.68rem;
+  font-weight: 700;
+  border: 1px solid;
+  border-radius: 999px;
+  padding: 1px 8px;
+  background: color-mix(in srgb, currentColor 10%, transparent);
+}
+
+.label-picker {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.label-picker__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.label-opt {
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.label-opt--on {
+  opacity: 1;
+  background: color-mix(in srgb, currentColor 12%, transparent);
+}
+
+.label-picker__new {
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius-sm);
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  color: var(--tf-text);
+  max-width: 240px;
+}

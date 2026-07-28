@@ -12,6 +12,7 @@ const mutations = {
   toggleDone: { mutate: vi.fn() },
   addSubtask: { mutate: vi.fn() },
   comment: { mutate: vi.fn(), isPending: false },
+  labels: { query: { data: [] }, create: { mutate: vi.fn() } },
 };
 
 beforeEach(() => useTaskDetail.mockReset());
@@ -86,6 +87,7 @@ describe('TaskDetail', () => {
       addSubtask,
       comment,
       toggleDone,
+      labels: { query: { data: [] }, create: { mutate: vi.fn() } },
     });
     renderWithProviders(<TaskDetail />, '/tasks/t');
 

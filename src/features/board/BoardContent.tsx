@@ -2,21 +2,24 @@ import { BoardColumn } from './BoardColumn';
 import { ListSection } from './ListSection';
 import type { Column } from './taskGrouping';
 import type { ViewMode } from './viewMode';
+import type { LabelRecord } from '../../lib/dataClient';
 
 type AddTask = (input: { sectionId: string; title: string; order: number }) => void;
 type ToggleDone = (input: { id: string; done: boolean; now: string }) => void;
 
 /** Renders the project's sections either as horizontal board columns or as a
- * vertical list of collapsible sections, per the chosen view mode. Shared by
- * ProjectView so the screen stays a thin shell. */
+ * vertical list of collapsible sections, per the chosen view mode. Passes the
+ * label registry down so cards can render their chips. Shared by ProjectView. */
 export function BoardContent({
   mode,
   columns,
+  labels = [],
   onAddTask,
   onToggleDone,
 }: {
   mode: ViewMode;
   columns: Column[];
+  labels?: LabelRecord[];
   onAddTask: AddTask;
   onToggleDone: ToggleDone;
 }) {
@@ -27,6 +30,7 @@ export function BoardContent({
           <ListSection
             key={column.section.id}
             column={column}
+            labels={labels}
             defaultOpen={i === 0 || column.tasks.length > 0}
             onAddTask={onAddTask}
             onToggleDone={onToggleDone}
@@ -41,6 +45,7 @@ export function BoardContent({
         <BoardColumn
           key={column.section.id}
           column={column}
+          labels={labels}
           onAddTask={onAddTask}
           onToggleDone={onToggleDone}
         />
