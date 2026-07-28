@@ -11,11 +11,11 @@ Feature: List view
     And the user opens the "Product Launch" project
     When the user switches to the list view
     Then a list section named "To do" is visible
-    And a task titled "Draft launch announcement" is visible on the board
+    And a task titled "Finalize press list" is visible on the board
 
   Scenario: Collapsing a list section hides its tasks
     Given a signed-in user
     And the user opens the "Product Launch" project
     When the user switches to the list view
     And the user collapses the "To do" list section
-    Then a task titled "Draft launch announcement" is not visible
+    Then a task titled "Finalize press list" is not visible

@@ -9,7 +9,7 @@ Feature: Board filter and sort
   Scenario: Completed tasks are hidden by default and can be revealed
     Given a signed-in user
     And the user opens the "Product Launch" project
-    When the user completes the task titled "Design hero banner"
-    Then a task titled "Design hero banner" is not visible
+    When the user completes the task titled "Ship changelog"
+    Then a task titled "Ship changelog" is not visible
     When the user shows completed tasks
-    Then a task titled "Design hero banner" is visible on the board
+    Then a task titled "Ship changelog" is visible on the board
