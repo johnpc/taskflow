@@ -18,20 +18,21 @@ iOS and Android.
 
 ## Features
 
-| Area          | What you get                                                                  | Status |
-| ------------- | ----------------------------------------------------------------------------- | ------ |
-| **Projects**  | Create color-coded projects, favorite the ones you live in                    | ✅     |
-| **Board**     | Kanban columns (To do / In progress / Done) with inline task creation         | ✅     |
-| **List view** | Board↔List toggle (persisted per project); collapsible sections, list-first   | ✅     |
-| **Tasks**     | Title, notes, priority (Low→High), due dates with overdue/today/upcoming cues | ✅     |
-| **Subtasks**  | Break a task into a checklist with its own done-count                         | ✅     |
-| **Comments**  | Discuss and log activity on any task                                          | ✅     |
-| **Labels**    | Reusable colored tags; apply on task detail, chips render on every card       | ✅     |
-| **My Tasks**  | Everything open across all projects, grouped by due date                      | ✅     |
-| **Search**    | Live substring search across every task's title and notes                     | ✅     |
-| **Complete**  | One-tap complete on the board and in lists, with a strike-through state       | ✅     |
-| **Dark mode** | Follows your OS, with an in-app Light / Dark / System override                | ✅     |
-| **Accounts**  | Email sign-up/sign-in; your workspace is private and owner-scoped             | ✅     |
+| Area              | What you get                                                                  | Status |
+| ----------------- | ----------------------------------------------------------------------------- | ------ |
+| **Projects**      | Create color-coded projects, favorite the ones you live in                    | ✅     |
+| **Board**         | Kanban columns (To do / In progress / Done) with inline task creation         | ✅     |
+| **List view**     | Board↔List toggle (persisted per project); collapsible sections, list-first   | ✅     |
+| **Tasks**         | Title, notes, priority (Low→High), due dates with overdue/today/upcoming cues | ✅     |
+| **Subtasks**      | Break a task into a checklist with its own done-count                         | ✅     |
+| **Comments**      | Discuss and log activity on any task                                          | ✅     |
+| **Labels**        | Reusable colored tags; apply on task detail, chips render on every card       | ✅     |
+| **Move & assign** | Move a task between sections and assign it to yourself, on task detail        | ✅     |
+| **My Tasks**      | Everything open across all projects, grouped by due date                      | ✅     |
+| **Search**        | Live substring search across every task's title and notes                     | ✅     |
+| **Complete**      | One-tap complete on the board and in lists, with a strike-through state       | ✅     |
+| **Dark mode**     | Follows your OS, with an in-app Light / Dark / System override                | ✅     |
+| **Accounts**      | Email sign-up/sign-in; your workspace is private and owner-scoped             | ✅     |
 
 ## The vision
 
