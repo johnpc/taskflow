@@ -57,6 +57,7 @@ export const seedProjects: SeedProject[] = [
       // (which hides it) can't break a parallel area on the shared sandbox.
       { title: 'Kickoff meeting', section: 'To do', priority: 'LOW' },
       { title: 'Ship changelog', section: 'To do', priority: 'LOW' },
+      { title: 'Retire old logo', section: 'To do', priority: 'LOW' },
     ],
   },
   {
