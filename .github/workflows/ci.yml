@@ -132,6 +132,8 @@ jobs:
             paths: .features-gen/e2e/features/filter
           - name: sections
             paths: .features-gen/e2e/features/sections
+          - name: delete
+            paths: .features-gen/e2e/features/delete
     steps:
       - uses: actions/checkout@v4
 

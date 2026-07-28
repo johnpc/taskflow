@@ -1,9 +1,11 @@
+import { useHistory } from 'react-router-dom';
 import { TaskHeader } from './TaskHeader';
 import { TaskFields } from './TaskFields';
 import { TaskAssignment } from './TaskAssignment';
 import { TaskLabels } from './TaskLabels';
 import { Subtasks } from './Subtasks';
 import { Comments } from './Comments';
+import { DeleteTaskButton } from './DeleteTaskButton';
 import { nextSubtaskOrder } from './nextSubtaskOrder';
 import { nowISO } from './today';
 import { useTaskSections } from './useTaskSections';
@@ -15,10 +17,14 @@ import type { TaskRecord } from '../../lib/dataClient';
  * labels, subtasks, comments. Split out of TaskDetail so the screen stays a
  * thin load-gate shell. All mutations come from the useTaskDetail hook. */
 export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDetailHook }) {
-  const { query, patch, toggleDone, addSubtask, comment, labels } = hook;
+  const { query, patch, toggleDone, addSubtask, comment, labels, remove } = hook;
   const sections = useTaskSections(task.projectId);
   const { email } = useAuth();
+  const history = useHistory();
   const subtasks = query.data?.subtasks ?? [];
+
+  const deleteTask = () =>
+    remove.mutate(task.id, { onSuccess: () => history.replace(`/projects/${task.projectId}`) });
 
   return (
     <div className="task-detail" data-testid="task-detail">
@@ -53,6 +59,7 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
         busy={comment.isPending}
         onPost={(body) => comment.mutate(body)}
       />
+      <DeleteTaskButton onDelete={deleteTask} />
     </div>
   );
 }

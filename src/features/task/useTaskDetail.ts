@@ -13,7 +13,14 @@ export function useTaskDetail(id: string) {
   const { email } = useAuth();
   const key = ['task', id];
   const query = useQuery({ queryKey: key, queryFn: () => fetchTaskDetail(id), enabled: !!id });
-  const invalidate = () => qc.invalidateQueries({ queryKey: key });
+  // Invalidate this task AND the aggregate views a task edit/delete affects
+  // (board columns, My Tasks) so they refetch — e.g. a deleted task must vanish
+  // from the board the detail navigates back to.
+  const invalidate = () => {
+    qc.invalidateQueries({ queryKey: key });
+    qc.invalidateQueries({ queryKey: ['board'] });
+    qc.invalidateQueries({ queryKey: ['my-tasks'] });
+  };
 
   const patch = useMutation({
     mutationFn: (input: Parameters<typeof updateTask>[0]) => updateTask(input),

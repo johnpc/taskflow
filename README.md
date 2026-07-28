@@ -29,6 +29,7 @@ iOS and Android.
 | **Comments**      | Discuss and log activity on any task                                          | ✅     |
 | **Labels**        | Reusable colored tags; apply on task detail, chips render on every card       | ✅     |
 | **Move & assign** | Move a task between sections and assign it to yourself, on task detail        | ✅     |
+| **Delete task**   | Delete a task (with confirm) from its detail; it leaves the board             | ✅     |
 | **My Tasks**      | Everything open across all projects, grouped by due date                      | ✅     |
 | **Search**        | Live substring search across every task's title and notes                     | ✅     |
 | **Complete**      | One-tap complete on the board and in lists, with a strike-through state       | ✅     |
