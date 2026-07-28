@@ -11,7 +11,9 @@ import { useParams } from 'react-router-dom';
 import { useBoard } from './useBoard';
 import { useProject } from './useProject';
 import { useViewMode } from './useViewMode';
+import { useBoardFilter } from './useBoardFilter';
 import { ViewToggle } from './ViewToggle';
+import { FilterBar } from './FilterBar';
 import { BoardContent } from './BoardContent';
 import { LoadState } from '../shell/LoadState';
 import { useDocumentTitle } from '../shell/useDocumentTitle';
@@ -23,7 +25,8 @@ import './board.css';
 export function ProjectView() {
   const { id } = useParams<{ id: string }>();
   const project = useProject(id);
-  const { query, columns, addTask, toggleDone, labels } = useBoard(id);
+  const { filter, update } = useBoardFilter();
+  const { query, columns, addTask, toggleDone, labels } = useBoard(id, filter);
   const { mode, choose } = useViewMode(id, project.data?.view as ViewMode | undefined);
   useDocumentTitle(project.data?.name ?? 'Project');
 
@@ -39,6 +42,7 @@ export function ProjectView() {
       </IonHeader>
       <IonContent className="ion-padding">
         <ViewToggle mode={mode} onChange={choose} />
+        <FilterBar filter={filter} labels={labels} onChange={update} />
         <LoadState
           isLoading={query.isLoading}
           isError={query.isError}

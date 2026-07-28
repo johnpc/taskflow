@@ -165,3 +165,40 @@
   flex-direction: column;
   gap: 8px;
 }
+
+/* Filter/sort controls bar */
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.filter-bar__chip {
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--tf-text-muted);
+  cursor: pointer;
+}
+
+.filter-bar__chip--on {
+  background: var(--tf-accent-soft);
+  border-color: var(--tf-accent);
+  color: var(--tf-accent-strong);
+}
+
+.filter-bar__select {
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: 999px;
+  padding: 7px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--tf-text);
+  font-family: var(--tf-font-sans);
+  cursor: pointer;
+}

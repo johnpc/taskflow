@@ -48,6 +48,15 @@ export const seedProjects: SeedProject[] = [
       { title: 'Design hero banner', section: 'To do', priority: 'MEDIUM', dueOffsetDays: 3 },
       { title: 'Set up analytics', section: 'In progress', priority: 'LOW', dueOffsetDays: 1 },
       { title: 'Reserve launch domain', section: 'Done', priority: 'NONE' },
+      // Stable anchor: NO acceptance scenario ever completes/moves this, so
+      // cross-area "is visible" assertions stay valid on the shared sandbox even
+      // as parallel areas mutate other tasks (hide-completed is default-on).
+      { title: 'Finalize press list', section: 'To do', priority: 'MEDIUM', labels: ['Marketing'] },
+      // Dedicated completion targets — each is completed by exactly ONE
+      // acceptance area (board, filter) and read by no other, so completing it
+      // (which hides it) can't break a parallel area on the shared sandbox.
+      { title: 'Kickoff meeting', section: 'To do', priority: 'LOW' },
+      { title: 'Ship changelog', section: 'To do', priority: 'LOW' },
     ],
   },
   {

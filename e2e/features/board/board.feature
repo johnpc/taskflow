@@ -10,7 +10,7 @@ Feature: Project board
     Given a signed-in user
     And the user opens the "Product Launch" project
     Then a board column named "To do" is visible
-    And a task titled "Draft launch announcement" is visible on the board
+    And a task titled "Finalize press list" is visible on the board
 
   Scenario: Adding a task shows it on the board
     Given a signed-in user
@@ -18,8 +18,11 @@ Feature: Project board
     When the user adds a task titled "Book venue 7c2b" to the "To do" column
     Then a task titled "Book venue 7c2b" is visible on the board
 
+  # Completing hides the card (hide-completed is default), so reveal it to prove
+  # the done state round-tripped. Uses a dedicated task no other area reads.
   Scenario: Completing a task marks it done
     Given a signed-in user
     And the user opens the "Product Launch" project
-    When the user completes the task titled "Draft launch announcement"
-    Then the task titled "Draft launch announcement" is shown as done
+    When the user completes the task titled "Kickoff meeting"
+    And the user shows completed tasks
+    Then the task titled "Kickoff meeting" is shown as done

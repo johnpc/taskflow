@@ -22,6 +22,7 @@ describe('ProjectView', () => {
       columns: [{ section: { id: 's1', name: 'To do' } as SectionRecord, tasks: [] }],
       addTask: { mutate: vi.fn() },
       toggleDone: { mutate: vi.fn() },
+      labels: [],
     });
     renderWithProviders(<ProjectView />, '/projects/p');
     expect(screen.getByTestId('board')).toBeInTheDocument();
@@ -34,6 +35,7 @@ describe('ProjectView', () => {
       columns: [{ section: { id: 's1', name: 'To do' } as SectionRecord, tasks: [] }],
       addTask: { mutate: vi.fn() },
       toggleDone: { mutate: vi.fn() },
+      labels: [],
     });
     renderWithProviders(<ProjectView />, '/projects/p');
     expect(screen.getByTestId('board')).toBeInTheDocument();
@@ -47,6 +49,7 @@ describe('ProjectView', () => {
       columns: [],
       addTask: { mutate: vi.fn() },
       toggleDone: { mutate: vi.fn() },
+      labels: [],
     });
     renderWithProviders(<ProjectView />, '/projects/p');
     expect(screen.getByTestId('load-empty')).toBeInTheDocument();
