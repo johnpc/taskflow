@@ -6,7 +6,7 @@ import { AddCard } from './AddCard';
 import { nowISO } from '../task/today';
 import { resolveLabels } from '../labels/resolveLabels';
 import type { Column } from './taskGrouping';
-import type { LabelRecord } from '../../lib/dataClient';
+import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 
 /** One section in the List view: a collapsible header (name + count) over a
  * stacked list of task rows, with an inline add at the bottom. Same data +
@@ -17,12 +17,18 @@ export function ListSection({
   defaultOpen = true,
   onAddTask,
   onToggleDone,
+  onReorder,
 }: {
   column: Column;
   labels?: LabelRecord[];
   defaultOpen?: boolean;
   onAddTask: (input: { sectionId: string; title: string; order: number }) => void;
   onToggleDone: (input: { id: string; done: boolean; now: string }) => void;
+  onReorder?: (input: {
+    columnTasks: TaskRecord[];
+    taskId: string;
+    direction: 'up' | 'down';
+  }) => void;
 }) {
   const [open, setOpen] = useState(defaultOpen);
   const nextOrder = column.tasks.reduce((max, t) => Math.max(max, t.sortOrder ?? 0), -1) + 1;
@@ -50,6 +56,11 @@ export function ListSection({
                 labels={resolveLabels(task.labelIds, labels)}
                 onToggleDone={(t) =>
                   onToggleDone({ id: t.id, done: t.status !== 'DONE', now: nowISO() })
+                }
+                onReorder={
+                  onReorder &&
+                  ((direction) =>
+                    onReorder({ columnTasks: column.tasks, taskId: task.id, direction }))
                 }
               />
             ))}

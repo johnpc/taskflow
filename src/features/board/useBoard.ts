@@ -4,8 +4,10 @@ import { fetchBoard, ensureDefaultSections } from './boardApi';
 import { groupTasksBySection } from './taskGrouping';
 import { applyFilter, DEFAULT_FILTER, type BoardFilter } from './taskFilter';
 import { createSection, renameSection, deleteSection } from './sectionsApi';
-import { createTask, setTaskDone } from '../task/tasksApi';
+import { reorderTasks } from './reorderTasks';
+import { createTask, setTaskDone, updateTask } from '../task/tasksApi';
 import { useLabels } from '../labels/useLabels';
+import type { TaskRecord } from '../../lib/dataClient';
 
 /** Board data for a project: loads sections + tasks, ensures default columns
  * exist, and exposes them grouped into columns (with the filter/sort applied)
@@ -60,7 +62,29 @@ export function useBoard(projectId: string, filter: BoardFilter = DEFAULT_FILTER
     onSuccess: invalidate,
   });
 
+  const reorder = useMutation({
+    mutationFn: async (input: {
+      columnTasks: TaskRecord[];
+      taskId: string;
+      direction: 'up' | 'down';
+    }) => {
+      const updates = reorderTasks(input.columnTasks, input.taskId, input.direction);
+      await Promise.all(updates.map((u) => updateTask(u)));
+    },
+    onSuccess: invalidate,
+  });
+
   const labels = useLabels().query.data ?? [];
 
-  return { query, columns, addTask, toggleDone, addSection, editSection, removeSection, labels };
+  return {
+    query,
+    columns,
+    addTask,
+    toggleDone,
+    reorder,
+    addSection,
+    editSection,
+    removeSection,
+    labels,
+  };
 }

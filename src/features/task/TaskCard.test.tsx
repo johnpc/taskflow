@@ -48,4 +48,13 @@ describe('TaskCard', () => {
     expect(open).toBeInTheDocument();
     fireEvent.click(open); // navigates via history.push — no throw
   });
+
+  it('shows reorder controls only when onReorder is given', () => {
+    const { rerender } = renderWithProviders(<TaskCard task={task({})} onToggleDone={vi.fn()} />);
+    expect(screen.queryByTestId('reorder')).not.toBeInTheDocument();
+    const onReorder = vi.fn();
+    rerender(<TaskCard task={task({})} onToggleDone={vi.fn()} onReorder={onReorder} />);
+    fireEvent.click(screen.getByTestId('reorder-up'));
+    expect(onReorder).toHaveBeenCalledWith('up');
+  });
 });

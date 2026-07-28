@@ -92,3 +92,25 @@
   background: color-mix(in srgb, var(--tf-priority-low) 15%, transparent);
   color: var(--tf-priority-low);
 }
+
+/* Reorder up/down controls on a card */
+.reorder {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+}
+
+.reorder__btn {
+  background: none;
+  border: none;
+  color: var(--tf-text-muted);
+  cursor: pointer;
+  font-size: 0.9rem;
+  padding: 0 2px;
+  line-height: 1;
+  display: flex;
+}
+
+.reorder__btn:hover {
+  color: var(--tf-accent-strong);
+}

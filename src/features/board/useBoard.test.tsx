@@ -1,23 +1,28 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, waitFor, act } from '@testing-library/react';
 
-const { fetchBoard, ensureDefaultSections, createTask, setTaskDone } = vi.hoisted(() => ({
-  fetchBoard: vi.fn(),
-  ensureDefaultSections: vi.fn(),
-  createTask: vi.fn(),
-  setTaskDone: vi.fn(),
-}));
+const { fetchBoard, ensureDefaultSections, createTask, setTaskDone, updateTask } = vi.hoisted(
+  () => ({
+    fetchBoard: vi.fn(),
+    ensureDefaultSections: vi.fn(),
+    createTask: vi.fn(),
+    setTaskDone: vi.fn(),
+    updateTask: vi.fn(),
+  }),
+);
 vi.mock('./boardApi', () => ({ fetchBoard, ensureDefaultSections }));
-vi.mock('../task/tasksApi', () => ({ createTask, setTaskDone }));
+vi.mock('../task/tasksApi', () => ({ createTask, setTaskDone, updateTask }));
 
 import { hookWrapper } from '../../test/hookWrapper';
 import { useBoard } from './useBoard';
+import type { TaskRecord } from '../../lib/dataClient';
 
 beforeEach(() => {
   fetchBoard.mockReset();
   ensureDefaultSections.mockReset();
   createTask.mockReset();
   setTaskDone.mockReset();
+  updateTask.mockReset();
 });
 
 describe('useBoard', () => {
@@ -48,5 +53,22 @@ describe('useBoard', () => {
     expect(createTask).toHaveBeenCalledWith(
       expect.objectContaining({ projectId: 'p', title: 'X' }),
     );
+  });
+
+  it('reorders a task by patching the two swapped sortOrders', async () => {
+    fetchBoard.mockResolvedValue({ sections: [], tasks: [] });
+    ensureDefaultSections.mockResolvedValue([{ id: 's1', name: 'To do', sortOrder: 0 }]);
+    updateTask.mockResolvedValue(undefined);
+    const columnTasks = [
+      { id: 'a', sortOrder: 0 },
+      { id: 'b', sortOrder: 1 },
+    ] as TaskRecord[];
+    const { result } = renderHook(() => useBoard('p'), { wrapper: hookWrapper() });
+    await waitFor(() => expect(result.current.query.isSuccess).toBe(true));
+    await act(async () => {
+      await result.current.reorder.mutateAsync({ columnTasks, taskId: 'b', direction: 'up' });
+    });
+    expect(updateTask).toHaveBeenCalledWith({ id: 'b', sortOrder: 0 });
+    expect(updateTask).toHaveBeenCalledWith({ id: 'a', sortOrder: 1 });
   });
 });

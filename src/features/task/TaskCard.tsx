@@ -4,20 +4,24 @@ import { ellipseOutline, checkmarkCircle } from 'ionicons/icons';
 import { isDone, dueLabel, dueStatus } from './taskMeta';
 import { todayISO } from './today';
 import { LabelChips } from '../labels/LabelChips';
+import { ReorderControls } from '../board/ReorderControls';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 import './task.css';
 
 /** A task card on the board/list. Tapping the circle toggles done; tapping the
  * body opens the task detail. Shows a due-date chip colored by urgency, a
- * priority flag, and any label chips (resolved by the caller). Renders only. */
+ * priority flag, and any label chips (resolved by the caller). When onReorder is
+ * given (board/list only), shows up/down controls. Renders only. */
 export function TaskCard({
   task,
   labels = [],
   onToggleDone,
+  onReorder,
 }: {
   task: TaskRecord;
   labels?: LabelRecord[];
   onToggleDone: (task: TaskRecord) => void;
+  onReorder?: (dir: 'up' | 'down') => void;
 }) {
   const history = useHistory();
   const done = isDone(task);
@@ -58,6 +62,7 @@ export function TaskCard({
           <LabelChips labels={labels} />
         </span>
       </button>
+      {onReorder && <ReorderControls onReorder={onReorder} />}
     </li>
   );
 }

@@ -25,6 +25,7 @@ iOS and Android.
 | **Board**         | Kanban columns (To do / In progress / Done) with inline task creation         | ✅     |
 | **List view**     | Board↔List toggle (persisted per project); collapsible sections, list-first   | ✅     |
 | **Tasks**         | Title, notes, priority (Low→High), due dates with overdue/today/upcoming cues | ✅     |
+| **Reorder**       | Move a task up/down within its section                                        | ✅     |
 | **Subtasks**      | Break a task into a checklist with its own done-count                         | ✅     |
 | **Comments**      | Discuss and log activity on any task                                          | ✅     |
 | **Labels**        | Reusable colored tags; apply on task detail, chips render on every card       | ✅     |
