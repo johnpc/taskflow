@@ -116,6 +116,8 @@ jobs:
             paths: .features-gen/e2e/features/projects
           - name: board
             paths: .features-gen/e2e/features/board
+          - name: list
+            paths: .features-gen/e2e/features/list
           - name: task
             paths: .features-gen/e2e/features/task
           - name: mytasks

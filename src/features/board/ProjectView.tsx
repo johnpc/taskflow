@@ -10,17 +10,21 @@ import {
 import { useParams } from 'react-router-dom';
 import { useBoard } from './useBoard';
 import { useProject } from './useProject';
-import { BoardColumn } from './BoardColumn';
+import { useViewMode } from './useViewMode';
+import { ViewToggle } from './ViewToggle';
+import { BoardContent } from './BoardContent';
 import { LoadState } from '../shell/LoadState';
 import { useDocumentTitle } from '../shell/useDocumentTitle';
+import type { ViewMode } from './viewMode';
 import './board.css';
 
-/** A project's board — its sections as columns of task cards. Guests never reach
- * here (RequireAuth). Renders only; board data + mutations come from useBoard. */
+/** A project's board/list — its sections rendered per the chosen view. Guests
+ * never reach here (RequireAuth). Renders only; data + mutations from useBoard. */
 export function ProjectView() {
   const { id } = useParams<{ id: string }>();
   const project = useProject(id);
   const { query, columns, addTask, toggleDone } = useBoard(id);
+  const { mode, choose } = useViewMode(id, project.data?.view as ViewMode | undefined);
   useDocumentTitle(project.data?.name ?? 'Project');
 
   return (
@@ -34,6 +38,7 @@ export function ProjectView() {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
+        <ViewToggle mode={mode} onChange={choose} />
         <LoadState
           isLoading={query.isLoading}
           isError={query.isError}
@@ -42,16 +47,12 @@ export function ProjectView() {
           emptyTitle="No columns yet"
           emptyMessage="This project has no sections."
         >
-          <div className="board" data-testid="board">
-            {columns.map((column) => (
-              <BoardColumn
-                key={column.section.id}
-                column={column}
-                onAddTask={(input) => addTask.mutate(input)}
-                onToggleDone={(input) => toggleDone.mutate(input)}
-              />
-            ))}
-          </div>
+          <BoardContent
+            mode={mode}
+            columns={columns}
+            onAddTask={(input) => addTask.mutate(input)}
+            onToggleDone={(input) => toggleDone.mutate(input)}
+          />
         </LoadState>
       </IonContent>
     </IonPage>

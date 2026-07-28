@@ -1,0 +1,30 @@
+import { expect } from '@playwright/test';
+import { createBdd } from 'playwright-bdd';
+
+const { When, Then } = createBdd();
+
+When('the user switches to the list view', async ({ page }) => {
+  await page.getByTestId('view-list').click();
+  await expect(page.getByTestId('list-view')).toBeVisible({ timeout: 15_000 });
+});
+
+Then('a list section named {string} is visible', async ({ page }, name: string) => {
+  await expect(page.getByTestId('list-section').filter({ hasText: name }).first()).toBeVisible({
+    timeout: 15_000,
+  });
+});
+
+When('the user collapses the {string} list section', async ({ page }, name: string) => {
+  await page
+    .getByTestId('list-section')
+    .filter({ hasText: name })
+    .first()
+    .getByTestId('list-section-toggle')
+    .click();
+});
+
+Then('a task titled {string} is not visible', async ({ page }, title: string) => {
+  await expect(page.getByTestId('task-card').filter({ hasText: title })).toHaveCount(0, {
+    timeout: 15_000,
+  });
+});

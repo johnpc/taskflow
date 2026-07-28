@@ -89,3 +89,79 @@
   font-size: 0.95rem;
   outline: none;
 }
+
+/* View toggle (Board / List) */
+.view-toggle {
+  display: inline-flex;
+  gap: 4px;
+  background: var(--tf-surface-2);
+  border-radius: 999px;
+  padding: 4px;
+  margin-bottom: 16px;
+}
+
+.view-toggle__seg {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: none;
+  border: none;
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  color: var(--tf-text-muted);
+  cursor: pointer;
+}
+
+.view-toggle__seg--on {
+  background: var(--tf-surface);
+  color: var(--tf-accent-strong);
+  box-shadow: var(--tf-shadow);
+}
+
+/* List view — vertical stack of collapsible sections */
+.list-view {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  padding-bottom: 96px;
+  max-width: 640px;
+}
+
+.list-section__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 6px 2px;
+  cursor: pointer;
+  color: var(--tf-text);
+  font-weight: 700;
+  font-size: 0.95rem;
+}
+
+.list-section__name {
+  flex: 1;
+  text-align: left;
+}
+
+.list-section__count {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--tf-text-muted);
+  background: var(--tf-surface-2);
+  border-radius: 999px;
+  padding: 1px 8px;
+}
+
+.list-section__rows {
+  list-style: none;
+  margin: 8px 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}

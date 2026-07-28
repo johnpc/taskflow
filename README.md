@@ -22,6 +22,7 @@ iOS and Android.
 | ------------- | ----------------------------------------------------------------------------- | ------ |
 | **Projects**  | Create color-coded projects, favorite the ones you live in                    | ✅     |
 | **Board**     | Kanban columns (To do / In progress / Done) with inline task creation         | ✅     |
+| **List view** | Board↔List toggle (persisted per project); collapsible sections, list-first   | ✅     |
 | **Tasks**     | Title, notes, priority (Low→High), due dates with overdue/today/upcoming cues | ✅     |
 | **Subtasks**  | Break a task into a checklist with its own done-count                         | ✅     |
 | **Comments**  | Discuss and log activity on any task                                          | ✅     |
