@@ -14,6 +14,7 @@ export function BoardColumn({
   labels = [],
   onAddTask,
   onToggleDone,
+  onReorder,
   onRenameSection,
   onDeleteSection,
 }: {
@@ -21,6 +22,11 @@ export function BoardColumn({
   labels?: LabelRecord[];
   onAddTask: (input: { sectionId: string; title: string; order: number }) => void;
   onToggleDone: (input: { id: string; done: boolean; now: string }) => void;
+  onReorder?: (input: {
+    columnTasks: TaskRecord[];
+    taskId: string;
+    direction: 'up' | 'down';
+  }) => void;
   onRenameSection?: (input: { id: string; name: string }) => void;
   onDeleteSection?: (id: string) => void;
 }) {
@@ -44,6 +50,10 @@ export function BoardColumn({
             labels={resolveLabels(task.labelIds, labels)}
             onToggleDone={(t) =>
               onToggleDone({ id: t.id, done: t.status !== 'DONE', now: nowISO() })
+            }
+            onReorder={
+              onReorder &&
+              ((direction) => onReorder({ columnTasks: column.tasks, taskId: task.id, direction }))
             }
           />
         ))}

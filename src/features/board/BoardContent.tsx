@@ -2,20 +2,26 @@ import { BoardColumn } from './BoardColumn';
 import { ListSection } from './ListSection';
 import type { Column } from './taskGrouping';
 import type { ViewMode } from './viewMode';
-import type { LabelRecord } from '../../lib/dataClient';
+import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 
 type AddTask = (input: { sectionId: string; title: string; order: number }) => void;
 type ToggleDone = (input: { id: string; done: boolean; now: string }) => void;
+type Reorder = (input: {
+  columnTasks: TaskRecord[];
+  taskId: string;
+  direction: 'up' | 'down';
+}) => void;
 
 /** Renders the project's sections either as horizontal board columns or as a
  * vertical list of collapsible sections, per the chosen view mode. Passes the
- * label registry + section rename/delete handlers down. Shared by ProjectView. */
+ * label registry + reorder + section rename/delete handlers down. */
 export function BoardContent({
   mode,
   columns,
   labels = [],
   onAddTask,
   onToggleDone,
+  onReorder,
   onRenameSection,
   onDeleteSection,
 }: {
@@ -24,6 +30,7 @@ export function BoardContent({
   labels?: LabelRecord[];
   onAddTask: AddTask;
   onToggleDone: ToggleDone;
+  onReorder?: Reorder;
   onRenameSection?: (input: { id: string; name: string }) => void;
   onDeleteSection?: (id: string) => void;
 }) {
@@ -38,6 +45,7 @@ export function BoardContent({
             defaultOpen={i === 0 || column.tasks.length > 0}
             onAddTask={onAddTask}
             onToggleDone={onToggleDone}
+            onReorder={onReorder}
           />
         ))}
       </div>
@@ -52,6 +60,7 @@ export function BoardContent({
           labels={labels}
           onAddTask={onAddTask}
           onToggleDone={onToggleDone}
+          onReorder={onReorder}
           onRenameSection={onRenameSection}
           onDeleteSection={onDeleteSection}
         />

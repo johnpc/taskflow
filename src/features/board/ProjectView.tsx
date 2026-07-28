@@ -29,8 +29,8 @@ export function ProjectView() {
   const project = useProject(id);
   const { filter, update } = useBoardFilter();
   const board = useBoard(id, filter);
-  const { query, columns, addTask, toggleDone, labels, addSection, editSection, removeSection } =
-    board;
+  const { query, columns, addTask, toggleDone, reorder, labels } = board;
+  const { addSection, editSection, removeSection } = board;
   const { mode, choose } = useViewMode(id, project.data?.view as ViewMode | undefined);
   const edit = useProjectEdit(id);
   useDocumentTitle(project.data?.name ?? 'Project');
@@ -69,6 +69,7 @@ export function ProjectView() {
             labels={labels}
             onAddTask={(input) => addTask.mutate(input)}
             onToggleDone={(input) => toggleDone.mutate(input)}
+            onReorder={(input) => reorder.mutate(input)}
             onRenameSection={(input) => editSection.mutate(input)}
             onDeleteSection={(sectionId) => removeSection.mutate(sectionId)}
           />
