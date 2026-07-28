@@ -2,13 +2,14 @@ import { useMemo } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchBoard, ensureDefaultSections } from './boardApi';
 import { groupTasksBySection } from './taskGrouping';
+import { applyFilter, DEFAULT_FILTER, type BoardFilter } from './taskFilter';
 import { createTask, setTaskDone } from '../task/tasksApi';
 import { useLabels } from '../labels/useLabels';
 
 /** Board data for a project: loads sections + tasks, ensures default columns
- * exist, and exposes them grouped into columns plus the task mutations the
- * board needs (add card, toggle done). All server state via react-query. */
-export function useBoard(projectId: string) {
+ * exist, and exposes them grouped into columns (with the filter/sort applied)
+ * plus the task mutations the board needs. All server state via react-query. */
+export function useBoard(projectId: string, filter: BoardFilter = DEFAULT_FILTER) {
   const qc = useQueryClient();
   const key = ['board', projectId];
 
@@ -22,10 +23,11 @@ export function useBoard(projectId: string) {
     enabled: !!projectId,
   });
 
-  const columns = useMemo(
-    () => (query.data ? groupTasksBySection(query.data.sections, query.data.tasks) : []),
-    [query.data],
-  );
+  const columns = useMemo(() => {
+    if (!query.data) return [];
+    const grouped = groupTasksBySection(query.data.sections, query.data.tasks);
+    return grouped.map((col) => ({ ...col, tasks: applyFilter(col.tasks, filter) }));
+  }, [query.data, filter]);
 
   const invalidate = () => qc.invalidateQueries({ queryKey: key });
 

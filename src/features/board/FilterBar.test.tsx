@@ -1,0 +1,41 @@
+import { describe, it, expect, vi } from 'vitest';
+import { render, screen, fireEvent } from '@testing-library/react';
+import { FilterBar } from './FilterBar';
+import { DEFAULT_FILTER } from './taskFilter';
+import type { LabelRecord } from '../../lib/dataClient';
+
+const labels: LabelRecord[] = [{ id: 'x', name: 'Urgent' } as LabelRecord];
+
+describe('FilterBar', () => {
+  it('toggles completed visibility', () => {
+    const onChange = vi.fn();
+    render(<FilterBar filter={DEFAULT_FILTER} labels={labels} onChange={onChange} />);
+    fireEvent.click(screen.getByTestId('toggle-completed'));
+    expect(onChange).toHaveBeenCalledWith({ hideDone: false });
+  });
+
+  it('filters by a label', () => {
+    const onChange = vi.fn();
+    render(<FilterBar filter={DEFAULT_FILTER} labels={labels} onChange={onChange} />);
+    fireEvent.change(screen.getByTestId('filter-label'), { target: { value: 'x' } });
+    expect(onChange).toHaveBeenCalledWith({ labelId: 'x' });
+  });
+
+  it('changes the sort', () => {
+    const onChange = vi.fn();
+    render(<FilterBar filter={DEFAULT_FILTER} labels={labels} onChange={onChange} />);
+    fireEvent.change(screen.getByTestId('filter-sort'), { target: { value: 'priority' } });
+    expect(onChange).toHaveBeenCalledWith({ sort: 'priority' });
+  });
+
+  it('shows the hide-completed label when done are visible', () => {
+    render(
+      <FilterBar
+        filter={{ ...DEFAULT_FILTER, hideDone: false }}
+        labels={labels}
+        onChange={vi.fn()}
+      />,
+    );
+    expect(screen.getByTestId('toggle-completed')).toHaveTextContent('Hide completed');
+  });
+});

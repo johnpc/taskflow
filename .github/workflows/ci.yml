@@ -128,6 +128,8 @@ jobs:
             paths: .features-gen/e2e/features/labels
           - name: assign
             paths: .features-gen/e2e/features/assign
+          - name: filter
+            paths: .features-gen/e2e/features/filter
     steps:
       - uses: actions/checkout@v4
 
