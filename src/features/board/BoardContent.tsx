@@ -9,19 +9,23 @@ type ToggleDone = (input: { id: string; done: boolean; now: string }) => void;
 
 /** Renders the project's sections either as horizontal board columns or as a
  * vertical list of collapsible sections, per the chosen view mode. Passes the
- * label registry down so cards can render their chips. Shared by ProjectView. */
+ * label registry + section rename/delete handlers down. Shared by ProjectView. */
 export function BoardContent({
   mode,
   columns,
   labels = [],
   onAddTask,
   onToggleDone,
+  onRenameSection,
+  onDeleteSection,
 }: {
   mode: ViewMode;
   columns: Column[];
   labels?: LabelRecord[];
   onAddTask: AddTask;
   onToggleDone: ToggleDone;
+  onRenameSection?: (input: { id: string; name: string }) => void;
+  onDeleteSection?: (id: string) => void;
 }) {
   if (mode === 'LIST') {
     return (
@@ -48,6 +52,8 @@ export function BoardContent({
           labels={labels}
           onAddTask={onAddTask}
           onToggleDone={onToggleDone}
+          onRenameSection={onRenameSection}
+          onDeleteSection={onDeleteSection}
         />
       ))}
     </div>

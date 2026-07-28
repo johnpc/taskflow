@@ -3,6 +3,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchBoard, ensureDefaultSections } from './boardApi';
 import { groupTasksBySection } from './taskGrouping';
 import { applyFilter, DEFAULT_FILTER, type BoardFilter } from './taskFilter';
+import { createSection, renameSection, deleteSection } from './sectionsApi';
 import { createTask, setTaskDone } from '../task/tasksApi';
 import { useLabels } from '../labels/useLabels';
 
@@ -43,7 +44,23 @@ export function useBoard(projectId: string, filter: BoardFilter = DEFAULT_FILTER
     onSuccess: invalidate,
   });
 
+  const addSection = useMutation({
+    mutationFn: (name: string) =>
+      createSection({ projectId, name, order: query.data?.sections.length ?? 0 }),
+    onSuccess: invalidate,
+  });
+
+  const editSection = useMutation({
+    mutationFn: (input: { id: string; name: string }) => renameSection(input.id, input.name),
+    onSuccess: invalidate,
+  });
+
+  const removeSection = useMutation({
+    mutationFn: (id: string) => deleteSection(id),
+    onSuccess: invalidate,
+  });
+
   const labels = useLabels().query.data ?? [];
 
-  return { query, columns, addTask, toggleDone, labels };
+  return { query, columns, addTask, toggleDone, addSection, editSection, removeSection, labels };
 }

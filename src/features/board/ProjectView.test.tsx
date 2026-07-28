@@ -23,6 +23,9 @@ describe('ProjectView', () => {
       addTask: { mutate: vi.fn() },
       toggleDone: { mutate: vi.fn() },
       labels: [],
+      addSection: { mutate: vi.fn() },
+      editSection: { mutate: vi.fn() },
+      removeSection: { mutate: vi.fn() },
     });
     renderWithProviders(<ProjectView />, '/projects/p');
     expect(screen.getByTestId('board')).toBeInTheDocument();
@@ -36,6 +39,9 @@ describe('ProjectView', () => {
       addTask: { mutate: vi.fn() },
       toggleDone: { mutate: vi.fn() },
       labels: [],
+      addSection: { mutate: vi.fn() },
+      editSection: { mutate: vi.fn() },
+      removeSection: { mutate: vi.fn() },
     });
     renderWithProviders(<ProjectView />, '/projects/p');
     expect(screen.getByTestId('board')).toBeInTheDocument();
@@ -50,6 +56,9 @@ describe('ProjectView', () => {
       addTask: { mutate: vi.fn() },
       toggleDone: { mutate: vi.fn() },
       labels: [],
+      addSection: { mutate: vi.fn() },
+      editSection: { mutate: vi.fn() },
+      removeSection: { mutate: vi.fn() },
     });
     renderWithProviders(<ProjectView />, '/projects/p');
     expect(screen.getByTestId('load-empty')).toBeInTheDocument();
