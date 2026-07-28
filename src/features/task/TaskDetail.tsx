@@ -10,6 +10,7 @@ import { useParams } from 'react-router-dom';
 import { useTaskDetail } from './useTaskDetail';
 import { TaskHeader } from './TaskHeader';
 import { TaskFields } from './TaskFields';
+import { TaskLabels } from './TaskLabels';
 import { Subtasks } from './Subtasks';
 import { Comments } from './Comments';
 import { LoadState } from '../shell/LoadState';
@@ -22,7 +23,7 @@ import './taskDetail.css';
  * comments. Renders only; all data + mutations come from useTaskDetail. */
 export function TaskDetail() {
   const { id } = useParams<{ id: string }>();
-  const { query, patch, toggleDone, addSubtask, comment } = useTaskDetail(id);
+  const { query, patch, toggleDone, addSubtask, comment, labels } = useTaskDetail(id);
   const task = query.data?.task ?? null;
   useDocumentTitle(task?.title ?? 'Task');
 
@@ -52,6 +53,12 @@ export function TaskDetail() {
                 onRename={(title) => patch.mutate({ id: task.id, title })}
               />
               <TaskFields task={task} onPatch={(p) => patch.mutate({ id: task.id, ...p })} />
+              <TaskLabels
+                task={task}
+                registry={labels.query.data ?? []}
+                onPatchLabels={(labelIds) => patch.mutate({ id: task.id, labelIds })}
+                onCreateLabel={(input) => labels.create.mutate(input)}
+              />
               <Subtasks
                 subtasks={query.data?.subtasks ?? []}
                 onAdd={(title) =>

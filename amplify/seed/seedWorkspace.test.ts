@@ -1,10 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // Mock the seed client (which otherwise reads amplify_outputs.json + .env on import).
-const { createProject, createSection, createTask } = vi.hoisted(() => ({
+const { createProject, createSection, createTask, createLabel } = vi.hoisted(() => ({
   createProject: vi.fn(),
   createSection: vi.fn(),
   createTask: vi.fn(),
+  createLabel: vi.fn(),
 }));
 vi.mock('./seedClient', () => ({
   client: {
@@ -12,6 +13,7 @@ vi.mock('./seedClient', () => ({
       Project: { create: createProject },
       Section: { create: createSection },
       Task: { create: createTask },
+      Label: { create: createLabel },
     },
   },
   OWNER_WRITE: { authMode: 'userPool' },
@@ -24,9 +26,11 @@ beforeEach(() => {
   createProject.mockReset();
   createSection.mockReset();
   createTask.mockReset();
+  createLabel.mockReset();
   createProject.mockResolvedValue({ data: { id: 'proj' }, errors: null });
   createSection.mockResolvedValue({ data: { id: 'sec' }, errors: null });
   createTask.mockResolvedValue({ data: { id: 'task' }, errors: null });
+  createLabel.mockResolvedValue({ data: { id: 'lbl' }, errors: null });
 });
 
 describe('seedWorkspaceData', () => {

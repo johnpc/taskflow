@@ -4,18 +4,22 @@ import { chevronDown, chevronForward } from 'ionicons/icons';
 import { TaskCard } from '../task/TaskCard';
 import { AddCard } from './AddCard';
 import { nowISO } from '../task/today';
+import { resolveLabels } from '../labels/resolveLabels';
 import type { Column } from './taskGrouping';
+import type { LabelRecord } from '../../lib/dataClient';
 
 /** One section in the List view: a collapsible header (name + count) over a
  * stacked list of task rows, with an inline add at the bottom. Same data +
  * mutations as a board column, laid out as a vertical list. */
 export function ListSection({
   column,
+  labels = [],
   defaultOpen = true,
   onAddTask,
   onToggleDone,
 }: {
   column: Column;
+  labels?: LabelRecord[];
   defaultOpen?: boolean;
   onAddTask: (input: { sectionId: string; title: string; order: number }) => void;
   onToggleDone: (input: { id: string; done: boolean; now: string }) => void;
@@ -43,6 +47,7 @@ export function ListSection({
               <TaskCard
                 key={task.id}
                 task={task}
+                labels={resolveLabels(task.labelIds, labels)}
                 onToggleDone={(t) =>
                   onToggleDone({ id: t.id, done: t.status !== 'DONE', now: nowISO() })
                 }

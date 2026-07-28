@@ -11,4 +11,5 @@ export async function clearAll(): Promise<void> {
   await clearOneModel(client.models.Section);
   await clearOneModel(client.models.Project);
   await clearOneModel(client.models.Label);
+  // (Label cleared above — kept explicit so a new model isn't silently missed.)
 }

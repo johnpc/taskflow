@@ -9,7 +9,17 @@ export interface SeedTask {
   dueOffsetDays?: number;
   notes?: string;
   subtasks?: string[];
+  /** Names of labels (from seedLabels) to apply to this task. */
+  labels?: string[];
 }
+
+/** Reusable label registry — name + color key (a --tf-proj-* palette key). */
+export const seedLabels: { name: string; color: string }[] = [
+  { name: 'Marketing', color: 'rose' },
+  { name: 'Design', color: 'violet' },
+  { name: 'Urgent', color: 'amber' },
+  { name: 'Backend', color: 'sky' },
+];
 
 export interface SeedProject {
   name: string;
@@ -33,6 +43,7 @@ export const seedProjects: SeedProject[] = [
         dueOffsetDays: -2,
         notes: 'Blog post + email + social.',
         subtasks: ['Outline key points', 'Write first draft'],
+        labels: ['Marketing', 'Urgent'],
       },
       { title: 'Design hero banner', section: 'To do', priority: 'MEDIUM', dueOffsetDays: 3 },
       { title: 'Set up analytics', section: 'In progress', priority: 'LOW', dueOffsetDays: 1 },

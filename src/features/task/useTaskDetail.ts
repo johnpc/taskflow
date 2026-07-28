@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchTaskDetail, addComment } from './taskDetailApi';
 import { createTask, setTaskDone, updateTask, deleteTask } from './tasksApi';
 import { useAuth } from '../auth/useAuth';
+import { useLabels } from '../labels/useLabels';
 import type { TaskRecord } from '../../lib/dataClient';
 
 /** Everything the task-detail screen needs: the task + subtasks + comments, and
@@ -41,7 +42,9 @@ export function useTaskDetail(id: string) {
     onSuccess: invalidate,
   });
 
-  return { query, patch, toggleDone, addSubtask, comment, remove };
+  const labels = useLabels();
+
+  return { query, patch, toggleDone, addSubtask, comment, remove, labels };
 }
 
 export type TaskDetailHook = ReturnType<typeof useTaskDetail>;

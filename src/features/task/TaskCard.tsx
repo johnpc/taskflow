@@ -3,17 +3,20 @@ import { useHistory } from 'react-router-dom';
 import { ellipseOutline, checkmarkCircle } from 'ionicons/icons';
 import { isDone, dueLabel, dueStatus } from './taskMeta';
 import { todayISO } from './today';
-import type { TaskRecord } from '../../lib/dataClient';
+import { LabelChips } from '../labels/LabelChips';
+import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 import './task.css';
 
 /** A task card on the board/list. Tapping the circle toggles done; tapping the
- * body opens the task detail. Shows a due-date chip colored by urgency and a
- * priority flag. Renders + delegates only. */
+ * body opens the task detail. Shows a due-date chip colored by urgency, a
+ * priority flag, and any label chips (resolved by the caller). Renders only. */
 export function TaskCard({
   task,
+  labels = [],
   onToggleDone,
 }: {
   task: TaskRecord;
+  labels?: LabelRecord[];
   onToggleDone: (task: TaskRecord) => void;
 }) {
   const history = useHistory();
@@ -52,6 +55,7 @@ export function TaskCard({
               {task.priority[0] + task.priority.slice(1).toLowerCase()}
             </span>
           )}
+          <LabelChips labels={labels} />
         </span>
       </button>
     </li>
