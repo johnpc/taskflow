@@ -182,6 +182,12 @@ npx ampx sandbox       # personal cloud backend sandbox
   PRs. `ios-deploy.yml` / `android-deploy.yml` publish after CI on `main`. Secrets: `AWS_ACCESS_KEY_ID`,
   `AWS_SECRET_ACCESS_KEY`, `TEST_USERNAME`, `TEST_PASSWORD`, `ASC_KEY_ID`, `ASC_ISSUER_ID`,
   `ASC_KEY_CONTENT`, `TEAM_ID`.
+- **No prod backend yet.** The deploy workflows are gated on a repo **variable** `TASKFLOW_APP_ID`
+  (the Amplify Hosting app id) and skip cleanly while it's unset — so merges to `main` don't fail on
+  a missing prod app. To go live: connect `johnpc/taskflow` to Amplify Hosting, then set the
+  `TASKFLOW_APP_ID` repo variable (Settings → Secrets and variables → Actions → Variables).
+  `prod-config.mjs` reads the same id from `process.env.TASKFLOW_APP_ID`. Until then everything (CI,
+  local dev, e2e) runs on the **sandbox** via `npm run e2e-config`.
 - **iOS signing:** team `JW5SC3NYUV` (set in `project.pbxproj`); `ITSAppUsesNonExemptEncryption=false`
   in Info.plist (skips the export-compliance prompt).
 
