@@ -31,7 +31,13 @@ jobs:
     # Xcode/iOS 18.5 → "SDK version issue" rejection.) We use the STANDARD
     # macos-26, not the -xlarge paid large runner that stopped allocating.
     runs-on: macos-26
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    # Only deploy once a prod backend exists: the repo variable TASKFLOW_APP_ID
+    # holds the Amplify Hosting app id. Until it's set (the app isn't hosted
+    # yet), skip cleanly — prod-config has nothing to pull, so a build would
+    # only fail. Set it: Settings → Secrets and variables → Actions → Variables.
+    if: ${{ vars.TASKFLOW_APP_ID != '' && (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success') }}
+    env:
+      TASKFLOW_APP_ID: ${{ vars.TASKFLOW_APP_ID }}
     steps:
       - uses: actions/checkout@v7
         with:

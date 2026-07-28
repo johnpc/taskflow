@@ -21,7 +21,11 @@ jobs:
   deploy:
     name: Build & publish Android APK
     runs-on: ubuntu-latest
-    if: ${{ github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success' }}
+    # Skip until a prod backend exists (repo variable TASKFLOW_APP_ID holds the
+    # Amplify Hosting app id). prod-config has nothing to pull before then.
+    if: ${{ vars.TASKFLOW_APP_ID != '' && (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success') }}
+    env:
+      TASKFLOW_APP_ID: ${{ vars.TASKFLOW_APP_ID }}
     steps:
       - uses: actions/checkout@v7
         with:
