@@ -1,0 +1,89 @@
+.profile {
+  max-width: 480px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding-bottom: 96px;
+}
+
+.profile__avatar {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background: var(--tf-accent-gradient);
+  color: var(--tf-accent-contrast);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 8px;
+}
+
+.profile__email {
+  font-size: 1.1rem;
+  margin: 0;
+  word-break: break-all;
+  text-align: center;
+}
+
+.profile__section {
+  width: 100%;
+  margin-top: 12px;
+}
+
+.profile__section-head {
+  font-size: 0.78rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--tf-text-muted);
+  margin: 0 0 10px;
+}
+
+.profile__hint {
+  font-size: 0.9rem;
+  margin: 0;
+}
+
+.settings__theme {
+  display: flex;
+  gap: 6px;
+  background: var(--tf-surface-2);
+  border-radius: 999px;
+  padding: 4px;
+}
+
+.settings__seg {
+  flex: 1;
+  background: none;
+  border: none;
+  border-radius: 999px;
+  padding: 9px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  color: var(--tf-text-muted);
+  cursor: pointer;
+}
+
+.settings__seg--on {
+  background: var(--tf-surface);
+  color: var(--tf-accent-strong);
+  box-shadow: var(--tf-shadow);
+}
+
+.profile__signout {
+  margin-top: 24px;
+  width: 100%;
+  max-width: 320px;
+  background: transparent;
+  color: var(--tf-danger);
+  border: 1px solid var(--tf-border);
+  border-radius: 999px;
+  padding: 13px;
+  font-weight: 600;
+  font-size: 0.95rem;
+  cursor: pointer;
+}

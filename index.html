@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Taskflow — projects & tasks, beautifully organized</title>
+    <meta
+      name="description"
+      content="A fast, focused project & task manager. Plan on a board, work through a list, and always know what's next."
+    />
+
+    <base href="/" />
+
+    <link rel="canonical" href="https://taskflow.jpc.io/" />
+
+    <meta name="color-scheme" content="light dark" />
+    <meta name="theme-color" content="#4f46e5" />
+    <!-- Allow pinch-zoom (no maximum-scale / user-scalable=no) — disabling it
+         fails WCAG 1.4.4. viewport-fit=cover keeps the notch/Dynamic Island
+         safe-area insets (env(safe-area-inset-*)) working. -->
+    <meta name="viewport" content="viewport-fit=cover, width=device-width, initial-scale=1.0" />
+    <meta name="format-detection" content="telephone=no" />
+    <meta name="msapplication-tap-highlight" content="no" />
+
+    <!-- PWA manifest -->
+    <link rel="manifest" href="/manifest.json" />
+
+    <!-- Favicons -->
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png" />
+    <link rel="shortcut icon" type="image/png" href="/favicon.png" />
+
+    <!-- Add to homescreen for iOS -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-title" content="Taskflow" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="default" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+
+    <!-- Open Graph / social -->
+    <meta property="og:title" content="Taskflow — projects & tasks, beautifully organized" />
+    <meta
+      property="og:description"
+      content="A fast, focused project & task manager. Plan on a board, work through a list, and always know what's next."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://taskflow.jpc.io/" />
+    <meta property="og:image" content="https://taskflow.jpc.io/banner.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Taskflow — projects & tasks, beautifully organized" />
+    <meta
+      name="twitter:description"
+      content="A fast, focused project & task manager. Plan on a board, work through a list."
+    />
+    <meta name="twitter:image" content="https://taskflow.jpc.io/banner.png" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

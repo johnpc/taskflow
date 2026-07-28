@@ -1,0 +1,61 @@
+/** Deterministic seed data for a demo workspace — declarative (gate-exempt).
+ * The e2e acceptance suite asserts on these exact names, so they must stay
+ * stable. `dueOffsetDays` is resolved to a real date at seed time (negative =
+ * overdue) so the My Tasks buckets always have an Overdue + Upcoming example. */
+export interface SeedTask {
+  title: string;
+  section: string;
+  priority: 'NONE' | 'LOW' | 'MEDIUM' | 'HIGH';
+  dueOffsetDays?: number;
+  notes?: string;
+  subtasks?: string[];
+}
+
+export interface SeedProject {
+  name: string;
+  color: string;
+  favorite?: boolean;
+  sections: string[];
+  tasks: SeedTask[];
+}
+
+export const seedProjects: SeedProject[] = [
+  {
+    name: 'Product Launch',
+    color: 'indigo',
+    favorite: true,
+    sections: ['To do', 'In progress', 'Done'],
+    tasks: [
+      {
+        title: 'Draft launch announcement',
+        section: 'To do',
+        priority: 'HIGH',
+        dueOffsetDays: -2,
+        notes: 'Blog post + email + social.',
+        subtasks: ['Outline key points', 'Write first draft'],
+      },
+      { title: 'Design hero banner', section: 'To do', priority: 'MEDIUM', dueOffsetDays: 3 },
+      { title: 'Set up analytics', section: 'In progress', priority: 'LOW', dueOffsetDays: 1 },
+      { title: 'Reserve launch domain', section: 'Done', priority: 'NONE' },
+    ],
+  },
+  {
+    name: 'Website Redesign',
+    color: 'sky',
+    sections: ['Backlog', 'This week', 'Shipped'],
+    tasks: [
+      { title: 'Audit current pages', section: 'Backlog', priority: 'MEDIUM' },
+      { title: 'New nav prototype', section: 'This week', priority: 'HIGH', dueOffsetDays: 0 },
+      { title: 'Migrate blog', section: 'Backlog', priority: 'LOW', dueOffsetDays: 10 },
+    ],
+  },
+  {
+    name: 'Personal',
+    color: 'emerald',
+    sections: ['To do', 'Doing', 'Done'],
+    tasks: [
+      { title: 'Plan Q3 goals', section: 'To do', priority: 'MEDIUM', dueOffsetDays: 5 },
+      { title: 'Renew passport', section: 'To do', priority: 'HIGH', dueOffsetDays: -1 },
+    ],
+  },
+];

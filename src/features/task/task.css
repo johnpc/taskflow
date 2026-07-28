@@ -1,0 +1,94 @@
+.task-card {
+  display: flex;
+  align-items: flex-start;
+  gap: 8px;
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius-sm);
+  box-shadow: var(--tf-shadow);
+  padding: 10px;
+}
+
+.task-card--done .task-card__title {
+  text-decoration: line-through;
+  color: var(--tf-text-muted);
+}
+
+.task-card__check {
+  background: none;
+  border: none;
+  color: var(--tf-text-muted);
+  font-size: 1.35rem;
+  padding: 0;
+  cursor: pointer;
+  line-height: 1;
+  display: flex;
+}
+
+.task-card--done .task-card__check {
+  color: var(--tf-done);
+}
+
+.task-card__body {
+  flex: 1;
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.task-card__title {
+  color: var(--tf-text);
+  font-weight: 500;
+  font-size: 0.95rem;
+  line-height: 1.3;
+}
+
+.task-card__meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.task-card__due,
+.task-card__prio {
+  font-size: 0.72rem;
+  font-weight: 600;
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
+.task-card__due {
+  background: var(--tf-surface-2);
+  color: var(--tf-text-muted);
+}
+
+.task-card__due--overdue {
+  background: color-mix(in srgb, var(--tf-overdue) 15%, transparent);
+  color: var(--tf-overdue);
+}
+
+.task-card__due--today {
+  background: color-mix(in srgb, var(--tf-priority-medium) 18%, transparent);
+  color: var(--tf-priority-medium);
+}
+
+.task-card__prio--high {
+  background: color-mix(in srgb, var(--tf-priority-high) 15%, transparent);
+  color: var(--tf-priority-high);
+}
+
+.task-card__prio--medium {
+  background: color-mix(in srgb, var(--tf-priority-medium) 18%, transparent);
+  color: var(--tf-priority-medium);
+}
+
+.task-card__prio--low {
+  background: color-mix(in srgb, var(--tf-priority-low) 15%, transparent);
+  color: var(--tf-priority-low);
+}

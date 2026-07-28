@@ -1,0 +1,64 @@
+import { describe, it, expect, vi } from 'vitest';
+import { screen, fireEvent } from '@testing-library/react';
+import { BoardColumn } from './BoardColumn';
+import { renderWithProviders } from '../../test/renderWithProviders';
+import type { Column } from './taskGrouping';
+import type { SectionRecord, TaskRecord } from '../../lib/dataClient';
+
+const column = (tasks: TaskRecord[]): Column => ({
+  section: { id: 's1', name: 'To do', sortOrder: 0 } as SectionRecord,
+  tasks,
+});
+const task = (over: Partial<TaskRecord>): TaskRecord =>
+  ({
+    id: 't',
+    title: 'T',
+    status: 'TODO',
+    priority: 'NONE',
+    dueDate: null,
+    sortOrder: 0,
+    ...over,
+  }) as TaskRecord;
+
+describe('BoardColumn', () => {
+  it('renders the section name and task count', () => {
+    renderWithProviders(
+      <BoardColumn
+        column={column([task({ id: 'a' })])}
+        onAddTask={vi.fn()}
+        onToggleDone={vi.fn()}
+      />,
+    );
+    expect(screen.getByText('To do')).toBeInTheDocument();
+    expect(screen.getByTestId('board-column')).toHaveTextContent('1');
+  });
+
+  it('adds a task with the next order', () => {
+    const onAddTask = vi.fn();
+    renderWithProviders(
+      <BoardColumn
+        column={column([task({ id: 'a', sortOrder: 2 })])}
+        onAddTask={onAddTask}
+        onToggleDone={vi.fn()}
+      />,
+    );
+    fireEvent.click(screen.getByTestId('add-card'));
+    const input = screen.getByTestId('add-card-input');
+    fireEvent.change(input, { target: { value: 'New' } });
+    fireEvent.keyDown(input, { key: 'Enter' });
+    expect(onAddTask).toHaveBeenCalledWith({ sectionId: 's1', title: 'New', order: 3 });
+  });
+
+  it('toggles a card done', () => {
+    const onToggleDone = vi.fn();
+    renderWithProviders(
+      <BoardColumn
+        column={column([task({ id: 'a' })])}
+        onAddTask={vi.fn()}
+        onToggleDone={onToggleDone}
+      />,
+    );
+    fireEvent.click(screen.getByTestId('task-check'));
+    expect(onToggleDone).toHaveBeenCalledWith(expect.objectContaining({ id: 'a', done: true }));
+  });
+});

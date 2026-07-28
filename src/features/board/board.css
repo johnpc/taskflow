@@ -1,0 +1,91 @@
+/* Horizontal-scrolling board of columns (kanban). Columns wrap into a single
+   column on narrow screens via scroll-snap for a phone-friendly feel. */
+.board {
+  display: flex;
+  gap: 14px;
+  overflow-x: auto;
+  padding-bottom: 96px;
+  scroll-snap-type: x proximity;
+  -webkit-overflow-scrolling: touch;
+}
+
+.board-col {
+  flex: 0 0 82%;
+  max-width: 340px;
+  scroll-snap-align: start;
+  background: var(--tf-surface-2);
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius);
+  padding: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-self: flex-start;
+}
+
+@media (min-width: 720px) {
+  .board-col {
+    flex-basis: 300px;
+  }
+}
+
+.board-col__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 2px 4px;
+}
+
+.board-col__name {
+  font-weight: 700;
+  font-size: 0.95rem;
+  color: var(--tf-text);
+}
+
+.board-col__count {
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--tf-text-muted);
+  background: var(--tf-surface);
+  border-radius: 999px;
+  padding: 1px 8px;
+}
+
+.board-col__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.add-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: transparent;
+  color: var(--tf-text-muted);
+  border: none;
+  border-radius: var(--tf-radius-sm);
+  padding: 8px 6px;
+  font-weight: 600;
+  font-size: 0.9rem;
+  cursor: pointer;
+  text-align: left;
+}
+
+.add-card--open {
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-accent);
+  padding: 6px 10px;
+}
+
+.add-card__input {
+  flex: 1;
+  border: none;
+  background: transparent;
+  color: var(--tf-text);
+  font-size: 0.95rem;
+  outline: none;
+}
