@@ -12,7 +12,13 @@ vi.mock('../../lib/dataClient', () => ({
   dataClient: { models: { Project: { list, get, create, update } } },
 }));
 
-import { fetchProjects, fetchProject, createProject, setProjectFavorite } from './projectsApi';
+import {
+  fetchProjects,
+  fetchProject,
+  createProject,
+  setProjectFavorite,
+  updateProject,
+} from './projectsApi';
 
 beforeEach(() => {
   list.mockReset();
@@ -70,5 +76,18 @@ describe('setProjectFavorite', () => {
   it('throws on error', async () => {
     update.mockResolvedValue({ errors: [{ message: 'no' }] });
     await expect(setProjectFavorite('x', false)).rejects.toThrow();
+  });
+});
+
+describe('updateProject', () => {
+  it('patches header fields', async () => {
+    update.mockResolvedValue({ errors: null });
+    await updateProject({ id: 'x', description: 'plan' });
+    expect(update).toHaveBeenCalledWith({ id: 'x', description: 'plan' });
+  });
+
+  it('throws on error', async () => {
+    update.mockResolvedValue({ errors: [{}] });
+    await expect(updateProject({ id: 'x', name: 'Y' })).rejects.toThrow();
   });
 });

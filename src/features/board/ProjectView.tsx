@@ -12,8 +12,10 @@ import { useBoard } from './useBoard';
 import { useProject } from './useProject';
 import { useViewMode } from './useViewMode';
 import { useBoardFilter } from './useBoardFilter';
+import { useProjectEdit } from './useProjectEdit';
 import { ViewToggle } from './ViewToggle';
 import { FilterBar } from './FilterBar';
+import { ProjectHeader } from './ProjectHeader';
 import { BoardContent } from './BoardContent';
 import { LoadState } from '../shell/LoadState';
 import { useDocumentTitle } from '../shell/useDocumentTitle';
@@ -26,8 +28,11 @@ export function ProjectView() {
   const { id } = useParams<{ id: string }>();
   const project = useProject(id);
   const { filter, update } = useBoardFilter();
-  const { query, columns, addTask, toggleDone, labels } = useBoard(id, filter);
+  const board = useBoard(id, filter);
+  const { query, columns, addTask, toggleDone, labels, addSection, editSection, removeSection } =
+    board;
   const { mode, choose } = useViewMode(id, project.data?.view as ViewMode | undefined);
+  const edit = useProjectEdit(id);
   useDocumentTitle(project.data?.name ?? 'Project');
 
   return (
@@ -41,6 +46,13 @@ export function ProjectView() {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
+        {project.data && (
+          <ProjectHeader
+            project={project.data}
+            onDescribe={(description) => edit.mutate({ id, description })}
+            onAddSection={(name) => addSection.mutate(name)}
+          />
+        )}
         <ViewToggle mode={mode} onChange={choose} />
         <FilterBar filter={filter} labels={labels} onChange={update} />
         <LoadState
@@ -57,6 +69,8 @@ export function ProjectView() {
             labels={labels}
             onAddTask={(input) => addTask.mutate(input)}
             onToggleDone={(input) => toggleDone.mutate(input)}
+            onRenameSection={(input) => editSection.mutate(input)}
+            onDeleteSection={(sectionId) => removeSection.mutate(sectionId)}
           />
         </LoadState>
       </IonContent>

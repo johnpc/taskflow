@@ -130,6 +130,8 @@ jobs:
             paths: .features-gen/e2e/features/assign
           - name: filter
             paths: .features-gen/e2e/features/filter
+          - name: sections
+            paths: .features-gen/e2e/features/sections
     steps:
       - uses: actions/checkout@v4
 
