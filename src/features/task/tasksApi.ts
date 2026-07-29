@@ -60,6 +60,7 @@ export async function updateTask(
       | 'labelIds'
       | 'blockedByIds'
       | 'repeat'
+      | 'myBucket'
     >
   >,
 ): Promise<void> {

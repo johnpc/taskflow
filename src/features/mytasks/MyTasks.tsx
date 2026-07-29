@@ -1,18 +1,19 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { useMyTasks } from './useMyTasks';
 import { GroupBySegment } from './GroupBySegment';
-import { TaskCard } from '../task/TaskCard';
+import { MyTasksBucket } from './MyTasksBucket';
 import { LoadState } from '../shell/LoadState';
 import { TabBar } from '../shell/TabBar';
 import { useDocumentTitle } from '../shell/useDocumentTitle';
-import { nowISO } from '../task/today';
 import './myTasks.css';
 
-/** My Tasks tab — every open task across projects, grouped by due date or
- * priority (a persisted switch), with an open-task total. Renders only. */
+/** My Tasks tab — every open task across projects, grouped by due date,
+ * priority, or focus (a persisted switch), with an open-task total. In focus
+ * mode each card can be re-filed into Today/Upcoming/Later. Renders only. */
 export function MyTasks() {
   useDocumentTitle('My Tasks');
-  const { query, buckets, overdue, openTotal, groupMode, setGroupMode, toggleDone } = useMyTasks();
+  const { query, buckets, overdue, openTotal, groupMode, setGroupMode, toggleDone, setBucket } =
+    useMyTasks();
 
   return (
     <IonPage>
@@ -42,27 +43,13 @@ export function MyTasks() {
         >
           <div className="mytasks__buckets">
             {buckets.map((bucket) => (
-              <section
+              <MyTasksBucket
                 key={bucket.key}
-                className="mytasks__bucket"
-                data-testid={`bucket-${bucket.key}`}
-              >
-                <h2 className="mytasks__bucket-head">
-                  {bucket.label}
-                  <span className="mytasks__bucket-count">{bucket.tasks.length}</span>
-                </h2>
-                <ul className="mytasks__list">
-                  {bucket.tasks.map((task) => (
-                    <TaskCard
-                      key={task.id}
-                      task={task}
-                      onToggleDone={(t) =>
-                        toggleDone.mutate({ id: t.id, done: t.status !== 'DONE', now: nowISO() })
-                      }
-                    />
-                  ))}
-                </ul>
-              </section>
+                bucket={bucket}
+                showFocusPicker={groupMode === 'focus'}
+                onToggleDone={(input) => toggleDone.mutate(input)}
+                onSetBucket={(input) => setBucket.mutate(input)}
+              />
             ))}
           </div>
         </LoadState>

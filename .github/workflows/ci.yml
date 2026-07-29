@@ -178,6 +178,8 @@ jobs:
             paths: .features-gen/e2e/features/attachments
           - name: reorderdrag
             paths: .features-gen/e2e/features/reorderdrag
+          - name: focus
+            paths: .features-gen/e2e/features/focus
     steps:
       - uses: actions/checkout@v4
 

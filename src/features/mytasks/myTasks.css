@@ -38,6 +38,26 @@
   gap: 8px;
 }
 
+.mytasks__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.mytasks__row > .task-card {
+  flex: 1;
+}
+
+.mytasks__bucket-select {
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius-sm);
+  padding: 6px 8px;
+  font-size: 0.8rem;
+  color: var(--tf-text);
+  font-family: var(--tf-font-sans);
+}
+
 .mytasks__summary {
   display: flex;
   align-items: center;
