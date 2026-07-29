@@ -1,4 +1,5 @@
 import { useHistory } from 'react-router-dom';
+import { ParentBreadcrumb } from './ParentBreadcrumb';
 import { TaskHeader } from './TaskHeader';
 import { TaskActivity } from './TaskActivity';
 import { TaskFields } from './TaskFields';
@@ -33,8 +34,11 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
   const duplicateTask = () =>
     duplicate.mutate(task, { onSuccess: (copy) => history.push(`/tasks/${copy.id}`) });
 
+  const openTask = (id: string) => history.push(`/tasks/${id}`);
+
   return (
     <div className="task-detail" data-testid="task-detail">
+      <ParentBreadcrumb parentTaskId={task.parentTaskId} onOpen={openTask} />
       <TaskHeader
         task={task}
         onToggleDone={(done) => toggleDone.mutate({ taskId: task.id, done, now: nowISO() })}
@@ -66,6 +70,7 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
           addSubtask.mutate({ projectId: task.projectId, title, order: nextSubtaskOrder(subtasks) })
         }
         onToggle={(input) => toggleDone.mutate(input)}
+        onOpen={openTask}
       />
       <Attachments
         attachments={query.data?.attachments ?? []}
