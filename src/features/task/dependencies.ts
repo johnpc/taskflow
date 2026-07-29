@@ -23,6 +23,12 @@ export function blockerTasks(task: TaskRecord, all: TaskRecord[]): TaskRecord[] 
     .filter((t): t is TaskRecord => !!t);
 }
 
+/** The tasks this one blocks: every other task that lists it as a blocker. The
+ * inverse of blockerTasks, derived from the same project set (no extra fetch). */
+export function dependentTasks(task: TaskRecord, all: TaskRecord[]): TaskRecord[] {
+  return all.filter((t) => t.id !== task.id && cleanIds(t.blockedByIds).includes(task.id));
+}
+
 /** A task is blocked when at least one of its blockers is not yet done. A
  * blocker id pointing at a deleted/missing task is treated as cleared. */
 export function isBlocked(task: TaskRecord, all: TaskRecord[]): boolean {

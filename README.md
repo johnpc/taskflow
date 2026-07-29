@@ -42,7 +42,7 @@ iOS and Android.
 | **Highlight color** | Give a task a color; its card gets a left accent stripe for visual grouping          | ✅     |
 | **Subtasks**        | Checklist with a "2/3" chip; open a subtask + breadcrumb back; confirm if incomplete | ✅     |
 | **Attachments**     | Attach labelled links to a task; each opens in a new tab (XSS-guarded hrefs)         | ✅     |
-| **Dependencies**    | "Blocked by" others; banner + board badge, and a confirm before completing early     | ✅     |
+| **Dependencies**    | "Blocked by" + "Blocking" lines, board badge, and a confirm before completing early  | ✅     |
 | **Recurring**       | Repeat daily/weekly/monthly (card shows the cadence); completing spawns the next     | ✅     |
 | **Rich notes**      | Notes render **bold**, safe links, and [ ]/[x] checklists (XSS-guarded hrefs)        | ✅     |
 | **Comments**        | Discuss on any task with relative timestamps; edit or delete a comment               | ✅     |

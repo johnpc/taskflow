@@ -16,6 +16,10 @@ Then('the blocked banner reads {string}', async ({ page }, text: string) => {
   await expect(page.getByTestId('blocked-banner')).toHaveText(text, { timeout: 15_000 });
 });
 
+Then('the blocking line reads {string}', async ({ page }, text: string) => {
+  await expect(page.getByTestId('blocking-line')).toHaveText(text, { timeout: 15_000 });
+});
+
 Then('the board card {string} shows a Blocked badge', async ({ page }, title: string) => {
   const card = page.getByTestId('task-card').filter({ hasText: title }).first();
   await expect(card.getByTestId('task-blocked')).toBeVisible({ timeout: 15_000 });

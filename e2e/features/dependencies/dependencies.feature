@@ -11,6 +11,14 @@ Feature: Task dependencies
     When the user opens the task titled "Announce on socials"
     Then the blocked banner reads "Blocked by Design hero banner"
 
+  # The inverse view: "Design hero banner" blocks "Announce on socials", so its
+  # detail shows a Blocking line naming the dependent. Pure read, mutates nothing.
+  Scenario: A blocker shows what it is blocking
+    Given a signed-in user
+    And the user opens the "Product Launch" project
+    When the user opens the task titled "Design hero banner"
+    Then the blocking line reads "Blocking Announce on socials"
+
   Scenario: Adding a blocker updates the banner
     Given a signed-in user
     And the user opens the "Product Launch" project
