@@ -28,13 +28,14 @@ const task = {
 
 function makeHook() {
   return {
-    query: { data: { task, subtasks: [], comments: [] } },
+    query: { data: { task, subtasks: [], comments: [], attachments: [] } },
     patch: { mutate: vi.fn() },
     toggleDone: { mutate: vi.fn() },
     addSubtask: { mutate: vi.fn() },
     comment: { mutate: vi.fn(), isPending: false },
     remove: { mutate: vi.fn() },
     labels: { query: { data: [] }, create: { mutate: vi.fn() } },
+    attachments: { add: { mutate: vi.fn(), isPending: false }, remove: { mutate: vi.fn() } },
   };
 }
 

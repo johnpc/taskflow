@@ -365,3 +365,69 @@
 .deps-opt--done {
   text-decoration: line-through;
 }
+
+.attachments__list {
+  list-style: none;
+  margin: 0 0 10px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.attachment {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.attachment__link {
+  color: var(--tf-accent-strong);
+  font-weight: 600;
+  text-decoration: none;
+  word-break: break-all;
+}
+
+.attachment__link--bad {
+  color: var(--tf-text-muted);
+  text-decoration: line-through;
+}
+
+.attachment__remove {
+  background: none;
+  border: none;
+  color: var(--tf-text-muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+}
+
+.attachments__composer {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.attachments__input {
+  flex: 1 1 40%;
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius-sm);
+  padding: 10px 12px;
+  font-size: 0.95rem;
+  color: var(--tf-text);
+  font-family: var(--tf-font-sans);
+}
+
+.attachments__add {
+  background: var(--tf-accent);
+  color: var(--tf-accent-contrast);
+  border: none;
+  border-radius: 999px;
+  padding: 9px 20px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.attachments__add:disabled {
+  opacity: 0.5;
+}

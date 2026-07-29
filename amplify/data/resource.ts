@@ -87,6 +87,7 @@ const schema = a.schema({
       parent: a.belongsTo('Task', 'parentTaskId'),
       subtasks: a.hasMany('Task', 'parentTaskId'),
       comments: a.hasMany('Comment', 'taskId'),
+      attachments: a.hasMany('Attachment', 'taskId'),
     })
     // Board read path: all tasks in a project, then group by section client-side
     // on the bounded page. Subtask read path: children of a parent task.
@@ -107,6 +108,19 @@ const schema = a.schema({
       authorEmail: a.string(),
     })
     // Read all comments for a task.
+    .secondaryIndexes((index) => [index('taskId')])
+    .authorization((allow) => [allow.owner()]),
+
+  // A link attached to a task (a named URL). No file uploads — this is a
+  // links-only v1; the url is safeHref-guarded before render. Ordered by
+  // createdAt on the bounded per-task page.
+  Attachment: a
+    .model({
+      taskId: a.id().required(),
+      task: a.belongsTo('Task', 'taskId'),
+      url: a.string().required(),
+      title: a.string(),
+    })
     .secondaryIndexes((index) => [index('taskId')])
     .authorization((allow) => [allow.owner()]),
 

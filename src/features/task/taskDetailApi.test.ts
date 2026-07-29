@@ -1,10 +1,11 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-const { get, listSub, listComments, createComment } = vi.hoisted(() => ({
+const { get, listSub, listComments, createComment, fetchAttachments } = vi.hoisted(() => ({
   get: vi.fn(),
   listSub: vi.fn(),
   listComments: vi.fn(),
   createComment: vi.fn(),
+  fetchAttachments: vi.fn(),
 }));
 vi.mock('../../lib/dataClient', () => ({
   dataClient: {
@@ -14,6 +15,7 @@ vi.mock('../../lib/dataClient', () => ({
     },
   },
 }));
+vi.mock('./attachmentsApi', () => ({ fetchAttachments }));
 
 import { fetchTaskDetail, addComment } from './taskDetailApi';
 
@@ -22,6 +24,8 @@ beforeEach(() => {
   listSub.mockReset();
   listComments.mockReset();
   createComment.mockReset();
+  fetchAttachments.mockReset();
+  fetchAttachments.mockResolvedValue([]);
 });
 
 describe('fetchTaskDetail', () => {
@@ -39,10 +43,12 @@ describe('fetchTaskDetail', () => {
         { id: 'c1', createdAt: '2026-01' },
       ],
     });
+    fetchAttachments.mockResolvedValue([{ id: 'at1' }]);
     const out = await fetchTaskDetail('t');
     expect(out.task?.id).toBe('t');
     expect(out.subtasks.map((s) => s.id)).toEqual(['s1', 's2']);
     expect(out.comments.map((c) => c.id)).toEqual(['c1', 'c2']);
+    expect(out.attachments.map((a) => a.id)).toEqual(['at1']);
   });
 
   it('returns null task when missing', async () => {
