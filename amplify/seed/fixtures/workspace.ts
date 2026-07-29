@@ -178,4 +178,12 @@ export const seedProjects: SeedProject[] = [
       { title: 'Progress open', section: 'Tasks', priority: 'LOW' },
     ],
   },
+  // Dedicated project for the archive/restore round-trip — only that area
+  // archives then restores it, so it can't disturb a parallel run.
+  {
+    name: 'Archive Lab',
+    color: 'sky',
+    sections: ['To do'],
+    tasks: [{ title: 'Archived work', section: 'To do', priority: 'LOW' }],
+  },
 ];

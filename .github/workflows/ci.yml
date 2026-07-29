@@ -192,6 +192,8 @@ jobs:
             paths: .features-gen/e2e/features/mytasksdone
           - name: searchfilter
             paths: .features-gen/e2e/features/searchfilter
+          - name: archivedview
+            paths: .features-gen/e2e/features/archivedview
     steps:
       - uses: actions/checkout@v4
 

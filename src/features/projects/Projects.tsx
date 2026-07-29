@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useProjects, useCreateProject, useToggleFavorite } from './useProjects';
 import { useProjectCounts } from './useProjectCounts';
 import { useProjectProgress } from './useProjectProgress';
+import { ArchivedSection } from './ArchivedSection';
 import { useTemplates } from '../templates/useTemplates';
 import { ProjectCard } from './ProjectCard';
 import { NewProjectButton } from './NewProjectButton';
@@ -69,6 +70,7 @@ export function Projects() {
             ))}
           </ul>
         </LoadState>
+        <ArchivedSection />
         <TabBar active="Projects" />
       </IonContent>
     </IonPage>

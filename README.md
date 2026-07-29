@@ -22,6 +22,7 @@ iOS and Android.
 | ------------------ | ------------------------------------------------------------------------------ | ------ |
 | **Home**           | Dashboard landing: greeting, due-today / overdue stats, what's coming up       | ✅     |
 | **Projects**       | Create color-coded projects, favorite them, add a description, archive/delete  | ✅     |
+| **Archived**       | Browse archived projects in a collapsible section and restore any of them      | ✅     |
 | **Templates**      | Start a ready-made project (Sprint / Content / Launch) with sections + tasks   | ✅     |
 | **Counts**         | Open-task count badge per project; overdue count on My Tasks                   | ✅     |
 | **Progress**       | Each project card shows a completion bar and "X of Y done"                     | ✅     |
