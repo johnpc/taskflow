@@ -288,3 +288,35 @@
   color: var(--tf-accent-strong);
   cursor: pointer;
 }
+
+/* Rendered notes preview (markdown-lite) */
+.notes-preview {
+  margin-top: 10px;
+  padding: 10px 12px;
+  background: var(--tf-surface-2);
+  border-radius: var(--tf-radius-sm);
+  font-size: 0.9rem;
+  color: var(--tf-text);
+}
+
+.notes-preview__line,
+.notes-preview__check {
+  margin: 0 0 4px;
+  line-height: 1.45;
+}
+
+.notes-preview__check {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.notes-preview__done {
+  text-decoration: line-through;
+  color: var(--tf-text-muted);
+}
+
+.notes-preview a {
+  color: var(--tf-accent-strong);
+  font-weight: 600;
+}

@@ -1,6 +1,7 @@
 import type { TaskRecord } from '../../lib/dataClient';
 import { PRIORITY_META, type Priority } from './taskMeta';
 import { DuePresetButtons } from './DuePresetButtons';
+import { NotesPreview } from './NotesPreview';
 import './taskDetail.css';
 
 const PRIORITIES: Priority[] = ['NONE', 'LOW', 'MEDIUM', 'HIGH'];
@@ -56,11 +57,12 @@ export function TaskFields({
         <textarea
           className="task-fields__notes"
           data-testid="task-notes"
-          placeholder="Add details…"
+          placeholder="Add details… **bold**, [links](https://…), [ ] checklist"
           rows={4}
           defaultValue={task.notes ?? ''}
           onBlur={(e) => onPatch({ notes: e.target.value })}
         />
+        <NotesPreview notes={task.notes} />
       </label>
     </div>
   );
