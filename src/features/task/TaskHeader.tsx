@@ -1,27 +1,36 @@
 import { useState } from 'react';
-import { IonIcon } from '@ionic/react';
+import { IonAlert, IonIcon } from '@ionic/react';
 import { ellipseOutline, checkmarkCircle } from 'ionicons/icons';
 import { isDone } from './taskMeta';
 import type { TaskRecord } from '../../lib/dataClient';
 
 /** Task-detail header: the big complete toggle + an editable title. Editing
- * commits on blur / Enter; presentational + delegating. */
+ * commits on blur / Enter; presentational + delegating. Completing a task that
+ * still has open blockers first asks for confirmation (Asana parity). */
 export function TaskHeader({
   task,
+  blocked = false,
   onToggleDone,
   onRename,
 }: {
   task: TaskRecord;
+  blocked?: boolean;
   onToggleDone: (done: boolean) => void;
   onRename: (title: string) => void;
 }) {
   const done = isDone(task);
   const [title, setTitle] = useState(task.title);
+  const [confirm, setConfirm] = useState(false);
 
   const commit = () => {
     const trimmed = title.trim();
     if (trimmed && trimmed !== task.title) onRename(trimmed);
     else setTitle(task.title);
+  };
+
+  const toggle = () => {
+    if (!done && blocked) setConfirm(true);
+    else onToggleDone(!done);
   };
 
   return (
@@ -32,7 +41,7 @@ export function TaskHeader({
         data-testid="task-detail-check"
         aria-pressed={done}
         aria-label={done ? 'Mark not done' : 'Mark done'}
-        onClick={() => onToggleDone(!done)}
+        onClick={toggle}
       >
         <IonIcon icon={done ? checkmarkCircle : ellipseOutline} />
       </button>
@@ -43,6 +52,21 @@ export function TaskHeader({
         onChange={(e) => setTitle(e.target.value)}
         onBlur={commit}
         onKeyDown={(e) => e.key === 'Enter' && e.currentTarget.blur()}
+      />
+      <IonAlert
+        isOpen={confirm}
+        header="This task is still blocked"
+        message="It has unfinished dependencies. Complete it anyway?"
+        data-testid="blocked-confirm"
+        onDidDismiss={() => setConfirm(false)}
+        buttons={[
+          { text: 'Cancel', role: 'cancel' },
+          {
+            text: 'Complete anyway',
+            htmlAttributes: { 'data-testid': 'blocked-confirm-yes' },
+            handler: () => onToggleDone(true),
+          },
+        ]}
       />
     </header>
   );
