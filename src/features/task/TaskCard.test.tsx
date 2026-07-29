@@ -49,6 +49,15 @@ describe('TaskCard', () => {
     fireEvent.click(open); // navigates via history.push — no throw
   });
 
+  it('shows quick-edit controls only when onQuickEdit is given', () => {
+    const { rerender } = renderWithProviders(<TaskCard task={task({})} onToggleDone={vi.fn()} />);
+    expect(screen.queryByTestId('quick-edit')).not.toBeInTheDocument();
+    const onQuickEdit = vi.fn();
+    rerender(<TaskCard task={task({})} onToggleDone={vi.fn()} onQuickEdit={onQuickEdit} />);
+    fireEvent.click(screen.getByTestId('quick-edit-priority'));
+    expect(onQuickEdit).toHaveBeenCalledWith({ priority: 'LOW' });
+  });
+
   it('shows reorder controls only when onReorder is given', () => {
     const { rerender } = renderWithProviders(<TaskCard task={task({})} onToggleDone={vi.fn()} />);
     expect(screen.queryByTestId('reorder')).not.toBeInTheDocument();

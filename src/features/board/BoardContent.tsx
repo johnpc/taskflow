@@ -2,19 +2,12 @@ import { BoardColumn } from './BoardColumn';
 import { ListSection } from './ListSection';
 import type { Column } from './taskGrouping';
 import type { ViewMode } from './viewMode';
-import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
-
-type AddTask = (input: { sectionId: string; title: string; order: number }) => void;
-type ToggleDone = (input: { id: string; done: boolean; now: string }) => void;
-type Reorder = (input: {
-  columnTasks: TaskRecord[];
-  taskId: string;
-  direction: 'up' | 'down';
-}) => void;
+import type { AddTaskFn, ToggleDoneFn, ReorderFn, QuickEditFn } from './boardHandlers';
+import type { LabelRecord } from '../../lib/dataClient';
 
 /** Renders the project's sections either as horizontal board columns or as a
  * vertical list of collapsible sections, per the chosen view mode. Passes the
- * label registry + reorder + section rename/delete handlers down. */
+ * label registry + reorder + quick-edit + section handlers down. */
 export function BoardContent({
   mode,
   columns,
@@ -22,15 +15,17 @@ export function BoardContent({
   onAddTask,
   onToggleDone,
   onReorder,
+  onQuickEdit,
   onRenameSection,
   onDeleteSection,
 }: {
   mode: ViewMode;
   columns: Column[];
   labels?: LabelRecord[];
-  onAddTask: AddTask;
-  onToggleDone: ToggleDone;
-  onReorder?: Reorder;
+  onAddTask: AddTaskFn;
+  onToggleDone: ToggleDoneFn;
+  onReorder?: ReorderFn;
+  onQuickEdit?: QuickEditFn;
   onRenameSection?: (input: { id: string; name: string }) => void;
   onDeleteSection?: (id: string) => void;
 }) {
@@ -46,6 +41,7 @@ export function BoardContent({
             onAddTask={onAddTask}
             onToggleDone={onToggleDone}
             onReorder={onReorder}
+            onQuickEdit={onQuickEdit}
           />
         ))}
       </div>
@@ -61,6 +57,7 @@ export function BoardContent({
           onAddTask={onAddTask}
           onToggleDone={onToggleDone}
           onReorder={onReorder}
+          onQuickEdit={onQuickEdit}
           onRenameSection={onRenameSection}
           onDeleteSection={onDeleteSection}
         />

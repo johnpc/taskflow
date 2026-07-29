@@ -4,6 +4,7 @@ import { SectionActions } from './SectionActions';
 import { nowISO } from '../task/today';
 import { resolveLabels } from '../labels/resolveLabels';
 import type { Column } from './taskGrouping';
+import type { QuickEditFn } from './boardHandlers';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 
 /** One board column: a section header (with rename/delete), its task cards, and
@@ -15,6 +16,7 @@ export function BoardColumn({
   onAddTask,
   onToggleDone,
   onReorder,
+  onQuickEdit,
   onRenameSection,
   onDeleteSection,
 }: {
@@ -27,6 +29,7 @@ export function BoardColumn({
     taskId: string;
     direction: 'up' | 'down';
   }) => void;
+  onQuickEdit?: QuickEditFn;
   onRenameSection?: (input: { id: string; name: string }) => void;
   onDeleteSection?: (id: string) => void;
 }) {
@@ -55,6 +58,7 @@ export function BoardColumn({
               onReorder &&
               ((direction) => onReorder({ columnTasks: column.tasks, taskId: task.id, direction }))
             }
+            onQuickEdit={onQuickEdit && ((patch) => onQuickEdit(task.id, patch))}
           />
         ))}
       </ul>
