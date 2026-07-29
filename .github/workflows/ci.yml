@@ -156,6 +156,8 @@ jobs:
             paths: .features-gen/e2e/features/activity
           - name: home
             paths: .features-gen/e2e/features/home
+          - name: duepresets
+            paths: .features-gen/e2e/features/duepresets
     steps:
       - uses: actions/checkout@v4
 

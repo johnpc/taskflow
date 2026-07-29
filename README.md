@@ -28,6 +28,7 @@ iOS and Android.
 | **Board**          | Kanban columns (To do / In progress / Done) with inline task creation         | ✅     |
 | **List view**      | Board↔List toggle (persisted per project); collapsible sections, list-first   | ✅     |
 | **Tasks**          | Title, notes, priority (Low→High), due dates with overdue/today/upcoming cues | ✅     |
+| **Due presets**    | One-tap Today / Tomorrow / Next week due-date buttons                         | ✅     |
 | **Reorder**        | Move a task up/down within its section                                        | ✅     |
 | **Quick-edit**     | Set a due date and cycle priority straight from a card, no detail needed      | ✅     |
 | **Inline rename**  | Rename a task in place from its card (pencil), no detail needed               | ✅     |
