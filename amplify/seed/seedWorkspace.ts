@@ -15,7 +15,7 @@ export async function seedWorkspaceData(): Promise<number> {
         color: proj.color,
         view: 'BOARD',
         sortOrder: p,
-        isArchived: false,
+        isArchived: !!proj.archived,
         favorite: !!proj.favorite,
       },
       OWNER_WRITE,

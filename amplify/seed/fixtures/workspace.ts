@@ -35,6 +35,8 @@ export interface SeedProject {
   name: string;
   color: string;
   favorite?: boolean;
+  /** Seed this project already archived (for the archived-projects view). */
+  archived?: boolean;
   sections: string[];
   tasks: SeedTask[];
 }
@@ -187,11 +189,13 @@ export const seedProjects: SeedProject[] = [
       { title: 'Progress open', section: 'Tasks', priority: 'LOW' },
     ],
   },
-  // Dedicated project for the archive/restore round-trip — only that area
-  // archives then restores it, so it can't disturb a parallel run.
+  // Pre-archived project for the archived-projects view: it starts in the
+  // Archived section (a pure read), so the acceptance never has to archive it
+  // first — keeping the scenario idempotent across CI retries.
   {
     name: 'Archive Lab',
     color: 'sky',
+    archived: true,
     sections: ['To do'],
     tasks: [{ title: 'Archived work', section: 'To do', priority: 'LOW' }],
   },
@@ -208,5 +212,13 @@ export const seedProjects: SeedProject[] = [
     color: 'amber',
     sections: ['Inbox'],
     tasks: [{ title: 'Move To anchor', section: 'Inbox', priority: 'LOW' }],
+  },
+  // Dedicated project for the persist-collapse round-trip — only that area
+  // collapses its section, so the persisted state can't disturb a parallel run.
+  {
+    name: 'Collapse Lab',
+    color: 'indigo',
+    sections: ['Backlog'],
+    tasks: [{ title: 'Collapse me', section: 'Backlog', priority: 'LOW' }],
   },
 ];

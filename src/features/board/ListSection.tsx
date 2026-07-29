@@ -1,8 +1,8 @@
-import { useState } from 'react';
 import { IonIcon } from '@ionic/react';
 import { chevronDown, chevronForward } from 'ionicons/icons';
 import { TaskCard } from '../task/TaskCard';
 import { AddCard } from './AddCard';
+import { useSectionCollapse } from './useSectionCollapse';
 import { nowISO } from '../task/today';
 import { resolveLabels } from '../labels/resolveLabels';
 import type { Column } from './taskGrouping';
@@ -42,7 +42,7 @@ export function ListSection({
   selectedIds?: Set<string>;
   onSelect?: (id: string) => void;
 }) {
-  const [open, setOpen] = useState(defaultOpen);
+  const { open, toggle } = useSectionCollapse(column.section.id, defaultOpen);
   const nextOrder = column.tasks.reduce((max, t) => Math.max(max, t.sortOrder ?? 0), -1) + 1;
 
   return (
@@ -52,7 +52,7 @@ export function ListSection({
         className="list-section__head"
         data-testid="list-section-toggle"
         aria-expanded={open}
-        onClick={() => setOpen((v) => !v)}
+        onClick={toggle}
       >
         <IonIcon icon={open ? chevronDown : chevronForward} aria-hidden="true" />
         <span className="list-section__name">{column.section.name}</span>
