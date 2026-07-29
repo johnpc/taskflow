@@ -2,6 +2,7 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/rea
 import { useHistory } from 'react-router-dom';
 import { useProjects, useCreateProject, useToggleFavorite } from './useProjects';
 import { useProjectCounts } from './useProjectCounts';
+import { useProjectProgress } from './useProjectProgress';
 import { useTemplates } from '../templates/useTemplates';
 import { ProjectCard } from './ProjectCard';
 import { NewProjectButton } from './NewProjectButton';
@@ -21,6 +22,7 @@ export function Projects() {
   const create = useCreateProject();
   const toggle = useToggleFavorite();
   const counts = useProjectCounts();
+  const progress = useProjectProgress();
   const template = useTemplates();
   const list = projects ?? [];
 
@@ -61,6 +63,7 @@ export function Projects() {
                 key={project.id}
                 project={project}
                 count={counts.get(project.id) ?? 0}
+                progress={progress.get(project.id)}
                 onToggleFavorite={(p) => toggle.mutate({ id: p.id, favorite: !p.favorite })}
               />
             ))}

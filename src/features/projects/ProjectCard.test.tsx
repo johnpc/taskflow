@@ -14,6 +14,29 @@ describe('ProjectCard', () => {
     expect(screen.getByRole('link')).toHaveAttribute('href', '/projects/p');
   });
 
+  it('shows a progress bar with a done-of-total label', () => {
+    renderWithProviders(
+      <ProjectCard
+        project={project({})}
+        progress={{ done: 3, total: 4 }}
+        onToggleFavorite={vi.fn()}
+      />,
+    );
+    expect(screen.getByTestId('project-progress-label')).toHaveTextContent('3 of 4 done');
+    expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '75');
+  });
+
+  it('omits the progress bar when the project has no tasks', () => {
+    renderWithProviders(
+      <ProjectCard
+        project={project({})}
+        progress={{ done: 0, total: 0 }}
+        onToggleFavorite={vi.fn()}
+      />,
+    );
+    expect(screen.queryByTestId('project-progress')).not.toBeInTheDocument();
+  });
+
   it('reflects favorite state', () => {
     renderWithProviders(
       <ProjectCard project={project({ favorite: true })} onToggleFavorite={vi.fn()} />,
