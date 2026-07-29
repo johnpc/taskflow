@@ -1,7 +1,8 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
-import { fetchTaskDetail, addComment } from './taskDetailApi';
+import { fetchTaskDetail } from './taskDetailApi';
 import { createTask, setTaskDone, updateTask, deleteTask, duplicateTask } from './tasksApi';
 import { useAttachments } from './useAttachments';
+import { useComments } from './useComments';
 import { useTaskMove } from './useTaskMove';
 import { useAuth } from '../auth/useAuth';
 import { useLabels } from '../labels/useLabels';
@@ -42,10 +43,7 @@ export function useTaskDetail(id: string) {
     onSuccess: invalidate,
   });
 
-  const comment = useMutation({
-    mutationFn: (body: string) => addComment({ taskId: id, body, authorEmail: email }),
-    onSuccess: invalidate,
-  });
+  const comments = useComments(id, email, invalidate);
 
   const remove = useMutation({
     mutationFn: (taskId: string) => deleteTask(taskId),
@@ -66,7 +64,7 @@ export function useTaskDetail(id: string) {
     patch,
     toggleDone,
     addSubtask,
-    comment,
+    comments,
     remove,
     duplicate,
     labels,

@@ -4,6 +4,7 @@ import { renderHook, waitFor, act } from '@testing-library/react';
 const {
   fetchTaskDetail,
   addComment,
+  deleteComment,
   createTask,
   setTaskDone,
   updateTask,
@@ -12,13 +13,14 @@ const {
 } = vi.hoisted(() => ({
   fetchTaskDetail: vi.fn(),
   addComment: vi.fn(),
+  deleteComment: vi.fn(),
   createTask: vi.fn(),
   setTaskDone: vi.fn(),
   updateTask: vi.fn(),
   deleteTask: vi.fn(),
   duplicateTask: vi.fn(),
 }));
-vi.mock('./taskDetailApi', () => ({ fetchTaskDetail, addComment }));
+vi.mock('./taskDetailApi', () => ({ fetchTaskDetail, addComment, deleteComment }));
 vi.mock('./tasksApi', () => ({ createTask, setTaskDone, updateTask, deleteTask, duplicateTask }));
 vi.mock('../auth/useAuth', () => ({ useAuth: () => ({ email: 'me@x.co' }) }));
 
@@ -49,7 +51,7 @@ describe('useTaskDetail', () => {
     addComment.mockResolvedValue({ id: 'c' });
     const { result } = renderHook(() => useTaskDetail('t'), { wrapper: hookWrapper() });
     await act(async () => {
-      await result.current.comment.mutateAsync('nice');
+      await result.current.comments.add.mutateAsync('nice');
     });
     expect(addComment).toHaveBeenCalledWith({ taskId: 't', body: 'nice', authorEmail: 'me@x.co' });
   });

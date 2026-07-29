@@ -20,7 +20,7 @@ import type { TaskRecord } from '../../lib/dataClient';
  * labels, subtasks, comments. Split out of TaskDetail so the screen stays a
  * thin load-gate shell. All mutations come from the useTaskDetail hook. */
 export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDetailHook }) {
-  const { query, patch, toggleDone, addSubtask, comment, labels } = hook;
+  const { query, patch, toggleDone, addSubtask, comments, labels } = hook;
   const { remove, duplicate, attachments, projects, move } = hook;
   const sections = useTaskSections(task.projectId);
   const { email } = useAuth();
@@ -75,8 +75,9 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
       />
       <Comments
         comments={query.data?.comments ?? []}
-        busy={comment.isPending}
-        onPost={(body) => comment.mutate(body)}
+        busy={comments.add.isPending}
+        onPost={(body) => comments.add.mutate(body)}
+        onDelete={(id) => comments.remove.mutate(id)}
       />
       <TaskActions
         duplicating={duplicate.isPending}

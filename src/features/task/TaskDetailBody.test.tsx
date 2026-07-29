@@ -32,7 +32,7 @@ function makeHook() {
     patch: { mutate: vi.fn() },
     toggleDone: { mutate: vi.fn() },
     addSubtask: { mutate: vi.fn() },
-    comment: { mutate: vi.fn(), isPending: false },
+    comments: { add: { mutate: vi.fn(), isPending: false }, remove: { mutate: vi.fn() } },
     remove: { mutate: vi.fn() },
     duplicate: { mutate: vi.fn(), isPending: false },
     labels: { query: { data: [] }, create: { mutate: vi.fn() } },
@@ -98,7 +98,7 @@ describe('TaskDetailBody', () => {
     expect(hook.duplicate.mutate).toHaveBeenCalled();
     fireEvent.change(screen.getByTestId('comment-input'), { target: { value: 'nice' } });
     fireEvent.click(screen.getByTestId('comment-post'));
-    expect(hook.comment.mutate).toHaveBeenCalledWith('nice');
+    expect(hook.comments.add.mutate).toHaveBeenCalledWith('nice');
   });
 
   it('adds an attachment through the hook', () => {
