@@ -37,6 +37,8 @@ function makeHook() {
     duplicate: { mutate: vi.fn(), isPending: false },
     labels: { query: { data: [] }, create: { mutate: vi.fn() } },
     attachments: { add: { mutate: vi.fn(), isPending: false }, remove: { mutate: vi.fn() } },
+    projects: { data: [{ id: 'p', name: 'Product Launch' }] },
+    move: { mutate: vi.fn() },
   };
 }
 
@@ -72,5 +74,39 @@ describe('TaskDetailBody', () => {
     renderWithProviders(<TaskDetailBody task={task} hook={hook as any} />, '/tasks/t');
     fireEvent.click(screen.getByTestId('task-assign'));
     expect(hook.patch.mutate).toHaveBeenCalledWith({ id: 't', assigneeEmail: 'me@x.co' });
+  });
+
+  it('moves the task to another project', () => {
+    const hook = makeHook();
+    hook.projects = {
+      data: [
+        { id: 'p', name: 'Product Launch' },
+        { id: 'p2', name: 'Other' },
+      ],
+    };
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    renderWithProviders(<TaskDetailBody task={task} hook={hook as any} />, '/tasks/t');
+    fireEvent.change(screen.getByTestId('task-project-select'), { target: { value: 'p2' } });
+    expect(hook.move.mutate).toHaveBeenCalledWith({ taskId: 't', projectId: 'p2' });
+  });
+
+  it('duplicates and posts a comment through the hook', () => {
+    const hook = makeHook();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    renderWithProviders(<TaskDetailBody task={task} hook={hook as any} />, '/tasks/t');
+    fireEvent.click(screen.getByTestId('task-duplicate'));
+    expect(hook.duplicate.mutate).toHaveBeenCalled();
+    fireEvent.change(screen.getByTestId('comment-input'), { target: { value: 'nice' } });
+    fireEvent.click(screen.getByTestId('comment-post'));
+    expect(hook.comment.mutate).toHaveBeenCalledWith('nice');
+  });
+
+  it('adds an attachment through the hook', () => {
+    const hook = makeHook();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    renderWithProviders(<TaskDetailBody task={task} hook={hook as any} />, '/tasks/t');
+    fireEvent.change(screen.getByTestId('attachment-url'), { target: { value: 'https://x.co' } });
+    fireEvent.click(screen.getByTestId('attachment-add'));
+    expect(hook.attachments.add.mutate).toHaveBeenCalledWith({ url: 'https://x.co', title: '' });
   });
 });

@@ -194,6 +194,8 @@ jobs:
             paths: .features-gen/e2e/features/searchfilter
           - name: archivedview
             paths: .features-gen/e2e/features/archivedview
+          - name: moveproject
+            paths: .features-gen/e2e/features/moveproject
     steps:
       - uses: actions/checkout@v4
 

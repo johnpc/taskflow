@@ -186,4 +186,18 @@ export const seedProjects: SeedProject[] = [
     sections: ['To do'],
     tasks: [{ title: 'Archived work', section: 'To do', priority: 'LOW' }],
   },
+  // Dedicated source + target for the move-to-project round-trip. Only that
+  // area moves "Movable task" from Move From into Move To.
+  {
+    name: 'Move From',
+    color: 'violet',
+    sections: ['To do'],
+    tasks: [{ title: 'Movable task', section: 'To do', priority: 'LOW' }],
+  },
+  {
+    name: 'Move To',
+    color: 'amber',
+    sections: ['Inbox'],
+    tasks: [{ title: 'Move To anchor', section: 'Inbox', priority: 'LOW' }],
+  },
 ];

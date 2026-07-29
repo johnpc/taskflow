@@ -46,7 +46,7 @@ iOS and Android.
 | **Rich notes**     | Notes render **bold**, safe links, and [ ]/[x] checklists (XSS-guarded hrefs)  | ✅     |
 | **Comments**       | Discuss and log activity on any task                                           | ✅     |
 | **Labels**         | Reusable colored tags; apply on task detail, chips render on every card        | ✅     |
-| **Move & assign**  | Move a task between sections and assign it to yourself, on task detail         | ✅     |
+| **Move & assign**  | Move a task between sections or to another project, and assign it to yourself  | ✅     |
 | **Duplicate**      | Copy a task (title, notes, dates, labels, flags) into the same section         | ✅     |
 | **Delete task**    | Delete a task (with confirm) from its detail; it leaves the board              | ✅     |
 | **My Tasks**       | Open tasks across projects — group by due/priority/focus; reveal completed     | ✅     |

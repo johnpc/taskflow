@@ -2,6 +2,7 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchTaskDetail, addComment } from './taskDetailApi';
 import { createTask, setTaskDone, updateTask, deleteTask, duplicateTask } from './tasksApi';
 import { useAttachments } from './useAttachments';
+import { useTaskMove } from './useTaskMove';
 import { useAuth } from '../auth/useAuth';
 import { useLabels } from '../labels/useLabels';
 import type { TaskRecord } from '../../lib/dataClient';
@@ -58,8 +59,21 @@ export function useTaskDetail(id: string) {
 
   const labels = useLabels();
   const attachments = useAttachments(id, invalidate);
+  const { projects, move } = useTaskMove(invalidate);
 
-  return { query, patch, toggleDone, addSubtask, comment, remove, duplicate, labels, attachments };
+  return {
+    query,
+    patch,
+    toggleDone,
+    addSubtask,
+    comment,
+    remove,
+    duplicate,
+    labels,
+    attachments,
+    projects,
+    move,
+  };
 }
 
 export type TaskDetailHook = ReturnType<typeof useTaskDetail>;
