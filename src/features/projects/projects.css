@@ -19,12 +19,43 @@
 
 .project-card {
   display: flex;
+  flex-wrap: wrap;
   align-items: stretch;
   background: var(--tf-surface);
   border: 1px solid var(--tf-border);
   border-radius: var(--tf-radius);
   box-shadow: var(--tf-shadow);
   overflow: hidden;
+}
+
+.project-card__progress {
+  flex-basis: 100%;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 0 16px 12px;
+}
+
+.project-card__bar {
+  flex: 1;
+  height: 6px;
+  border-radius: 999px;
+  background: var(--tf-surface-2);
+  overflow: hidden;
+}
+
+.project-card__bar-fill {
+  display: block;
+  height: 100%;
+  background: var(--tf-accent);
+  transition: width 0.3s ease;
+}
+
+.project-card__progress-label {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--tf-text-muted);
+  white-space: nowrap;
 }
 
 .project-card__main {

@@ -19,6 +19,8 @@ export interface SeedTask {
   repeat?: 'DAILY' | 'WEEKLY' | 'MONTHLY';
   /** Mark this task a milestone (a key checkpoint, shown with a ◆ marker). */
   isMilestone?: boolean;
+  /** Seed this task already completed (for progress/completed acceptance). */
+  done?: boolean;
 }
 
 /** Reusable label registry — name + color key (a --tf-proj-* palette key). */
@@ -161,6 +163,17 @@ export const seedProjects: SeedProject[] = [
     tasks: [
       { title: 'Order alpha', section: 'Queue', priority: 'LOW' },
       { title: 'Order bravo', section: 'Queue', priority: 'LOW' },
+    ],
+  },
+  // Dedicated project with a fixed 1-of-2 done ratio for the progress-bar
+  // acceptance — read-only, so its 50% stays stable on the shared sandbox.
+  {
+    name: 'Progress Lab',
+    color: 'emerald',
+    sections: ['Tasks'],
+    tasks: [
+      { title: 'Progress done', section: 'Tasks', priority: 'LOW', done: true },
+      { title: 'Progress open', section: 'Tasks', priority: 'LOW' },
     ],
   },
 ];
