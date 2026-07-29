@@ -11,3 +11,12 @@ Feature: My Tasks
     When the user opens My Tasks
     Then a due bucket "Overdue" is visible
     And a task titled "Renew passport" is visible in My Tasks
+
+  # "Renew passport" is seeded HIGH priority, so switching the grouping surfaces
+  # it under a "High priority" bucket instead of a due bucket.
+  Scenario: My Tasks can group by priority
+    Given a signed-in user
+    When the user opens My Tasks
+    And the user groups My Tasks by priority
+    Then a due bucket "High priority" is visible
+    And a task titled "Renew passport" is visible in My Tasks

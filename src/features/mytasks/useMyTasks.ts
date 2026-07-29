@@ -1,22 +1,38 @@
-import { useMemo } from 'react';
+import { useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchMyTasks } from './myTasksApi';
-import { groupByDue } from './groupByDue';
+import { groupByDue, type TaskBucket } from './groupByDue';
+import { groupByPriority } from './groupByPriority';
+import { readGroupMode, writeGroupMode, type GroupMode } from './groupMode';
 import { setTaskDone } from '../task/tasksApi';
+import { isDone } from '../task/taskMeta';
 import { overdueCount } from '../projects/taskCounts';
 import { todayISO } from '../task/today';
 
-/** My Tasks data: the owner's open tasks grouped into due buckets, an overdue
- * count for the header, plus a complete toggle. All server state via react-query. */
+/** My Tasks data: the owner's open tasks grouped by the chosen mode (due date
+ * or priority), overdue + open-total counts for the header, a complete toggle,
+ * and a persisted group-by switch. All server state via react-query. */
 export function useMyTasks() {
   const qc = useQueryClient();
   const query = useQuery({ queryKey: ['my-tasks'], queryFn: fetchMyTasks });
+  const [groupMode, setMode] = useState<GroupMode>(readGroupMode);
 
-  const { buckets, overdue } = useMemo(() => {
+  const setGroupMode = (mode: GroupMode) => {
+    writeGroupMode(mode);
+    setMode(mode);
+  };
+
+  const { buckets, overdue, openTotal } = useMemo(() => {
     const today = todayISO();
     const data = query.data ?? [];
-    return { buckets: groupByDue(data, today), overdue: overdueCount(data, today) };
-  }, [query.data]);
+    const grouped: TaskBucket[] =
+      groupMode === 'priority' ? groupByPriority(data) : groupByDue(data, today);
+    return {
+      buckets: grouped,
+      overdue: overdueCount(data, today),
+      openTotal: data.filter((t) => !isDone(t)).length,
+    };
+  }, [query.data, groupMode]);
 
   const toggleDone = useMutation({
     mutationFn: (input: { id: string; done: boolean; now: string }) =>
@@ -24,5 +40,5 @@ export function useMyTasks() {
     onSuccess: () => qc.invalidateQueries({ queryKey: ['my-tasks'] }),
   });
 
-  return { query, buckets, overdue, toggleDone };
+  return { query, buckets, overdue, openTotal, groupMode, setGroupMode, toggleDone };
 }

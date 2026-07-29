@@ -10,6 +10,10 @@ When('the user opens My Tasks', async ({ page }) => {
   });
 });
 
+When('the user groups My Tasks by priority', async ({ page }) => {
+  await page.getByTestId('groupby-priority').click();
+});
+
 Then('a due bucket {string} is visible', async ({ page }, label: string) => {
   await expect(page.getByRole('heading', { name: new RegExp(label) })).toBeVisible({
     timeout: 15_000,
