@@ -1,5 +1,6 @@
 import type { TaskRecord } from '../../lib/dataClient';
 import { PRIORITY_META, type Priority } from './taskMeta';
+import { DuePresetButtons } from './DuePresetButtons';
 import './taskDetail.css';
 
 const PRIORITIES: Priority[] = ['NONE', 'LOW', 'MEDIUM', 'HIGH'];
@@ -16,7 +17,7 @@ export function TaskFields({
 }) {
   return (
     <div className="task-fields">
-      <label className="task-fields__row">
+      <div className="task-fields__row">
         <span className="task-fields__label">Due date</span>
         <input
           type="date"
@@ -25,7 +26,8 @@ export function TaskFields({
           value={task.dueDate ?? ''}
           onChange={(e) => onPatch({ dueDate: e.target.value || null })}
         />
-      </label>
+        <DuePresetButtons onPick={(date) => onPatch({ dueDate: date })} />
+      </div>
 
       <div className="task-fields__row">
         <span className="task-fields__label">Priority</span>

@@ -269,3 +269,22 @@
   color: var(--tf-text-muted);
   margin: -6px 0 0;
 }
+
+/* Due-date quick presets */
+.due-presets {
+  display: inline-flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.due-presets__btn {
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--tf-accent-strong);
+  cursor: pointer;
+}

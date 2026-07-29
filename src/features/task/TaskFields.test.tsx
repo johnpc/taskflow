@@ -33,6 +33,13 @@ describe('TaskFields', () => {
     expect(screen.getByTestId('priority-medium')).toHaveAttribute('aria-pressed', 'true');
   });
 
+  it('sets the due date from a preset', () => {
+    const onPatch = vi.fn();
+    render(<TaskFields task={task({})} onPatch={onPatch} />);
+    fireEvent.click(screen.getByTestId('due-preset-today'));
+    expect(onPatch).toHaveBeenCalledWith({ dueDate: expect.stringMatching(/^\d{4}-\d{2}-\d{2}$/) });
+  });
+
   it('patches notes on blur', () => {
     const onPatch = vi.fn();
     render(<TaskFields task={task({})} onPatch={onPatch} />);
