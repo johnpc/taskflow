@@ -77,6 +77,7 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
         comments={query.data?.comments ?? []}
         busy={comments.add.isPending}
         onPost={(body) => comments.add.mutate(body)}
+        onEdit={(input) => comments.edit.mutate(input)}
         onDelete={(id) => comments.remove.mutate(id)}
       />
       <TaskActions

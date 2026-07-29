@@ -50,3 +50,9 @@ export async function deleteComment(id: string): Promise<void> {
   const { errors } = await dataClient.models.Comment.delete({ id });
   if (errors) throw new Error(`Delete comment failed: ${JSON.stringify(errors)}`);
 }
+
+/** Edit a comment's body. */
+export async function updateComment(id: string, body: string): Promise<void> {
+  const { errors } = await dataClient.models.Comment.update({ id, body: body.trim() });
+  if (errors) throw new Error(`Edit comment failed: ${JSON.stringify(errors)}`);
+}

@@ -204,6 +204,8 @@ jobs:
             paths: .features-gen/e2e/features/taskcolor
           - name: commentdelete
             paths: .features-gen/e2e/features/commentdelete
+          - name: commentedit
+            paths: .features-gen/e2e/features/commentedit
     steps:
       - uses: actions/checkout@v4
 

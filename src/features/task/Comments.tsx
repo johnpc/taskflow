@@ -1,17 +1,21 @@
 import { useState } from 'react';
+import { CommentRow } from './CommentRow';
 import type { CommentRecord } from '../../lib/dataClient';
 
-/** Comment thread on task detail: the existing comments (oldest first) plus a
- * composer. Delegates posting to the parent; local state only for the draft. */
+/** Comment thread on task detail: the existing comments (oldest first, each
+ * editable/deletable via CommentRow) plus a composer. Delegates all mutations
+ * to the parent; local state only for the new-comment draft. */
 export function Comments({
   comments,
   busy,
   onPost,
+  onEdit,
   onDelete,
 }: {
   comments: CommentRecord[];
   busy: boolean;
   onPost: (body: string) => void;
+  onEdit: (input: { id: string; body: string }) => void;
   onDelete: (id: string) => void;
 }) {
   const [draft, setDraft] = useState('');
@@ -28,19 +32,7 @@ export function Comments({
       <h2 className="comments__head">Comments</h2>
       <ul className="comments__list">
         {comments.map((c) => (
-          <li key={c.id} className="comment" data-testid="comment">
-            <span className="comment__author">{c.authorEmail ?? 'You'}</span>
-            <span className="comment__body">{c.body}</span>
-            <button
-              type="button"
-              className="comment__delete"
-              data-testid="comment-delete"
-              aria-label="Delete comment"
-              onClick={() => onDelete(c.id)}
-            >
-              ✕
-            </button>
-          </li>
+          <CommentRow key={c.id} comment={c} onEdit={onEdit} onDelete={onDelete} />
         ))}
       </ul>
       <div className="comments__composer">

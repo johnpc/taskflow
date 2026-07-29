@@ -45,7 +45,7 @@ iOS and Android.
 | **Dependencies**    | Mark a task "blocked by" others; a banner + board badge flag it until done     | ✅     |
 | **Recurring**       | Repeat a task daily/weekly/monthly; completing it spawns the next occurrence   | ✅     |
 | **Rich notes**      | Notes render **bold**, safe links, and [ ]/[x] checklists (XSS-guarded hrefs)  | ✅     |
-| **Comments**        | Discuss on any task; delete a comment you no longer need                       | ✅     |
+| **Comments**        | Discuss on any task; edit or delete a comment you posted                       | ✅     |
 | **Labels**          | Reusable colored tags; apply on task detail, chips render on every card        | ✅     |
 | **Move & assign**   | Move a task between sections or to another project, and assign it to yourself  | ✅     |
 | **Duplicate**       | Copy a task (title, notes, dates, labels, flags) into the same section         | ✅     |

@@ -221,10 +221,16 @@
   padding: 10px 12px;
 }
 
-.comment__delete {
+.comment__actions {
   position: absolute;
   top: 8px;
   right: 10px;
+  display: flex;
+  gap: 6px;
+}
+
+.comment__edit,
+.comment__delete {
   background: none;
   border: none;
   color: var(--tf-text-muted);
@@ -233,16 +239,39 @@
   opacity: 0.6;
 }
 
+.comment__edit:hover {
+  opacity: 1;
+  color: var(--tf-accent-strong);
+}
+
 .comment__delete:hover {
   opacity: 1;
   color: var(--tf-danger);
 }
 
-/* Touch devices have no hover — keep the delete affordance reachable. */
+/* Touch devices have no hover — keep the row actions reachable. */
 @media (hover: none), (max-width: 640px) {
+  .comment__edit,
   .comment__delete {
     opacity: 0.8;
   }
+}
+
+.comment__edit-actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 6px;
+}
+
+.comment__edit-actions button {
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--tf-text);
+  cursor: pointer;
 }
 
 .comment__author {

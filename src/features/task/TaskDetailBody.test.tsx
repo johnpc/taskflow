@@ -32,7 +32,11 @@ function makeHook() {
     patch: { mutate: vi.fn() },
     toggleDone: { mutate: vi.fn() },
     addSubtask: { mutate: vi.fn() },
-    comments: { add: { mutate: vi.fn(), isPending: false }, remove: { mutate: vi.fn() } },
+    comments: {
+      add: { mutate: vi.fn(), isPending: false },
+      edit: { mutate: vi.fn() },
+      remove: { mutate: vi.fn() },
+    },
     remove: { mutate: vi.fn() },
     duplicate: { mutate: vi.fn(), isPending: false },
     labels: { query: { data: [] }, create: { mutate: vi.fn() } },
