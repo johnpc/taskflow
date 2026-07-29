@@ -1,8 +1,11 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import { useHistory } from 'react-router-dom';
 import { useProjects, useCreateProject, useToggleFavorite } from './useProjects';
 import { useProjectCounts } from './useProjectCounts';
+import { useTemplates } from '../templates/useTemplates';
 import { ProjectCard } from './ProjectCard';
 import { NewProjectButton } from './NewProjectButton';
+import { TemplatePicker } from '../templates/TemplatePicker';
 import { LoadState } from '../shell/LoadState';
 import { TabBar } from '../shell/TabBar';
 import { useDocumentTitle } from '../shell/useDocumentTitle';
@@ -10,13 +13,15 @@ import type { ProjectRecord } from '../../lib/dataClient';
 import './projects.css';
 
 /** Projects tab — the workspace home. Lists the owner's projects with a favorite
- * toggle and an inline "New project" composer. Renders only; logic is in hooks. */
+ * toggle, an inline "New project" composer, and template quick-starts. */
 export function Projects() {
   useDocumentTitle('Projects');
+  const history = useHistory();
   const { data: projects, isLoading, isError, refetch } = useProjects();
   const create = useCreateProject();
   const toggle = useToggleFavorite();
   const counts = useProjectCounts();
+  const template = useTemplates();
   const list = projects ?? [];
 
   return (
@@ -32,6 +37,15 @@ export function Projects() {
         <NewProjectButton
           busy={create.isPending}
           onCreate={(name) => create.mutate({ name, existingCount: list.length })}
+        />
+        <TemplatePicker
+          busy={template.isPending}
+          onPick={(t) =>
+            template.mutate(
+              { template: t, sortOrder: list.length },
+              { onSuccess: (id) => history.push(`/projects/${id}`) },
+            )
+          }
         />
         <LoadState
           isLoading={isLoading}

@@ -146,6 +146,8 @@ jobs:
             paths: .features-gen/e2e/features/completed
           - name: quickedit
             paths: .features-gen/e2e/features/quickedit
+          - name: templates
+            paths: .features-gen/e2e/features/templates
     steps:
       - uses: actions/checkout@v4
 
