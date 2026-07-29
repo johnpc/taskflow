@@ -1,11 +1,9 @@
 import { IonIcon } from '@ionic/react';
-import { useHistory } from 'react-router-dom';
 import { ellipseOutline, checkmarkCircle } from 'ionicons/icons';
 import { isDone } from './taskMeta';
 import { ReorderControls } from '../board/ReorderControls';
 import { QuickEdit } from './QuickEdit';
-import { CardTitle } from './CardTitle';
-import { CardMeta } from './CardMeta';
+import { CardBody } from './CardBody';
 import { taskCardShell } from './taskCardShell';
 import type { Priority } from './taskMeta';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
@@ -20,6 +18,7 @@ export function TaskCard({
   labels = [],
   blocked,
   subtasks,
+  project,
   onToggleDone,
   onReorder,
   onQuickEdit,
@@ -33,6 +32,7 @@ export function TaskCard({
   labels?: LabelRecord[];
   blocked?: boolean;
   subtasks?: { done: number; total: number };
+  project?: { name: string; color: string | null };
   onToggleDone: (task: TaskRecord) => void;
   onReorder?: (dir: 'up' | 'down') => void;
   onQuickEdit?: (patch: { dueDate?: string | null; priority?: Priority; title?: string }) => void;
@@ -42,7 +42,6 @@ export function TaskCard({
   onDragEnd?: () => void;
   onDropTask?: () => void;
 }) {
-  const history = useHistory();
   const done = isDone(task);
   const shell = taskCardShell(task.color, onDropTask);
 
@@ -78,14 +77,14 @@ export function TaskCard({
       >
         <IonIcon icon={done ? checkmarkCircle : ellipseOutline} />
       </button>
-      <div className="task-card__body">
-        <CardTitle
-          title={task.title}
-          onOpen={() => history.push(`/tasks/${task.id}`)}
-          onRename={onQuickEdit && ((title) => onQuickEdit({ title }))}
-        />
-        <CardMeta task={task} labels={labels} blocked={blocked} subtasks={subtasks} />
-      </div>
+      <CardBody
+        task={task}
+        labels={labels}
+        blocked={blocked}
+        subtasks={subtasks}
+        project={project}
+        onRename={onQuickEdit && ((title) => onQuickEdit({ title }))}
+      />
       {onQuickEdit && <QuickEdit task={task} onEdit={onQuickEdit} />}
       {onReorder && <ReorderControls onReorder={onReorder} />}
     </li>

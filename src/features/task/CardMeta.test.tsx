@@ -7,6 +7,13 @@ const task = (over: Partial<TaskRecord>): TaskRecord =>
   ({ id: 't', title: 'T', status: 'TODO', priority: 'NONE', dueDate: null, ...over }) as TaskRecord;
 
 describe('CardMeta', () => {
+  it('shows a project chip only when a project is given', () => {
+    const { rerender } = render(<CardMeta task={task({})} labels={[]} />);
+    expect(screen.queryByTestId('task-project')).not.toBeInTheDocument();
+    rerender(<CardMeta task={task({})} labels={[]} project={{ name: 'Launch', color: 'sky' }} />);
+    expect(screen.getByTestId('task-project')).toHaveTextContent('Launch');
+  });
+
   it('renders the blocked badge, due chip, and priority', () => {
     render(
       <CardMeta task={task({ dueDate: '2000-01-01', priority: 'HIGH' })} labels={[]} blocked />,

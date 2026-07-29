@@ -214,6 +214,8 @@ jobs:
             paths: .features-gen/e2e/features/copylink
           - name: subtasknav
             paths: .features-gen/e2e/features/subtasknav
+          - name: projectchip
+            paths: .features-gen/e2e/features/projectchip
     steps:
       - uses: actions/checkout@v4
 

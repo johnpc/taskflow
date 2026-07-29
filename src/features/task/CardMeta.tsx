@@ -1,22 +1,26 @@
 import { dueLabelWithTime, dueStatus, isDone, startsInFuture, startLabel } from './taskMeta';
 import { todayISO } from './today';
 import { repeats, type Repeat } from './recurrence';
+import { projectColorVar } from '../projects/projectColors';
 import { LabelChips } from '../labels/LabelChips';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 
-/** The meta row under a card title: a Blocked badge, a start-or-due chip (a
- * not-yet-started task shows "Starts Mon D" instead of its due date), a
- * priority flag, subtask-progress + repeat markers, and label chips. Renders. */
+/** The meta row under a card title: an optional project chip (cross-project
+ * views only), a Blocked badge, a start-or-due chip (a not-yet-started task
+ * shows "Starts Mon D"), a priority flag, subtask-progress + repeat markers,
+ * and label chips. Renders. */
 export function CardMeta({
   task,
   labels,
   blocked,
   subtasks,
+  project,
 }: {
   task: TaskRecord;
   labels: LabelRecord[];
   blocked?: boolean;
   subtasks?: { done: number; total: number };
+  project?: { name: string; color: string | null };
 }) {
   const today = todayISO();
   const done = isDone(task);
@@ -25,6 +29,16 @@ export function CardMeta({
   const dueKind = dueStatus(task.dueDate, today, done);
   return (
     <span className="task-card__meta">
+      {project && (
+        <span className="task-card__project" data-testid="task-project">
+          <span
+            className="task-card__project-dot"
+            style={{ background: projectColorVar(project.color) }}
+            aria-hidden="true"
+          />
+          {project.name}
+        </span>
+      )}
       {task.isMilestone && (
         <span className="task-card__milestone" data-testid="task-milestone" aria-label="Milestone">
           ◆ Milestone
