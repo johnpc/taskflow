@@ -7,7 +7,7 @@ import {
   IonTitle,
   IonToolbar,
 } from '@ionic/react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useBoard } from './useBoard';
 import { useProject } from './useProject';
 import { useViewMode } from './useViewMode';
@@ -32,22 +32,10 @@ export function ProjectView() {
   const { filter, update } = useBoardFilter();
   const board = useBoard(id, filter);
   const { query, columns, addTask, toggleDone, reorder, quickEdit, labels } = board;
-  const { addSection, editSection, removeSection } = board;
+  const { addSection, editSection, removeSection, moveSection } = board;
   const { mode, choose } = useViewMode(id, project.data?.view as ViewMode | undefined);
   const edit = useProjectEdit(id);
   const actions = useProjectActions(id);
-  const history = useHistory();
-  // Archive/delete then leave to the project list. Navigate right after firing
-  // the mutation (it's confirmed server-side regardless); the list refetches via
-  // the hook's onSuccess invalidation and shows the project gone.
-  const archiveAndLeave = () => {
-    actions.archive.mutate();
-    history.replace('/projects');
-  };
-  const deleteAndLeave = () => {
-    actions.remove.mutate();
-    history.replace('/projects');
-  };
   useDocumentTitle(project.data?.name ?? 'Project');
 
   return (
@@ -59,7 +47,7 @@ export function ProjectView() {
           </IonButtons>
           <IonTitle>{project.data?.name ?? 'Project'}</IonTitle>
           <IonButtons slot="end">
-            <ProjectMenu onArchive={archiveAndLeave} onDelete={deleteAndLeave} />
+            <ProjectMenu onArchive={actions.archiveAndLeave} onDelete={actions.deleteAndLeave} />
           </IonButtons>
         </IonToolbar>
       </IonHeader>
@@ -91,6 +79,7 @@ export function ProjectView() {
             onQuickEdit={(taskId, patch) => quickEdit.mutate({ id: taskId, ...patch })}
             onRenameSection={(input) => editSection.mutate(input)}
             onDeleteSection={(sectionId) => removeSection.mutate(sectionId)}
+            onMoveSection={(input) => moveSection.mutate(input)}
           />
         </LoadState>
       </IonContent>

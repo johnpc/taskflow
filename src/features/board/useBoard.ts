@@ -3,15 +3,16 @@ import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchBoard, ensureDefaultSections } from './boardApi';
 import { groupTasksBySection } from './taskGrouping';
 import { applyFilter, DEFAULT_FILTER, type BoardFilter } from './taskFilter';
-import { createSection, renameSection, deleteSection } from './sectionsApi';
 import { reorderTasks } from './reorderTasks';
+import { useSectionMutations } from './useSectionMutations';
 import { createTask, setTaskDone, updateTask } from '../task/tasksApi';
 import { useLabels } from '../labels/useLabels';
 import type { TaskRecord } from '../../lib/dataClient';
 
 /** Board data for a project: loads sections + tasks, ensures default columns
  * exist, and exposes them grouped into columns (with the filter/sort applied)
- * plus the task mutations the board needs. All server state via react-query. */
+ * plus the task + section mutations the board needs. Section mutations live in
+ * useSectionMutations to keep this hub small. All server state via react-query. */
 export function useBoard(projectId: string, filter: BoardFilter = DEFAULT_FILTER) {
   const qc = useQueryClient();
   const key = ['board', projectId];
@@ -46,22 +47,6 @@ export function useBoard(projectId: string, filter: BoardFilter = DEFAULT_FILTER
     onSuccess: invalidate,
   });
 
-  const addSection = useMutation({
-    mutationFn: (name: string) =>
-      createSection({ projectId, name, order: query.data?.sections.length ?? 0 }),
-    onSuccess: invalidate,
-  });
-
-  const editSection = useMutation({
-    mutationFn: (input: { id: string; name: string }) => renameSection(input.id, input.name),
-    onSuccess: invalidate,
-  });
-
-  const removeSection = useMutation({
-    mutationFn: (id: string) => deleteSection(id),
-    onSuccess: invalidate,
-  });
-
   const reorder = useMutation({
     mutationFn: async (input: {
       columnTasks: TaskRecord[];
@@ -79,18 +64,8 @@ export function useBoard(projectId: string, filter: BoardFilter = DEFAULT_FILTER
     onSuccess: invalidate,
   });
 
+  const sections = useSectionMutations(projectId, query.data?.sections ?? [], invalidate);
   const labels = useLabels().query.data ?? [];
 
-  return {
-    query,
-    columns,
-    addTask,
-    toggleDone,
-    reorder,
-    quickEdit,
-    addSection,
-    editSection,
-    removeSection,
-    labels,
-  };
+  return { query, columns, addTask, toggleDone, reorder, quickEdit, labels, ...sections };
 }

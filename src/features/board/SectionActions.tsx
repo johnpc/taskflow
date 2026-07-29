@@ -1,22 +1,26 @@
 import { useState } from 'react';
 import { IonIcon } from '@ionic/react';
 import { createOutline, trashOutline, checkmarkOutline } from 'ionicons/icons';
+import { SectionMoveButtons } from './SectionMoveButtons';
 
-/** Inline rename + delete controls for a board/list section header. Enter or the
- * check commits the rename; the trash deletes. Local edit state only; both
- * mutations are delegated. Renders nothing interactive until handlers exist. */
+/** Inline rename + delete + move controls for a board section header. Enter or
+ * the check commits the rename; the trash deletes; the chevrons move the column.
+ * Local edit state only; all mutations delegated. Renders nothing until handlers
+ * exist. */
 export function SectionActions({
   name,
   onRename,
   onDelete,
+  onMove,
 }: {
   name: string;
   onRename?: (name: string) => void;
   onDelete?: () => void;
+  onMove?: (direction: 'left' | 'right') => void;
 }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(name);
-  if (!onRename && !onDelete) return null;
+  if (!onRename && !onDelete && !onMove) return null;
 
   const commit = () => {
     const trimmed = draft.trim();
@@ -49,6 +53,7 @@ export function SectionActions({
 
   return (
     <span className="section-actions">
+      {onMove && <SectionMoveButtons name={name} onMove={onMove} />}
       {onRename && (
         <button
           type="button"
