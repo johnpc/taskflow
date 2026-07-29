@@ -1,0 +1,51 @@
+.template-picker {
+  margin: 16px 0 8px;
+}
+
+.template-picker__kicker {
+  margin: 0 0 8px;
+}
+
+.template-picker__row {
+  display: flex;
+  gap: 10px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.template-card {
+  flex: 0 0 auto;
+  width: 160px;
+  text-align: left;
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius);
+  box-shadow: var(--tf-shadow);
+  padding: 12px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.template-card:disabled {
+  opacity: 0.6;
+}
+
+.template-card__dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+}
+
+.template-card__name {
+  font-weight: 700;
+  font-size: 0.92rem;
+  color: var(--tf-text);
+}
+
+.template-card__desc {
+  font-size: 0.78rem;
+  color: var(--tf-text-muted);
+  line-height: 1.35;
+}
