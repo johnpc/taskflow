@@ -148,6 +148,8 @@ jobs:
             paths: .features-gen/e2e/features/quickedit
           - name: templates
             paths: .features-gen/e2e/features/templates
+          - name: rename
+            paths: .features-gen/e2e/features/rename
     steps:
       - uses: actions/checkout@v4
 

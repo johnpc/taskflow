@@ -13,5 +13,5 @@ export type ReorderFn = (input: {
 }) => void;
 export type QuickEditFn = (
   taskId: string,
-  patch: { dueDate?: string | null; priority?: Priority },
+  patch: { dueDate?: string | null; priority?: Priority; title?: string },
 ) => void;

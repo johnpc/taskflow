@@ -6,14 +6,15 @@ import { todayISO } from './today';
 import { LabelChips } from '../labels/LabelChips';
 import { ReorderControls } from '../board/ReorderControls';
 import { QuickEdit } from './QuickEdit';
+import { CardTitle } from './CardTitle';
 import type { Priority } from './taskMeta';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 import './task.css';
 
 /** A task card on the board/list. Tapping the circle toggles done; tapping the
- * body opens the task detail. Shows a due-date chip colored by urgency, a
- * priority flag, and any label chips (resolved by the caller). When onReorder /
- * onQuickEdit are given (board/list only), shows those controls. Renders only. */
+ * title opens the task (double-click renames in place when editable). Shows a
+ * due chip, priority flag, and labels. When onReorder / onQuickEdit are given
+ * (board/list only), shows those controls. Renders only. */
 export function TaskCard({
   task,
   labels = [],
@@ -25,7 +26,7 @@ export function TaskCard({
   labels?: LabelRecord[];
   onToggleDone: (task: TaskRecord) => void;
   onReorder?: (dir: 'up' | 'down') => void;
-  onQuickEdit?: (patch: { dueDate?: string | null; priority?: Priority }) => void;
+  onQuickEdit?: (patch: { dueDate?: string | null; priority?: Priority; title?: string }) => void;
 }) {
   const history = useHistory();
   const done = isDone(task);
@@ -45,13 +46,12 @@ export function TaskCard({
       >
         <IonIcon icon={done ? checkmarkCircle : ellipseOutline} />
       </button>
-      <button
-        type="button"
-        className="task-card__body"
-        data-testid="task-open"
-        onClick={() => history.push(`/tasks/${task.id}`)}
-      >
-        <span className="task-card__title">{task.title}</span>
+      <div className="task-card__body">
+        <CardTitle
+          title={task.title}
+          onOpen={() => history.push(`/tasks/${task.id}`)}
+          onRename={onQuickEdit && ((title) => onQuickEdit({ title }))}
+        />
         <span className="task-card__meta">
           {due && (
             <span className={`task-card__due task-card__due--${dueKind}`} data-testid="task-due">
@@ -65,7 +65,7 @@ export function TaskCard({
           )}
           <LabelChips labels={labels} />
         </span>
-      </button>
+      </div>
       {onQuickEdit && <QuickEdit task={task} onEdit={onQuickEdit} />}
       {onReorder && <ReorderControls onReorder={onReorder} />}
     </li>
