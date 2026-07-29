@@ -48,6 +48,7 @@ export function BoardRegion({
         columns={columns}
         labels={board.labels}
         blockedIds={board.blockedIds}
+        subtaskProgress={board.subtaskProgress}
         onAddTask={(input) => board.addTask.mutate(input)}
         onToggleDone={toggleDone}
         onReorder={(input) => board.reorder.mutate(input)}

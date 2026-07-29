@@ -55,6 +55,20 @@ describe('useBoard', () => {
     expect([...result.current.blockedIds]).toEqual(['b']);
   });
 
+  it('exposes subtask progress per parent', async () => {
+    ensureDefaultSections.mockResolvedValue([{ id: 's1', name: 'To do', sortOrder: 0 }]);
+    fetchBoard.mockResolvedValue({
+      sections: [],
+      tasks: [
+        { id: 'p1', sectionId: 's1', status: 'TODO' },
+        { id: 's', parentTaskId: 'p1', status: 'DONE' },
+      ],
+    });
+    const { result } = renderHook(() => useBoard('p'), { wrapper: hookWrapper() });
+    await waitFor(() => expect(result.current.query.isSuccess).toBe(true));
+    expect(result.current.subtaskProgress.get('p1')).toEqual({ done: 1, total: 1 });
+  });
+
   it('adds a task through the mutation', async () => {
     fetchBoard.mockResolvedValue({ sections: [], tasks: [] });
     ensureDefaultSections.mockResolvedValue([{ id: 's1', name: 'To do', sortOrder: 0 }]);

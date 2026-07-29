@@ -196,6 +196,8 @@ jobs:
             paths: .features-gen/e2e/features/archivedview
           - name: moveproject
             paths: .features-gen/e2e/features/moveproject
+          - name: subtaskchip
+            paths: .features-gen/e2e/features/subtaskchip
     steps:
       - uses: actions/checkout@v4
 

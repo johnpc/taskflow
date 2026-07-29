@@ -7,6 +7,7 @@ import { nowISO } from '../task/today';
 import { resolveLabels } from '../labels/resolveLabels';
 import type { Column } from './taskGrouping';
 import type { QuickEditFn } from './boardHandlers';
+import type { SubProgress } from '../task/subtaskProgress';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 
 /** One section in the List view: a collapsible header (name + count) over a
@@ -16,6 +17,7 @@ export function ListSection({
   column,
   labels = [],
   blockedIds,
+  subtaskProgress,
   defaultOpen = true,
   onAddTask,
   onToggleDone,
@@ -27,6 +29,7 @@ export function ListSection({
   column: Column;
   labels?: LabelRecord[];
   blockedIds?: Set<string>;
+  subtaskProgress?: Map<string, SubProgress>;
   defaultOpen?: boolean;
   onAddTask: (input: { sectionId: string; title: string; order: number }) => void;
   onToggleDone: (input: { id: string; done: boolean; now: string }) => void;
@@ -64,6 +67,7 @@ export function ListSection({
                 task={task}
                 labels={resolveLabels(task.labelIds, labels)}
                 blocked={blockedIds?.has(task.id)}
+                subtasks={subtaskProgress?.get(task.id)}
                 onToggleDone={(t) =>
                   onToggleDone({ id: t.id, done: t.status !== 'DONE', now: nowISO() })
                 }

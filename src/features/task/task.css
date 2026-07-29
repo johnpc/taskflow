@@ -91,6 +91,15 @@
   align-self: center;
 }
 
+.task-card__subs {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--tf-text-muted);
+  background: var(--tf-surface-2);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
 .task-card__due {
   background: var(--tf-surface-2);
   color: var(--tf-text-muted);
