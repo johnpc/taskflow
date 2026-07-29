@@ -70,6 +70,9 @@ const schema = a.schema({
       startDate: a.date(),
       // A milestone is a key checkpoint (shown with a ◆ marker), not regular work.
       isMilestone: a.boolean(),
+      // Optional highlight color (a --tf-proj-* palette key) — a left accent
+      // stripe on the card for visual grouping. Null = no highlight.
+      color: a.string(),
       dueDate: a.date(),
       // Optional time-of-day for the due date (HH:MM, 24h). A display refinement
       // on top of the date — bucketing (overdue/today/upcoming) stays date-level.
