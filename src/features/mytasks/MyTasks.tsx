@@ -1,5 +1,6 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { useMyTasks } from './useMyTasks';
+import { GroupBySegment } from './GroupBySegment';
 import { TaskCard } from '../task/TaskCard';
 import { LoadState } from '../shell/LoadState';
 import { TabBar } from '../shell/TabBar';
@@ -7,11 +8,11 @@ import { useDocumentTitle } from '../shell/useDocumentTitle';
 import { nowISO } from '../task/today';
 import './myTasks.css';
 
-/** My Tasks tab — every open task across projects, grouped by due date
- * (Overdue / Today / Upcoming / No due date). Renders only. */
+/** My Tasks tab — every open task across projects, grouped by due date or
+ * priority (a persisted switch), with an open-task total. Renders only. */
 export function MyTasks() {
   useDocumentTitle('My Tasks');
-  const { query, buckets, overdue, toggleDone } = useMyTasks();
+  const { query, buckets, overdue, openTotal, groupMode, setGroupMode, toggleDone } = useMyTasks();
 
   return (
     <IonPage>
@@ -22,11 +23,15 @@ export function MyTasks() {
       </IonHeader>
       <IonContent className="ion-padding">
         <h1 className="tf-heading mytasks__title">What’s on your plate</h1>
-        {overdue > 0 && (
-          <p className="mytasks__overdue" data-testid="mytasks-overdue">
-            {overdue} overdue
-          </p>
-        )}
+        <p className="mytasks__summary" data-testid="mytasks-summary">
+          <span data-testid="mytasks-open">{openTotal} open</span>
+          {overdue > 0 && (
+            <span className="mytasks__overdue" data-testid="mytasks-overdue">
+              {overdue} overdue
+            </span>
+          )}
+        </p>
+        <GroupBySegment mode={groupMode} onChange={setGroupMode} />
         <LoadState
           isLoading={query.isLoading}
           isError={query.isError}

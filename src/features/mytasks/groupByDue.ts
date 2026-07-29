@@ -3,10 +3,16 @@ import { dueStatus, isDone } from '../task/taskMeta';
 
 export type DueBucketKey = 'overdue' | 'today' | 'upcoming' | 'noDate';
 
-export interface DueBucket {
-  key: DueBucketKey;
+/** A named group of tasks shown as one section on My Tasks. Shared by every
+ * grouping strategy (due date, priority) so the view renders them uniformly. */
+export interface TaskBucket {
+  key: string;
   label: string;
   tasks: TaskRecord[];
+}
+
+export interface DueBucket extends TaskBucket {
+  key: DueBucketKey;
 }
 
 const ORDER: { key: DueBucketKey; label: string }[] = [
