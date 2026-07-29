@@ -1,5 +1,6 @@
 import { useHistory } from 'react-router-dom';
 import { TaskHeader } from './TaskHeader';
+import { TaskActivity } from './TaskActivity';
 import { TaskFields } from './TaskFields';
 import { TaskAssignment } from './TaskAssignment';
 import { TaskLabels } from './TaskLabels';
@@ -33,6 +34,7 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
         onToggleDone={(done) => toggleDone.mutate({ taskId: task.id, done, now: nowISO() })}
         onRename={(title) => patch.mutate({ id: task.id, title })}
       />
+      <TaskActivity task={task} nowMs={Date.now()} />
       <TaskFields task={task} onPatch={(p) => patch.mutate({ id: task.id, ...p })} />
       <TaskAssignment
         task={task}

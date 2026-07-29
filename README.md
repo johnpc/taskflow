@@ -39,7 +39,8 @@ iOS and Android.
 | **Calendar**       | Two-week forward view of upcoming dated tasks, grouped by day                 | ✅     |
 | **Search**         | Live substring search across every task's title and notes                     | ✅     |
 | **Complete**       | One-tap complete on the board and in lists, with a strike-through state       | ✅     |
-| **Completed view** | Per-project archive of done tasks, each reopenable                            | ✅     |
+| **Completed view** | Per-project archive of done tasks (with when), each reopenable                | ✅     |
+| **Activity**       | Created / completed relative timestamps on task detail                        | ✅     |
 | **Filter & sort**  | Hide/show completed, filter by label, sort by due date or priority            | ✅     |
 | **Dark mode**      | Follows your OS, with an in-app Light / Dark / System override                | ✅     |
 | **Accounts**       | Email sign-up/sign-in; your workspace is private and owner-scoped             | ✅     |

@@ -33,3 +33,9 @@
   cursor: pointer;
   display: flex;
 }
+
+.completed__when {
+  font-size: 0.75rem;
+  color: var(--tf-text-muted);
+  white-space: nowrap;
+}
