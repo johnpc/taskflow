@@ -1,9 +1,9 @@
 import { describe, it, expect } from 'vitest';
-import { matchTasks } from './matchTasks';
+import { matchTasks, filterResults } from './matchTasks';
 import type { TaskRecord } from '../../lib/dataClient';
 
 const task = (over: Partial<TaskRecord>): TaskRecord =>
-  ({ id: 't', title: '', notes: null, ...over }) as TaskRecord;
+  ({ id: 't', title: '', notes: null, status: 'TODO', priority: 'NONE', ...over }) as TaskRecord;
 
 describe('matchTasks', () => {
   const tasks = [
@@ -31,5 +31,37 @@ describe('matchTasks', () => {
 
   it('returns empty when nothing matches', () => {
     expect(matchTasks(tasks, 'zzz')).toEqual([]);
+  });
+});
+
+describe('filterResults', () => {
+  const tasks = [
+    task({ id: 'h', priority: 'HIGH' }),
+    task({ id: 'l', priority: 'LOW' }),
+    task({ id: 'done', priority: 'HIGH', status: 'DONE' }),
+  ];
+
+  it('passes everything through with default filters', () => {
+    expect(filterResults(tasks, { priority: '', hideDone: false })).toHaveLength(3);
+  });
+
+  it('filters by priority', () => {
+    expect(filterResults(tasks, { priority: 'HIGH', hideDone: false }).map((t) => t.id)).toEqual([
+      'h',
+      'done',
+    ]);
+  });
+
+  it('hides completed', () => {
+    expect(filterResults(tasks, { priority: '', hideDone: true }).map((t) => t.id)).toEqual([
+      'h',
+      'l',
+    ]);
+  });
+
+  it('combines priority and hide-completed', () => {
+    expect(filterResults(tasks, { priority: 'HIGH', hideDone: true }).map((t) => t.id)).toEqual([
+      'h',
+    ]);
   });
 });

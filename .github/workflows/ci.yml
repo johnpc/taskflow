@@ -190,6 +190,8 @@ jobs:
             paths: .features-gen/e2e/features/duplicate
           - name: mytasksdone
             paths: .features-gen/e2e/features/mytasksdone
+          - name: searchfilter
+            paths: .features-gen/e2e/features/searchfilter
     steps:
       - uses: actions/checkout@v4
 
