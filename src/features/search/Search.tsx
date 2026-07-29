@@ -2,6 +2,8 @@ import { IonContent, IonHeader, IonPage, IonSearchbar, IonTitle, IonToolbar } fr
 import { useHistory } from 'react-router-dom';
 import { useSearch } from './useSearch';
 import { SearchFilterBar } from './SearchFilterBar';
+import { SearchHit } from './SearchHit';
+import { useProjectsById } from '../projects/useProjectsById';
 import { EmptyState } from '../shell/EmptyState';
 import { TabBar } from '../shell/TabBar';
 import { useDocumentTitle } from '../shell/useDocumentTitle';
@@ -14,6 +16,7 @@ export function Search() {
   useDocumentTitle('Search');
   const history = useHistory();
   const { query, setQuery, filters, setFilters, results } = useSearch();
+  const projectsById = useProjectsById();
 
   return (
     <IonPage>
@@ -49,14 +52,11 @@ export function Search() {
           <ul className="search__results" data-testid="search-results">
             {results.map((task) => (
               <li key={task.id}>
-                <button
-                  type="button"
-                  className="search__hit"
-                  data-testid="search-hit"
-                  onClick={() => history.push(`/tasks/${task.id}`)}
-                >
-                  {task.title}
-                </button>
+                <SearchHit
+                  task={task}
+                  project={projectsById.get(task.projectId)}
+                  onOpen={() => history.push(`/tasks/${task.id}`)}
+                />
               </li>
             ))}
           </ul>
