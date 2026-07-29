@@ -120,6 +120,41 @@
   color: var(--tf-priority-medium);
 }
 
+.task-color__swatches {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.task-color__none {
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--tf-text-muted);
+  cursor: pointer;
+}
+
+.task-color__none--on {
+  border-color: var(--tf-accent);
+  color: var(--tf-accent-strong);
+}
+
+.task-color__swatch {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+}
+
+.task-color__swatch--on {
+  border-color: var(--tf-text);
+}
+
 .subtasks__head,
 .comments__head {
   font-size: 1rem;

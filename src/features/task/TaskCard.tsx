@@ -6,6 +6,7 @@ import { ReorderControls } from '../board/ReorderControls';
 import { QuickEdit } from './QuickEdit';
 import { CardTitle } from './CardTitle';
 import { CardMeta } from './CardMeta';
+import { taskCardShell } from './taskCardShell';
 import type { Priority } from './taskMeta';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 import './task.css';
@@ -43,24 +44,19 @@ export function TaskCard({
 }) {
   const history = useHistory();
   const done = isDone(task);
+  const shell = taskCardShell(task.color, onDropTask);
 
   return (
     <li
       className={done ? 'task-card task-card--done' : 'task-card'}
       data-testid="task-card"
+      data-colored={shell.colored}
+      style={shell.style}
       data-selected={selected ? 'true' : undefined}
       draggable={!!onDragStart}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
-      onDragOver={onDropTask && ((e) => e.preventDefault())}
-      onDrop={
-        onDropTask &&
-        ((e) => {
-          e.preventDefault();
-          e.stopPropagation();
-          onDropTask();
-        })
-      }
+      {...shell.drop}
     >
       {onSelect && (
         <input

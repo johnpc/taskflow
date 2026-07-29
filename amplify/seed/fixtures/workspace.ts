@@ -123,6 +123,8 @@ export const seedProjects: SeedProject[] = [
       { title: 'Launch day', section: 'To do', priority: 'HIGH', isMilestone: true },
       // Dedicated duplicate target: only the duplicate area copies it.
       { title: 'Clone me', section: 'To do', priority: 'MEDIUM' },
+      // Dedicated highlight-color target: only the color area sets its color.
+      { title: 'Color me', section: 'To do', priority: 'LOW' },
       // Read-only subtask-chip anchor: 2 open subtasks, so its card shows "0/2".
       // No other area touches it (unlike Draft launch, whose subtasks the task
       // area mutates).

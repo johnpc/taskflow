@@ -49,6 +49,13 @@ describe('TaskCard', () => {
     expect(screen.getByTestId('task-blocked')).toBeInTheDocument();
   });
 
+  it('shows a color accent stripe only when a color is set', () => {
+    const { rerender } = renderWithProviders(<TaskCard task={task({})} onToggleDone={vi.fn()} />);
+    expect(screen.getByTestId('task-card')).not.toHaveAttribute('data-colored');
+    rerender(<TaskCard task={task({ color: 'sky' })} onToggleDone={vi.fn()} />);
+    expect(screen.getByTestId('task-card')).toHaveAttribute('data-colored', 'true');
+  });
+
   it('has an open-task control that is clickable', () => {
     renderWithProviders(<TaskCard task={task({})} onToggleDone={vi.fn()} />);
     const open = screen.getByTestId('task-open');

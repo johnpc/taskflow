@@ -73,6 +73,7 @@ export async function updateTask(
       | 'repeat'
       | 'myBucket'
       | 'isMilestone'
+      | 'color'
     >
   >,
 ): Promise<void> {

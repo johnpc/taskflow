@@ -42,4 +42,20 @@ describe('TaskSettings', () => {
     fireEvent.change(screen.getByTestId('task-repeat-select'), { target: { value: 'WEEKLY' } });
     expect(onPatch).toHaveBeenCalledWith({ repeat: 'WEEKLY' });
   });
+
+  it('patches a highlight color via onPatch', () => {
+    const onPatch = vi.fn();
+    render(
+      <TaskSettings
+        task={task}
+        sections={sections}
+        projects={projects}
+        currentEmail={null}
+        onPatch={onPatch}
+        onMoveProject={vi.fn()}
+      />,
+    );
+    fireEvent.click(screen.getByTestId('task-color-sky'));
+    expect(onPatch).toHaveBeenCalledWith({ color: 'sky' });
+  });
 });
