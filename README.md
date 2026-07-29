@@ -20,6 +20,7 @@ iOS and Android.
 
 | Area               | What you get                                                                  | Status |
 | ------------------ | ----------------------------------------------------------------------------- | ------ |
+| **Home**           | Dashboard landing: greeting, due-today / overdue stats, what's coming up      | ✅     |
 | **Projects**       | Create color-coded projects, favorite them, add a description, archive/delete | ✅     |
 | **Templates**      | Start a ready-made project (Sprint / Content / Launch) with sections + tasks  | ✅     |
 | **Counts**         | Open-task count badge per project; overdue count on My Tasks                  | ✅     |

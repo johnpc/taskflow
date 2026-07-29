@@ -36,7 +36,7 @@ describe('useSignUpForm', () => {
     await act(async () => {
       await result.current.submitDetails();
     });
-    expect(replace).toHaveBeenCalledWith('/projects');
+    expect(replace).toHaveBeenCalledWith('/home');
   });
 
   it('confirms the code then signs in', async () => {
@@ -47,6 +47,6 @@ describe('useSignUpForm', () => {
       await result.current.submitCode();
     });
     expect(confirmSignUp).toHaveBeenCalled();
-    expect(replace).toHaveBeenCalledWith('/projects');
+    expect(replace).toHaveBeenCalledWith('/home');
   });
 });

@@ -1,21 +1,21 @@
 import { Link } from 'react-router-dom';
 import { IonIcon } from '@ionic/react';
 import {
+  homeOutline,
   albumsOutline,
   checkmarkDoneOutline,
-  calendarOutline,
   searchOutline,
   personCircleOutline,
 } from 'ionicons/icons';
 import './tabBar.css';
 
-/** Bottom tab bar. Projects (the workspace home) is the launch surface; My Tasks
- * is everything due for you across projects; Calendar is the forward two-week
- * view; Search finds any task; You is the profile + theme settings. */
+/** Bottom tab bar. Home is the dashboard landing; Projects lists the workspace;
+ * My Tasks is everything due across projects; Search finds any task; You is the
+ * profile + theme settings. (Calendar is reachable from Home + My Tasks.) */
 const TABS: { label: string; icon: string; to: string }[] = [
+  { label: 'Home', icon: homeOutline, to: '/home' },
   { label: 'Projects', icon: albumsOutline, to: '/projects' },
   { label: 'My Tasks', icon: checkmarkDoneOutline, to: '/my-tasks' },
-  { label: 'Calendar', icon: calendarOutline, to: '/calendar' },
   { label: 'Search', icon: searchOutline, to: '/search' },
   { label: 'You', icon: personCircleOutline, to: '/you' },
 ];

@@ -4,6 +4,7 @@ import { Welcome } from './features/auth/Welcome';
 import { SignIn } from './features/auth/SignIn';
 import { SignUp } from './features/auth/SignUp';
 import { RequireAuth } from './features/auth/RequireAuth';
+import { Home } from './features/home/Home';
 import { Projects } from './features/projects/Projects';
 import { ProjectView } from './features/board/ProjectView';
 import { Completed } from './features/completed/Completed';
@@ -28,6 +29,11 @@ export function AppRoutes() {
       </Route>
       <Route exact path="/signup">
         <SignUp />
+      </Route>
+      <Route exact path="/home">
+        <RequireAuth>
+          <Home />
+        </RequireAuth>
       </Route>
       <Route exact path="/projects">
         <RequireAuth>
@@ -70,7 +76,7 @@ export function AppRoutes() {
         </RequireAuth>
       </Route>
       <Route exact path="/">
-        <Redirect to="/projects" />
+        <Redirect to="/home" />
       </Route>
       {/* Catch-all 404 — a pathless route matches anything above didn't. */}
       <Route>

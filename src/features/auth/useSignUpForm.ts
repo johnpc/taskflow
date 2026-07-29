@@ -17,7 +17,7 @@ export function useSignUpForm() {
 
   const finish = useCallback(async () => {
     await signIn(email, password);
-    history.replace('/projects');
+    history.replace('/home');
   }, [email, password, signIn, history]);
 
   const submitDetails = useCallback(async () => {

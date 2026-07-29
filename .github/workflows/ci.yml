@@ -154,6 +154,8 @@ jobs:
             paths: .features-gen/e2e/features/sectionmove
           - name: activity
             paths: .features-gen/e2e/features/activity
+          - name: home
+            paths: .features-gen/e2e/features/home
     steps:
       - uses: actions/checkout@v4
 
