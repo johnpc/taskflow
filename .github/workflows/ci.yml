@@ -206,6 +206,8 @@ jobs:
             paths: .features-gen/e2e/features/commentdelete
           - name: commentedit
             paths: .features-gen/e2e/features/commentedit
+          - name: commenttime
+            paths: .features-gen/e2e/features/commenttime
     steps:
       - uses: actions/checkout@v4
 

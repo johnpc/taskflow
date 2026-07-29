@@ -274,10 +274,21 @@
   cursor: pointer;
 }
 
+.comment__meta {
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+}
+
 .comment__author {
   font-size: 0.78rem;
   font-weight: 700;
   color: var(--tf-accent-strong);
+}
+
+.comment__time {
+  font-size: 0.72rem;
+  color: var(--tf-text-muted);
 }
 
 .comment__body {

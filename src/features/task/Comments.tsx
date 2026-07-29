@@ -8,12 +8,14 @@ import type { CommentRecord } from '../../lib/dataClient';
 export function Comments({
   comments,
   busy,
+  nowMs,
   onPost,
   onEdit,
   onDelete,
 }: {
   comments: CommentRecord[];
   busy: boolean;
+  nowMs: number;
   onPost: (body: string) => void;
   onEdit: (input: { id: string; body: string }) => void;
   onDelete: (id: string) => void;
@@ -32,7 +34,7 @@ export function Comments({
       <h2 className="comments__head">Comments</h2>
       <ul className="comments__list">
         {comments.map((c) => (
-          <CommentRow key={c.id} comment={c} onEdit={onEdit} onDelete={onDelete} />
+          <CommentRow key={c.id} comment={c} nowMs={nowMs} onEdit={onEdit} onDelete={onDelete} />
         ))}
       </ul>
       <div className="comments__composer">
