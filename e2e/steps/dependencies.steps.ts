@@ -21,8 +21,13 @@ Then('the board card {string} shows a Blocked badge', async ({ page }, title: st
   await expect(card.getByTestId('task-blocked')).toBeVisible({ timeout: 15_000 });
 });
 
-When('the user tries to complete the task', async ({ page }) => {
-  await expect(page.getByTestId('task-detail')).toBeVisible({ timeout: 15_000 });
+When('the user tries to complete the blocked task', async ({ page }) => {
+  // Wait for the blocked-banner first: it proves useProjectTasks has resolved
+  // and the task's blocked state is known. Clicking before that races the
+  // readiness query — blocked would read false and the task would just complete
+  // (no confirm), which also mutates the shared seed. Guarding on the banner
+  // makes the click deterministic on the contended sandbox.
+  await expect(page.getByTestId('blocked-banner')).toBeVisible({ timeout: 15_000 });
   await page.getByTestId('task-detail-check').click();
 });
 

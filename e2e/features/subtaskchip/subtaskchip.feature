@@ -17,5 +17,5 @@ Feature: Subtask progress on cards
     Given a signed-in user
     And the user opens the "Product Launch" project
     When the user opens the task titled "Chip parent"
-    And the user tries to complete the task
+    And the user tries to complete the task with open subtasks
     Then a subtask-complete confirmation appears
