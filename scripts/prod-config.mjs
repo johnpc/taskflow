@@ -20,14 +20,11 @@ import { promisify } from 'node:util';
 
 const run = promisify(execFile);
 
-// The prod Amplify app that serves spork.jpc.io (hosting + backend). The old
-// id here (d1ws6pg5gd10zx) was stale — it pulled an outdated schema missing the
-// Quiz/Answer/game models. Verified against `aws amplify list-apps`.
-// Prod Amplify app id — set this after connecting johnpc/taskflow to Amplify
-// Hosting (Console → New app → Host web app → this GitHub repo). Until then the
-// deploy workflows (which call prod-config) have no prod backend to pull from;
-// CI + local dev use the sandbox via `npm run e2e-config` instead.
-const APP_ID = process.env.TASKFLOW_APP_ID ?? 'PROD_APP_ID_PLACEHOLDER';
+// The prod Amplify app (hosting + backend) for johnpc/taskflow — app id
+// dbu3ty06r2jaw, set as the TASKFLOW_APP_ID repo variable so the deploy
+// workflows pass it in. Local dev + CI acceptance still use the sandbox via
+// `npm run e2e-config`; only the deploy jobs pull prod outputs through here.
+const APP_ID = process.env.TASKFLOW_APP_ID ?? 'dbu3ty06r2jaw';
 const BRANCH = 'main';
 const REGION = 'us-west-2';
 const PROFILE = 'personal';

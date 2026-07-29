@@ -182,12 +182,12 @@ npx ampx sandbox       # personal cloud backend sandbox
   PRs. `ios-deploy.yml` / `android-deploy.yml` publish after CI on `main`. Secrets: `AWS_ACCESS_KEY_ID`,
   `AWS_SECRET_ACCESS_KEY`, `TEST_USERNAME`, `TEST_PASSWORD`, `ASC_KEY_ID`, `ASC_ISSUER_ID`,
   `ASC_KEY_CONTENT`, `TEAM_ID`.
-- **No prod backend yet.** The deploy workflows are gated on a repo **variable** `TASKFLOW_APP_ID`
-  (the Amplify Hosting app id) and skip cleanly while it's unset — so merges to `main` don't fail on
-  a missing prod app. To go live: connect `johnpc/taskflow` to Amplify Hosting, then set the
-  `TASKFLOW_APP_ID` repo variable (Settings → Secrets and variables → Actions → Variables).
-  `prod-config.mjs` reads the same id from `process.env.TASKFLOW_APP_ID`. Until then everything (CI,
-  local dev, e2e) runs on the **sandbox** via `npm run e2e-config`.
+- **Prod backend:** Amplify app id **`dbu3ty06r2jaw`** (`johnpc/taskflow`, branch `main`, region
+  us-west-2), set as the repo **variable** `TASKFLOW_APP_ID`. The deploy workflows (ios/android)
+  gate on that variable and now activate on merges to `main`; `prod-config.mjs` reads the id from
+  `process.env.TASKFLOW_APP_ID` (defaulting to it) to pull `amplify_outputs.json` from prod. CI
+  acceptance + local dev/e2e still run on the **sandbox** via `npm run e2e-config` — only the deploy
+  jobs pull prod outputs.
 - **iOS signing:** team `JW5SC3NYUV` (set in `project.pbxproj`); `ITSAppUsesNonExemptEncryption=false`
   in Info.plist (skips the export-compliance prompt).
 
