@@ -1,17 +1,17 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, waitFor, act } from '@testing-library/react';
 
-const { fetchBoard, ensureDefaultSections, createTask, setTaskDone, updateTask } = vi.hoisted(
-  () => ({
+const { fetchBoard, ensureDefaultSections, createTask, setTaskDone, updateTask, deleteTask } =
+  vi.hoisted(() => ({
     fetchBoard: vi.fn(),
     ensureDefaultSections: vi.fn(),
     createTask: vi.fn(),
     setTaskDone: vi.fn(),
     updateTask: vi.fn(),
-  }),
-);
+    deleteTask: vi.fn(),
+  }));
 vi.mock('./boardApi', () => ({ fetchBoard, ensureDefaultSections }));
-vi.mock('../task/tasksApi', () => ({ createTask, setTaskDone, updateTask }));
+vi.mock('../task/tasksApi', () => ({ createTask, setTaskDone, updateTask, deleteTask }));
 
 import { hookWrapper } from '../../test/hookWrapper';
 import { useBoard } from './useBoard';
@@ -82,5 +82,21 @@ describe('useBoard', () => {
       await result.current.quickEdit.mutateAsync({ id: 't', priority: 'HIGH' });
     });
     expect(updateTask).toHaveBeenCalledWith({ id: 't', priority: 'HIGH' });
+  });
+
+  it('bulk-completes and bulk-deletes selected ids', async () => {
+    fetchBoard.mockResolvedValue({ sections: [], tasks: [] });
+    ensureDefaultSections.mockResolvedValue([{ id: 's1', name: 'To do', sortOrder: 0 }]);
+    setTaskDone.mockResolvedValue(undefined);
+    deleteTask.mockResolvedValue(undefined);
+    const { result } = renderHook(() => useBoard('p'), { wrapper: hookWrapper() });
+    await waitFor(() => expect(result.current.query.isSuccess).toBe(true));
+    await act(async () => {
+      await result.current.bulkComplete.mutateAsync({ ids: ['a', 'b'], now: 'now' });
+      await result.current.bulkDelete.mutateAsync(['c']);
+    });
+    expect(setTaskDone).toHaveBeenCalledWith('a', true, 'now');
+    expect(setTaskDone).toHaveBeenCalledWith('b', true, 'now');
+    expect(deleteTask).toHaveBeenCalledWith('c');
   });
 });

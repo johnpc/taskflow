@@ -30,6 +30,7 @@ iOS and Android.
 | **Tasks**          | Title, notes, priority (Low→High), due dates with overdue/today/upcoming cues | ✅     |
 | **Due presets**    | One-tap Today / Tomorrow / Next week due-date buttons                         | ✅     |
 | **Reorder**        | Move a task up/down within its section                                        | ✅     |
+| **Multi-select**   | Select tasks in the list view and bulk-complete or delete                     | ✅     |
 | **Quick-edit**     | Set a due date and cycle priority straight from a card, no detail needed      | ✅     |
 | **Inline rename**  | Rename a task in place from its card (pencil), no detail needed               | ✅     |
 | **Subtasks**       | Break a task into a checklist with its own done-count                         | ✅     |

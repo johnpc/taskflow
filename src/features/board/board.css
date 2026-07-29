@@ -287,3 +287,40 @@
   font-size: 0.85rem;
   white-space: nowrap;
 }
+
+/* Bulk-select action bar (list view) */
+.selection-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--tf-accent-soft);
+  border: 1px solid var(--tf-accent);
+  border-radius: var(--tf-radius);
+  padding: 8px 14px;
+  margin-bottom: 14px;
+}
+
+.selection-bar__count {
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--tf-accent-strong);
+  margin-right: auto;
+}
+
+.selection-bar__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--tf-text);
+  cursor: pointer;
+}
+
+.selection-bar__btn--danger {
+  color: var(--tf-danger);
+}

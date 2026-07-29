@@ -199,3 +199,11 @@
   opacity: 1;
   color: var(--tf-accent-strong);
 }
+
+.task-card__select {
+  align-self: center;
+  width: 18px;
+  height: 18px;
+  accent-color: var(--tf-accent);
+  cursor: pointer;
+}

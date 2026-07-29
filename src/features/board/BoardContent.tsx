@@ -19,6 +19,8 @@ export function BoardContent({
   onRenameSection,
   onDeleteSection,
   onMoveSection,
+  selectedIds,
+  onSelect,
 }: {
   mode: ViewMode;
   columns: Column[];
@@ -30,6 +32,8 @@ export function BoardContent({
   onRenameSection?: (input: { id: string; name: string }) => void;
   onDeleteSection?: (id: string) => void;
   onMoveSection?: (input: { sectionId: string; direction: 'left' | 'right' }) => void;
+  selectedIds?: Set<string>;
+  onSelect?: (id: string) => void;
 }) {
   if (mode === 'LIST') {
     return (
@@ -44,6 +48,8 @@ export function BoardContent({
             onToggleDone={onToggleDone}
             onReorder={onReorder}
             onQuickEdit={onQuickEdit}
+            selectedIds={selectedIds}
+            onSelect={onSelect}
           />
         ))}
       </div>

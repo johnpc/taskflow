@@ -160,6 +160,8 @@ jobs:
             paths: .features-gen/e2e/features/duepresets
           - name: richnotes
             paths: .features-gen/e2e/features/richnotes
+          - name: bulk
+            paths: .features-gen/e2e/features/bulk
     steps:
       - uses: actions/checkout@v4
 

@@ -21,12 +21,16 @@ export function TaskCard({
   onToggleDone,
   onReorder,
   onQuickEdit,
+  selected,
+  onSelect,
 }: {
   task: TaskRecord;
   labels?: LabelRecord[];
   onToggleDone: (task: TaskRecord) => void;
   onReorder?: (dir: 'up' | 'down') => void;
   onQuickEdit?: (patch: { dueDate?: string | null; priority?: Priority; title?: string }) => void;
+  selected?: boolean;
+  onSelect?: () => void;
 }) {
   const history = useHistory();
   const done = isDone(task);
@@ -35,7 +39,21 @@ export function TaskCard({
   const dueKind = dueStatus(task.dueDate, today, done);
 
   return (
-    <li className={done ? 'task-card task-card--done' : 'task-card'} data-testid="task-card">
+    <li
+      className={done ? 'task-card task-card--done' : 'task-card'}
+      data-testid="task-card"
+      data-selected={selected ? 'true' : undefined}
+    >
+      {onSelect && (
+        <input
+          type="checkbox"
+          className="task-card__select"
+          data-testid="task-select"
+          aria-label={`Select ${task.title}`}
+          checked={!!selected}
+          onChange={onSelect}
+        />
+      )}
       <button
         type="button"
         className="task-card__check"
