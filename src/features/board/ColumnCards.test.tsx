@@ -32,7 +32,13 @@ describe('ColumnCards', () => {
 
   it('wires reorder + drag when provided', () => {
     const onReorder = vi.fn();
-    const drag = { draggingId: null, onStart: vi.fn(), onEnd: vi.fn(), onDropToSection: vi.fn() };
+    const drag = {
+      draggingId: null,
+      onStart: vi.fn(),
+      onEnd: vi.fn(),
+      onDropToSection: vi.fn(),
+      onDropToTask: vi.fn(),
+    };
     renderWithProviders(
       <ColumnCards
         column={column([task({ id: 'a', sortOrder: 1 })])}

@@ -1,18 +1,16 @@
 import { BoardContent } from './BoardContent';
 import { LoadState } from '../shell/LoadState';
-import { useDragTask } from './useDragTask';
-import { computeDrop } from './computeDrop';
+import { useBoardDrag } from './useBoardDrag';
 import { useToast } from '../shell/useToast';
 import { nowISO } from '../task/today';
 import type { useBoard } from './useBoard';
 import type { useBulkSelection } from './useBulkSelection';
 import type { ViewMode } from './viewMode';
-import type { BoardDrag } from './boardHandlers';
 
 /** The load-gated board/list region of ProjectView: wires every board mutation
  * to BoardContent, threads list-mode multi-select, and drives board drag-and-drop
- * (drop a card on another column to move it there). Split out to keep the screen
- * shell under the line limit. */
+ * (drop a card on a column to move it; onto a card to reorder). Split out to keep
+ * the screen shell under the line limit. */
 export function BoardRegion({
   board,
   mode,
@@ -35,17 +33,7 @@ export function BoardRegion({
       });
     }
   };
-  const dragState = useDragTask();
-  const drag: BoardDrag = {
-    draggingId: dragState.draggingId,
-    onStart: dragState.start,
-    onEnd: dragState.end,
-    onDropToSection: (sectionId) => {
-      const patch = dragState.draggingId && computeDrop(columns, dragState.draggingId, sectionId);
-      if (patch) board.quickEdit.mutate(patch);
-      dragState.end();
-    },
-  };
+  const drag = useBoardDrag(columns, (p) => board.quickEdit.mutate(p));
   return (
     <LoadState
       isLoading={query.isLoading}

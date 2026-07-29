@@ -60,6 +60,24 @@ describe('BoardRegion drag-and-drop', () => {
     expect(quickEdit.mutate).not.toHaveBeenCalled();
   });
 
+  it('reorders when a card is dropped onto another card', () => {
+    const quickEdit = { mutate: vi.fn() };
+    const board = fakeBoard(quickEdit);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    (board as any).columns = [
+      col('s1', [
+        { id: 'a', sectionId: 's1', sortOrder: 0 } as TaskRecord,
+        { id: 'b', sectionId: 's1', sortOrder: 1 } as TaskRecord,
+      ]),
+    ];
+    renderRegion(board, 'BOARD');
+    const cards = screen.getAllByTestId('task-card');
+    fireEvent.dragStart(cards[1]); // drag 'b'
+    fireEvent.drop(cards[0]); // onto 'a' → b before a
+    expect(quickEdit.mutate).toHaveBeenCalledWith({ id: 'b', sectionId: 's1', sortOrder: 0 });
+    expect(quickEdit.mutate).toHaveBeenCalledWith({ id: 'a', sectionId: 's1', sortOrder: 1 });
+  });
+
   it('shows an undo toast when a task is completed', () => {
     const board = fakeBoard();
     renderRegion(board, 'BOARD');

@@ -176,6 +176,8 @@ jobs:
             paths: .features-gen/e2e/features/duetime
           - name: attachments
             paths: .features-gen/e2e/features/attachments
+          - name: reorderdrag
+            paths: .features-gen/e2e/features/reorderdrag
     steps:
       - uses: actions/checkout@v4
 

@@ -30,8 +30,8 @@ iOS and Android.
 | **Tasks**          | Title, notes, priority (Low→High), due dates with overdue/today/upcoming cues  | ✅     |
 | **Due presets**    | One-tap Today / Tomorrow / Next week due-date buttons                          | ✅     |
 | **Due time**       | Add a time of day to a due date; the card chip shows it (e.g. "Aug 3 2:00 PM") | ✅     |
-| **Drag & drop**    | Drag a card across columns to move it to another section                       | ✅     |
-| **Reorder**        | Move a task up/down within its section                                         | ✅     |
+| **Drag & drop**    | Drag a card to a column to move it, or onto a card to drop it at that position | ✅     |
+| **Reorder**        | Drag onto a card, or move a task up/down within its section                    | ✅     |
 | **Multi-select**   | Select tasks in the list view and bulk-complete or delete                      | ✅     |
 | **Quick-edit**     | Set a due date and cycle priority straight from a card, no detail needed       | ✅     |
 | **Inline rename**  | Rename a task in place from its card (pencil), no detail needed                | ✅     |
