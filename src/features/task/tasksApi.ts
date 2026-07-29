@@ -62,6 +62,7 @@ export async function updateTask(
       | 'blockedByIds'
       | 'repeat'
       | 'myBucket'
+      | 'isMilestone'
     >
   >,
 ): Promise<void> {

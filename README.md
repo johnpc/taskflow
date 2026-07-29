@@ -36,6 +36,7 @@ iOS and Android.
 | **Multi-select**   | Select tasks in the list view and bulk-complete or delete                      | ✅     |
 | **Quick-edit**     | Set a due date and cycle priority straight from a card, no detail needed       | ✅     |
 | **Inline rename**  | Rename a task in place from its card (pencil), no detail needed                | ✅     |
+| **Milestones**     | Mark a task a milestone; its card shows a ◆ marker for key checkpoints         | ✅     |
 | **Subtasks**       | Break a task into a checklist with its own done-count                          | ✅     |
 | **Attachments**    | Attach labelled links to a task; each opens in a new tab (XSS-guarded hrefs)   | ✅     |
 | **Dependencies**   | Mark a task "blocked by" others; a banner + board badge flag it until done     | ✅     |

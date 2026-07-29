@@ -103,6 +103,23 @@
   color: var(--tf-accent-strong);
 }
 
+.task-milestone__btn {
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--tf-text-muted);
+  cursor: pointer;
+}
+
+.task-milestone__btn--on {
+  background: color-mix(in srgb, var(--tf-priority-medium) 16%, transparent);
+  border-color: var(--tf-priority-medium);
+  color: var(--tf-priority-medium);
+}
+
 .subtasks__head,
 .comments__head {
   font-size: 1rem;

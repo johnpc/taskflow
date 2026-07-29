@@ -16,6 +16,13 @@ describe('CardMeta', () => {
     expect(screen.getByText('High')).toBeInTheDocument();
   });
 
+  it('shows a milestone marker when the task is a milestone', () => {
+    const { rerender } = render(<CardMeta task={task({})} labels={[]} />);
+    expect(screen.queryByTestId('task-milestone')).not.toBeInTheDocument();
+    rerender(<CardMeta task={task({ isMilestone: true })} labels={[]} />);
+    expect(screen.getByTestId('task-milestone')).toBeInTheDocument();
+  });
+
   it('shows a Starts chip instead of the due chip when not started yet', () => {
     render(
       <CardMeta task={task({ startDate: '2999-01-01', dueDate: '2999-02-01' })} labels={[]} />,

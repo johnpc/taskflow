@@ -182,6 +182,8 @@ jobs:
             paths: .features-gen/e2e/features/focus
           - name: startdate
             paths: .features-gen/e2e/features/startdate
+          - name: milestone
+            paths: .features-gen/e2e/features/milestone
     steps:
       - uses: actions/checkout@v4
 
