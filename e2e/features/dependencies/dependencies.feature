@@ -24,7 +24,7 @@ Feature: Task dependencies
     Given a signed-in user
     And the user opens the "Product Launch" project
     When the user opens the task titled "Announce on socials"
-    And the user tries to complete the task
+    And the user tries to complete the blocked task
     Then a blocked-complete confirmation appears
 
   # The board flags blocked cards from data it already holds (no extra fetch).

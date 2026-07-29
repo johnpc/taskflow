@@ -9,3 +9,13 @@ Feature: Subtask progress on cards
     Given a signed-in user
     And the user opens the "Product Launch" project
     Then the board card "Chip parent" shows subtask progress "0/2"
+
+  # Completing a task with open subtasks asks for confirmation first (Asana
+  # parity). Non-mutating: assert the confirm, then cancel — "Chip parent" stays
+  # open, so its "0/2" chip is unaffected for the scenario above.
+  Scenario: Completing a task with open subtasks asks for confirmation
+    Given a signed-in user
+    And the user opens the "Product Launch" project
+    When the user opens the task titled "Chip parent"
+    And the user tries to complete the task with open subtasks
+    Then a subtask-complete confirmation appears
