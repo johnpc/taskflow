@@ -15,4 +15,5 @@ export type ProjectRecord = Schema['Project']['type'];
 export type SectionRecord = Schema['Section']['type'];
 export type TaskRecord = Schema['Task']['type'];
 export type CommentRecord = Schema['Comment']['type'];
+export type AttachmentRecord = Schema['Attachment']['type'];
 export type LabelRecord = Schema['Label']['type'];

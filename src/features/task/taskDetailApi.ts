@@ -3,19 +3,23 @@
  * each list is a bounded per-parent GSI query.
  */
 import { dataClient, type TaskRecord, type CommentRecord } from '../../lib/dataClient';
+import { fetchAttachments } from './attachmentsApi';
+import type { AttachmentRecord } from '../../lib/dataClient';
 
 export interface TaskDetailData {
   task: TaskRecord | null;
   subtasks: TaskRecord[];
   comments: CommentRecord[];
+  attachments: AttachmentRecord[];
 }
 
-/** Load a task, its subtasks (children), and its comments. */
+/** Load a task, its subtasks (children), comments, and attachments. */
 export async function fetchTaskDetail(id: string): Promise<TaskDetailData> {
   const { data: task } = await dataClient.models.Task.get({ id });
-  const [subRes, commentRes] = await Promise.all([
+  const [subRes, commentRes, attachments] = await Promise.all([
     dataClient.models.Task.listTaskByParentTaskId({ parentTaskId: id }, { limit: 200 }),
     dataClient.models.Comment.listCommentByTaskId({ taskId: id }, { limit: 200 }),
+    fetchAttachments(id),
   ]);
   const subtasks = ((subRes.data ?? []).filter(Boolean) as TaskRecord[]).sort(
     (a, b) => (a.sortOrder ?? 0) - (b.sortOrder ?? 0),
@@ -23,7 +27,7 @@ export async function fetchTaskDetail(id: string): Promise<TaskDetailData> {
   const comments = ((commentRes.data ?? []).filter(Boolean) as CommentRecord[]).sort((a, b) =>
     (a.createdAt ?? '').localeCompare(b.createdAt ?? ''),
   );
-  return { task: task ?? null, subtasks, comments };
+  return { task: task ?? null, subtasks, comments, attachments };
 }
 
 /** Add a comment to a task. */

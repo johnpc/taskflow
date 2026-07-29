@@ -8,6 +8,7 @@ import { TaskLabels } from './TaskLabels';
 import { TaskDependencies } from './TaskDependencies';
 import { Subtasks } from './Subtasks';
 import { Comments } from './Comments';
+import { Attachments } from './Attachments';
 import { DeleteTaskButton } from './DeleteTaskButton';
 import { nextSubtaskOrder } from './nextSubtaskOrder';
 import { nowISO } from './today';
@@ -20,7 +21,7 @@ import type { TaskRecord } from '../../lib/dataClient';
  * labels, subtasks, comments. Split out of TaskDetail so the screen stays a
  * thin load-gate shell. All mutations come from the useTaskDetail hook. */
 export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDetailHook }) {
-  const { query, patch, toggleDone, addSubtask, comment, labels, remove } = hook;
+  const { query, patch, toggleDone, addSubtask, comment, labels, remove, attachments } = hook;
   const sections = useTaskSections(task.projectId);
   const { email } = useAuth();
   const history = useHistory();
@@ -62,6 +63,12 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
           addSubtask.mutate({ projectId: task.projectId, title, order: nextSubtaskOrder(subtasks) })
         }
         onToggle={(input) => toggleDone.mutate(input)}
+      />
+      <Attachments
+        attachments={query.data?.attachments ?? []}
+        busy={attachments.add.isPending}
+        onAdd={(input) => attachments.add.mutate(input)}
+        onRemove={(id) => attachments.remove.mutate(id)}
       />
       <Comments
         comments={query.data?.comments ?? []}
