@@ -69,6 +69,7 @@
 }
 
 .task-fields__date,
+.task-fields__select,
 .task-fields__notes {
   background: var(--tf-surface);
   border: 1px solid var(--tf-border);

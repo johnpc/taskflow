@@ -16,6 +16,13 @@ describe('CardMeta', () => {
     expect(screen.getByText('High')).toBeInTheDocument();
   });
 
+  it('shows a repeat badge only when the task recurs', () => {
+    const { rerender } = render(<CardMeta task={task({})} labels={[]} />);
+    expect(screen.queryByTestId('task-repeat-badge')).not.toBeInTheDocument();
+    rerender(<CardMeta task={task({ repeat: 'DAILY' })} labels={[]} />);
+    expect(screen.getByTestId('task-repeat-badge')).toBeInTheDocument();
+  });
+
   it('omits chips when nothing is set', () => {
     render(<CardMeta task={task({})} labels={[]} />);
     expect(screen.queryByTestId('task-blocked')).not.toBeInTheDocument();

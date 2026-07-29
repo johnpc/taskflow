@@ -170,6 +170,8 @@ jobs:
             paths: .features-gen/e2e/features/shortcuts
           - name: dependencies
             paths: .features-gen/e2e/features/dependencies
+          - name: recurring
+            paths: .features-gen/e2e/features/recurring
     steps:
       - uses: actions/checkout@v4
 
