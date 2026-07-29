@@ -47,6 +47,8 @@
   font-weight: 500;
   font-size: 0.95rem;
   line-height: 1.3;
+  cursor: pointer;
+  text-align: left;
 }
 
 .task-card__meta {
@@ -152,4 +154,48 @@
 
 .quick-edit__prio--low {
   color: var(--tf-priority-low);
+}
+
+/* Inline card title (view span acts as a button; edit becomes an input) */
+.task-card__title-input {
+  flex: 1;
+  border: 1px solid var(--tf-accent);
+  border-radius: var(--tf-radius-sm);
+  background: var(--tf-surface);
+  color: var(--tf-text);
+  font-size: 0.95rem;
+  font-weight: 500;
+  padding: 2px 6px;
+  outline: none;
+  width: 100%;
+}
+
+/* Title row: title button + rename pencil */
+.task-card__title-row {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.task-card__title {
+  background: none;
+  border: none;
+  padding: 0;
+  flex: 1;
+}
+
+.task-card__rename {
+  background: none;
+  border: none;
+  color: var(--tf-text-muted);
+  cursor: pointer;
+  font-size: 0.85rem;
+  padding: 2px;
+  display: flex;
+  opacity: 0.6;
+}
+
+.task-card__rename:hover {
+  opacity: 1;
+  color: var(--tf-accent-strong);
 }
