@@ -225,4 +225,15 @@ export const seedProjects: SeedProject[] = [
     sections: ['Backlog'],
     tasks: [{ title: 'Collapse me', section: 'Backlog', priority: 'LOW' }],
   },
+  // Dedicated project for the bulk-move round-trip: two tasks in Stage that
+  // only this area selects + moves to Shipped.
+  {
+    name: 'Bulk Move Lab',
+    color: 'sky',
+    sections: ['Stage', 'Shipped'],
+    tasks: [
+      { title: 'Bulk move one', section: 'Stage', priority: 'LOW' },
+      { title: 'Bulk move two', section: 'Stage', priority: 'LOW' },
+    ],
+  },
 ];

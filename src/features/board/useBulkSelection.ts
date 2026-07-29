@@ -16,6 +16,10 @@ export function useBulkSelection(board: ReturnType<typeof useBoard>) {
     board.bulkDelete.mutate([...selection.ids]);
     selection.clear();
   };
+  const moveSelected = (sectionId: string) => {
+    board.bulkMove.mutate({ ids: [...selection.ids], sectionId });
+    selection.clear();
+  };
 
-  return { selection, completeSelected, deleteSelected };
+  return { selection, completeSelected, deleteSelected, moveSelected };
 }
