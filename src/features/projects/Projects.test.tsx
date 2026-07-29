@@ -1,12 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { screen } from '@testing-library/react';
 
-const { useProjects, useCreateProject, useToggleFavorite } = vi.hoisted(() => ({
+const { useProjects, useCreateProject, useToggleFavorite, useProjectCounts } = vi.hoisted(() => ({
   useProjects: vi.fn(),
   useCreateProject: vi.fn(),
   useToggleFavorite: vi.fn(),
+  useProjectCounts: vi.fn(),
 }));
 vi.mock('./useProjects', () => ({ useProjects, useCreateProject, useToggleFavorite }));
+vi.mock('./useProjectCounts', () => ({ useProjectCounts }));
 
 import { renderWithProviders } from '../../test/renderWithProviders';
 import { Projects } from './Projects';
@@ -14,6 +16,7 @@ import { Projects } from './Projects';
 beforeEach(() => {
   useCreateProject.mockReturnValue({ mutate: vi.fn(), isPending: false });
   useToggleFavorite.mockReturnValue({ mutate: vi.fn() });
+  useProjectCounts.mockReturnValue(new Map());
 });
 
 describe('Projects', () => {

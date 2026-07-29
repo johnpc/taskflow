@@ -109,3 +109,13 @@
   font-weight: 600;
   cursor: pointer;
 }
+
+.project-card__count {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--tf-text-muted);
+  background: var(--tf-surface-2);
+  border-radius: 999px;
+  padding: 1px 9px;
+  flex: none;
+}

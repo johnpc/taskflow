@@ -11,7 +11,7 @@ import './myTasks.css';
  * (Overdue / Today / Upcoming / No due date). Renders only. */
 export function MyTasks() {
   useDocumentTitle('My Tasks');
-  const { query, buckets, toggleDone } = useMyTasks();
+  const { query, buckets, overdue, toggleDone } = useMyTasks();
 
   return (
     <IonPage>
@@ -22,6 +22,11 @@ export function MyTasks() {
       </IonHeader>
       <IonContent className="ion-padding">
         <h1 className="tf-heading mytasks__title">What’s on your plate</h1>
+        {overdue > 0 && (
+          <p className="mytasks__overdue" data-testid="mytasks-overdue">
+            {overdue} overdue
+          </p>
+        )}
         <LoadState
           isLoading={query.isLoading}
           isError={query.isError}

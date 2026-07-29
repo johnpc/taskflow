@@ -140,6 +140,8 @@ jobs:
             paths: .features-gen/e2e/features/archive
           - name: calendar
             paths: .features-gen/e2e/features/calendar
+          - name: counts
+            paths: .features-gen/e2e/features/counts
     steps:
       - uses: actions/checkout@v4
 

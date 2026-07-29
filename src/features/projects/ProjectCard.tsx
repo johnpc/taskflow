@@ -9,9 +9,11 @@ import './projects.css';
  * favorite toggle. Renders only; the toggle is handled by the parent. */
 export function ProjectCard({
   project,
+  count = 0,
   onToggleFavorite,
 }: {
   project: ProjectRecord;
+  count?: number;
   onToggleFavorite: (project: ProjectRecord) => void;
 }) {
   const fav = !!project.favorite;
@@ -24,6 +26,11 @@ export function ProjectCard({
           aria-hidden="true"
         />
         <span className="project-card__name">{project.name}</span>
+        {count > 0 && (
+          <span className="project-card__count" data-testid="project-count">
+            {count}
+          </span>
+        )}
         <IonIcon className="project-card__chevron" icon={chevronForward} aria-hidden="true" />
       </Link>
       <button

@@ -1,5 +1,6 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { useProjects, useCreateProject, useToggleFavorite } from './useProjects';
+import { useProjectCounts } from './useProjectCounts';
 import { ProjectCard } from './ProjectCard';
 import { NewProjectButton } from './NewProjectButton';
 import { LoadState } from '../shell/LoadState';
@@ -15,6 +16,7 @@ export function Projects() {
   const { data: projects, isLoading, isError, refetch } = useProjects();
   const create = useCreateProject();
   const toggle = useToggleFavorite();
+  const counts = useProjectCounts();
   const list = projects ?? [];
 
   return (
@@ -44,6 +46,7 @@ export function Projects() {
               <ProjectCard
                 key={project.id}
                 project={project}
+                count={counts.get(project.id) ?? 0}
                 onToggleFavorite={(p) => toggle.mutate({ id: p.id, favorite: !p.favorite })}
               />
             ))}
