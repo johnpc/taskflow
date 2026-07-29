@@ -8,6 +8,7 @@ import { Projects } from './features/projects/Projects';
 import { ProjectView } from './features/board/ProjectView';
 import { TaskDetail } from './features/task/TaskDetail';
 import { MyTasks } from './features/mytasks/MyTasks';
+import { Calendar } from './features/calendar/Calendar';
 import { Search } from './features/search/Search';
 import { Profile } from './features/profile/Profile';
 import { NotFound } from './features/shell/NotFound';
@@ -45,6 +46,11 @@ export function AppRoutes() {
       <Route exact path="/my-tasks">
         <RequireAuth>
           <MyTasks />
+        </RequireAuth>
+      </Route>
+      <Route exact path="/calendar">
+        <RequireAuth>
+          <Calendar />
         </RequireAuth>
       </Route>
       <Route exact path="/search">

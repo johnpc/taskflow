@@ -3,17 +3,19 @@ import { IonIcon } from '@ionic/react';
 import {
   albumsOutline,
   checkmarkDoneOutline,
+  calendarOutline,
   searchOutline,
   personCircleOutline,
 } from 'ionicons/icons';
 import './tabBar.css';
 
 /** Bottom tab bar. Projects (the workspace home) is the launch surface; My Tasks
- * is everything assigned to or due for you across projects; Search finds any
- * task; You is the profile + theme settings. */
+ * is everything due for you across projects; Calendar is the forward two-week
+ * view; Search finds any task; You is the profile + theme settings. */
 const TABS: { label: string; icon: string; to: string }[] = [
   { label: 'Projects', icon: albumsOutline, to: '/projects' },
   { label: 'My Tasks', icon: checkmarkDoneOutline, to: '/my-tasks' },
+  { label: 'Calendar', icon: calendarOutline, to: '/calendar' },
   { label: 'Search', icon: searchOutline, to: '/search' },
   { label: 'You', icon: personCircleOutline, to: '/you' },
 ];
