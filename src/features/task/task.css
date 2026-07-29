@@ -114,3 +114,42 @@
 .reorder__btn:hover {
   color: var(--tf-accent-strong);
 }
+
+/* Per-card quick-edit (due date + priority cycle) */
+.quick-edit {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.quick-edit__date {
+  border: none;
+  background: transparent;
+  color: var(--tf-text-muted);
+  font-size: 0.7rem;
+  font-family: var(--tf-font-sans);
+  width: 1.4rem;
+  cursor: pointer;
+}
+
+.quick-edit__prio {
+  background: none;
+  border: none;
+  color: var(--tf-text-muted);
+  font-size: 0.95rem;
+  padding: 2px;
+  cursor: pointer;
+  display: flex;
+}
+
+.quick-edit__prio--high {
+  color: var(--tf-priority-high);
+}
+
+.quick-edit__prio--medium {
+  color: var(--tf-priority-medium);
+}
+
+.quick-edit__prio--low {
+  color: var(--tf-priority-low);
+}

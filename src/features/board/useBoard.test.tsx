@@ -71,4 +71,16 @@ describe('useBoard', () => {
     expect(updateTask).toHaveBeenCalledWith({ id: 'b', sortOrder: 0 });
     expect(updateTask).toHaveBeenCalledWith({ id: 'a', sortOrder: 1 });
   });
+
+  it('quick-edits a task field', async () => {
+    fetchBoard.mockResolvedValue({ sections: [], tasks: [] });
+    ensureDefaultSections.mockResolvedValue([{ id: 's1', name: 'To do', sortOrder: 0 }]);
+    updateTask.mockResolvedValue(undefined);
+    const { result } = renderHook(() => useBoard('p'), { wrapper: hookWrapper() });
+    await waitFor(() => expect(result.current.query.isSuccess).toBe(true));
+    await act(async () => {
+      await result.current.quickEdit.mutateAsync({ id: 't', priority: 'HIGH' });
+    });
+    expect(updateTask).toHaveBeenCalledWith({ id: 't', priority: 'HIGH' });
+  });
 });

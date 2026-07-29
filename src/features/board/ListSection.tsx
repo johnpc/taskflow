@@ -6,6 +6,7 @@ import { AddCard } from './AddCard';
 import { nowISO } from '../task/today';
 import { resolveLabels } from '../labels/resolveLabels';
 import type { Column } from './taskGrouping';
+import type { QuickEditFn } from './boardHandlers';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 
 /** One section in the List view: a collapsible header (name + count) over a
@@ -18,6 +19,7 @@ export function ListSection({
   onAddTask,
   onToggleDone,
   onReorder,
+  onQuickEdit,
 }: {
   column: Column;
   labels?: LabelRecord[];
@@ -29,6 +31,7 @@ export function ListSection({
     taskId: string;
     direction: 'up' | 'down';
   }) => void;
+  onQuickEdit?: QuickEditFn;
 }) {
   const [open, setOpen] = useState(defaultOpen);
   const nextOrder = column.tasks.reduce((max, t) => Math.max(max, t.sortOrder ?? 0), -1) + 1;
@@ -62,6 +65,7 @@ export function ListSection({
                   ((direction) =>
                     onReorder({ columnTasks: column.tasks, taskId: task.id, direction }))
                 }
+                onQuickEdit={onQuickEdit && ((patch) => onQuickEdit(task.id, patch))}
               />
             ))}
           </ul>

@@ -74,6 +74,11 @@ export function useBoard(projectId: string, filter: BoardFilter = DEFAULT_FILTER
     onSuccess: invalidate,
   });
 
+  const quickEdit = useMutation({
+    mutationFn: (input: Parameters<typeof updateTask>[0]) => updateTask(input),
+    onSuccess: invalidate,
+  });
+
   const labels = useLabels().query.data ?? [];
 
   return {
@@ -82,6 +87,7 @@ export function useBoard(projectId: string, filter: BoardFilter = DEFAULT_FILTER
     addTask,
     toggleDone,
     reorder,
+    quickEdit,
     addSection,
     editSection,
     removeSection,

@@ -31,7 +31,7 @@ export function ProjectView() {
   const project = useProject(id);
   const { filter, update } = useBoardFilter();
   const board = useBoard(id, filter);
-  const { query, columns, addTask, toggleDone, reorder, labels } = board;
+  const { query, columns, addTask, toggleDone, reorder, quickEdit, labels } = board;
   const { addSection, editSection, removeSection } = board;
   const { mode, choose } = useViewMode(id, project.data?.view as ViewMode | undefined);
   const edit = useProjectEdit(id);
@@ -88,6 +88,7 @@ export function ProjectView() {
             onAddTask={(input) => addTask.mutate(input)}
             onToggleDone={(input) => toggleDone.mutate(input)}
             onReorder={(input) => reorder.mutate(input)}
+            onQuickEdit={(taskId, patch) => quickEdit.mutate({ id: taskId, ...patch })}
             onRenameSection={(input) => editSection.mutate(input)}
             onDeleteSection={(sectionId) => removeSection.mutate(sectionId)}
           />
