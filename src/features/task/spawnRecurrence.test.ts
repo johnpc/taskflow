@@ -1,56 +1,56 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-const { get, create } = vi.hoisted(() => ({ get: vi.fn(), create: vi.fn() }));
+const { create } = vi.hoisted(() => ({ create: vi.fn() }));
 vi.mock('../../lib/dataClient', () => ({
-  dataClient: { models: { Task: { get, create } } },
+  dataClient: { models: { Task: { create } } },
 }));
 
 import { spawnNextOccurrence } from './spawnRecurrence';
+import type { TaskRecord } from '../../lib/dataClient';
+
+const task = (over: Partial<TaskRecord>): TaskRecord =>
+  ({ id: 't', projectId: 'p', title: 'T', status: 'DONE', ...over }) as TaskRecord;
 
 beforeEach(() => {
-  get.mockReset();
   create.mockReset();
   create.mockResolvedValue({ data: { id: 'new' } });
 });
 
 describe('spawnNextOccurrence', () => {
   it('creates the next occurrence with the due date advanced', async () => {
-    get.mockResolvedValue({
-      data: {
-        id: 't',
-        projectId: 'p',
+    await spawnNextOccurrence(
+      task({
         sectionId: 's',
         title: 'Standup',
-        status: 'DONE',
         priority: 'LOW',
         dueDate: '2026-07-28',
+        dueTime: '09:00',
         repeat: 'WEEKLY',
         sortOrder: 2,
         labelIds: ['l1', null],
-      },
-    });
-    await spawnNextOccurrence('t');
+      }),
+    );
     expect(create).toHaveBeenCalledWith(
       expect.objectContaining({
         projectId: 'p',
         title: 'Standup',
         status: 'TODO',
         dueDate: '2026-08-04',
+        dueTime: '09:00',
         repeat: 'WEEKLY',
         labelIds: ['l1'],
       }),
     );
   });
 
-  it('does nothing for a non-recurring task', async () => {
-    get.mockResolvedValue({ data: { id: 't', repeat: 'NONE', dueDate: '2026-07-28' } });
-    await spawnNextOccurrence('t');
+  it('does nothing for a null record or non-recurring task', async () => {
+    await spawnNextOccurrence(null);
+    await spawnNextOccurrence(task({ repeat: 'NONE', dueDate: '2026-07-28' }));
     expect(create).not.toHaveBeenCalled();
   });
 
   it('does nothing when a recurring task has no due date', async () => {
-    get.mockResolvedValue({ data: { id: 't', repeat: 'WEEKLY', dueDate: null } });
-    await spawnNextOccurrence('t');
+    await spawnNextOccurrence(task({ repeat: 'WEEKLY', dueDate: null }));
     expect(create).not.toHaveBeenCalled();
   });
 });

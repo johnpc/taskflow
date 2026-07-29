@@ -65,10 +65,11 @@ describe('setTaskDone', () => {
     await setTaskDone('t', false, '2026-07-28T00:00:00Z');
     expect(update).toHaveBeenCalledWith({ id: 't', status: 'TODO', completedAt: null });
   });
-  it('spawns the next occurrence on completion, not on reopen', async () => {
-    update.mockResolvedValue({ errors: null });
+  it('spawns from the updated record on completion, not on reopen', async () => {
+    const updated = { id: 't', status: 'DONE', repeat: 'WEEKLY' };
+    update.mockResolvedValue({ data: updated, errors: null });
     await setTaskDone('t', true, 'now');
-    expect(spawn).toHaveBeenCalledWith('t');
+    expect(spawn).toHaveBeenCalledWith(updated);
     spawn.mockClear();
     await setTaskDone('t', false, 'now');
     expect(spawn).not.toHaveBeenCalled();
