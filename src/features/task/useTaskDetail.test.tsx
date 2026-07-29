@@ -20,7 +20,12 @@ const {
   deleteTask: vi.fn(),
   duplicateTask: vi.fn(),
 }));
-vi.mock('./taskDetailApi', () => ({ fetchTaskDetail, addComment, deleteComment }));
+vi.mock('./taskDetailApi', () => ({
+  fetchTaskDetail,
+  addComment,
+  deleteComment,
+  updateComment: vi.fn(),
+}));
 vi.mock('./tasksApi', () => ({ createTask, setTaskDone, updateTask, deleteTask, duplicateTask }));
 vi.mock('../auth/useAuth', () => ({ useAuth: () => ({ email: 'me@x.co' }) }));
 
