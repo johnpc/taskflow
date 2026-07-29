@@ -3,6 +3,7 @@ import { SectionActions } from './SectionActions';
 import { ColumnCards } from './ColumnCards';
 import type { Column } from './taskGrouping';
 import type { QuickEditFn, BoardDrag } from './boardHandlers';
+import type { SubProgress } from '../task/subtaskProgress';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 
 /** One board column: a section header (with rename/delete), its task cards, and
@@ -12,6 +13,7 @@ export function BoardColumn({
   column,
   labels = [],
   blockedIds,
+  subtaskProgress,
   onAddTask,
   onToggleDone,
   onReorder,
@@ -24,6 +26,7 @@ export function BoardColumn({
   column: Column;
   labels?: LabelRecord[];
   blockedIds?: Set<string>;
+  subtaskProgress?: Map<string, SubProgress>;
   onAddTask: (input: { sectionId: string; title: string; order: number }) => void;
   onToggleDone: (input: { id: string; done: boolean; now: string }) => void;
   onReorder?: (input: {
@@ -72,6 +75,7 @@ export function BoardColumn({
         column={column}
         labels={labels}
         blockedIds={blockedIds}
+        subtaskProgress={subtaskProgress}
         onToggleDone={onToggleDone}
         onReorder={onReorder}
         onQuickEdit={onQuickEdit}

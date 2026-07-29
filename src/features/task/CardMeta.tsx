@@ -6,15 +6,17 @@ import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 
 /** The meta row under a card title: a Blocked badge, a start-or-due chip (a
  * not-yet-started task shows "Starts Mon D" instead of its due date), a
- * priority flag, repeat marker, and label chips. Renders only. */
+ * priority flag, subtask-progress + repeat markers, and label chips. Renders. */
 export function CardMeta({
   task,
   labels,
   blocked,
+  subtasks,
 }: {
   task: TaskRecord;
   labels: LabelRecord[];
   blocked?: boolean;
+  subtasks?: { done: number; total: number };
 }) {
   const today = todayISO();
   const done = isDone(task);
@@ -47,6 +49,11 @@ export function CardMeta({
       {task.priority && task.priority !== 'NONE' && (
         <span className={`task-card__prio task-card__prio--${task.priority.toLowerCase()}`}>
           {task.priority[0] + task.priority.slice(1).toLowerCase()}
+        </span>
+      )}
+      {subtasks && subtasks.total > 0 && (
+        <span className="task-card__subs" data-testid="task-subs" aria-label="Subtasks done">
+          ◑ {subtasks.done}/{subtasks.total}
         </span>
       )}
       {repeats(task.repeat as Repeat) && (

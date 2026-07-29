@@ -18,6 +18,7 @@ export function TaskCard({
   task,
   labels = [],
   blocked,
+  subtasks,
   onToggleDone,
   onReorder,
   onQuickEdit,
@@ -30,6 +31,7 @@ export function TaskCard({
   task: TaskRecord;
   labels?: LabelRecord[];
   blocked?: boolean;
+  subtasks?: { done: number; total: number };
   onToggleDone: (task: TaskRecord) => void;
   onReorder?: (dir: 'up' | 'down') => void;
   onQuickEdit?: (patch: { dueDate?: string | null; priority?: Priority; title?: string }) => void;
@@ -86,7 +88,7 @@ export function TaskCard({
           onOpen={() => history.push(`/tasks/${task.id}`)}
           onRename={onQuickEdit && ((title) => onQuickEdit({ title }))}
         />
-        <CardMeta task={task} labels={labels} blocked={blocked} />
+        <CardMeta task={task} labels={labels} blocked={blocked} subtasks={subtasks} />
       </div>
       {onQuickEdit && <QuickEdit task={task} onEdit={onQuickEdit} />}
       {onReorder && <ReorderControls onReorder={onReorder} />}

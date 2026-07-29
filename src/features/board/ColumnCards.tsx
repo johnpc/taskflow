@@ -3,6 +3,7 @@ import { nowISO } from '../task/today';
 import { resolveLabels } from '../labels/resolveLabels';
 import type { Column } from './taskGrouping';
 import type { QuickEditFn, BoardDrag } from './boardHandlers';
+import type { SubProgress } from '../task/subtaskProgress';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 
 /** The task-card list inside a board column. Extracted from BoardColumn so each
@@ -12,6 +13,7 @@ export function ColumnCards({
   column,
   labels,
   blockedIds,
+  subtaskProgress,
   onToggleDone,
   onReorder,
   onQuickEdit,
@@ -20,6 +22,7 @@ export function ColumnCards({
   column: Column;
   labels: LabelRecord[];
   blockedIds?: Set<string>;
+  subtaskProgress?: Map<string, SubProgress>;
   onToggleDone: (input: { id: string; done: boolean; now: string }) => void;
   onReorder?: (input: {
     columnTasks: TaskRecord[];
@@ -37,6 +40,7 @@ export function ColumnCards({
           task={task}
           labels={resolveLabels(task.labelIds, labels)}
           blocked={blockedIds?.has(task.id)}
+          subtasks={subtaskProgress?.get(task.id)}
           onToggleDone={(t) => onToggleDone({ id: t.id, done: t.status !== 'DONE', now: nowISO() })}
           onReorder={
             onReorder &&

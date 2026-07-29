@@ -36,6 +36,13 @@ describe('CardMeta', () => {
     expect(screen.getByTestId('task-due')).toHaveTextContent('9:00 AM');
   });
 
+  it('shows a subtask chip only when the task has subtasks', () => {
+    const { rerender } = render(<CardMeta task={task({})} labels={[]} />);
+    expect(screen.queryByTestId('task-subs')).not.toBeInTheDocument();
+    rerender(<CardMeta task={task({})} labels={[]} subtasks={{ done: 2, total: 3 }} />);
+    expect(screen.getByTestId('task-subs')).toHaveTextContent('2/3');
+  });
+
   it('shows a repeat badge only when the task recurs', () => {
     const { rerender } = render(<CardMeta task={task({})} labels={[]} />);
     expect(screen.queryByTestId('task-repeat-badge')).not.toBeInTheDocument();

@@ -4,7 +4,7 @@ import { fetchBoard, ensureDefaultSections } from './boardApi';
 import { groupTasksBySection } from './taskGrouping';
 import { applyFilter, DEFAULT_FILTER, type BoardFilter } from './taskFilter';
 import { reorderTasks } from './reorderTasks';
-import { blockedIdSet } from '../task/dependencies';
+import { useBoardDerived } from './useBoardDerived';
 import { useSectionMutations } from './useSectionMutations';
 import { createTask, setTaskDone, updateTask, deleteTask } from '../task/tasksApi';
 import { useLabels } from '../labels/useLabels';
@@ -34,8 +34,8 @@ export function useBoard(projectId: string, filter: BoardFilter = DEFAULT_FILTER
     return grouped.map((col) => ({ ...col, tasks: applyFilter(col.tasks, filter) }));
   }, [query.data, filter]);
 
-  // Ids of blocked tasks, derived from the full project task set (no join).
-  const blockedIds = useMemo(() => blockedIdSet(query.data?.tasks ?? []), [query.data]);
+  // Blocked-task ids + subtask progress, derived from the full task set.
+  const { blockedIds, subtaskProgress } = useBoardDerived(query.data?.tasks);
 
   const invalidate = () => qc.invalidateQueries({ queryKey: key });
 
@@ -86,6 +86,7 @@ export function useBoard(projectId: string, filter: BoardFilter = DEFAULT_FILTER
     query,
     columns,
     blockedIds,
+    subtaskProgress,
     addTask,
     toggleDone,
     reorder,

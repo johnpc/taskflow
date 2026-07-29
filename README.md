@@ -39,7 +39,7 @@ iOS and Android.
 | **Quick-edit**     | Set a due date and cycle priority straight from a card, no detail needed       | ✅     |
 | **Inline rename**  | Rename a task in place from its card (pencil), no detail needed                | ✅     |
 | **Milestones**     | Mark a task a milestone; its card shows a ◆ marker for key checkpoints         | ✅     |
-| **Subtasks**       | Break a task into a checklist with its own done-count                          | ✅     |
+| **Subtasks**       | Break a task into a checklist; the card shows a "2/3" progress chip            | ✅     |
 | **Attachments**    | Attach labelled links to a task; each opens in a new tab (XSS-guarded hrefs)   | ✅     |
 | **Dependencies**   | Mark a task "blocked by" others; a banner + board badge flag it until done     | ✅     |
 | **Recurring**      | Repeat a task daily/weekly/monthly; completing it spawns the next occurrence   | ✅     |

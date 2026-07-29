@@ -3,6 +3,7 @@ import { ListSection } from './ListSection';
 import type { Column } from './taskGrouping';
 import type { ViewMode } from './viewMode';
 import type { AddTaskFn, ToggleDoneFn, ReorderFn, QuickEditFn, BoardDrag } from './boardHandlers';
+import type { SubProgress } from '../task/subtaskProgress';
 import type { LabelRecord } from '../../lib/dataClient';
 
 /** Renders the project's sections either as horizontal board columns or as a
@@ -13,6 +14,7 @@ export function BoardContent({
   columns,
   labels = [],
   blockedIds,
+  subtaskProgress,
   onAddTask,
   onToggleDone,
   onReorder,
@@ -28,6 +30,7 @@ export function BoardContent({
   columns: Column[];
   labels?: LabelRecord[];
   blockedIds?: Set<string>;
+  subtaskProgress?: Map<string, SubProgress>;
   onAddTask: AddTaskFn;
   onToggleDone: ToggleDoneFn;
   onReorder?: ReorderFn;
@@ -48,6 +51,7 @@ export function BoardContent({
             column={column}
             labels={labels}
             blockedIds={blockedIds}
+            subtaskProgress={subtaskProgress}
             defaultOpen={i === 0 || column.tasks.length > 0}
             onAddTask={onAddTask}
             onToggleDone={onToggleDone}
@@ -68,6 +72,7 @@ export function BoardContent({
           column={column}
           labels={labels}
           blockedIds={blockedIds}
+          subtaskProgress={subtaskProgress}
           onAddTask={onAddTask}
           onToggleDone={onToggleDone}
           onReorder={onReorder}
