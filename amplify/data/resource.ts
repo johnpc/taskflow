@@ -68,6 +68,8 @@ const schema = a.schema({
       // Optional start date — when work should begin, on or before the due date.
       // A future start marks the task "not started yet" (a card cue).
       startDate: a.date(),
+      // A milestone is a key checkpoint (shown with a ◆ marker), not regular work.
+      isMilestone: a.boolean(),
       dueDate: a.date(),
       // Optional time-of-day for the due date (HH:MM, 24h). A display refinement
       // on top of the date — bucketing (overdue/today/upcoming) stays date-level.

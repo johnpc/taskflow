@@ -3,6 +3,7 @@ import { TaskHeader } from './TaskHeader';
 import { TaskActivity } from './TaskActivity';
 import { TaskFields } from './TaskFields';
 import { RepeatPicker } from './RepeatPicker';
+import { MilestoneToggle } from './MilestoneToggle';
 import { TaskAssignment } from './TaskAssignment';
 import { TaskLabels } from './TaskLabels';
 import { TaskDependencies } from './TaskDependencies';
@@ -40,6 +41,10 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
       <TaskActivity task={task} nowMs={Date.now()} />
       <TaskFields task={task} onPatch={(p) => patch.mutate({ id: task.id, ...p })} />
       <RepeatPicker task={task} onChange={(repeat) => patch.mutate({ id: task.id, repeat })} />
+      <MilestoneToggle
+        task={task}
+        onToggle={(isMilestone) => patch.mutate({ id: task.id, isMilestone })}
+      />
       <TaskAssignment
         task={task}
         sections={sections.data ?? []}

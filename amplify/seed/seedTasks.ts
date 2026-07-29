@@ -38,6 +38,7 @@ export async function createTaskWithSubtasks(
       sortOrder: order,
       labelIds: labelIdsFor(task, labelMap),
       repeat: task.repeat ?? 'NONE',
+      isMilestone: task.isMilestone ?? false,
     },
     OWNER_WRITE,
   );

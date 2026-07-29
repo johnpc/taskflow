@@ -17,6 +17,8 @@ export interface SeedTask {
   blockedBy?: string[];
   /** Recurrence rule; completing a recurring task spawns the next occurrence. */
   repeat?: 'DAILY' | 'WEEKLY' | 'MONTHLY';
+  /** Mark this task a milestone (a key checkpoint, shown with a ◆ marker). */
+  isMilestone?: boolean;
 }
 
 /** Reusable label registry — name + color key (a --tf-proj-* palette key). */
@@ -113,6 +115,8 @@ export const seedProjects: SeedProject[] = [
         startOffsetDays: 5,
         dueOffsetDays: 12,
       },
+      // Read-only milestone anchor: its card always shows the ◆ marker.
+      { title: 'Launch day', section: 'To do', priority: 'HIGH', isMilestone: true },
     ],
   },
   {

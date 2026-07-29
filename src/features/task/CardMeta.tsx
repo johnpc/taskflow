@@ -23,6 +23,11 @@ export function CardMeta({
   const dueKind = dueStatus(task.dueDate, today, done);
   return (
     <span className="task-card__meta">
+      {task.isMilestone && (
+        <span className="task-card__milestone" data-testid="task-milestone" aria-label="Milestone">
+          ◆ Milestone
+        </span>
+      )}
       {blocked && (
         <span className="task-card__blocked" data-testid="task-blocked">
           Blocked
