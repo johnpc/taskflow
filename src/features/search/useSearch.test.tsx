@@ -21,4 +21,18 @@ describe('useSearch', () => {
     act(() => result.current.setQuery('design'));
     await waitFor(() => expect(result.current.results.map((t) => t.id)).toEqual(['a']));
   });
+
+  it('narrows matches by the priority + completed filters', async () => {
+    fetchMyTasks.mockResolvedValue([
+      { id: 'a', title: 'Ship it', notes: null, priority: 'HIGH', status: 'TODO' },
+      { id: 'b', title: 'Ship logs', notes: null, priority: 'LOW', status: 'TODO' },
+      { id: 'c', title: 'Ship done', notes: null, priority: 'HIGH', status: 'DONE' },
+    ]);
+    const { result } = renderHook(() => useSearch(), { wrapper: hookWrapper() });
+    await waitFor(() => expect(result.current.tasksQuery.data).toHaveLength(3));
+    act(() => result.current.setQuery('ship'));
+    await waitFor(() => expect(result.current.results).toHaveLength(3));
+    act(() => result.current.setFilters({ priority: 'HIGH', hideDone: true }));
+    await waitFor(() => expect(result.current.results.map((t) => t.id)).toEqual(['a']));
+  });
 });

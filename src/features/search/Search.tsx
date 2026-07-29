@@ -1,6 +1,7 @@
 import { IonContent, IonHeader, IonPage, IonSearchbar, IonTitle, IonToolbar } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 import { useSearch } from './useSearch';
+import { SearchFilterBar } from './SearchFilterBar';
 import { EmptyState } from '../shell/EmptyState';
 import { TabBar } from '../shell/TabBar';
 import { useDocumentTitle } from '../shell/useDocumentTitle';
@@ -12,7 +13,7 @@ import './search.css';
 export function Search() {
   useDocumentTitle('Search');
   const history = useHistory();
-  const { query, setQuery, results } = useSearch();
+  const { query, setQuery, filters, setFilters, results } = useSearch();
 
   return (
     <IonPage>
@@ -29,6 +30,7 @@ export function Search() {
           placeholder="Search tasks"
           onIonInput={(e) => setQuery(e.detail.value ?? '')}
         />
+        {query.trim() !== '' && <SearchFilterBar filters={filters} onChange={setFilters} />}
         {query.trim() === '' ? (
           <EmptyState
             icon={searchOutline}
