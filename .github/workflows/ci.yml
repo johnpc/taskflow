@@ -158,6 +158,8 @@ jobs:
             paths: .features-gen/e2e/features/home
           - name: duepresets
             paths: .features-gen/e2e/features/duepresets
+          - name: richnotes
+            paths: .features-gen/e2e/features/richnotes
     steps:
       - uses: actions/checkout@v4
 
