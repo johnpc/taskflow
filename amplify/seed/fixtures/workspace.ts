@@ -58,6 +58,7 @@ export const seedProjects: SeedProject[] = [
       { title: 'Kickoff meeting', section: 'To do', priority: 'LOW' },
       { title: 'Ship changelog', section: 'To do', priority: 'LOW' },
       { title: 'Retire old logo', section: 'To do', priority: 'LOW' },
+      { title: 'Archive Q1 notes', section: 'To do', priority: 'LOW' },
     ],
   },
   {

@@ -1,0 +1,35 @@
+.completed__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.completed__row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius-sm);
+  box-shadow: var(--tf-shadow);
+  padding: 12px 14px;
+}
+
+.completed__title {
+  flex: 1;
+  color: var(--tf-text-muted);
+  text-decoration: line-through;
+  font-size: 0.95rem;
+}
+
+.completed__reopen {
+  background: none;
+  border: none;
+  color: var(--tf-accent-strong);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+}

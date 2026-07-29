@@ -269,3 +269,21 @@
   padding: 2px 6px;
   width: 8rem;
 }
+
+.project-header__row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.project-header__completed {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--tf-accent-strong);
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 0.85rem;
+  white-space: nowrap;
+}
