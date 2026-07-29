@@ -162,6 +162,8 @@ jobs:
             paths: .features-gen/e2e/features/richnotes
           - name: bulk
             paths: .features-gen/e2e/features/bulk
+          - name: dragdrop
+            paths: .features-gen/e2e/features/dragdrop
     steps:
       - uses: actions/checkout@v4
 

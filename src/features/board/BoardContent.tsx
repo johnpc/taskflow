@@ -2,7 +2,7 @@ import { BoardColumn } from './BoardColumn';
 import { ListSection } from './ListSection';
 import type { Column } from './taskGrouping';
 import type { ViewMode } from './viewMode';
-import type { AddTaskFn, ToggleDoneFn, ReorderFn, QuickEditFn } from './boardHandlers';
+import type { AddTaskFn, ToggleDoneFn, ReorderFn, QuickEditFn, BoardDrag } from './boardHandlers';
 import type { LabelRecord } from '../../lib/dataClient';
 
 /** Renders the project's sections either as horizontal board columns or as a
@@ -21,6 +21,7 @@ export function BoardContent({
   onMoveSection,
   selectedIds,
   onSelect,
+  drag,
 }: {
   mode: ViewMode;
   columns: Column[];
@@ -34,6 +35,7 @@ export function BoardContent({
   onMoveSection?: (input: { sectionId: string; direction: 'left' | 'right' }) => void;
   selectedIds?: Set<string>;
   onSelect?: (id: string) => void;
+  drag?: BoardDrag;
 }) {
   if (mode === 'LIST') {
     return (
@@ -69,6 +71,7 @@ export function BoardContent({
           onRenameSection={onRenameSection}
           onDeleteSection={onDeleteSection}
           onMoveSection={onMoveSection}
+          drag={drag}
         />
       ))}
     </div>

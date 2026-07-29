@@ -207,3 +207,12 @@
   accent-color: var(--tf-accent);
   cursor: pointer;
 }
+
+/* Card being dragged */
+.task-card[draggable='true'] {
+  cursor: grab;
+}
+
+.task-card[draggable='true']:active {
+  cursor: grabbing;
+}
