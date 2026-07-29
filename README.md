@@ -35,7 +35,7 @@ iOS and Android.
 | **Due time**        | Add a time of day to a due date; the card chip shows it (e.g. "Aug 3 2:00 PM") | ✅     |
 | **Drag & drop**     | Drag a card to a column to move it, or onto a card to drop it at that position | ✅     |
 | **Reorder**         | Drag onto a card, or move a task up/down within its section                    | ✅     |
-| **Multi-select**    | Select tasks in the list view and bulk-complete or delete                      | ✅     |
+| **Multi-select**    | Select tasks in the list view and bulk-complete, move-to-section, or delete    | ✅     |
 | **Quick-edit**      | Set a due date and cycle priority straight from a card, no detail needed       | ✅     |
 | **Inline rename**   | Rename a task in place from its card (pencil), no detail needed                | ✅     |
 | **Milestones**      | Mark a task a milestone; its card shows a ◆ marker for key checkpoints         | ✅     |

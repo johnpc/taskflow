@@ -2,13 +2,26 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { SelectionBar } from './SelectionBar';
 
+const sections = [
+  { id: 's1', name: 'To do' },
+  { id: 's2', name: 'Done' },
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+] as any;
+
 describe('SelectionBar', () => {
   it('shows the count and fires each action', () => {
     const onComplete = vi.fn();
     const onDelete = vi.fn();
     const onClear = vi.fn();
     render(
-      <SelectionBar count={3} onComplete={onComplete} onDelete={onDelete} onClear={onClear} />,
+      <SelectionBar
+        count={3}
+        sections={sections}
+        onComplete={onComplete}
+        onMove={vi.fn()}
+        onDelete={onDelete}
+        onClear={onClear}
+      />,
     );
     expect(screen.getByTestId('selection-bar')).toHaveTextContent('3 selected');
     fireEvent.click(screen.getByTestId('bulk-complete'));
@@ -17,5 +30,21 @@ describe('SelectionBar', () => {
     expect(onComplete).toHaveBeenCalledOnce();
     expect(onDelete).toHaveBeenCalledOnce();
     expect(onClear).toHaveBeenCalledOnce();
+  });
+
+  it('moves the selection to a chosen section', () => {
+    const onMove = vi.fn();
+    render(
+      <SelectionBar
+        count={2}
+        sections={sections}
+        onComplete={vi.fn()}
+        onMove={onMove}
+        onDelete={vi.fn()}
+        onClear={vi.fn()}
+      />,
+    );
+    fireEvent.change(screen.getByTestId('bulk-move'), { target: { value: 's2' } });
+    expect(onMove).toHaveBeenCalledWith('s2');
   });
 });

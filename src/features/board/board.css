@@ -324,3 +324,14 @@
 .selection-bar__btn--danger {
   color: var(--tf-danger);
 }
+
+.selection-bar__move {
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--tf-text);
+  cursor: pointer;
+}

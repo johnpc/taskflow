@@ -6,7 +6,8 @@ import { applyFilter, DEFAULT_FILTER, type BoardFilter } from './taskFilter';
 import { reorderTasks } from './reorderTasks';
 import { useBoardDerived } from './useBoardDerived';
 import { useSectionMutations } from './useSectionMutations';
-import { createTask, setTaskDone, updateTask, deleteTask } from '../task/tasksApi';
+import { useBulkMutations } from './useBulkMutations';
+import { createTask, setTaskDone, updateTask } from '../task/tasksApi';
 import { useLabels } from '../labels/useLabels';
 import type { TaskRecord } from '../../lib/dataClient';
 
@@ -68,17 +69,7 @@ export function useBoard(projectId: string, filter: BoardFilter = DEFAULT_FILTER
     onSuccess: invalidate,
   });
 
-  const bulkComplete = useMutation({
-    mutationFn: (input: { ids: string[]; now: string }) =>
-      Promise.all(input.ids.map((id) => setTaskDone(id, true, input.now))),
-    onSuccess: invalidate,
-  });
-
-  const bulkDelete = useMutation({
-    mutationFn: (ids: string[]) => Promise.all(ids.map((id) => deleteTask(id))),
-    onSuccess: invalidate,
-  });
-
+  const bulk = useBulkMutations(invalidate);
   const sections = useSectionMutations(projectId, query.data?.sections ?? [], invalidate);
   const labels = useLabels().query.data ?? [];
 
@@ -91,9 +82,8 @@ export function useBoard(projectId: string, filter: BoardFilter = DEFAULT_FILTER
     toggleDone,
     reorder,
     quickEdit,
-    bulkComplete,
-    bulkDelete,
     labels,
+    ...bulk,
     ...sections,
   };
 }

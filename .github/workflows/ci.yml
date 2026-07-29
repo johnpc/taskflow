@@ -208,6 +208,8 @@ jobs:
             paths: .features-gen/e2e/features/commentedit
           - name: commenttime
             paths: .features-gen/e2e/features/commenttime
+          - name: bulkmove
+            paths: .features-gen/e2e/features/bulkmove
     steps:
       - uses: actions/checkout@v4
 
