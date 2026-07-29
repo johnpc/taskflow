@@ -1,18 +1,25 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, waitFor, act } from '@testing-library/react';
 
-const { fetchTaskDetail, addComment, createTask, setTaskDone, updateTask, deleteTask } = vi.hoisted(
-  () => ({
-    fetchTaskDetail: vi.fn(),
-    addComment: vi.fn(),
-    createTask: vi.fn(),
-    setTaskDone: vi.fn(),
-    updateTask: vi.fn(),
-    deleteTask: vi.fn(),
-  }),
-);
+const {
+  fetchTaskDetail,
+  addComment,
+  createTask,
+  setTaskDone,
+  updateTask,
+  deleteTask,
+  duplicateTask,
+} = vi.hoisted(() => ({
+  fetchTaskDetail: vi.fn(),
+  addComment: vi.fn(),
+  createTask: vi.fn(),
+  setTaskDone: vi.fn(),
+  updateTask: vi.fn(),
+  deleteTask: vi.fn(),
+  duplicateTask: vi.fn(),
+}));
 vi.mock('./taskDetailApi', () => ({ fetchTaskDetail, addComment }));
-vi.mock('./tasksApi', () => ({ createTask, setTaskDone, updateTask, deleteTask }));
+vi.mock('./tasksApi', () => ({ createTask, setTaskDone, updateTask, deleteTask, duplicateTask }));
 vi.mock('../auth/useAuth', () => ({ useAuth: () => ({ email: 'me@x.co' }) }));
 
 import { hookWrapper } from '../../test/hookWrapper';
@@ -80,5 +87,16 @@ describe('useTaskDetail', () => {
     });
     expect(setTaskDone).toHaveBeenCalledWith('t', true, 'now');
     expect(deleteTask).toHaveBeenCalledWith('t');
+  });
+
+  it('duplicates a task at sortOrder + 1', async () => {
+    fetchTaskDetail.mockResolvedValue({ task: { id: 't' }, subtasks: [], comments: [] });
+    duplicateTask.mockResolvedValue({ id: 'copy' });
+    const { result } = renderHook(() => useTaskDetail('t'), { wrapper: hookWrapper() });
+    await act(async () => {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      await result.current.duplicate.mutateAsync({ id: 't', sortOrder: 2 } as any);
+    });
+    expect(duplicateTask).toHaveBeenCalledWith(expect.objectContaining({ id: 't' }), 3);
   });
 });

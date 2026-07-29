@@ -10,7 +10,7 @@ import { TaskDependencies } from './TaskDependencies';
 import { Subtasks } from './Subtasks';
 import { Comments } from './Comments';
 import { Attachments } from './Attachments';
-import { DeleteTaskButton } from './DeleteTaskButton';
+import { TaskActions } from './TaskActions';
 import { nextSubtaskOrder } from './nextSubtaskOrder';
 import { nowISO } from './today';
 import { useTaskSections } from './useTaskSections';
@@ -22,7 +22,8 @@ import type { TaskRecord } from '../../lib/dataClient';
  * labels, subtasks, comments. Split out of TaskDetail so the screen stays a
  * thin load-gate shell. All mutations come from the useTaskDetail hook. */
 export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDetailHook }) {
-  const { query, patch, toggleDone, addSubtask, comment, labels, remove, attachments } = hook;
+  const { query, patch, toggleDone, addSubtask, comment, labels, remove, duplicate, attachments } =
+    hook;
   const sections = useTaskSections(task.projectId);
   const { email } = useAuth();
   const history = useHistory();
@@ -30,6 +31,9 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
 
   const deleteTask = () =>
     remove.mutate(task.id, { onSuccess: () => history.replace(`/projects/${task.projectId}`) });
+
+  const duplicateTask = () =>
+    duplicate.mutate(task, { onSuccess: (copy) => history.push(`/tasks/${copy.id}`) });
 
   return (
     <div className="task-detail" data-testid="task-detail">
@@ -80,7 +84,11 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
         busy={comment.isPending}
         onPost={(body) => comment.mutate(body)}
       />
-      <DeleteTaskButton onDelete={deleteTask} />
+      <TaskActions
+        duplicating={duplicate.isPending}
+        onDuplicate={duplicateTask}
+        onDelete={deleteTask}
+      />
     </div>
   );
 }

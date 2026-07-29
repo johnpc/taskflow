@@ -186,6 +186,8 @@ jobs:
             paths: .features-gen/e2e/features/milestone
           - name: progress
             paths: .features-gen/e2e/features/progress
+          - name: duplicate
+            paths: .features-gen/e2e/features/duplicate
     steps:
       - uses: actions/checkout@v4
 

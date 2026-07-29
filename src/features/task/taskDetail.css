@@ -265,12 +265,34 @@
 }
 
 /* Delete-task control */
+.task-detail__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 8px;
+}
+
+.task-detail__dup {
+  align-self: flex-start;
+  background: transparent;
+  border: 1px solid var(--tf-border);
+  border-radius: 999px;
+  padding: 9px 18px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--tf-text);
+  cursor: pointer;
+}
+
+.task-detail__dup:disabled {
+  opacity: 0.5;
+}
+
 .task-delete {
   display: inline-flex;
   align-items: center;
   gap: 8px;
   align-self: flex-start;
-  margin-top: 8px;
   background: transparent;
   border: 1px solid var(--tf-border);
   border-radius: 999px;

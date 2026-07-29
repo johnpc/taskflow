@@ -1,6 +1,6 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchTaskDetail, addComment } from './taskDetailApi';
-import { createTask, setTaskDone, updateTask, deleteTask } from './tasksApi';
+import { createTask, setTaskDone, updateTask, deleteTask, duplicateTask } from './tasksApi';
 import { useAttachments } from './useAttachments';
 import { useAuth } from '../auth/useAuth';
 import { useLabels } from '../labels/useLabels';
@@ -51,10 +51,15 @@ export function useTaskDetail(id: string) {
     onSuccess: invalidate,
   });
 
+  const duplicate = useMutation({
+    mutationFn: (task: TaskRecord) => duplicateTask(task, (task.sortOrder ?? 0) + 1),
+    onSuccess: invalidate,
+  });
+
   const labels = useLabels();
   const attachments = useAttachments(id, invalidate);
 
-  return { query, patch, toggleDone, addSubtask, comment, remove, labels, attachments };
+  return { query, patch, toggleDone, addSubtask, comment, remove, duplicate, labels, attachments };
 }
 
 export type TaskDetailHook = ReturnType<typeof useTaskDetail>;
