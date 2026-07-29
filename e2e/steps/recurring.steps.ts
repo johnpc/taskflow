@@ -15,7 +15,12 @@ Then('an open task titled {string} is still on the board', async ({ page }, titl
   await expect(card).not.toHaveClass(/task-card--done/, { timeout: 25_000 });
 });
 
-Then('the board card {string} shows a repeat badge', async ({ page }, title: string) => {
-  const card = page.getByTestId('task-card').filter({ hasText: title }).first();
-  await expect(card.getByTestId('task-repeat-badge')).toBeVisible({ timeout: 15_000 });
-});
+Then(
+  'the board card {string} shows a repeat badge reading {string}',
+  async ({ page }, title: string, cadence: string) => {
+    const card = page.getByTestId('task-card').filter({ hasText: title }).first();
+    await expect(card.getByTestId('task-repeat-badge')).toHaveText(`↻ ${cadence}`, {
+      timeout: 15_000,
+    });
+  },
+);

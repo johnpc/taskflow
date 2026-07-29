@@ -12,7 +12,7 @@ Feature: Recurring tasks
     When the user completes the task titled "Weekly sync"
     Then an open task titled "Weekly sync" is still on the board
 
-  Scenario: A recurring task shows a repeat badge
+  Scenario: A recurring task shows its cadence on a repeat badge
     Given a signed-in user
     And the user opens the "Product Launch" project
-    Then the board card "Daily standup" shows a repeat badge
+    Then the board card "Daily standup" shows a repeat badge reading "Daily"
