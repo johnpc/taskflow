@@ -7,10 +7,12 @@ export function Comments({
   comments,
   busy,
   onPost,
+  onDelete,
 }: {
   comments: CommentRecord[];
   busy: boolean;
   onPost: (body: string) => void;
+  onDelete: (id: string) => void;
 }) {
   const [draft, setDraft] = useState('');
 
@@ -29,6 +31,15 @@ export function Comments({
           <li key={c.id} className="comment" data-testid="comment">
             <span className="comment__author">{c.authorEmail ?? 'You'}</span>
             <span className="comment__body">{c.body}</span>
+            <button
+              type="button"
+              className="comment__delete"
+              data-testid="comment-delete"
+              aria-label="Delete comment"
+              onClick={() => onDelete(c.id)}
+            >
+              ✕
+            </button>
           </li>
         ))}
       </ul>

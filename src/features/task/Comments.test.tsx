@@ -8,22 +8,43 @@ const comment = (over: Partial<CommentRecord>): CommentRecord =>
 
 describe('Comments', () => {
   it('renders existing comments', () => {
-    render(<Comments comments={[comment({ body: 'First' })]} busy={false} onPost={vi.fn()} />);
+    render(
+      <Comments
+        comments={[comment({ body: 'First' })]}
+        busy={false}
+        onPost={vi.fn()}
+        onDelete={vi.fn()}
+      />,
+    );
     expect(screen.getByText('First')).toBeInTheDocument();
   });
 
   it('disables post when the draft is empty', () => {
-    render(<Comments comments={[]} busy={false} onPost={vi.fn()} />);
+    render(<Comments comments={[]} busy={false} onPost={vi.fn()} onDelete={vi.fn()} />);
     expect(screen.getByTestId('comment-post')).toBeDisabled();
   });
 
   it('posts a trimmed comment and clears the draft', () => {
     const onPost = vi.fn();
-    render(<Comments comments={[]} busy={false} onPost={onPost} />);
+    render(<Comments comments={[]} busy={false} onPost={onPost} onDelete={vi.fn()} />);
     const input = screen.getByTestId('comment-input');
     fireEvent.change(input, { target: { value: 'Nice work' } });
     fireEvent.click(screen.getByTestId('comment-post'));
     expect(onPost).toHaveBeenCalledWith('Nice work');
     expect(input).toHaveValue('');
+  });
+
+  it('deletes a comment via its delete button', () => {
+    const onDelete = vi.fn();
+    render(
+      <Comments
+        comments={[comment({ id: 'c9' })]}
+        busy={false}
+        onPost={vi.fn()}
+        onDelete={onDelete}
+      />,
+    );
+    fireEvent.click(screen.getByTestId('comment-delete'));
+    expect(onDelete).toHaveBeenCalledWith('c9');
   });
 });

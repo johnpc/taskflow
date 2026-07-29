@@ -44,3 +44,9 @@ export async function addComment(input: {
   if (errors || !data) throw new Error(`Add comment failed: ${JSON.stringify(errors)}`);
   return data;
 }
+
+/** Delete a comment by id. */
+export async function deleteComment(id: string): Promise<void> {
+  const { errors } = await dataClient.models.Comment.delete({ id });
+  if (errors) throw new Error(`Delete comment failed: ${JSON.stringify(errors)}`);
+}

@@ -211,6 +211,7 @@
 }
 
 .comment {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 2px;
@@ -218,6 +219,30 @@
   border: 1px solid var(--tf-border);
   border-radius: var(--tf-radius-sm);
   padding: 10px 12px;
+}
+
+.comment__delete {
+  position: absolute;
+  top: 8px;
+  right: 10px;
+  background: none;
+  border: none;
+  color: var(--tf-text-muted);
+  font-size: 0.8rem;
+  cursor: pointer;
+  opacity: 0.6;
+}
+
+.comment__delete:hover {
+  opacity: 1;
+  color: var(--tf-danger);
+}
+
+/* Touch devices have no hover — keep the delete affordance reachable. */
+@media (hover: none), (max-width: 640px) {
+  .comment__delete {
+    opacity: 0.8;
+  }
 }
 
 .comment__author {
