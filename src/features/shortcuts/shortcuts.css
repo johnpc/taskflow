@@ -1,0 +1,64 @@
+.shortcuts {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(16, 24, 40, 0.45);
+  padding: 24px;
+}
+
+.shortcuts__card {
+  background: var(--tf-surface);
+  border-radius: var(--tf-radius);
+  box-shadow: var(--tf-shadow-hover);
+  padding: 24px;
+  width: 100%;
+  max-width: 340px;
+}
+
+.shortcuts__title {
+  font-size: 1.2rem;
+  margin: 0 0 16px;
+}
+
+.shortcuts__list {
+  list-style: none;
+  margin: 0 0 18px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.shortcuts__row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: 0.92rem;
+  color: var(--tf-text);
+}
+
+.shortcuts__keys {
+  font-family: var(--tf-font-sans);
+  font-weight: 700;
+  font-size: 0.78rem;
+  background: var(--tf-surface-2);
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius-sm);
+  padding: 3px 8px;
+  min-width: 44px;
+  text-align: center;
+}
+
+.shortcuts__close {
+  width: 100%;
+  background: var(--tf-accent);
+  color: var(--tf-accent-contrast);
+  border: none;
+  border-radius: 999px;
+  padding: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
