@@ -2,6 +2,7 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/rea
 import { useMyTasks } from './useMyTasks';
 import { GroupBySegment } from './GroupBySegment';
 import { MyTasksBucket } from './MyTasksBucket';
+import { useProjectsById } from '../projects/useProjectsById';
 import { LoadState } from '../shell/LoadState';
 import { TabBar } from '../shell/TabBar';
 import { useDocumentTitle } from '../shell/useDocumentTitle';
@@ -24,6 +25,7 @@ export function MyTasks() {
     toggleDone,
     setBucket,
   } = useMyTasks();
+  const projectsById = useProjectsById();
 
   return (
     <IonPage>
@@ -66,6 +68,7 @@ export function MyTasks() {
                 key={bucket.key}
                 bucket={bucket}
                 showFocusPicker={groupMode === 'focus'}
+                projectsById={projectsById}
                 onToggleDone={(input) => toggleDone.mutate(input)}
                 onSetBucket={(input) => setBucket.mutate(input)}
               />

@@ -8,8 +8,18 @@ import type { TaskRecord } from '../../lib/dataClient';
 const bucket: TaskBucket = {
   key: 'TODAY',
   label: 'Today',
-  tasks: [{ id: 't1', title: 'Ship it', status: 'TODO', myBucket: 'TODAY' } as TaskRecord],
+  tasks: [
+    {
+      id: 't1',
+      title: 'Ship it',
+      status: 'TODO',
+      myBucket: 'TODAY',
+      projectId: 'p1',
+    } as TaskRecord,
+  ],
 };
+
+const projectsById = new Map([['p1', { name: 'Launch', color: 'sky' }]]);
 
 describe('MyTasksBucket', () => {
   it('renders the bucket header, count, and cards', () => {
@@ -17,12 +27,14 @@ describe('MyTasksBucket', () => {
       <MyTasksBucket
         bucket={bucket}
         showFocusPicker={false}
+        projectsById={projectsById}
         onToggleDone={vi.fn()}
         onSetBucket={vi.fn()}
       />,
     );
     expect(screen.getByTestId('bucket-TODAY')).toHaveTextContent('Today');
     expect(screen.getByText('Ship it')).toBeInTheDocument();
+    expect(screen.getByTestId('task-project')).toHaveTextContent('Launch');
     expect(screen.queryByTestId('focus-bucket-select')).not.toBeInTheDocument();
   });
 
@@ -32,6 +44,7 @@ describe('MyTasksBucket', () => {
       <MyTasksBucket
         bucket={bucket}
         showFocusPicker
+        projectsById={projectsById}
         onToggleDone={vi.fn()}
         onSetBucket={onSetBucket}
       />,
