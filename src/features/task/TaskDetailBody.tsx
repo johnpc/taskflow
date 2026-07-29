@@ -2,6 +2,7 @@ import { useHistory } from 'react-router-dom';
 import { TaskHeader } from './TaskHeader';
 import { TaskActivity } from './TaskActivity';
 import { TaskFields } from './TaskFields';
+import { RepeatPicker } from './RepeatPicker';
 import { TaskAssignment } from './TaskAssignment';
 import { TaskLabels } from './TaskLabels';
 import { TaskDependencies } from './TaskDependencies';
@@ -37,6 +38,7 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
       />
       <TaskActivity task={task} nowMs={Date.now()} />
       <TaskFields task={task} onPatch={(p) => patch.mutate({ id: task.id, ...p })} />
+      <RepeatPicker task={task} onChange={(repeat) => patch.mutate({ id: task.id, repeat })} />
       <TaskAssignment
         task={task}
         sections={sections.data ?? []}

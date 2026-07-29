@@ -1,13 +1,15 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-const { create, update, del } = vi.hoisted(() => ({
+const { create, update, del, spawn } = vi.hoisted(() => ({
   create: vi.fn(),
   update: vi.fn(),
   del: vi.fn(),
+  spawn: vi.fn(),
 }));
 vi.mock('../../lib/dataClient', () => ({
   dataClient: { models: { Task: { create, update, delete: del } } },
 }));
+vi.mock('./spawnRecurrence', () => ({ spawnNextOccurrence: spawn }));
 
 import { createTask, setTaskDone, updateTask, deleteTask } from './tasksApi';
 
@@ -15,6 +17,8 @@ beforeEach(() => {
   create.mockReset();
   update.mockReset();
   del.mockReset();
+  spawn.mockReset();
+  spawn.mockResolvedValue(undefined);
 });
 
 describe('createTask', () => {
@@ -60,6 +64,14 @@ describe('setTaskDone', () => {
     update.mockResolvedValue({ errors: null });
     await setTaskDone('t', false, '2026-07-28T00:00:00Z');
     expect(update).toHaveBeenCalledWith({ id: 't', status: 'TODO', completedAt: null });
+  });
+  it('spawns the next occurrence on completion, not on reopen', async () => {
+    update.mockResolvedValue({ errors: null });
+    await setTaskDone('t', true, 'now');
+    expect(spawn).toHaveBeenCalledWith('t');
+    spawn.mockClear();
+    await setTaskDone('t', false, 'now');
+    expect(spawn).not.toHaveBeenCalled();
   });
   it('throws on error', async () => {
     update.mockResolvedValue({ errors: [{}] });

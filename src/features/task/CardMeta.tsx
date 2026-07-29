@@ -1,5 +1,6 @@
 import { dueLabel, dueStatus, isDone } from './taskMeta';
 import { todayISO } from './today';
+import { repeats, type Repeat } from './recurrence';
 import { LabelChips } from '../labels/LabelChips';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 
@@ -33,6 +34,11 @@ export function CardMeta({
       {task.priority && task.priority !== 'NONE' && (
         <span className={`task-card__prio task-card__prio--${task.priority.toLowerCase()}`}>
           {task.priority[0] + task.priority.slice(1).toLowerCase()}
+        </span>
+      )}
+      {repeats(task.repeat as Repeat) && (
+        <span className="task-card__repeat" data-testid="task-repeat-badge" aria-label="Repeats">
+          ↻
         </span>
       )}
       <LabelChips labels={labels} />

@@ -13,6 +13,8 @@ export interface SeedTask {
   labels?: string[];
   /** Titles of other tasks in the SAME project that must finish first. */
   blockedBy?: string[];
+  /** Recurrence rule; completing a recurring task spawns the next occurrence. */
+  repeat?: 'DAILY' | 'WEEKLY' | 'MONTHLY';
 }
 
 /** Reusable label registry — name + color key (a --tf-proj-* palette key). */
@@ -81,6 +83,22 @@ export const seedProjects: SeedProject[] = [
       { title: 'Bulk two', section: 'To do', priority: 'LOW' },
       { title: 'Drag me', section: 'To do', priority: 'LOW' },
       { title: 'Undo me', section: 'To do', priority: 'LOW' },
+      // Weekly recurring COMPLETION target (spawns next occurrence when done).
+      {
+        title: 'Weekly sync',
+        section: 'To do',
+        priority: 'LOW',
+        dueOffsetDays: 2,
+        repeat: 'WEEKLY',
+      },
+      // Daily recurring READ-ONLY anchor (never completed) for the repeat-badge check.
+      {
+        title: 'Daily standup',
+        section: 'To do',
+        priority: 'LOW',
+        dueOffsetDays: 1,
+        repeat: 'DAILY',
+      },
     ],
   },
   {

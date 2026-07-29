@@ -72,6 +72,12 @@
   font-weight: 700;
 }
 
+.task-card__repeat {
+  font-size: 0.8rem;
+  color: var(--tf-text-muted);
+  align-self: center;
+}
+
 .task-card__due {
   background: var(--tf-surface-2);
   color: var(--tf-text-muted);

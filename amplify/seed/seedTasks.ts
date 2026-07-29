@@ -36,6 +36,7 @@ export async function createTaskWithSubtasks(
       dueDate: task.dueOffsetDays === undefined ? undefined : offsetDate(task.dueOffsetDays),
       sortOrder: order,
       labelIds: labelIdsFor(task, labelMap),
+      repeat: task.repeat ?? 'NONE',
     },
     OWNER_WRITE,
   );

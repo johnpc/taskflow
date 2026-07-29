@@ -66,6 +66,9 @@ const schema = a.schema({
       status: a.enum(['TODO', 'IN_PROGRESS', 'DONE']),
       priority: a.enum(['NONE', 'LOW', 'MEDIUM', 'HIGH']),
       dueDate: a.date(),
+      // Recurrence: when set (and the task has a due date), completing the task
+      // spawns the next occurrence with the due date advanced by this period.
+      repeat: a.enum(['NONE', 'DAILY', 'WEEKLY', 'MONTHLY']),
       completedAt: a.datetime(),
       sortOrder: a.integer().default(0),
       assigneeEmail: a.string(),

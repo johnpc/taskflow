@@ -3,6 +3,7 @@
  * Amplify client; the pure status + due helpers live in taskMeta.
  */
 import { dataClient, type TaskRecord } from '../../lib/dataClient';
+import { spawnNextOccurrence } from './spawnRecurrence';
 
 export type { TaskRecord } from '../../lib/dataClient';
 
@@ -37,6 +38,8 @@ export async function setTaskDone(id: string, done: boolean, now: string): Promi
     completedAt: done ? now : null,
   });
   if (errors) throw new Error(`Update task failed: ${JSON.stringify(errors)}`);
+  // Completing a recurring task rolls its next occurrence forward.
+  if (done) await spawnNextOccurrence(id);
 }
 
 /** Patch arbitrary task fields (title, notes, priority, dueDate, assignee,
@@ -54,6 +57,7 @@ export async function updateTask(
       | 'sortOrder'
       | 'labelIds'
       | 'blockedByIds'
+      | 'repeat'
     >
   >,
 ): Promise<void> {
