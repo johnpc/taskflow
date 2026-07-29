@@ -11,10 +11,12 @@ export function Subtasks({
   subtasks,
   onAdd,
   onToggle,
+  onOpen,
 }: {
   subtasks: TaskRecord[];
   onAdd: (title: string) => void;
   onToggle: (input: { taskId: string; done: boolean; now: string }) => void;
+  onOpen: (id: string) => void;
 }) {
   const doneCount = subtasks.filter(isDone).length;
   return (
@@ -42,7 +44,14 @@ export function Subtasks({
               >
                 <IonIcon icon={done ? checkmarkCircle : ellipseOutline} />
               </button>
-              <span className="subtask__title">{sub.title}</span>
+              <button
+                type="button"
+                className="subtask__title"
+                data-testid="subtask-open"
+                onClick={() => onOpen(sub.id)}
+              >
+                {sub.title}
+              </button>
             </li>
           );
         })}

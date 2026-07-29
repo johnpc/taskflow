@@ -40,7 +40,7 @@ iOS and Android.
 | **Inline rename**   | Rename a task in place from its card (pencil), no detail needed                | ✅     |
 | **Milestones**      | Mark a task a milestone; its card shows a ◆ marker for key checkpoints         | ✅     |
 | **Highlight color** | Give a task a color; its card gets a left accent stripe for visual grouping    | ✅     |
-| **Subtasks**        | Break a task into a checklist; the card shows a "2/3" progress chip            | ✅     |
+| **Subtasks**        | Checklist with a "2/3" card chip; open a subtask, hop back via its breadcrumb  | ✅     |
 | **Attachments**     | Attach labelled links to a task; each opens in a new tab (XSS-guarded hrefs)   | ✅     |
 | **Dependencies**    | Mark a task "blocked by" others; a banner + board badge flag it until done     | ✅     |
 | **Recurring**       | Repeat a task daily/weekly/monthly; completing it spawns the next occurrence   | ✅     |

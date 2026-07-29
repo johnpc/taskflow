@@ -212,6 +212,8 @@ jobs:
             paths: .features-gen/e2e/features/bulkmove
           - name: copylink
             paths: .features-gen/e2e/features/copylink
+          - name: subtasknav
+            paths: .features-gen/e2e/features/subtasknav
     steps:
       - uses: actions/checkout@v4
 

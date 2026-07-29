@@ -205,9 +205,37 @@
   color: var(--tf-done);
 }
 
+.subtask__title {
+  background: none;
+  border: none;
+  padding: 0;
+  text-align: left;
+  font-size: inherit;
+  color: var(--tf-text);
+  cursor: pointer;
+}
+
+.subtask__title:hover {
+  text-decoration: underline;
+}
+
 .subtask--done .subtask__title {
   text-decoration: line-through;
   color: var(--tf-text-muted);
+}
+
+.task-breadcrumb {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  align-self: flex-start;
+  background: none;
+  border: none;
+  padding: 0 0 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--tf-accent-strong);
+  cursor: pointer;
 }
 
 .comment {
