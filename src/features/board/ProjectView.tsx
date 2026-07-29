@@ -18,8 +18,9 @@ import { ViewToggle } from './ViewToggle';
 import { FilterBar } from './FilterBar';
 import { ProjectHeader } from './ProjectHeader';
 import { ProjectMenu } from './ProjectMenu';
-import { BoardContent } from './BoardContent';
-import { LoadState } from '../shell/LoadState';
+import { SelectionBar } from './SelectionBar';
+import { useBulkSelection } from './useBulkSelection';
+import { BoardRegion } from './BoardRegion';
 import { useDocumentTitle } from '../shell/useDocumentTitle';
 import type { ViewMode } from './viewMode';
 import './board.css';
@@ -31,11 +32,10 @@ export function ProjectView() {
   const project = useProject(id);
   const { filter, update } = useBoardFilter();
   const board = useBoard(id, filter);
-  const { query, columns, addTask, toggleDone, reorder, quickEdit, labels } = board;
-  const { addSection, editSection, removeSection, moveSection } = board;
   const { mode, choose } = useViewMode(id, project.data?.view as ViewMode | undefined);
   const edit = useProjectEdit(id);
   const actions = useProjectActions(id);
+  const bulk = useBulkSelection(board);
   useDocumentTitle(project.data?.name ?? 'Project');
 
   return (
@@ -56,32 +56,20 @@ export function ProjectView() {
           <ProjectHeader
             project={project.data}
             onDescribe={(description) => edit.mutate({ id, description })}
-            onAddSection={(name) => addSection.mutate(name)}
+            onAddSection={(name) => board.addSection.mutate(name)}
           />
         )}
         <ViewToggle mode={mode} onChange={choose} />
-        <FilterBar filter={filter} labels={labels} onChange={update} />
-        <LoadState
-          isLoading={query.isLoading}
-          isError={query.isError}
-          isEmpty={columns.length === 0}
-          onRetry={query.refetch}
-          emptyTitle="No columns yet"
-          emptyMessage="This project has no sections."
-        >
-          <BoardContent
-            mode={mode}
-            columns={columns}
-            labels={labels}
-            onAddTask={(input) => addTask.mutate(input)}
-            onToggleDone={(input) => toggleDone.mutate(input)}
-            onReorder={(input) => reorder.mutate(input)}
-            onQuickEdit={(taskId, patch) => quickEdit.mutate({ id: taskId, ...patch })}
-            onRenameSection={(input) => editSection.mutate(input)}
-            onDeleteSection={(sectionId) => removeSection.mutate(sectionId)}
-            onMoveSection={(input) => moveSection.mutate(input)}
+        <FilterBar filter={filter} labels={board.labels} onChange={update} />
+        {mode === 'LIST' && bulk.selection.active && (
+          <SelectionBar
+            count={bulk.selection.count}
+            onComplete={bulk.completeSelected}
+            onDelete={bulk.deleteSelected}
+            onClear={bulk.selection.clear}
           />
-        </LoadState>
+        )}
+        <BoardRegion board={board} mode={mode} bulk={bulk} />
       </IonContent>
     </IonPage>
   );

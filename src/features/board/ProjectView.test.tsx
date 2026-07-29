@@ -29,6 +29,8 @@ describe('ProjectView', () => {
       editSection: { mutate: vi.fn() },
       removeSection: { mutate: vi.fn() },
       moveSection: { mutate: vi.fn() },
+      bulkComplete: { mutate: vi.fn() },
+      bulkDelete: { mutate: vi.fn() },
     });
     renderWithProviders(<ProjectView />, '/projects/p');
     expect(screen.getByTestId('board')).toBeInTheDocument();
@@ -48,6 +50,8 @@ describe('ProjectView', () => {
       editSection: { mutate: vi.fn() },
       removeSection: { mutate: vi.fn() },
       moveSection: { mutate: vi.fn() },
+      bulkComplete: { mutate: vi.fn() },
+      bulkDelete: { mutate: vi.fn() },
     });
     renderWithProviders(<ProjectView />, '/projects/p');
     expect(screen.getByTestId('board')).toBeInTheDocument();
@@ -68,6 +72,8 @@ describe('ProjectView', () => {
       editSection: { mutate: vi.fn() },
       removeSection: { mutate: vi.fn() },
       moveSection: { mutate: vi.fn() },
+      bulkComplete: { mutate: vi.fn() },
+      bulkDelete: { mutate: vi.fn() },
     });
     renderWithProviders(<ProjectView />, '/projects/p');
     expect(screen.getByTestId('load-empty')).toBeInTheDocument();

@@ -20,6 +20,8 @@ export function ListSection({
   onToggleDone,
   onReorder,
   onQuickEdit,
+  selectedIds,
+  onSelect,
 }: {
   column: Column;
   labels?: LabelRecord[];
@@ -32,6 +34,8 @@ export function ListSection({
     direction: 'up' | 'down';
   }) => void;
   onQuickEdit?: QuickEditFn;
+  selectedIds?: Set<string>;
+  onSelect?: (id: string) => void;
 }) {
   const [open, setOpen] = useState(defaultOpen);
   const nextOrder = column.tasks.reduce((max, t) => Math.max(max, t.sortOrder ?? 0), -1) + 1;
@@ -66,6 +70,8 @@ export function ListSection({
                     onReorder({ columnTasks: column.tasks, taskId: task.id, direction }))
                 }
                 onQuickEdit={onQuickEdit && ((patch) => onQuickEdit(task.id, patch))}
+                selected={selectedIds?.has(task.id)}
+                onSelect={onSelect && (() => onSelect(task.id))}
               />
             ))}
           </ul>
