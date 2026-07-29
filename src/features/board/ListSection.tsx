@@ -15,6 +15,7 @@ import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 export function ListSection({
   column,
   labels = [],
+  blockedIds,
   defaultOpen = true,
   onAddTask,
   onToggleDone,
@@ -25,6 +26,7 @@ export function ListSection({
 }: {
   column: Column;
   labels?: LabelRecord[];
+  blockedIds?: Set<string>;
   defaultOpen?: boolean;
   onAddTask: (input: { sectionId: string; title: string; order: number }) => void;
   onToggleDone: (input: { id: string; done: boolean; now: string }) => void;
@@ -61,6 +63,7 @@ export function ListSection({
                 key={task.id}
                 task={task}
                 labels={resolveLabels(task.labelIds, labels)}
+                blocked={blockedIds?.has(task.id)}
                 onToggleDone={(t) =>
                   onToggleDone({ id: t.id, done: t.status !== 'DONE', now: nowISO() })
                 }

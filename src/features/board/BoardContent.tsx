@@ -12,6 +12,7 @@ export function BoardContent({
   mode,
   columns,
   labels = [],
+  blockedIds,
   onAddTask,
   onToggleDone,
   onReorder,
@@ -26,6 +27,7 @@ export function BoardContent({
   mode: ViewMode;
   columns: Column[];
   labels?: LabelRecord[];
+  blockedIds?: Set<string>;
   onAddTask: AddTaskFn;
   onToggleDone: ToggleDoneFn;
   onReorder?: ReorderFn;
@@ -45,6 +47,7 @@ export function BoardContent({
             key={column.section.id}
             column={column}
             labels={labels}
+            blockedIds={blockedIds}
             defaultOpen={i === 0 || column.tasks.length > 0}
             onAddTask={onAddTask}
             onToggleDone={onToggleDone}
@@ -64,6 +67,7 @@ export function BoardContent({
           key={column.section.id}
           column={column}
           labels={labels}
+          blockedIds={blockedIds}
           onAddTask={onAddTask}
           onToggleDone={onToggleDone}
           onReorder={onReorder}

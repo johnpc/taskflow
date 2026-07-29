@@ -41,6 +41,20 @@ describe('useBoard', () => {
     expect(result.current.columns[0].tasks.map((t) => t.id)).toEqual(['t1']);
   });
 
+  it('exposes the set of blocked task ids', async () => {
+    ensureDefaultSections.mockResolvedValue([{ id: 's1', name: 'To do', sortOrder: 0 }]);
+    fetchBoard.mockResolvedValue({
+      sections: [],
+      tasks: [
+        { id: 'a', sectionId: 's1', status: 'TODO' },
+        { id: 'b', sectionId: 's1', status: 'TODO', blockedByIds: ['a'] },
+      ],
+    });
+    const { result } = renderHook(() => useBoard('p'), { wrapper: hookWrapper() });
+    await waitFor(() => expect(result.current.query.isSuccess).toBe(true));
+    expect([...result.current.blockedIds]).toEqual(['b']);
+  });
+
   it('adds a task through the mutation', async () => {
     fetchBoard.mockResolvedValue({ sections: [], tasks: [] });
     ensureDefaultSections.mockResolvedValue([{ id: 's1', name: 'To do', sortOrder: 0 }]);
