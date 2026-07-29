@@ -61,6 +61,7 @@ export async function updateTask(
       | 'title'
       | 'notes'
       | 'priority'
+      | 'projectId'
       | 'startDate'
       | 'dueDate'
       | 'dueTime'
