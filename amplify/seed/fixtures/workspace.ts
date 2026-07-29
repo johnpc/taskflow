@@ -79,4 +79,18 @@ export const seedProjects: SeedProject[] = [
       { title: 'Renew passport', section: 'To do', priority: 'HIGH', dueOffsetDays: -1 },
     ],
   },
+  // Dedicated throwaway projects for the archive + delete acceptance scenarios,
+  // each mutated by exactly one area so they can't disturb the others.
+  {
+    name: 'Old Campaign',
+    color: 'amber',
+    sections: ['To do', 'Done'],
+    tasks: [{ title: 'Wrap up', section: 'To do', priority: 'LOW' }],
+  },
+  {
+    name: 'Scratchpad',
+    color: 'violet',
+    sections: ['To do'],
+    tasks: [{ title: 'Random idea', section: 'To do', priority: 'NONE' }],
+  },
 ];

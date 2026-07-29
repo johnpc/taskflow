@@ -2,14 +2,40 @@ import { describe, it, expect, vi, beforeEach } from 'vitest';
 
 // Mock the shared Amplify client before importing the module under test.
 // vi.hoisted lets the fns exist above the hoisted vi.mock factory.
-const { list, get, create, update } = vi.hoisted(() => ({
+const {
+  list,
+  get,
+  create,
+  update,
+  del,
+  listSections,
+  delSection,
+  listTasks,
+  delTask,
+  listComments,
+  delComment,
+} = vi.hoisted(() => ({
   list: vi.fn(),
   get: vi.fn(),
   create: vi.fn(),
   update: vi.fn(),
+  del: vi.fn(),
+  listSections: vi.fn(),
+  delSection: vi.fn(),
+  listTasks: vi.fn(),
+  delTask: vi.fn(),
+  listComments: vi.fn(),
+  delComment: vi.fn(),
 }));
 vi.mock('../../lib/dataClient', () => ({
-  dataClient: { models: { Project: { list, get, create, update } } },
+  dataClient: {
+    models: {
+      Project: { list, get, create, update, delete: del },
+      Section: { listSectionByProjectIdAndSortOrder: listSections, delete: delSection },
+      Task: { listTaskByProjectIdAndSortOrder: listTasks, delete: delTask },
+      Comment: { listCommentByTaskId: listComments, delete: delComment },
+    },
+  },
 }));
 
 import {
@@ -18,6 +44,8 @@ import {
   createProject,
   setProjectFavorite,
   updateProject,
+  archiveProject,
+  deleteProject,
 } from './projectsApi';
 
 beforeEach(() => {
@@ -89,5 +117,37 @@ describe('updateProject', () => {
   it('throws on error', async () => {
     update.mockResolvedValue({ errors: [{}] });
     await expect(updateProject({ id: 'x', name: 'Y' })).rejects.toThrow();
+  });
+});
+
+describe('archiveProject', () => {
+  it('sets isArchived', async () => {
+    update.mockResolvedValue({ errors: null });
+    await archiveProject('x');
+    expect(update).toHaveBeenCalledWith({ id: 'x', isArchived: true });
+  });
+});
+
+describe('deleteProject', () => {
+  it('cascades tasks (+comments) and sections, then deletes the project', async () => {
+    listSections.mockResolvedValue({ data: [{ id: 's1' }] });
+    listTasks.mockResolvedValue({ data: [{ id: 't1' }] });
+    listComments.mockResolvedValue({ data: [{ id: 'c1' }] });
+    delComment.mockResolvedValue({ errors: null });
+    delTask.mockResolvedValue({ errors: null });
+    delSection.mockResolvedValue({ errors: null });
+    del.mockResolvedValue({ errors: null });
+    await deleteProject('p');
+    expect(delComment).toHaveBeenCalledWith({ id: 'c1' });
+    expect(delTask).toHaveBeenCalledWith({ id: 't1' });
+    expect(delSection).toHaveBeenCalledWith({ id: 's1' });
+    expect(del).toHaveBeenCalledWith({ id: 'p' });
+  });
+
+  it('throws when the final delete errors', async () => {
+    listSections.mockResolvedValue({ data: [] });
+    listTasks.mockResolvedValue({ data: [] });
+    del.mockResolvedValue({ errors: [{}] });
+    await expect(deleteProject('p')).rejects.toThrow();
   });
 });
