@@ -13,11 +13,6 @@ Then('an archived project {string} is listed', async ({ page }, name: string) =>
   });
 });
 
-When('the user restores the archived project {string}', async ({ page }, name: string) => {
-  await page
-    .getByTestId('archived-project')
-    .filter({ hasText: name })
-    .first()
-    .getByTestId('archived-restore')
-    .click();
+Then('a {string} control is present', async ({ page }, label: string) => {
+  await expect(page.getByRole('button', { name: label })).toBeVisible({ timeout: 15_000 });
 });
