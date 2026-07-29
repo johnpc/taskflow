@@ -262,3 +262,10 @@
   color: var(--tf-danger);
   cursor: pointer;
 }
+
+/* Activity line (created / completed timestamps) */
+.task-activity {
+  font-size: 0.78rem;
+  color: var(--tf-text-muted);
+  margin: -6px 0 0;
+}

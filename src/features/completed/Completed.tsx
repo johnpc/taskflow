@@ -14,6 +14,7 @@ import { useCompleted } from './useCompleted';
 import { LoadState } from '../shell/LoadState';
 import { useDocumentTitle } from '../shell/useDocumentTitle';
 import { nowISO } from '../task/today';
+import { relativeTime } from '../task/relativeTime';
 import './completed.css';
 
 /** A project's completed tasks — most-recently done first, each reopenable.
@@ -46,6 +47,11 @@ export function Completed() {
             {done.map((task) => (
               <li key={task.id} className="completed__row" data-testid="completed-task">
                 <span className="completed__title">{task.title}</span>
+                {task.completedAt && (
+                  <span className="completed__when">
+                    {relativeTime(task.completedAt, Date.now())}
+                  </span>
+                )}
                 <button
                   type="button"
                   className="completed__reopen"

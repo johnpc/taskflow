@@ -152,6 +152,8 @@ jobs:
             paths: .features-gen/e2e/features/rename
           - name: sectionmove
             paths: .features-gen/e2e/features/sectionmove
+          - name: activity
+            paths: .features-gen/e2e/features/activity
     steps:
       - uses: actions/checkout@v4
 
