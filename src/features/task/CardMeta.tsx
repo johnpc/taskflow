@@ -1,12 +1,12 @@
-import { dueLabelWithTime, dueStatus, isDone } from './taskMeta';
+import { dueLabelWithTime, dueStatus, isDone, startsInFuture, startLabel } from './taskMeta';
 import { todayISO } from './today';
 import { repeats, type Repeat } from './recurrence';
 import { LabelChips } from '../labels/LabelChips';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 
-/** The meta row under a card title: a Blocked badge (when the task is blocked),
- * a due chip, a priority flag, and label chips. Extracted from TaskCard to keep
- * that component small. Renders only. */
+/** The meta row under a card title: a Blocked badge, a start-or-due chip (a
+ * not-yet-started task shows "Starts Mon D" instead of its due date), a
+ * priority flag, repeat marker, and label chips. Renders only. */
 export function CardMeta({
   task,
   labels,
@@ -17,8 +17,10 @@ export function CardMeta({
   blocked?: boolean;
 }) {
   const today = todayISO();
+  const done = isDone(task);
+  const notStarted = startsInFuture(task.startDate, today, done);
   const due = dueLabelWithTime(task.dueDate, task.dueTime, today);
-  const dueKind = dueStatus(task.dueDate, today, isDone(task));
+  const dueKind = dueStatus(task.dueDate, today, done);
   return (
     <span className="task-card__meta">
       {blocked && (
@@ -26,10 +28,16 @@ export function CardMeta({
           Blocked
         </span>
       )}
-      {due && (
-        <span className={`task-card__due task-card__due--${dueKind}`} data-testid="task-due">
-          {due}
+      {notStarted ? (
+        <span className="task-card__start" data-testid="task-start">
+          {startLabel(task.startDate, today)}
         </span>
+      ) : (
+        due && (
+          <span className={`task-card__due task-card__due--${dueKind}`} data-testid="task-due">
+            {due}
+          </span>
+        )
       )}
       {task.priority && task.priority !== 'NONE' && (
         <span className={`task-card__prio task-card__prio--${task.priority.toLowerCase()}`}>

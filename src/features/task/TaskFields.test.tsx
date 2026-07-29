@@ -7,6 +7,13 @@ const task = (over: Partial<TaskRecord>): TaskRecord =>
   ({ id: 't', title: 'T', priority: 'NONE', dueDate: null, notes: null, ...over }) as TaskRecord;
 
 describe('TaskFields', () => {
+  it('patches the start date', () => {
+    const onPatch = vi.fn();
+    render(<TaskFields task={task({})} onPatch={onPatch} />);
+    fireEvent.change(screen.getByTestId('task-start-input'), { target: { value: '2026-07-30' } });
+    expect(onPatch).toHaveBeenCalledWith({ startDate: '2026-07-30' });
+  });
+
   it('patches the due date (and resets the time)', () => {
     const onPatch = vi.fn();
     render(<TaskFields task={task({})} onPatch={onPatch} />);

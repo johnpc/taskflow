@@ -63,3 +63,22 @@ export function dueLabelWithTime(
   const time = base ? formatTime(dueTime) : '';
   return time ? `${base} ${time}` : base;
 }
+
+/** A task hasn't started yet when its start date is strictly after today
+ * (and it isn't done). Pure; time injected. */
+export function startsInFuture(
+  startDate: string | null | undefined,
+  today: string,
+  done: boolean,
+): boolean {
+  return !done && !!startDate && startDate > today;
+}
+
+/** "Starts Mon D" label for a future start date, else ''. Reuses the month
+ * formatting from dueLabel. */
+export function startLabel(startDate: string | null | undefined, today: string): string {
+  if (!startDate || startDate <= today) return '';
+  const [, m, d] = startDate.split('-').map(Number);
+  const months = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split(' ');
+  return `Starts ${months[m - 1]} ${d}`;
+}

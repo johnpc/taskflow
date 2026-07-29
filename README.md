@@ -28,6 +28,7 @@ iOS and Android.
 | **Board**          | Kanban columns (To do / In progress / Done) with inline task creation          | ✅     |
 | **List view**      | Board↔List toggle (persisted per project); collapsible sections, list-first    | ✅     |
 | **Tasks**          | Title, notes, priority (Low→High), due dates with overdue/today/upcoming cues  | ✅     |
+| **Start date**     | Give a task a start date; not-yet-started tasks show a "Starts Mon D" chip     | ✅     |
 | **Due presets**    | One-tap Today / Tomorrow / Next week due-date buttons                          | ✅     |
 | **Due time**       | Add a time of day to a due date; the card chip shows it (e.g. "Aug 3 2:00 PM") | ✅     |
 | **Drag & drop**    | Drag a card to a column to move it, or onto a card to drop it at that position | ✅     |

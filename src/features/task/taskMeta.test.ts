@@ -5,6 +5,8 @@ import {
   dueLabel,
   formatTime,
   dueLabelWithTime,
+  startsInFuture,
+  startLabel,
   PRIORITY_META,
 } from './taskMeta';
 
@@ -74,6 +76,29 @@ describe('dueLabelWithTime', () => {
   });
   it('is blank with no date even if a time is set', () => {
     expect(dueLabelWithTime(null, '09:00', today)).toBe('');
+  });
+});
+
+describe('startsInFuture', () => {
+  const today = '2026-07-28';
+  it('is true only for a future start on an open task', () => {
+    expect(startsInFuture('2026-08-01', today, false)).toBe(true);
+    expect(startsInFuture('2026-07-28', today, false)).toBe(false); // today = started
+    expect(startsInFuture('2026-07-01', today, false)).toBe(false); // past
+    expect(startsInFuture('2026-08-01', today, true)).toBe(false); // done
+    expect(startsInFuture(null, today, false)).toBe(false);
+  });
+});
+
+describe('startLabel', () => {
+  const today = '2026-07-28';
+  it('labels a future start "Starts Mon D"', () => {
+    expect(startLabel('2026-08-03', today)).toBe('Starts Aug 3');
+  });
+  it('is blank for today, past, or no start', () => {
+    expect(startLabel('2026-07-28', today)).toBe('');
+    expect(startLabel('2026-07-01', today)).toBe('');
+    expect(startLabel(null, today)).toBe('');
   });
 });
 
