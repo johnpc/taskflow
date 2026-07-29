@@ -4,6 +4,7 @@ import { QueryClientProvider } from '@tanstack/react-query';
 import { queryClient } from './lib/queryClient';
 import { AuthProvider } from './features/auth/AuthProvider';
 import { ThemeGate } from './features/settings/ThemeGate';
+import { ToastProvider } from './features/shell/ToastProvider';
 import { ErrorBoundary } from './features/shell/ErrorBoundary';
 import { AppRoutes } from './AppRoutes';
 
@@ -27,11 +28,13 @@ const App: React.FC = () => (
     <QueryClientProvider client={queryClient}>
       <ThemeGate>
         <AuthProvider>
-          <IonReactRouter>
-            <ErrorBoundary>
-              <AppRoutes />
-            </ErrorBoundary>
-          </IonReactRouter>
+          <ToastProvider>
+            <IonReactRouter>
+              <ErrorBoundary>
+                <AppRoutes />
+              </ErrorBoundary>
+            </IonReactRouter>
+          </ToastProvider>
         </AuthProvider>
       </ThemeGate>
     </QueryClientProvider>

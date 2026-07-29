@@ -2,6 +2,8 @@ import { BoardContent } from './BoardContent';
 import { LoadState } from '../shell/LoadState';
 import { useDragTask } from './useDragTask';
 import { computeDrop } from './computeDrop';
+import { useToast } from '../shell/useToast';
+import { nowISO } from '../task/today';
 import type { useBoard } from './useBoard';
 import type { useBulkSelection } from './useBulkSelection';
 import type { ViewMode } from './viewMode';
@@ -22,6 +24,17 @@ export function BoardRegion({
 }) {
   const { query, columns } = board;
   const inList = mode === 'LIST';
+  const { showUndo } = useToast();
+  // Completing a task hides it (hide-completed default); offer a one-tap undo.
+  const toggleDone = (input: { id: string; done: boolean; now: string }) => {
+    board.toggleDone.mutate(input);
+    if (input.done) {
+      showUndo({
+        message: 'Task completed',
+        onUndo: () => board.toggleDone.mutate({ id: input.id, done: false, now: nowISO() }),
+      });
+    }
+  };
   const dragState = useDragTask();
   const drag: BoardDrag = {
     draggingId: dragState.draggingId,
@@ -47,7 +60,7 @@ export function BoardRegion({
         columns={columns}
         labels={board.labels}
         onAddTask={(input) => board.addTask.mutate(input)}
-        onToggleDone={(input) => board.toggleDone.mutate(input)}
+        onToggleDone={toggleDone}
         onReorder={(input) => board.reorder.mutate(input)}
         onQuickEdit={(taskId, patch) => board.quickEdit.mutate({ id: taskId, ...patch })}
         onRenameSection={(input) => board.editSection.mutate(input)}
