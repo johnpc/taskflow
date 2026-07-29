@@ -1,20 +1,25 @@
 import { useState } from 'react';
+import { relativeTime } from './relativeTime';
 import type { CommentRecord } from '../../lib/dataClient';
 
-/** One comment: author + body with Edit/Delete controls, toggling to an inline
- * editor (textarea + Save/Cancel) on Edit. Edit + delete are delegated up; only
- * the local draft + editing flag live here. */
+/** One comment: author + relative timestamp + body, with Edit/Delete controls
+ * toggling to an inline editor (textarea + Save/Cancel) on Edit. Edit + delete
+ * are delegated up; only the local draft + editing flag live here. `nowMs` is
+ * injected for deterministic timestamps. */
 export function CommentRow({
   comment,
+  nowMs,
   onEdit,
   onDelete,
 }: {
   comment: CommentRecord;
+  nowMs: number;
   onEdit: (input: { id: string; body: string }) => void;
   onDelete: (id: string) => void;
 }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(comment.body);
+  const when = relativeTime(comment.createdAt, nowMs);
 
   const save = () => {
     const body = draft.trim();
@@ -24,7 +29,14 @@ export function CommentRow({
 
   return (
     <li className="comment" data-testid="comment">
-      <span className="comment__author">{comment.authorEmail ?? 'You'}</span>
+      <span className="comment__meta">
+        <span className="comment__author">{comment.authorEmail ?? 'You'}</span>
+        {when && (
+          <span className="comment__time" data-testid="comment-time">
+            {when}
+          </span>
+        )}
+      </span>
       {editing ? (
         <>
           <textarea

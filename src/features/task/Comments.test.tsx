@@ -12,6 +12,7 @@ describe('Comments', () => {
       <Comments
         comments={[comment({ body: 'First' })]}
         busy={false}
+        nowMs={0}
         onPost={vi.fn()}
         onEdit={vi.fn()}
         onDelete={vi.fn()}
@@ -22,7 +23,14 @@ describe('Comments', () => {
 
   it('disables post when the draft is empty', () => {
     render(
-      <Comments comments={[]} busy={false} onPost={vi.fn()} onEdit={vi.fn()} onDelete={vi.fn()} />,
+      <Comments
+        comments={[]}
+        busy={false}
+        nowMs={0}
+        onPost={vi.fn()}
+        onEdit={vi.fn()}
+        onDelete={vi.fn()}
+      />,
     );
     expect(screen.getByTestId('comment-post')).toBeDisabled();
   });
@@ -30,7 +38,14 @@ describe('Comments', () => {
   it('posts a trimmed comment and clears the draft', () => {
     const onPost = vi.fn();
     render(
-      <Comments comments={[]} busy={false} onPost={onPost} onEdit={vi.fn()} onDelete={vi.fn()} />,
+      <Comments
+        comments={[]}
+        busy={false}
+        nowMs={0}
+        onPost={onPost}
+        onEdit={vi.fn()}
+        onDelete={vi.fn()}
+      />,
     );
     const input = screen.getByTestId('comment-input');
     fireEvent.change(input, { target: { value: 'Nice work' } });
@@ -45,6 +60,7 @@ describe('Comments', () => {
       <Comments
         comments={[comment({ id: 'c9' })]}
         busy={false}
+        nowMs={0}
         onPost={vi.fn()}
         onEdit={vi.fn()}
         onDelete={onDelete}
