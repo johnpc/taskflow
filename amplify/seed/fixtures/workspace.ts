@@ -70,6 +70,7 @@ export const seedProjects: SeedProject[] = [
       { title: 'Bulk one', section: 'To do', priority: 'LOW' },
       { title: 'Bulk two', section: 'To do', priority: 'LOW' },
       { title: 'Drag me', section: 'To do', priority: 'LOW' },
+      { title: 'Undo me', section: 'To do', priority: 'LOW' },
     ],
   },
   {

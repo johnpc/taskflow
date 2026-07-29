@@ -1,10 +1,18 @@
 import { describe, it, expect, vi } from 'vitest';
 import { screen, fireEvent } from '@testing-library/react';
 import { BoardRegion } from './BoardRegion';
+import { ToastProvider } from '../shell/ToastProvider';
 import { renderWithProviders } from '../../test/renderWithProviders';
 import type { SectionRecord, TaskRecord } from '../../lib/dataClient';
 import type { useBoard } from './useBoard';
 import type { useBulkSelection } from './useBulkSelection';
+
+const renderRegion = (board: ReturnType<typeof useBoard>, mode: 'BOARD' | 'LIST', b = bulk) =>
+  renderWithProviders(
+    <ToastProvider>
+      <BoardRegion board={board} mode={mode} bulk={b} />
+    </ToastProvider>,
+  );
 
 const col = (id: string, tasks: TaskRecord[]) => ({
   section: { id, name: id } as SectionRecord,
@@ -35,7 +43,7 @@ const bulk = {
 describe('BoardRegion drag-and-drop', () => {
   it('moves a dragged task to the dropped column via quickEdit', () => {
     const quickEdit = { mutate: vi.fn() };
-    renderWithProviders(<BoardRegion board={fakeBoard(quickEdit)} mode="BOARD" bulk={bulk} />);
+    renderRegion(fakeBoard(quickEdit), 'BOARD');
     const [s1, s2] = screen.getAllByTestId('board-column');
     // Drag card 'a' (in s1), drop on s2.
     fireEvent.dragStart(s1.querySelector('[data-testid="task-card"]')!);
@@ -45,10 +53,21 @@ describe('BoardRegion drag-and-drop', () => {
 
   it('does not patch when dropped on the same column', () => {
     const quickEdit = { mutate: vi.fn() };
-    renderWithProviders(<BoardRegion board={fakeBoard(quickEdit)} mode="BOARD" bulk={bulk} />);
+    renderRegion(fakeBoard(quickEdit), 'BOARD');
     const [s1] = screen.getAllByTestId('board-column');
     fireEvent.dragStart(s1.querySelector('[data-testid="task-card"]')!);
     fireEvent.drop(s1);
     expect(quickEdit.mutate).not.toHaveBeenCalled();
+  });
+
+  it('shows an undo toast when a task is completed', () => {
+    const board = fakeBoard();
+    renderRegion(board, 'BOARD');
+    fireEvent.click(screen.getAllByTestId('task-check')[0]);
+    expect(screen.getByTestId('undo-toast')).toBeInTheDocument();
+    // Undo re-opens the task (a second toggleDone with done:false).
+    fireEvent.click(screen.getByTestId('undo-toast-action'));
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    expect((board.toggleDone.mutate as any).mock.calls.pop()[0]).toMatchObject({ done: false });
   });
 });

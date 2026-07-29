@@ -4,6 +4,8 @@ import { screen, fireEvent } from '@testing-library/react';
 const { useBoard, useProject } = vi.hoisted(() => ({ useBoard: vi.fn(), useProject: vi.fn() }));
 vi.mock('./useBoard', () => ({ useBoard }));
 vi.mock('./useProject', () => ({ useProject }));
+// BoardRegion (rendered by ProjectView) uses the toast; stub it here.
+vi.mock('../shell/useToast', () => ({ useToast: () => ({ showUndo: vi.fn() }) }));
 
 import { renderWithProviders } from '../../test/renderWithProviders';
 import { ProjectView } from './ProjectView';

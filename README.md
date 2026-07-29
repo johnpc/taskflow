@@ -44,6 +44,7 @@ iOS and Android.
 | **Calendar**       | Two-week forward view of upcoming dated tasks, grouped by day                 | ✅     |
 | **Search**         | Live substring search across every task's title and notes                     | ✅     |
 | **Complete**       | One-tap complete on the board and in lists, with a strike-through state       | ✅     |
+| **Undo**           | An undo toast after completing a task — one tap to bring it back              | ✅     |
 | **Completed view** | Per-project archive of done tasks (with when), each reopenable                | ✅     |
 | **Activity**       | Created / completed relative timestamps on task detail                        | ✅     |
 | **Filter & sort**  | Hide/show completed, filter by label, sort by due date or priority            | ✅     |
