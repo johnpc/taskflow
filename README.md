@@ -50,6 +50,7 @@ iOS and Android.
 | **Filter & sort**  | Hide/show completed, filter by label, sort by due date or priority            | ✅     |
 | **Dark mode**      | Follows your OS, with an in-app Light / Dark / System override                | ✅     |
 | **Accounts**       | Email sign-up/sign-in; your workspace is private and owner-scoped             | ✅     |
+| **Shortcuts**      | Keyboard nav — `g` then h/p/t/c to jump around, `/` to search, `?` for help   | ✅     |
 
 ## The vision
 

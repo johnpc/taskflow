@@ -166,6 +166,8 @@ jobs:
             paths: .features-gen/e2e/features/dragdrop
           - name: undo
             paths: .features-gen/e2e/features/undo
+          - name: shortcuts
+            paths: .features-gen/e2e/features/shortcuts
     steps:
       - uses: actions/checkout@v4
 
