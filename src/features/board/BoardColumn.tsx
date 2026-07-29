@@ -19,6 +19,7 @@ export function BoardColumn({
   onQuickEdit,
   onRenameSection,
   onDeleteSection,
+  onMoveSection,
 }: {
   column: Column;
   labels?: LabelRecord[];
@@ -32,6 +33,7 @@ export function BoardColumn({
   onQuickEdit?: QuickEditFn;
   onRenameSection?: (input: { id: string; name: string }) => void;
   onDeleteSection?: (id: string) => void;
+  onMoveSection?: (input: { sectionId: string; direction: 'left' | 'right' }) => void;
 }) {
   const nextOrder = column.tasks.reduce((max, t) => Math.max(max, t.sortOrder ?? 0), -1) + 1;
   return (
@@ -43,6 +45,10 @@ export function BoardColumn({
           name={column.section.name}
           onRename={onRenameSection && ((name) => onRenameSection({ id: column.section.id, name }))}
           onDelete={onDeleteSection && (() => onDeleteSection(column.section.id))}
+          onMove={
+            onMoveSection &&
+            ((direction) => onMoveSection({ sectionId: column.section.id, direction }))
+          }
         />
       </header>
       <ul className="board-col__list">

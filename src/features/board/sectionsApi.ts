@@ -28,3 +28,9 @@ export async function deleteSection(id: string): Promise<void> {
   const { errors } = await dataClient.models.Section.delete({ id });
   if (errors) throw new Error(`Delete section failed: ${JSON.stringify(errors)}`);
 }
+
+/** Set a section's sortOrder (used to reorder columns). */
+export async function setSectionOrder(id: string, sortOrder: number): Promise<void> {
+  const { errors } = await dataClient.models.Section.update({ id, sortOrder });
+  if (errors) throw new Error(`Reorder section failed: ${JSON.stringify(errors)}`);
+}

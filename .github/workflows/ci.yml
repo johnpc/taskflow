@@ -150,6 +150,8 @@ jobs:
             paths: .features-gen/e2e/features/templates
           - name: rename
             paths: .features-gen/e2e/features/rename
+          - name: sectionmove
+            paths: .features-gen/e2e/features/sectionmove
     steps:
       - uses: actions/checkout@v4
 

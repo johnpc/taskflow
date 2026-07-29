@@ -23,7 +23,7 @@ iOS and Android.
 | **Projects**       | Create color-coded projects, favorite them, add a description, archive/delete | ✅     |
 | **Templates**      | Start a ready-made project (Sprint / Content / Launch) with sections + tasks  | ✅     |
 | **Counts**         | Open-task count badge per project; overdue count on My Tasks                  | ✅     |
-| **Sections**       | Add, rename, and delete a project's columns/sections                          | ✅     |
+| **Sections**       | Add, rename, delete, and reorder a project's columns/sections                 | ✅     |
 | **Board**          | Kanban columns (To do / In progress / Done) with inline task creation         | ✅     |
 | **List view**      | Board↔List toggle (persisted per project); collapsible sections, list-first   | ✅     |
 | **Tasks**          | Title, notes, priority (Low→High), due dates with overdue/today/upcoming cues | ✅     |
