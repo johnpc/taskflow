@@ -53,6 +53,7 @@ export async function updateTask(
       | 'sectionId'
       | 'sortOrder'
       | 'labelIds'
+      | 'blockedByIds'
     >
   >,
 ): Promise<void> {

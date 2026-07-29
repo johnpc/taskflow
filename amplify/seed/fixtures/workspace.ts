@@ -11,6 +11,8 @@ export interface SeedTask {
   subtasks?: string[];
   /** Names of labels (from seedLabels) to apply to this task. */
   labels?: string[];
+  /** Titles of other tasks in the SAME project that must finish first. */
+  blockedBy?: string[];
 }
 
 /** Reusable label registry — name + color key (a --tf-proj-* palette key). */
@@ -46,6 +48,14 @@ export const seedProjects: SeedProject[] = [
         labels: ['Marketing', 'Urgent'],
       },
       { title: 'Design hero banner', section: 'To do', priority: 'MEDIUM', dueOffsetDays: 3 },
+      // Stable dependency anchor: blocked by the (never-completed) hero banner,
+      // so the "Blocked by" banner is always present for the deps acceptance.
+      {
+        title: 'Announce on socials',
+        section: 'To do',
+        priority: 'LOW',
+        blockedBy: ['Design hero banner'],
+      },
       { title: 'Set up analytics', section: 'In progress', priority: 'LOW', dueOffsetDays: 1 },
       { title: 'Reserve launch domain', section: 'Done', priority: 'NONE' },
       // Stable anchor: NO acceptance scenario ever completes/moves this, so

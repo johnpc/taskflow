@@ -4,6 +4,7 @@ import { TaskActivity } from './TaskActivity';
 import { TaskFields } from './TaskFields';
 import { TaskAssignment } from './TaskAssignment';
 import { TaskLabels } from './TaskLabels';
+import { TaskDependencies } from './TaskDependencies';
 import { Subtasks } from './Subtasks';
 import { Comments } from './Comments';
 import { DeleteTaskButton } from './DeleteTaskButton';
@@ -48,6 +49,10 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
         registry={labels.query.data ?? []}
         onPatchLabels={(labelIds) => patch.mutate({ id: task.id, labelIds })}
         onCreateLabel={(input) => labels.create.mutate(input)}
+      />
+      <TaskDependencies
+        task={task}
+        onPatch={(blockedByIds) => patch.mutate({ id: task.id, blockedByIds })}
       />
       <Subtasks
         subtasks={subtasks}

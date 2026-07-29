@@ -168,6 +168,8 @@ jobs:
             paths: .features-gen/e2e/features/undo
           - name: shortcuts
             paths: .features-gen/e2e/features/shortcuts
+          - name: dependencies
+            paths: .features-gen/e2e/features/dependencies
     steps:
       - uses: actions/checkout@v4
 

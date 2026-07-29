@@ -72,6 +72,10 @@ const schema = a.schema({
       // Denormalized reusable-label ids (see Label). Kept on the task so the
       // board renders chips without a per-task join.
       labelIds: a.string().array(),
+      // Task dependencies: ids of same-project tasks that must finish first.
+      // Denormalized (like labelIds) so the board can flag "Blocked" without a
+      // join — it already holds every task in the project.
+      blockedByIds: a.string().array(),
       // Subtasks: a task can have a parent task (self-relation).
       parentTaskId: a.id(),
       parent: a.belongsTo('Task', 'parentTaskId'),

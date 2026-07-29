@@ -1,8 +1,12 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { screen, fireEvent } from '@testing-library/react';
 
-const { useTaskSections } = vi.hoisted(() => ({ useTaskSections: vi.fn() }));
+const { useTaskSections, useProjectTasks } = vi.hoisted(() => ({
+  useTaskSections: vi.fn(),
+  useProjectTasks: vi.fn(),
+}));
 vi.mock('./useTaskSections', () => ({ useTaskSections }));
+vi.mock('./useProjectTasks', () => ({ useProjectTasks }));
 vi.mock('../auth/useAuth', () => ({ useAuth: () => ({ email: 'me@x.co' }) }));
 
 import { renderWithProviders } from '../../test/renderWithProviders';
@@ -41,6 +45,7 @@ beforeEach(() => {
       { id: 's2', name: 'Done' },
     ],
   });
+  useProjectTasks.mockReturnValue({ data: [task] });
 });
 
 describe('TaskDetailBody', () => {
