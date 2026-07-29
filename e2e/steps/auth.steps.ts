@@ -18,10 +18,8 @@ Given('a signed-in user', async ({ page }) => {
   await page.getByLabel('Password').fill(password!);
   await page.getByTestId('signin-submit').click();
 
-  // Landing on Projects proves the session resolved (RequireAuth passed).
-  await expect(page.getByRole('heading', { name: 'Your projects' })).toBeVisible({
-    timeout: 20_000,
-  });
+  // Landing on the Home dashboard proves the session resolved (RequireAuth passed).
+  await expect(page.getByTestId('home-greeting')).toBeVisible({ timeout: 20_000 });
 });
 
 When('the user opens the app', async ({ page }) => {

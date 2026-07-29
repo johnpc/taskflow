@@ -10,7 +10,7 @@ export function Welcome() {
   const { status } = useAuth();
   useDocumentTitle('Taskflow');
 
-  if (status === 'authenticated') return <Redirect to="/projects" />;
+  if (status === 'authenticated') return <Redirect to="/home" />;
 
   return (
     <IonPage>

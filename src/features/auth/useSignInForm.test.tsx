@@ -24,7 +24,7 @@ describe('useSignInForm', () => {
       await result.current.submit();
     });
     expect(signIn).toHaveBeenCalledWith('a@b.co', 'pw');
-    expect(replace).toHaveBeenCalledWith('/projects');
+    expect(replace).toHaveBeenCalledWith('/home');
   });
 
   it('surfaces an error on failure', async () => {

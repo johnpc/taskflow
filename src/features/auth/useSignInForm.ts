@@ -16,7 +16,7 @@ export function useSignInForm() {
     setBusy(true);
     try {
       await signIn(email, password);
-      history.replace('/projects');
+      history.replace('/home');
     } catch (e) {
       setError(e instanceof Error ? e.message : 'Sign-in failed.');
     } finally {
