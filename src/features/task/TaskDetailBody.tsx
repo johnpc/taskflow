@@ -11,6 +11,7 @@ import { Attachments } from './Attachments';
 import { TaskActions } from './TaskActions';
 import { nextSubtaskOrder } from './nextSubtaskOrder';
 import { nowISO } from './today';
+import { completeWarning } from './completeWarning';
 import { useTaskBlocked } from './useTaskBlocked';
 import { useTaskDetailNav } from './useTaskDetailNav';
 import { useTaskSections } from './useTaskSections';
@@ -29,13 +30,14 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
   const { email } = useAuth();
   const { deleteTask, duplicateTask, openTask } = useTaskDetailNav(task, hook);
   const subtasks = query.data?.subtasks ?? [];
+  const warning = completeWarning(blocked, subtasks);
 
   return (
     <div className="task-detail" data-testid="task-detail">
       <ParentBreadcrumb parentTaskId={task.parentTaskId} onOpen={openTask} />
       <TaskHeader
         task={task}
-        blocked={blocked}
+        warning={warning}
         onToggleDone={(done) => toggleDone.mutate({ taskId: task.id, done, now: nowISO() })}
         onRename={(title) => patch.mutate({ id: task.id, title })}
       />

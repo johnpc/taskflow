@@ -10,3 +10,10 @@ Then(
     await expect(card.getByTestId('task-subs')).toContainText(progress, { timeout: 15_000 });
   },
 );
+
+Then('a subtask-complete confirmation appears', async ({ page }) => {
+  await expect(page.getByText("This task isn't ready")).toBeVisible({ timeout: 15_000 });
+  await expect(page.getByText('incomplete subtask', { exact: false })).toBeVisible();
+  // Cancel so "Chip parent" stays open — this scenario mutates nothing.
+  await page.getByRole('button', { name: 'Cancel' }).click();
+});

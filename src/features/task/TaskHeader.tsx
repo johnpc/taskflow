@@ -6,15 +6,16 @@ import type { TaskRecord } from '../../lib/dataClient';
 
 /** Task-detail header: the big complete toggle + an editable title. Editing
  * commits on blur / Enter; presentational + delegating. Completing a task that
- * still has open blockers first asks for confirmation (Asana parity). */
+ * isn't ready (open dependencies or subtasks) first asks for confirmation with
+ * the supplied `warning` message (Asana parity). */
 export function TaskHeader({
   task,
-  blocked = false,
+  warning = null,
   onToggleDone,
   onRename,
 }: {
   task: TaskRecord;
-  blocked?: boolean;
+  warning?: string | null;
   onToggleDone: (done: boolean) => void;
   onRename: (title: string) => void;
 }) {
@@ -29,7 +30,7 @@ export function TaskHeader({
   };
 
   const toggle = () => {
-    if (!done && blocked) setConfirm(true);
+    if (!done && warning) setConfirm(true);
     else onToggleDone(!done);
   };
 
@@ -55,8 +56,8 @@ export function TaskHeader({
       />
       <IonAlert
         isOpen={confirm}
-        header="This task is still blocked"
-        message="It has unfinished dependencies. Complete it anyway?"
+        header="This task isn't ready"
+        message={warning ?? ''}
         data-testid="blocked-confirm"
         onDidDismiss={() => setConfirm(false)}
         buttons={[

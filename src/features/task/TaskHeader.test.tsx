@@ -42,33 +42,47 @@ describe('TaskHeader', () => {
     expect(screen.getByTestId('task-detail-check').className).toContain('--done');
   });
 
-  it('confirms instead of completing when blocked', async () => {
+  it('confirms with the warning message instead of completing', async () => {
     const onToggle = vi.fn();
-    render(<TaskHeader task={task({})} blocked onToggleDone={onToggle} onRename={vi.fn()} />);
+    render(
+      <TaskHeader
+        task={task({})}
+        warning="It still has 2 incomplete subtasks. Complete it anyway?"
+        onToggleDone={onToggle}
+        onRename={vi.fn()}
+      />,
+    );
     fireEvent.click(screen.getByTestId('task-detail-check'));
     expect(onToggle).not.toHaveBeenCalled();
     await waitFor(() =>
       expect(
-        screen.getByText('It has unfinished dependencies. Complete it anyway?'),
+        screen.getByText('It still has 2 incomplete subtasks. Complete it anyway?'),
       ).toBeInTheDocument(),
     );
   });
 
-  it('completes anyway when the blocked confirm is accepted', async () => {
+  it('completes anyway when the confirm is accepted', async () => {
     const onToggle = vi.fn();
-    render(<TaskHeader task={task({})} blocked onToggleDone={onToggle} onRename={vi.fn()} />);
+    render(
+      <TaskHeader
+        task={task({})}
+        warning="Not ready?"
+        onToggleDone={onToggle}
+        onRename={vi.fn()}
+      />,
+    );
     fireEvent.click(screen.getByTestId('task-detail-check'));
     const yes = await screen.findByText('Complete anyway', {}, { timeout: 3000 });
     fireEvent.click(yes);
     await waitFor(() => expect(onToggle).toHaveBeenCalledWith(true));
   });
 
-  it('un-completing a blocked task skips the confirm', () => {
+  it('un-completing a warned task skips the confirm', () => {
     const onToggle = vi.fn();
     render(
       <TaskHeader
         task={task({ status: 'DONE' })}
-        blocked
+        warning="Not ready?"
         onToggleDone={onToggle}
         onRename={vi.fn()}
       />,
