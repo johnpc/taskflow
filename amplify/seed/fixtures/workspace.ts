@@ -119,6 +119,8 @@ export const seedProjects: SeedProject[] = [
       },
       // Read-only milestone anchor: its card always shows the ◆ marker.
       { title: 'Launch day', section: 'To do', priority: 'HIGH', isMilestone: true },
+      // Dedicated duplicate target: only the duplicate area copies it.
+      { title: 'Clone me', section: 'To do', priority: 'MEDIUM' },
     ],
   },
   {

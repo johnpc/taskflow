@@ -11,7 +11,8 @@ vi.mock('../../lib/dataClient', () => ({
 }));
 vi.mock('./spawnRecurrence', () => ({ spawnNextOccurrence: spawn }));
 
-import { createTask, setTaskDone, updateTask, deleteTask } from './tasksApi';
+import { createTask, setTaskDone, updateTask, deleteTask, duplicateTask } from './tasksApi';
+import type { TaskRecord } from '../../lib/dataClient';
 
 beforeEach(() => {
   create.mockReset();
@@ -47,6 +48,18 @@ describe('createTask', () => {
   it('throws on error', async () => {
     create.mockResolvedValue({ data: null, errors: [{ message: 'x' }] });
     await expect(createTask({ projectId: 'p', title: 'X', order: 0 })).rejects.toThrow();
+  });
+});
+
+describe('duplicateTask', () => {
+  it('creates a "(copy)" at the given order', async () => {
+    create.mockResolvedValue({ data: { id: 'copy' }, errors: null });
+    const task = { id: 't', projectId: 'p', title: 'Plan', status: 'TODO' } as TaskRecord;
+    const out = await duplicateTask(task, 5);
+    expect(create).toHaveBeenCalledWith(
+      expect.objectContaining({ title: 'Plan (copy)', status: 'TODO', sortOrder: 5 }),
+    );
+    expect(out.id).toBe('copy');
   });
 });
 

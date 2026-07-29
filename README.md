@@ -46,6 +46,7 @@ iOS and Android.
 | **Comments**       | Discuss and log activity on any task                                           | ✅     |
 | **Labels**         | Reusable colored tags; apply on task detail, chips render on every card        | ✅     |
 | **Move & assign**  | Move a task between sections and assign it to yourself, on task detail         | ✅     |
+| **Duplicate**      | Copy a task (title, notes, dates, labels, flags) into the same section         | ✅     |
 | **Delete task**    | Delete a task (with confirm) from its detail; it leaves the board              | ✅     |
 | **My Tasks**       | Everything open across projects — group by due date, priority, or focus plan   | ✅     |
 | **Focus plan**     | File tasks into Today / Upcoming / Later in My Tasks, independent of due dates | ✅     |

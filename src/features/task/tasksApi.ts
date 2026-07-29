@@ -4,6 +4,7 @@
  */
 import { dataClient, type TaskRecord } from '../../lib/dataClient';
 import { spawnNextOccurrence } from './spawnRecurrence';
+import { duplicateInput } from './duplicateInput';
 
 export type { TaskRecord } from '../../lib/dataClient';
 
@@ -26,6 +27,14 @@ export async function createTask(input: {
     parentTaskId: input.parentTaskId,
   });
   if (errors || !data) throw new Error(`Create task failed: ${JSON.stringify(errors)}`);
+  return data;
+}
+
+/** Duplicate a task: a fresh TODO copy in the same section (see duplicateInput
+ * for what carries over). Returns the new task. */
+export async function duplicateTask(task: TaskRecord, order: number): Promise<TaskRecord> {
+  const { data, errors } = await dataClient.models.Task.create(duplicateInput(task, order));
+  if (errors || !data) throw new Error(`Duplicate task failed: ${JSON.stringify(errors)}`);
   return data;
 }
 
