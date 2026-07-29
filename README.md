@@ -29,6 +29,7 @@ iOS and Android.
 | **List view**      | Board↔List toggle (persisted per project); collapsible sections, list-first   | ✅     |
 | **Tasks**          | Title, notes, priority (Low→High), due dates with overdue/today/upcoming cues | ✅     |
 | **Due presets**    | One-tap Today / Tomorrow / Next week due-date buttons                         | ✅     |
+| **Drag & drop**    | Drag a card across columns to move it to another section                      | ✅     |
 | **Reorder**        | Move a task up/down within its section                                        | ✅     |
 | **Multi-select**   | Select tasks in the list view and bulk-complete or delete                     | ✅     |
 | **Quick-edit**     | Set a due date and cycle priority straight from a card, no detail needed      | ✅     |

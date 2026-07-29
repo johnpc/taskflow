@@ -23,6 +23,8 @@ export function TaskCard({
   onQuickEdit,
   selected,
   onSelect,
+  onDragStart,
+  onDragEnd,
 }: {
   task: TaskRecord;
   labels?: LabelRecord[];
@@ -31,6 +33,8 @@ export function TaskCard({
   onQuickEdit?: (patch: { dueDate?: string | null; priority?: Priority; title?: string }) => void;
   selected?: boolean;
   onSelect?: () => void;
+  onDragStart?: () => void;
+  onDragEnd?: () => void;
 }) {
   const history = useHistory();
   const done = isDone(task);
@@ -43,6 +47,9 @@ export function TaskCard({
       className={done ? 'task-card task-card--done' : 'task-card'}
       data-testid="task-card"
       data-selected={selected ? 'true' : undefined}
+      draggable={!!onDragStart}
+      onDragStart={onDragStart}
+      onDragEnd={onDragEnd}
     >
       {onSelect && (
         <input

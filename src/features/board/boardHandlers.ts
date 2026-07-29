@@ -15,3 +15,12 @@ export type QuickEditFn = (
   taskId: string,
   patch: { dueDate?: string | null; priority?: Priority; title?: string },
 ) => void;
+
+/** Drag-and-drop wiring for the board: begin/end a card drag and drop it onto a
+ * section (move-to-section). Bundled so columns/cards take one prop, not three. */
+export interface BoardDrag {
+  draggingId: string | null;
+  onStart: (taskId: string) => void;
+  onEnd: () => void;
+  onDropToSection: (sectionId: string) => void;
+}

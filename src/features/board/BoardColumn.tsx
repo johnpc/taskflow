@@ -1,10 +1,8 @@
-import { TaskCard } from '../task/TaskCard';
 import { AddCard } from './AddCard';
 import { SectionActions } from './SectionActions';
-import { nowISO } from '../task/today';
-import { resolveLabels } from '../labels/resolveLabels';
+import { ColumnCards } from './ColumnCards';
 import type { Column } from './taskGrouping';
-import type { QuickEditFn } from './boardHandlers';
+import type { QuickEditFn, BoardDrag } from './boardHandlers';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 
 /** One board column: a section header (with rename/delete), its task cards, and
@@ -20,6 +18,7 @@ export function BoardColumn({
   onRenameSection,
   onDeleteSection,
   onMoveSection,
+  drag,
 }: {
   column: Column;
   labels?: LabelRecord[];
@@ -34,10 +33,26 @@ export function BoardColumn({
   onRenameSection?: (input: { id: string; name: string }) => void;
   onDeleteSection?: (id: string) => void;
   onMoveSection?: (input: { sectionId: string; direction: 'left' | 'right' }) => void;
+  drag?: BoardDrag;
 }) {
+  const sectionId = column.section.id;
   const nextOrder = column.tasks.reduce((max, t) => Math.max(max, t.sortOrder ?? 0), -1) + 1;
+  const dropProps = drag
+    ? {
+        onDragOver: (e: React.DragEvent) => e.preventDefault(),
+        onDrop: (e: React.DragEvent) => {
+          e.preventDefault();
+          drag.onDropToSection(sectionId);
+        },
+      }
+    : {};
   return (
-    <section className="board-col" data-testid="board-column" aria-label={column.section.name}>
+    <section
+      className="board-col"
+      data-testid="board-column"
+      aria-label={column.section.name}
+      {...dropProps}
+    >
       <header className="board-col__head">
         <span className="board-col__name">{column.section.name}</span>
         <span className="board-col__count">{column.tasks.length}</span>
@@ -51,27 +66,15 @@ export function BoardColumn({
           }
         />
       </header>
-      <ul className="board-col__list">
-        {column.tasks.map((task: TaskRecord) => (
-          <TaskCard
-            key={task.id}
-            task={task}
-            labels={resolveLabels(task.labelIds, labels)}
-            onToggleDone={(t) =>
-              onToggleDone({ id: t.id, done: t.status !== 'DONE', now: nowISO() })
-            }
-            onReorder={
-              onReorder &&
-              ((direction) => onReorder({ columnTasks: column.tasks, taskId: task.id, direction }))
-            }
-            onQuickEdit={onQuickEdit && ((patch) => onQuickEdit(task.id, patch))}
-          />
-        ))}
-      </ul>
-      <AddCard
-        busy={false}
-        onAdd={(title) => onAddTask({ sectionId: column.section.id, title, order: nextOrder })}
+      <ColumnCards
+        column={column}
+        labels={labels}
+        onToggleDone={onToggleDone}
+        onReorder={onReorder}
+        onQuickEdit={onQuickEdit}
+        drag={drag}
       />
+      <AddCard busy={false} onAdd={(title) => onAddTask({ sectionId, title, order: nextOrder })} />
     </section>
   );
 }

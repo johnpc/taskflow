@@ -61,4 +61,39 @@ describe('BoardColumn', () => {
     fireEvent.click(screen.getByTestId('task-check'));
     expect(onToggleDone).toHaveBeenCalledWith(expect.objectContaining({ id: 'a', done: true }));
   });
+
+  it('drops a task onto the column section', () => {
+    const onDropToSection = vi.fn();
+    const drag = { draggingId: 'x', onStart: vi.fn(), onEnd: vi.fn(), onDropToSection };
+    renderWithProviders(
+      <BoardColumn
+        column={column([task({ id: 'a' })])}
+        onAddTask={vi.fn()}
+        onToggleDone={vi.fn()}
+        drag={drag}
+      />,
+    );
+    fireEvent.drop(screen.getByTestId('board-column'));
+    expect(onDropToSection).toHaveBeenCalledWith('s1');
+  });
+
+  it('makes cards draggable only when drag is provided', () => {
+    const { rerender } = renderWithProviders(
+      <BoardColumn
+        column={column([task({ id: 'a' })])}
+        onAddTask={vi.fn()}
+        onToggleDone={vi.fn()}
+      />,
+    );
+    expect(screen.getByTestId('task-card')).not.toHaveAttribute('draggable', 'true');
+    rerender(
+      <BoardColumn
+        column={column([task({ id: 'a' })])}
+        onAddTask={vi.fn()}
+        onToggleDone={vi.fn()}
+        drag={{ draggingId: null, onStart: vi.fn(), onEnd: vi.fn(), onDropToSection: vi.fn() }}
+      />,
+    );
+    expect(screen.getByTestId('task-card')).toHaveAttribute('draggable', 'true');
+  });
 });
