@@ -60,4 +60,17 @@ describe('useMyTasks', () => {
     });
     expect(updateTask).toHaveBeenCalledWith({ id: 'a', myBucket: 'TODAY' });
   });
+
+  it('appends a Completed bucket only when show-completed is on', async () => {
+    fetchMyTasks.mockResolvedValue([
+      { id: 'a', status: 'TODO', dueDate: null, title: 'A' },
+      { id: 'b', status: 'DONE', dueDate: null, title: 'B', completedAt: '2026-01-01' },
+    ]);
+    const { result } = renderHook(() => useMyTasks(), { wrapper: hookWrapper() });
+    await waitFor(() => expect(result.current.buckets.length).toBe(1));
+    act(() => result.current.setShowCompleted(true));
+    expect(result.current.showCompleted).toBe(true);
+    expect(result.current.buckets.map((b) => b.key)).toContain('completed');
+    expect(localStorage.getItem('tf-mytasks-show-completed')).toBe('true');
+  });
 });

@@ -48,7 +48,7 @@ iOS and Android.
 | **Move & assign**  | Move a task between sections and assign it to yourself, on task detail         | ✅     |
 | **Duplicate**      | Copy a task (title, notes, dates, labels, flags) into the same section         | ✅     |
 | **Delete task**    | Delete a task (with confirm) from its detail; it leaves the board              | ✅     |
-| **My Tasks**       | Everything open across projects — group by due date, priority, or focus plan   | ✅     |
+| **My Tasks**       | Open tasks across projects — group by due/priority/focus; reveal completed     | ✅     |
 | **Focus plan**     | File tasks into Today / Upcoming / Later in My Tasks, independent of due dates | ✅     |
 | **Calendar**       | Two-week forward view of upcoming dated tasks, grouped by day                  | ✅     |
 | **Search**         | Live substring search across every task's title and notes                      | ✅     |
