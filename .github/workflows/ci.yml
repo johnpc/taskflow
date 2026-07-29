@@ -210,6 +210,8 @@ jobs:
             paths: .features-gen/e2e/features/commenttime
           - name: bulkmove
             paths: .features-gen/e2e/features/bulkmove
+          - name: copylink
+            paths: .features-gen/e2e/features/copylink
     steps:
       - uses: actions/checkout@v4
 

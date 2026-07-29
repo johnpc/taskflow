@@ -82,6 +82,7 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
         onDelete={(id) => comments.remove.mutate(id)}
       />
       <TaskActions
+        taskId={task.id}
         duplicating={duplicate.isPending}
         onDuplicate={duplicateTask}
         onDelete={deleteTask}
