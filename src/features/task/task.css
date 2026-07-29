@@ -59,11 +59,17 @@
 
 .task-card__due,
 .task-card__prio,
-.task-card__blocked {
+.task-card__blocked,
+.task-card__start {
   font-size: 0.72rem;
   font-weight: 600;
   border-radius: 999px;
   padding: 2px 8px;
+}
+
+.task-card__start {
+  background: color-mix(in srgb, var(--tf-accent) 14%, transparent);
+  color: var(--tf-accent-strong);
 }
 
 .task-card__blocked {

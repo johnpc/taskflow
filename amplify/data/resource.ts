@@ -65,6 +65,9 @@ const schema = a.schema({
       notes: a.string(),
       status: a.enum(['TODO', 'IN_PROGRESS', 'DONE']),
       priority: a.enum(['NONE', 'LOW', 'MEDIUM', 'HIGH']),
+      // Optional start date — when work should begin, on or before the due date.
+      // A future start marks the task "not started yet" (a card cue).
+      startDate: a.date(),
       dueDate: a.date(),
       // Optional time-of-day for the due date (HH:MM, 24h). A display refinement
       // on top of the date — bucketing (overdue/today/upcoming) stays date-level.

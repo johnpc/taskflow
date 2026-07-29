@@ -16,6 +16,14 @@ describe('CardMeta', () => {
     expect(screen.getByText('High')).toBeInTheDocument();
   });
 
+  it('shows a Starts chip instead of the due chip when not started yet', () => {
+    render(
+      <CardMeta task={task({ startDate: '2999-01-01', dueDate: '2999-02-01' })} labels={[]} />,
+    );
+    expect(screen.getByTestId('task-start')).toHaveTextContent('Starts Jan 1');
+    expect(screen.queryByTestId('task-due')).not.toBeInTheDocument();
+  });
+
   it('appends the due time to the due chip', () => {
     render(<CardMeta task={task({ dueDate: '2030-01-01', dueTime: '09:00' })} labels={[]} />);
     expect(screen.getByTestId('task-due')).toHaveTextContent('9:00 AM');

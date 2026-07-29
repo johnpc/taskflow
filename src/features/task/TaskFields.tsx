@@ -14,10 +14,24 @@ export function TaskFields({
   onPatch,
 }: {
   task: TaskRecord;
-  onPatch: (patch: Partial<Pick<TaskRecord, 'dueDate' | 'dueTime' | 'priority' | 'notes'>>) => void;
+  onPatch: (
+    patch: Partial<Pick<TaskRecord, 'startDate' | 'dueDate' | 'dueTime' | 'priority' | 'notes'>>,
+  ) => void;
 }) {
   return (
     <div className="task-fields">
+      <div className="task-fields__row">
+        <span className="task-fields__label">Start date</span>
+        <input
+          type="date"
+          className="task-fields__date"
+          data-testid="task-start-input"
+          value={task.startDate ?? ''}
+          max={task.dueDate ?? undefined}
+          onChange={(e) => onPatch({ startDate: e.target.value || null })}
+        />
+      </div>
+
       <div className="task-fields__row">
         <span className="task-fields__label">Due date</span>
         <input

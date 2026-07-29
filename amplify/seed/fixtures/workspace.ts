@@ -7,6 +7,8 @@ export interface SeedTask {
   section: string;
   priority: 'NONE' | 'LOW' | 'MEDIUM' | 'HIGH';
   dueOffsetDays?: number;
+  /** Start date as a day offset from today (positive = starts in the future). */
+  startOffsetDays?: number;
   notes?: string;
   subtasks?: string[];
   /** Names of labels (from seedLabels) to apply to this task. */
@@ -102,6 +104,15 @@ export const seedProjects: SeedProject[] = [
       // Dedicated due-time target: already has a date, so the time input is
       // enabled; only the due-time area sets its time.
       { title: 'Timed review', section: 'To do', priority: 'LOW', dueOffsetDays: 4 },
+      // Future-start READ-ONLY anchor: starts in 5 days, so its card always
+      // shows the "Starts …" chip for the start-date acceptance.
+      {
+        title: 'Prep offsite',
+        section: 'To do',
+        priority: 'LOW',
+        startOffsetDays: 5,
+        dueOffsetDays: 12,
+      },
     ],
   },
   {

@@ -52,6 +52,7 @@ export async function updateTask(
       | 'title'
       | 'notes'
       | 'priority'
+      | 'startDate'
       | 'dueDate'
       | 'dueTime'
       | 'assigneeEmail'

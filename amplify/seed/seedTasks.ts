@@ -33,6 +33,7 @@ export async function createTaskWithSubtasks(
       notes: task.notes,
       status: 'TODO',
       priority: task.priority,
+      startDate: task.startOffsetDays === undefined ? undefined : offsetDate(task.startOffsetDays),
       dueDate: task.dueOffsetDays === undefined ? undefined : offsetDate(task.dueOffsetDays),
       sortOrder: order,
       labelIds: labelIdsFor(task, labelMap),
