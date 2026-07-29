@@ -209,4 +209,12 @@ export const seedProjects: SeedProject[] = [
     sections: ['Inbox'],
     tasks: [{ title: 'Move To anchor', section: 'Inbox', priority: 'LOW' }],
   },
+  // Dedicated project for the persist-collapse round-trip — only that area
+  // collapses its section, so the persisted state can't disturb a parallel run.
+  {
+    name: 'Collapse Lab',
+    color: 'indigo',
+    sections: ['Backlog'],
+    tasks: [{ title: 'Collapse me', section: 'Backlog', priority: 'LOW' }],
+  },
 ];

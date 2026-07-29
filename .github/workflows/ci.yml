@@ -198,6 +198,8 @@ jobs:
             paths: .features-gen/e2e/features/moveproject
           - name: subtaskchip
             paths: .features-gen/e2e/features/subtaskchip
+          - name: collapsepersist
+            paths: .features-gen/e2e/features/collapsepersist
     steps:
       - uses: actions/checkout@v4
 
