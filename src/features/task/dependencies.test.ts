@@ -5,6 +5,7 @@ import {
   blockerTasks,
   isBlocked,
   blockerCandidates,
+  blockedIdSet,
 } from './dependencies';
 import type { TaskRecord } from '../../lib/dataClient';
 
@@ -44,5 +45,17 @@ describe('dependencies', () => {
   it('blockerCandidates excludes the task itself and its subtasks', () => {
     const all = [task({ id: 't' }), task({ id: 'sub', parentTaskId: 't' }), task({ id: 'other' })];
     expect(blockerCandidates(task({ id: 't' }), all).map((t) => t.id)).toEqual(['other']);
+  });
+
+  it('blockedIdSet collects every currently-blocked task', () => {
+    const all = [
+      task({ id: 'a', status: 'TODO' }),
+      task({ id: 'b', blockedByIds: ['a'] }),
+      task({ id: 'c', blockedByIds: ['a'], status: 'TODO' }),
+      task({ id: 'd', status: 'DONE' }),
+      task({ id: 'e', blockedByIds: ['d'] }),
+    ];
+    const set = blockedIdSet(all);
+    expect([...set].sort()).toEqual(['b', 'c']);
   });
 });

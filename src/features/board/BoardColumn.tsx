@@ -11,6 +11,7 @@ import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 export function BoardColumn({
   column,
   labels = [],
+  blockedIds,
   onAddTask,
   onToggleDone,
   onReorder,
@@ -22,6 +23,7 @@ export function BoardColumn({
 }: {
   column: Column;
   labels?: LabelRecord[];
+  blockedIds?: Set<string>;
   onAddTask: (input: { sectionId: string; title: string; order: number }) => void;
   onToggleDone: (input: { id: string; done: boolean; now: string }) => void;
   onReorder?: (input: {
@@ -69,6 +71,7 @@ export function BoardColumn({
       <ColumnCards
         column={column}
         labels={labels}
+        blockedIds={blockedIds}
         onToggleDone={onToggleDone}
         onReorder={onReorder}
         onQuickEdit={onQuickEdit}

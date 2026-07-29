@@ -35,7 +35,7 @@ iOS and Android.
 | **Quick-edit**     | Set a due date and cycle priority straight from a card, no detail needed      | ✅     |
 | **Inline rename**  | Rename a task in place from its card (pencil), no detail needed               | ✅     |
 | **Subtasks**       | Break a task into a checklist with its own done-count                         | ✅     |
-| **Dependencies**   | Mark a task "blocked by" others; a banner names blockers until they're done   | ✅     |
+| **Dependencies**   | Mark a task "blocked by" others; a banner + board badge flag it until done    | ✅     |
 | **Rich notes**     | Notes render **bold**, safe links, and [ ]/[x] checklists (XSS-guarded hrefs) | ✅     |
 | **Comments**       | Discuss and log activity on any task                                          | ✅     |
 | **Labels**         | Reusable colored tags; apply on task detail, chips render on every card       | ✅     |

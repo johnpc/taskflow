@@ -42,6 +42,13 @@ describe('TaskCard', () => {
     expect(screen.getByTestId('task-due')).toBeInTheDocument();
   });
 
+  it('shows a Blocked badge only when blocked', () => {
+    const { rerender } = renderWithProviders(<TaskCard task={task({})} onToggleDone={vi.fn()} />);
+    expect(screen.queryByTestId('task-blocked')).not.toBeInTheDocument();
+    rerender(<TaskCard task={task({})} blocked onToggleDone={vi.fn()} />);
+    expect(screen.getByTestId('task-blocked')).toBeInTheDocument();
+  });
+
   it('has an open-task control that is clickable', () => {
     renderWithProviders(<TaskCard task={task({})} onToggleDone={vi.fn()} />);
     const open = screen.getByTestId('task-open');

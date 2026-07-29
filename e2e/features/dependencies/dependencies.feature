@@ -17,3 +17,9 @@ Feature: Task dependencies
     When the user opens the task titled "Finalize press list"
     And the user marks it blocked by "Reserve launch domain"
     Then the blocked banner reads "Blocked by Reserve launch domain"
+
+  # The board flags blocked cards from data it already holds (no extra fetch).
+  Scenario: A blocked task shows a Blocked badge on the board
+    Given a signed-in user
+    And the user opens the "Product Launch" project
+    Then the board card "Announce on socials" shows a Blocked badge

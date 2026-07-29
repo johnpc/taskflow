@@ -11,6 +11,7 @@ import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 export function ColumnCards({
   column,
   labels,
+  blockedIds,
   onToggleDone,
   onReorder,
   onQuickEdit,
@@ -18,6 +19,7 @@ export function ColumnCards({
 }: {
   column: Column;
   labels: LabelRecord[];
+  blockedIds?: Set<string>;
   onToggleDone: (input: { id: string; done: boolean; now: string }) => void;
   onReorder?: (input: {
     columnTasks: TaskRecord[];
@@ -34,6 +36,7 @@ export function ColumnCards({
           key={task.id}
           task={task}
           labels={resolveLabels(task.labelIds, labels)}
+          blocked={blockedIds?.has(task.id)}
           onToggleDone={(t) => onToggleDone({ id: t.id, done: t.status !== 'DONE', now: nowISO() })}
           onReorder={
             onReorder &&

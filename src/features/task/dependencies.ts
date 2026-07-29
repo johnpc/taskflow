@@ -34,3 +34,9 @@ export function isBlocked(task: TaskRecord, all: TaskRecord[]): boolean {
 export function blockerCandidates(task: TaskRecord, all: TaskRecord[]): TaskRecord[] {
   return all.filter((t) => t.id !== task.id && t.parentTaskId !== task.id);
 }
+
+/** Ids of every task that is currently blocked, given the full task set. Lets
+ * the board flag "Blocked" cards from data it already holds (no extra fetch). */
+export function blockedIdSet(all: TaskRecord[]): Set<string> {
+  return new Set(all.filter((t) => isBlocked(t, all)).map((t) => t.id));
+}

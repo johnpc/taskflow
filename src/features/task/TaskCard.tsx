@@ -1,23 +1,23 @@
 import { IonIcon } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 import { ellipseOutline, checkmarkCircle } from 'ionicons/icons';
-import { isDone, dueLabel, dueStatus } from './taskMeta';
-import { todayISO } from './today';
-import { LabelChips } from '../labels/LabelChips';
+import { isDone } from './taskMeta';
 import { ReorderControls } from '../board/ReorderControls';
 import { QuickEdit } from './QuickEdit';
 import { CardTitle } from './CardTitle';
+import { CardMeta } from './CardMeta';
 import type { Priority } from './taskMeta';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 import './task.css';
 
 /** A task card on the board/list. Tapping the circle toggles done; tapping the
  * title opens the task (double-click renames in place when editable). Shows a
- * due chip, priority flag, and labels. When onReorder / onQuickEdit are given
- * (board/list only), shows those controls. Renders only. */
+ * Blocked badge, due chip, priority flag, and labels via CardMeta. When
+ * onReorder / onQuickEdit are given (board/list only), shows those controls. */
 export function TaskCard({
   task,
   labels = [],
+  blocked,
   onToggleDone,
   onReorder,
   onQuickEdit,
@@ -28,6 +28,7 @@ export function TaskCard({
 }: {
   task: TaskRecord;
   labels?: LabelRecord[];
+  blocked?: boolean;
   onToggleDone: (task: TaskRecord) => void;
   onReorder?: (dir: 'up' | 'down') => void;
   onQuickEdit?: (patch: { dueDate?: string | null; priority?: Priority; title?: string }) => void;
@@ -38,9 +39,6 @@ export function TaskCard({
 }) {
   const history = useHistory();
   const done = isDone(task);
-  const today = todayISO();
-  const due = dueLabel(task.dueDate, today);
-  const dueKind = dueStatus(task.dueDate, today, done);
 
   return (
     <li
@@ -77,19 +75,7 @@ export function TaskCard({
           onOpen={() => history.push(`/tasks/${task.id}`)}
           onRename={onQuickEdit && ((title) => onQuickEdit({ title }))}
         />
-        <span className="task-card__meta">
-          {due && (
-            <span className={`task-card__due task-card__due--${dueKind}`} data-testid="task-due">
-              {due}
-            </span>
-          )}
-          {task.priority && task.priority !== 'NONE' && (
-            <span className={`task-card__prio task-card__prio--${task.priority.toLowerCase()}`}>
-              {task.priority[0] + task.priority.slice(1).toLowerCase()}
-            </span>
-          )}
-          <LabelChips labels={labels} />
-        </span>
+        <CardMeta task={task} labels={labels} blocked={blocked} />
       </div>
       {onQuickEdit && <QuickEdit task={task} onEdit={onQuickEdit} />}
       {onReorder && <ReorderControls onReorder={onReorder} />}
