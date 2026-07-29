@@ -136,6 +136,8 @@ jobs:
             paths: .features-gen/e2e/features/delete
           - name: reorder
             paths: .features-gen/e2e/features/reorder
+          - name: archive
+            paths: .features-gen/e2e/features/archive
     steps:
       - uses: actions/checkout@v4
 

@@ -20,7 +20,7 @@ iOS and Android.
 
 | Area              | What you get                                                                  | Status |
 | ----------------- | ----------------------------------------------------------------------------- | ------ |
-| **Projects**      | Create color-coded projects, favorite them, add a description                 | ✅     |
+| **Projects**      | Create color-coded projects, favorite them, add a description, archive/delete | ✅     |
 | **Sections**      | Add, rename, and delete a project's columns/sections                          | ✅     |
 | **Board**         | Kanban columns (To do / In progress / Done) with inline task creation         | ✅     |
 | **List view**     | Board↔List toggle (persisted per project); collapsible sections, list-first   | ✅     |
