@@ -216,6 +216,8 @@ jobs:
             paths: .features-gen/e2e/features/subtasknav
           - name: projectchip
             paths: .features-gen/e2e/features/projectchip
+          - name: searchrich
+            paths: .features-gen/e2e/features/searchrich
     steps:
       - uses: actions/checkout@v4
 
