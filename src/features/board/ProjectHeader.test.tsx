@@ -1,6 +1,7 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 import { ProjectHeader } from './ProjectHeader';
+import { renderWithProviders } from '../../test/renderWithProviders';
 import type { ProjectRecord } from '../../lib/dataClient';
 
 const project = (over: Partial<ProjectRecord>): ProjectRecord =>
@@ -9,7 +10,9 @@ const project = (over: Partial<ProjectRecord>): ProjectRecord =>
 describe('ProjectHeader', () => {
   it('commits a changed description on blur', () => {
     const onDescribe = vi.fn();
-    render(<ProjectHeader project={project({})} onDescribe={onDescribe} onAddSection={vi.fn()} />);
+    renderWithProviders(
+      <ProjectHeader project={project({})} onDescribe={onDescribe} onAddSection={vi.fn()} />,
+    );
     const input = screen.getByTestId('project-description');
     fireEvent.change(input, { target: { value: 'Q3 launch plan' } });
     fireEvent.blur(input);
@@ -18,7 +21,7 @@ describe('ProjectHeader', () => {
 
   it('does not commit an unchanged description', () => {
     const onDescribe = vi.fn();
-    render(
+    renderWithProviders(
       <ProjectHeader
         project={project({ description: 'same' })}
         onDescribe={onDescribe}
@@ -31,12 +34,19 @@ describe('ProjectHeader', () => {
 
   it('adds a section on Enter', () => {
     const onAddSection = vi.fn();
-    render(
+    renderWithProviders(
       <ProjectHeader project={project({})} onDescribe={vi.fn()} onAddSection={onAddSection} />,
     );
     const input = screen.getByTestId('add-section-input');
     fireEvent.change(input, { target: { value: 'Review' } });
     fireEvent.keyDown(input, { key: 'Enter' });
     expect(onAddSection).toHaveBeenCalledWith('Review');
+  });
+
+  it('links to the completed view', () => {
+    renderWithProviders(
+      <ProjectHeader project={project({})} onDescribe={vi.fn()} onAddSection={vi.fn()} />,
+    );
+    expect(screen.getByTestId('completed-link')).toHaveAttribute('href', '/projects/p/completed');
   });
 });

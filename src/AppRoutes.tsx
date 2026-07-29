@@ -6,6 +6,7 @@ import { SignUp } from './features/auth/SignUp';
 import { RequireAuth } from './features/auth/RequireAuth';
 import { Projects } from './features/projects/Projects';
 import { ProjectView } from './features/board/ProjectView';
+import { Completed } from './features/completed/Completed';
 import { TaskDetail } from './features/task/TaskDetail';
 import { MyTasks } from './features/mytasks/MyTasks';
 import { Calendar } from './features/calendar/Calendar';
@@ -36,6 +37,11 @@ export function AppRoutes() {
       <Route exact path="/projects/:id">
         <RequireAuth>
           <ProjectView />
+        </RequireAuth>
+      </Route>
+      <Route exact path="/projects/:id/completed">
+        <RequireAuth>
+          <Completed />
         </RequireAuth>
       </Route>
       <Route exact path="/tasks/:id">

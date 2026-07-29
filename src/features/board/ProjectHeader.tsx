@@ -1,6 +1,7 @@
 import { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { IonIcon } from '@ionic/react';
-import { addOutline } from 'ionicons/icons';
+import { addOutline, checkmarkDoneOutline } from 'ionicons/icons';
 import type { ProjectRecord } from '../../lib/dataClient';
 import './board.css';
 
@@ -33,16 +34,26 @@ export function ProjectHeader({
         defaultValue={project.description ?? ''}
         onBlur={(e) => e.target.value !== (project.description ?? '') && onDescribe(e.target.value)}
       />
-      <div className="project-header__add-section">
-        <IonIcon icon={addOutline} aria-hidden="true" />
-        <input
-          className="project-header__section-input"
-          data-testid="add-section-input"
-          placeholder="Add section"
-          value={section}
-          onChange={(e) => setSection(e.target.value)}
-          onKeyDown={(e) => e.key === 'Enter' && submitSection()}
-        />
+      <div className="project-header__row">
+        <div className="project-header__add-section">
+          <IonIcon icon={addOutline} aria-hidden="true" />
+          <input
+            className="project-header__section-input"
+            data-testid="add-section-input"
+            placeholder="Add section"
+            value={section}
+            onChange={(e) => setSection(e.target.value)}
+            onKeyDown={(e) => e.key === 'Enter' && submitSection()}
+          />
+        </div>
+        <Link
+          className="project-header__completed"
+          data-testid="completed-link"
+          to={`/projects/${project.id}/completed`}
+        >
+          <IonIcon icon={checkmarkDoneOutline} aria-hidden="true" />
+          <span>Completed</span>
+        </Link>
       </div>
     </div>
   );
