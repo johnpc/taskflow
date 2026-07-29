@@ -1,6 +1,6 @@
 import { dueLabelWithTime, dueStatus, isDone, startsInFuture, startLabel } from './taskMeta';
 import { todayISO } from './today';
-import { repeats, type Repeat } from './recurrence';
+import { repeats, REPEAT_META, type Repeat } from './recurrence';
 import { projectColorVar } from '../projects/projectColors';
 import { LabelChips } from '../labels/LabelChips';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
@@ -72,7 +72,7 @@ export function CardMeta({
       )}
       {repeats(task.repeat as Repeat) && (
         <span className="task-card__repeat" data-testid="task-repeat-badge" aria-label="Repeats">
-          ↻
+          ↻ {REPEAT_META[task.repeat as Repeat]}
         </span>
       )}
       <LabelChips labels={labels} />

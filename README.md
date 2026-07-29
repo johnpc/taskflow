@@ -43,7 +43,7 @@ iOS and Android.
 | **Subtasks**        | Checklist with a "2/3" card chip; open a subtask, hop back via its breadcrumb    | ✅     |
 | **Attachments**     | Attach labelled links to a task; each opens in a new tab (XSS-guarded hrefs)     | ✅     |
 | **Dependencies**    | "Blocked by" others; banner + board badge, and a confirm before completing early | ✅     |
-| **Recurring**       | Repeat a task daily/weekly/monthly; completing it spawns the next occurrence     | ✅     |
+| **Recurring**       | Repeat daily/weekly/monthly (card shows the cadence); completing spawns the next | ✅     |
 | **Rich notes**      | Notes render **bold**, safe links, and [ ]/[x] checklists (XSS-guarded hrefs)    | ✅     |
 | **Comments**        | Discuss on any task with relative timestamps; edit or delete a comment           | ✅     |
 | **Labels**          | Reusable colored tags; apply on task detail, chips render on every card          | ✅     |
