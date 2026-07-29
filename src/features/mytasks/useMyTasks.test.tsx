@@ -1,12 +1,13 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, waitFor, act } from '@testing-library/react';
 
-const { fetchMyTasks, setTaskDone } = vi.hoisted(() => ({
+const { fetchMyTasks, setTaskDone, updateTask } = vi.hoisted(() => ({
   fetchMyTasks: vi.fn(),
   setTaskDone: vi.fn(),
+  updateTask: vi.fn(),
 }));
 vi.mock('./myTasksApi', () => ({ fetchMyTasks }));
-vi.mock('../task/tasksApi', () => ({ setTaskDone }));
+vi.mock('../task/tasksApi', () => ({ setTaskDone, updateTask }));
 
 import { hookWrapper } from '../../test/hookWrapper';
 import { useMyTasks } from './useMyTasks';
@@ -14,6 +15,7 @@ import { useMyTasks } from './useMyTasks';
 beforeEach(() => {
   fetchMyTasks.mockReset();
   setTaskDone.mockReset();
+  updateTask.mockReset();
   localStorage.clear();
 });
 
@@ -47,5 +49,15 @@ describe('useMyTasks', () => {
       await result.current.toggleDone.mutateAsync({ id: 'a', done: true, now: 'now' });
     });
     expect(setTaskDone).toHaveBeenCalledWith('a', true, 'now');
+  });
+
+  it('sets a task focus bucket via updateTask', async () => {
+    fetchMyTasks.mockResolvedValue([]);
+    updateTask.mockResolvedValue(undefined);
+    const { result } = renderHook(() => useMyTasks(), { wrapper: hookWrapper() });
+    await act(async () => {
+      await result.current.setBucket.mutateAsync({ id: 'a', myBucket: 'TODAY' });
+    });
+    expect(updateTask).toHaveBeenCalledWith({ id: 'a', myBucket: 'TODAY' });
   });
 });

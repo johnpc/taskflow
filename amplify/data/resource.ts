@@ -72,6 +72,9 @@ const schema = a.schema({
       // Recurrence: when set (and the task has a due date), completing the task
       // spawns the next occurrence with the due date advanced by this period.
       repeat: a.enum(['NONE', 'DAILY', 'WEEKLY', 'MONTHLY']),
+      // My Tasks focus plan: a manual Today/Upcoming/Later bucket, independent of
+      // the due date — for organizing "what I'll work on" across projects.
+      myBucket: a.enum(['NONE', 'TODAY', 'UPCOMING', 'LATER']),
       completedAt: a.datetime(),
       sortOrder: a.integer().default(0),
       assigneeEmail: a.string(),

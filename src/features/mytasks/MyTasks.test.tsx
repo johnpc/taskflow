@@ -16,6 +16,7 @@ const base = {
   groupMode: 'due' as const,
   setGroupMode: vi.fn(),
   toggleDone: { mutate: vi.fn() },
+  setBucket: { mutate: vi.fn() },
 };
 
 describe('MyTasks', () => {
