@@ -10,3 +10,8 @@ Feature: Calendar
     Given a signed-in user
     When the user opens the calendar
     Then a calendar task "Plan Q3 goals" is visible
+
+  Scenario: A calendar task shows which project it belongs to
+    Given a signed-in user
+    When the user opens the calendar
+    Then the calendar task "Plan Q3 goals" shows the project "Personal"

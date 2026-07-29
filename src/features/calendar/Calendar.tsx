@@ -1,6 +1,8 @@
 import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
 import { useHistory } from 'react-router-dom';
 import { useCalendar } from './useCalendar';
+import { CalendarTask } from './CalendarTask';
+import { useProjectsById } from '../projects/useProjectsById';
 import { LoadState } from '../shell/LoadState';
 import { TabBar } from '../shell/TabBar';
 import { useDocumentTitle } from '../shell/useDocumentTitle';
@@ -12,6 +14,7 @@ export function Calendar() {
   useDocumentTitle('Calendar');
   const history = useHistory();
   const { query, days } = useCalendar();
+  const projectsById = useProjectsById();
 
   return (
     <IonPage>
@@ -37,14 +40,11 @@ export function Calendar() {
                 <ul className="calendar__list">
                   {day.tasks.map((task) => (
                     <li key={task.id}>
-                      <button
-                        type="button"
-                        className="calendar__task"
-                        data-testid="calendar-task"
-                        onClick={() => history.push(`/tasks/${task.id}`)}
-                      >
-                        {task.title}
-                      </button>
+                      <CalendarTask
+                        title={task.title}
+                        project={projectsById.get(task.projectId)}
+                        onOpen={() => history.push(`/tasks/${task.id}`)}
+                      />
                     </li>
                   ))}
                 </ul>

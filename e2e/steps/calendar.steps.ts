@@ -15,3 +15,12 @@ Then('a calendar task {string} is visible', async ({ page }, title: string) => {
     timeout: 15_000,
   });
 });
+
+Then(
+  'the calendar task {string} shows the project {string}',
+  async ({ page }, title: string, project: string) => {
+    const card = page.getByTestId('calendar-task').filter({ hasText: title }).first();
+    await expect(card).toBeVisible({ timeout: 15_000 });
+    await expect(card.getByTestId('calendar-project')).toHaveText(project, { timeout: 15_000 });
+  },
+);
