@@ -27,4 +27,14 @@ describe('ProjectCard', () => {
     fireEvent.click(screen.getByTestId('project-fav'));
     expect(onToggle).toHaveBeenCalledOnce();
   });
+
+  it('hides the count badge when zero', () => {
+    renderWithProviders(<ProjectCard project={project({})} count={0} onToggleFavorite={vi.fn()} />);
+    expect(screen.queryByTestId('project-count')).not.toBeInTheDocument();
+  });
+
+  it('shows an open-task count badge when non-zero', () => {
+    renderWithProviders(<ProjectCard project={project({})} count={4} onToggleFavorite={vi.fn()} />);
+    expect(screen.getByTestId('project-count')).toHaveTextContent('4');
+  });
 });
