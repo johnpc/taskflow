@@ -138,6 +138,8 @@ jobs:
             paths: .features-gen/e2e/features/reorder
           - name: archive
             paths: .features-gen/e2e/features/archive
+          - name: calendar
+            paths: .features-gen/e2e/features/calendar
     steps:
       - uses: actions/checkout@v4
 

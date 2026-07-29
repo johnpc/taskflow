@@ -1,0 +1,43 @@
+.calendar__title {
+  font-size: 1.5rem;
+  margin: 6px 0 18px;
+}
+
+.calendar__days {
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+  padding-bottom: 96px;
+}
+
+.calendar__day-head {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--tf-text);
+  margin: 0 0 8px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--tf-border);
+}
+
+.calendar__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.calendar__task {
+  width: 100%;
+  text-align: left;
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius-sm);
+  box-shadow: var(--tf-shadow);
+  padding: 12px 14px;
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: var(--tf-text);
+  cursor: pointer;
+}

@@ -1,0 +1,12 @@
+Feature: Calendar
+  As a signed-in user
+  I want a two-week view of my upcoming dated tasks
+  So that I can see what's coming and plan ahead (Asana calendar analogue)
+
+  # Honest e2e: a seeded task with a near-future due date shows on the calendar.
+  # "Plan Q3 goals" is seeded +5 days out and no other area completes it.
+
+  Scenario: Upcoming dated tasks appear on the calendar
+    Given a signed-in user
+    When the user opens the calendar
+    Then a calendar task "Plan Q3 goals" is visible

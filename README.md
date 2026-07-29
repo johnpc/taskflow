@@ -32,6 +32,7 @@ iOS and Android.
 | **Move & assign** | Move a task between sections and assign it to yourself, on task detail        | ✅     |
 | **Delete task**   | Delete a task (with confirm) from its detail; it leaves the board             | ✅     |
 | **My Tasks**      | Everything open across all projects, grouped by due date                      | ✅     |
+| **Calendar**      | Two-week forward view of upcoming dated tasks, grouped by day                 | ✅     |
 | **Search**        | Live substring search across every task's title and notes                     | ✅     |
 | **Complete**      | One-tap complete on the board and in lists, with a strike-through state       | ✅     |
 | **Filter & sort** | Hide/show completed, filter by label, sort by due date or priority            | ✅     |
