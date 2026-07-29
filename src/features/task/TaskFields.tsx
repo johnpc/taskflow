@@ -14,7 +14,7 @@ export function TaskFields({
   onPatch,
 }: {
   task: TaskRecord;
-  onPatch: (patch: Partial<Pick<TaskRecord, 'dueDate' | 'priority' | 'notes'>>) => void;
+  onPatch: (patch: Partial<Pick<TaskRecord, 'dueDate' | 'dueTime' | 'priority' | 'notes'>>) => void;
 }) {
   return (
     <div className="task-fields">
@@ -25,7 +25,16 @@ export function TaskFields({
           className="task-fields__date"
           data-testid="task-due-input"
           value={task.dueDate ?? ''}
-          onChange={(e) => onPatch({ dueDate: e.target.value || null })}
+          onChange={(e) => onPatch({ dueDate: e.target.value || null, dueTime: null })}
+        />
+        <input
+          type="time"
+          className="task-fields__date"
+          data-testid="task-due-time"
+          aria-label="Due time"
+          value={task.dueTime ?? ''}
+          disabled={!task.dueDate}
+          onChange={(e) => onPatch({ dueTime: e.target.value || null })}
         />
         <DuePresetButtons onPick={(date) => onPatch({ dueDate: date })} />
       </div>

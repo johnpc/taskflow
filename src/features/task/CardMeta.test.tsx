@@ -16,6 +16,11 @@ describe('CardMeta', () => {
     expect(screen.getByText('High')).toBeInTheDocument();
   });
 
+  it('appends the due time to the due chip', () => {
+    render(<CardMeta task={task({ dueDate: '2030-01-01', dueTime: '09:00' })} labels={[]} />);
+    expect(screen.getByTestId('task-due')).toHaveTextContent('9:00 AM');
+  });
+
   it('shows a repeat badge only when the task recurs', () => {
     const { rerender } = render(<CardMeta task={task({})} labels={[]} />);
     expect(screen.queryByTestId('task-repeat-badge')).not.toBeInTheDocument();

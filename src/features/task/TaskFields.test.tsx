@@ -7,18 +7,29 @@ const task = (over: Partial<TaskRecord>): TaskRecord =>
   ({ id: 't', title: 'T', priority: 'NONE', dueDate: null, notes: null, ...over }) as TaskRecord;
 
 describe('TaskFields', () => {
-  it('patches the due date', () => {
+  it('patches the due date (and resets the time)', () => {
     const onPatch = vi.fn();
     render(<TaskFields task={task({})} onPatch={onPatch} />);
     fireEvent.change(screen.getByTestId('task-due-input'), { target: { value: '2026-08-01' } });
-    expect(onPatch).toHaveBeenCalledWith({ dueDate: '2026-08-01' });
+    expect(onPatch).toHaveBeenCalledWith({ dueDate: '2026-08-01', dueTime: null });
   });
 
   it('clears the due date to null', () => {
     const onPatch = vi.fn();
     render(<TaskFields task={task({ dueDate: '2026-08-01' })} onPatch={onPatch} />);
     fireEvent.change(screen.getByTestId('task-due-input'), { target: { value: '' } });
-    expect(onPatch).toHaveBeenCalledWith({ dueDate: null });
+    expect(onPatch).toHaveBeenCalledWith({ dueDate: null, dueTime: null });
+  });
+
+  it('patches the due time and disables it without a date', () => {
+    const onPatch = vi.fn();
+    const { rerender } = render(<TaskFields task={task({})} onPatch={onPatch} />);
+    expect(screen.getByTestId('task-due-time')).toBeDisabled();
+    rerender(<TaskFields task={task({ dueDate: '2026-08-01' })} onPatch={onPatch} />);
+    const time = screen.getByTestId('task-due-time');
+    expect(time).not.toBeDisabled();
+    fireEvent.change(time, { target: { value: '09:30' } });
+    expect(onPatch).toHaveBeenCalledWith({ dueTime: '09:30' });
   });
 
   it('patches priority', () => {

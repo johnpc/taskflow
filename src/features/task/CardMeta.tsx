@@ -1,4 +1,4 @@
-import { dueLabel, dueStatus, isDone } from './taskMeta';
+import { dueLabelWithTime, dueStatus, isDone } from './taskMeta';
 import { todayISO } from './today';
 import { repeats, type Repeat } from './recurrence';
 import { LabelChips } from '../labels/LabelChips';
@@ -17,7 +17,7 @@ export function CardMeta({
   blocked?: boolean;
 }) {
   const today = todayISO();
-  const due = dueLabel(task.dueDate, today);
+  const due = dueLabelWithTime(task.dueDate, task.dueTime, today);
   const dueKind = dueStatus(task.dueDate, today, isDone(task));
   return (
     <span className="task-card__meta">

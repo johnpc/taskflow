@@ -99,6 +99,9 @@ export const seedProjects: SeedProject[] = [
         dueOffsetDays: 1,
         repeat: 'DAILY',
       },
+      // Dedicated due-time target: already has a date, so the time input is
+      // enabled; only the due-time area sets its time.
+      { title: 'Timed review', section: 'To do', priority: 'LOW', dueOffsetDays: 4 },
     ],
   },
   {

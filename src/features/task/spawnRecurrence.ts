@@ -18,6 +18,7 @@ export async function spawnNextOccurrence(id: string): Promise<void> {
     status: 'TODO',
     priority: task.priority,
     dueDate: due,
+    dueTime: task.dueTime,
     sortOrder: (task.sortOrder ?? 0) + 1,
     repeat: task.repeat,
     labelIds: (task.labelIds ?? []).filter((x): x is string => !!x),
