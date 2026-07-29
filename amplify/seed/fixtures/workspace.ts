@@ -137,4 +137,15 @@ export const seedProjects: SeedProject[] = [
     sections: ['To do'],
     tasks: [{ title: 'Random idea', section: 'To do', priority: 'NONE' }],
   },
+  // Dedicated project for drag-to-reorder: two ordered cards only this area
+  // touches, so reordering them can't disturb a parallel run.
+  {
+    name: 'Reorder Lab',
+    color: 'rose',
+    sections: ['Queue'],
+    tasks: [
+      { title: 'Order alpha', section: 'Queue', priority: 'LOW' },
+      { title: 'Order bravo', section: 'Queue', priority: 'LOW' },
+    ],
+  },
 ];

@@ -64,7 +64,13 @@ describe('BoardColumn', () => {
 
   it('drops a task onto the column section', () => {
     const onDropToSection = vi.fn();
-    const drag = { draggingId: 'x', onStart: vi.fn(), onEnd: vi.fn(), onDropToSection };
+    const drag = {
+      draggingId: 'x',
+      onStart: vi.fn(),
+      onEnd: vi.fn(),
+      onDropToSection,
+      onDropToTask: vi.fn(),
+    };
     renderWithProviders(
       <BoardColumn
         column={column([task({ id: 'a' })])}
@@ -91,7 +97,13 @@ describe('BoardColumn', () => {
         column={column([task({ id: 'a' })])}
         onAddTask={vi.fn()}
         onToggleDone={vi.fn()}
-        drag={{ draggingId: null, onStart: vi.fn(), onEnd: vi.fn(), onDropToSection: vi.fn() }}
+        drag={{
+          draggingId: null,
+          onStart: vi.fn(),
+          onEnd: vi.fn(),
+          onDropToSection: vi.fn(),
+          onDropToTask: vi.fn(),
+        }}
       />,
     );
     expect(screen.getByTestId('task-card')).toHaveAttribute('draggable', 'true');

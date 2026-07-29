@@ -45,6 +45,7 @@ export function ColumnCards({
           onQuickEdit={onQuickEdit && ((patch) => onQuickEdit(task.id, patch))}
           onDragStart={drag && (() => drag.onStart(task.id))}
           onDragEnd={drag && drag.onEnd}
+          onDropTask={drag && (() => drag.onDropToTask(task.id))}
         />
       ))}
     </ul>

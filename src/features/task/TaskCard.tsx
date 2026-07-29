@@ -25,6 +25,7 @@ export function TaskCard({
   onSelect,
   onDragStart,
   onDragEnd,
+  onDropTask,
 }: {
   task: TaskRecord;
   labels?: LabelRecord[];
@@ -36,6 +37,7 @@ export function TaskCard({
   onSelect?: () => void;
   onDragStart?: () => void;
   onDragEnd?: () => void;
+  onDropTask?: () => void;
 }) {
   const history = useHistory();
   const done = isDone(task);
@@ -48,6 +50,15 @@ export function TaskCard({
       draggable={!!onDragStart}
       onDragStart={onDragStart}
       onDragEnd={onDragEnd}
+      onDragOver={onDropTask && ((e) => e.preventDefault())}
+      onDrop={
+        onDropTask &&
+        ((e) => {
+          e.preventDefault();
+          e.stopPropagation();
+          onDropTask();
+        })
+      }
     >
       {onSelect && (
         <input
