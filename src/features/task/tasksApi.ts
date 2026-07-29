@@ -32,14 +32,15 @@ export async function createTask(input: {
 /** Toggle a task done/undone. Completing stamps completedAt + DONE; reopening
  * clears it back to TODO. `now` is injected for deterministic tests. */
 export async function setTaskDone(id: string, done: boolean, now: string): Promise<void> {
-  const { errors } = await dataClient.models.Task.update({
+  const { data, errors } = await dataClient.models.Task.update({
     id,
     status: done ? 'DONE' : 'TODO',
     completedAt: done ? now : null,
   });
   if (errors) throw new Error(`Update task failed: ${JSON.stringify(errors)}`);
-  // Completing a recurring task rolls its next occurrence forward.
-  if (done) await spawnNextOccurrence(id);
+  // Completing a recurring task rolls its next occurrence forward. Uses the
+  // record the mutation returned (read-your-write) — never a stale re-read.
+  if (done) await spawnNextOccurrence(data);
 }
 
 /** Patch arbitrary task fields (title, notes, priority, dueDate, assignee,
@@ -52,6 +53,7 @@ export async function updateTask(
       | 'notes'
       | 'priority'
       | 'dueDate'
+      | 'dueTime'
       | 'assigneeEmail'
       | 'sectionId'
       | 'sortOrder'

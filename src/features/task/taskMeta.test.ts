@@ -1,5 +1,12 @@
 import { describe, it, expect } from 'vitest';
-import { isDone, dueStatus, dueLabel, PRIORITY_META } from './taskMeta';
+import {
+  isDone,
+  dueStatus,
+  dueLabel,
+  formatTime,
+  dueLabelWithTime,
+  PRIORITY_META,
+} from './taskMeta';
 
 describe('isDone', () => {
   it('is true only for DONE', () => {
@@ -39,6 +46,34 @@ describe('dueLabel', () => {
   });
   it('formats a future date as Mon D', () => {
     expect(dueLabel('2026-08-03', today)).toBe('Aug 3');
+  });
+});
+
+describe('formatTime', () => {
+  it('formats 24h HH:MM as a 12h clock', () => {
+    expect(formatTime('09:00')).toBe('9:00 AM');
+    expect(formatTime('14:05')).toBe('2:05 PM');
+    expect(formatTime('00:30')).toBe('12:30 AM');
+    expect(formatTime('12:00')).toBe('12:00 PM');
+  });
+  it('is blank for empty/malformed values', () => {
+    expect(formatTime(null)).toBe('');
+    expect(formatTime('')).toBe('');
+    expect(formatTime('nope')).toBe('');
+  });
+});
+
+describe('dueLabelWithTime', () => {
+  const today = '2026-07-28';
+  it('appends the time to the date label', () => {
+    expect(dueLabelWithTime('2026-07-28', '09:00', today)).toBe('Today 9:00 AM');
+    expect(dueLabelWithTime('2026-08-03', '14:00', today)).toBe('Aug 3 2:00 PM');
+  });
+  it('falls back to the plain date label without a time', () => {
+    expect(dueLabelWithTime('2026-08-03', null, today)).toBe('Aug 3');
+  });
+  it('is blank with no date even if a time is set', () => {
+    expect(dueLabelWithTime(null, '09:00', today)).toBe('');
   });
 });
 

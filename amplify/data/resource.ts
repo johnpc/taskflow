@@ -66,6 +66,9 @@ const schema = a.schema({
       status: a.enum(['TODO', 'IN_PROGRESS', 'DONE']),
       priority: a.enum(['NONE', 'LOW', 'MEDIUM', 'HIGH']),
       dueDate: a.date(),
+      // Optional time-of-day for the due date (HH:MM, 24h). A display refinement
+      // on top of the date — bucketing (overdue/today/upcoming) stays date-level.
+      dueTime: a.string(),
       // Recurrence: when set (and the task has a due date), completing the task
       // spawns the next occurrence with the due date advanced by this period.
       repeat: a.enum(['NONE', 'DAILY', 'WEEKLY', 'MONTHLY']),

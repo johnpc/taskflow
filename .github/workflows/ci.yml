@@ -172,6 +172,8 @@ jobs:
             paths: .features-gen/e2e/features/dependencies
           - name: recurring
             paths: .features-gen/e2e/features/recurring
+          - name: duetime
+            paths: .features-gen/e2e/features/duetime
     steps:
       - uses: actions/checkout@v4
 

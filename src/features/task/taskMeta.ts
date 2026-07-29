@@ -40,3 +40,26 @@ export function dueLabel(dueDate: string | null | undefined, today: string): str
   const months = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split(' ');
   return `${months[m - 1]} ${d}`;
 }
+
+/** Format an HH:MM (24h) time string as a 12h clock label, e.g. "2:00 PM".
+ * Returns '' for an empty/malformed value. Pure. */
+export function formatTime(time: string | null | undefined): string {
+  if (!time) return '';
+  const [h, m] = time.split(':').map(Number);
+  if (Number.isNaN(h) || Number.isNaN(m)) return '';
+  const period = h < 12 ? 'AM' : 'PM';
+  const hour = h % 12 === 0 ? 12 : h % 12;
+  return `${hour}:${String(m).padStart(2, '0')} ${period}`;
+}
+
+/** The due chip label with an optional time appended, e.g. "Today 9:00 AM" or
+ * "Aug 3 2:00 PM". Falls back to the plain date label when there's no time. */
+export function dueLabelWithTime(
+  dueDate: string | null | undefined,
+  dueTime: string | null | undefined,
+  today: string,
+): string {
+  const base = dueLabel(dueDate, today);
+  const time = base ? formatTime(dueTime) : '';
+  return time ? `${base} ${time}` : base;
+}
