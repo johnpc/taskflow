@@ -20,6 +20,7 @@ export function useTaskDetail(id: string) {
     qc.invalidateQueries({ queryKey: key });
     qc.invalidateQueries({ queryKey: ['board'] });
     qc.invalidateQueries({ queryKey: ['my-tasks'] });
+    qc.invalidateQueries({ queryKey: ['project-tasks'] });
   };
 
   const patch = useMutation({

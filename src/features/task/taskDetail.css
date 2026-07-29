@@ -320,3 +320,47 @@
   color: var(--tf-accent-strong);
   font-weight: 600;
 }
+
+.deps__banner {
+  margin: 0 0 10px;
+  padding: 8px 12px;
+  border-radius: var(--tf-radius-sm);
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--tf-overdue);
+  background: color-mix(in srgb, var(--tf-overdue) 12%, transparent);
+}
+
+.deps__empty {
+  margin: 0;
+  font-size: 0.9rem;
+}
+
+.deps__options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.deps-opt {
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  opacity: 0.6;
+  color: var(--tf-text);
+}
+
+.deps-opt--on {
+  opacity: 1;
+  border-color: var(--tf-overdue);
+  color: var(--tf-overdue);
+  background: color-mix(in srgb, var(--tf-overdue) 12%, transparent);
+}
+
+.deps-opt--done {
+  text-decoration: line-through;
+}
