@@ -1,4 +1,3 @@
-import { useHistory } from 'react-router-dom';
 import { ParentBreadcrumb } from './ParentBreadcrumb';
 import { TaskHeader } from './TaskHeader';
 import { TaskActivity } from './TaskActivity';
@@ -12,6 +11,8 @@ import { Attachments } from './Attachments';
 import { TaskActions } from './TaskActions';
 import { nextSubtaskOrder } from './nextSubtaskOrder';
 import { nowISO } from './today';
+import { useTaskBlocked } from './useTaskBlocked';
+import { useTaskDetailNav } from './useTaskDetailNav';
 import { useTaskSections } from './useTaskSections';
 import { useAuth } from '../auth/useAuth';
 import type { TaskDetailHook } from './useTaskDetail';
@@ -22,25 +23,19 @@ import type { TaskRecord } from '../../lib/dataClient';
  * thin load-gate shell. All mutations come from the useTaskDetail hook. */
 export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDetailHook }) {
   const { query, patch, toggleDone, addSubtask, comments, labels } = hook;
-  const { remove, duplicate, attachments, projects, move } = hook;
+  const { attachments, projects, move, duplicate } = hook;
   const sections = useTaskSections(task.projectId);
+  const blocked = useTaskBlocked(task);
   const { email } = useAuth();
-  const history = useHistory();
+  const { deleteTask, duplicateTask, openTask } = useTaskDetailNav(task, hook);
   const subtasks = query.data?.subtasks ?? [];
-
-  const deleteTask = () =>
-    remove.mutate(task.id, { onSuccess: () => history.replace(`/projects/${task.projectId}`) });
-
-  const duplicateTask = () =>
-    duplicate.mutate(task, { onSuccess: (copy) => history.push(`/tasks/${copy.id}`) });
-
-  const openTask = (id: string) => history.push(`/tasks/${id}`);
 
   return (
     <div className="task-detail" data-testid="task-detail">
       <ParentBreadcrumb parentTaskId={task.parentTaskId} onOpen={openTask} />
       <TaskHeader
         task={task}
+        blocked={blocked}
         onToggleDone={(done) => toggleDone.mutate({ taskId: task.id, done, now: nowISO() })}
         onRename={(title) => patch.mutate({ id: task.id, title })}
       />

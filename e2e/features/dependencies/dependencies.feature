@@ -18,6 +18,15 @@ Feature: Task dependencies
     And the user marks it blocked by "Reserve launch domain"
     Then the blocked banner reads "Blocked by Reserve launch domain"
 
+  # Completing a still-blocked task asks for confirmation first (Asana parity).
+  # Non-mutating: we assert the confirm appears, then cancel — seed stays pristine.
+  Scenario: Completing a blocked task asks for confirmation
+    Given a signed-in user
+    And the user opens the "Product Launch" project
+    When the user opens the task titled "Announce on socials"
+    And the user tries to complete the task
+    Then a blocked-complete confirmation appears
+
   # The board flags blocked cards from data it already holds (no extra fetch).
   Scenario: A blocked task shows a Blocked badge on the board
     Given a signed-in user

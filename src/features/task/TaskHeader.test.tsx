@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from 'vitest';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, waitFor } from '@testing-library/react';
 import { TaskHeader } from './TaskHeader';
 import type { TaskRecord } from '../../lib/dataClient';
 
@@ -40,5 +40,40 @@ describe('TaskHeader', () => {
       <TaskHeader task={task({ status: 'DONE' })} onToggleDone={vi.fn()} onRename={vi.fn()} />,
     );
     expect(screen.getByTestId('task-detail-check').className).toContain('--done');
+  });
+
+  it('confirms instead of completing when blocked', async () => {
+    const onToggle = vi.fn();
+    render(<TaskHeader task={task({})} blocked onToggleDone={onToggle} onRename={vi.fn()} />);
+    fireEvent.click(screen.getByTestId('task-detail-check'));
+    expect(onToggle).not.toHaveBeenCalled();
+    await waitFor(() =>
+      expect(
+        screen.getByText('It has unfinished dependencies. Complete it anyway?'),
+      ).toBeInTheDocument(),
+    );
+  });
+
+  it('completes anyway when the blocked confirm is accepted', async () => {
+    const onToggle = vi.fn();
+    render(<TaskHeader task={task({})} blocked onToggleDone={onToggle} onRename={vi.fn()} />);
+    fireEvent.click(screen.getByTestId('task-detail-check'));
+    const yes = await screen.findByText('Complete anyway', {}, { timeout: 3000 });
+    fireEvent.click(yes);
+    await waitFor(() => expect(onToggle).toHaveBeenCalledWith(true));
+  });
+
+  it('un-completing a blocked task skips the confirm', () => {
+    const onToggle = vi.fn();
+    render(
+      <TaskHeader
+        task={task({ status: 'DONE' })}
+        blocked
+        onToggleDone={onToggle}
+        onRename={vi.fn()}
+      />,
+    );
+    fireEvent.click(screen.getByTestId('task-detail-check'));
+    expect(onToggle).toHaveBeenCalledWith(false);
   });
 });
