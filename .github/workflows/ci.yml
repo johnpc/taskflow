@@ -188,6 +188,8 @@ jobs:
             paths: .features-gen/e2e/features/progress
           - name: duplicate
             paths: .features-gen/e2e/features/duplicate
+          - name: mytasksdone
+            paths: .features-gen/e2e/features/mytasksdone
     steps:
       - uses: actions/checkout@v4
 

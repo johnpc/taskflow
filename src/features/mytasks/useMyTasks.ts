@@ -2,7 +2,9 @@ import { useMemo, useState } from 'react';
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchMyTasks } from './myTasksApi';
 import { selectBuckets } from './selectBuckets';
+import { completedBucket } from './completedBucket';
 import { readGroupMode, writeGroupMode, type GroupMode } from './groupMode';
+import { readShowCompleted, writeShowCompleted } from './showCompletedStore';
 import { setTaskDone, updateTask } from '../task/tasksApi';
 import { isDone } from '../task/taskMeta';
 import { overdueCount } from '../projects/taskCounts';
@@ -16,21 +18,28 @@ export function useMyTasks() {
   const qc = useQueryClient();
   const query = useQuery({ queryKey: ['my-tasks'], queryFn: fetchMyTasks });
   const [groupMode, setMode] = useState<GroupMode>(readGroupMode);
+  const [showCompleted, setShow] = useState<boolean>(readShowCompleted);
 
   const setGroupMode = (mode: GroupMode) => {
     writeGroupMode(mode);
     setMode(mode);
   };
 
+  const setShowCompleted = (show: boolean) => {
+    writeShowCompleted(show);
+    setShow(show);
+  };
+
   const { buckets, overdue, openTotal } = useMemo(() => {
     const today = todayISO();
     const data = query.data ?? [];
+    const open = selectBuckets(groupMode, data, today);
     return {
-      buckets: selectBuckets(groupMode, data, today),
+      buckets: showCompleted ? [...open, ...completedBucket(data)] : open,
       overdue: overdueCount(data, today),
       openTotal: data.filter((t) => !isDone(t)).length,
     };
-  }, [query.data, groupMode]);
+  }, [query.data, groupMode, showCompleted]);
 
   const invalidate = () => qc.invalidateQueries({ queryKey: ['my-tasks'] });
 
@@ -45,5 +54,16 @@ export function useMyTasks() {
     onSuccess: invalidate,
   });
 
-  return { query, buckets, overdue, openTotal, groupMode, setGroupMode, toggleDone, setBucket };
+  return {
+    query,
+    buckets,
+    overdue,
+    openTotal,
+    groupMode,
+    setGroupMode,
+    showCompleted,
+    setShowCompleted,
+    toggleDone,
+    setBucket,
+  };
 }

@@ -12,8 +12,18 @@ import './myTasks.css';
  * mode each card can be re-filed into Today/Upcoming/Later. Renders only. */
 export function MyTasks() {
   useDocumentTitle('My Tasks');
-  const { query, buckets, overdue, openTotal, groupMode, setGroupMode, toggleDone, setBucket } =
-    useMyTasks();
+  const {
+    query,
+    buckets,
+    overdue,
+    openTotal,
+    groupMode,
+    setGroupMode,
+    showCompleted,
+    setShowCompleted,
+    toggleDone,
+    setBucket,
+  } = useMyTasks();
 
   return (
     <IonPage>
@@ -33,6 +43,15 @@ export function MyTasks() {
           )}
         </p>
         <GroupBySegment mode={groupMode} onChange={setGroupMode} />
+        <label className="mytasks__show-done">
+          <input
+            type="checkbox"
+            data-testid="mytasks-show-completed"
+            checked={showCompleted}
+            onChange={(e) => setShowCompleted(e.target.checked)}
+          />
+          Show completed
+        </label>
         <LoadState
           isLoading={query.isLoading}
           isError={query.isError}

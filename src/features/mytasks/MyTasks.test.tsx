@@ -1,5 +1,5 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { screen } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 
 const { useMyTasks } = vi.hoisted(() => ({ useMyTasks: vi.fn() }));
 vi.mock('./useMyTasks', () => ({ useMyTasks }));
@@ -15,6 +15,8 @@ const base = {
   openTotal: 0,
   groupMode: 'due' as const,
   setGroupMode: vi.fn(),
+  showCompleted: false,
+  setShowCompleted: vi.fn(),
   toggleDone: { mutate: vi.fn() },
   setBucket: { mutate: vi.fn() },
 };
@@ -44,6 +46,14 @@ describe('MyTasks', () => {
     useMyTasks.mockReturnValue({ ...base, buckets: [], groupMode: 'priority' });
     renderWithProviders(<MyTasks />);
     expect(screen.getByTestId('mytasks-groupby')).toHaveAttribute('value', 'priority');
+  });
+
+  it('toggles show-completed', () => {
+    const setShowCompleted = vi.fn();
+    useMyTasks.mockReturnValue({ ...base, buckets: [], setShowCompleted });
+    renderWithProviders(<MyTasks />);
+    fireEvent.click(screen.getByTestId('mytasks-show-completed'));
+    expect(setShowCompleted).toHaveBeenCalledWith(true);
   });
 
   it('shows the caught-up empty state', () => {
