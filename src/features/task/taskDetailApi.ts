@@ -4,6 +4,7 @@
  */
 import { dataClient, type TaskRecord, type CommentRecord } from '../../lib/dataClient';
 import { fetchAttachments } from './attachmentsApi';
+import { membersForTask } from '../auth/members';
 import type { AttachmentRecord } from '../../lib/dataClient';
 
 export interface TaskDetailData {
@@ -40,6 +41,7 @@ export async function addComment(input: {
     taskId: input.taskId,
     body: input.body.trim(),
     authorEmail: input.authorEmail ?? undefined,
+    members: await membersForTask(input.taskId),
   });
   if (errors || !data) throw new Error(`Add comment failed: ${JSON.stringify(errors)}`);
   return data;

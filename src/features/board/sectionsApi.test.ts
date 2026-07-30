@@ -21,7 +21,12 @@ describe('sectionsApi', () => {
   it('creates a section with a trimmed name + order', async () => {
     create.mockResolvedValue({ errors: null });
     await createSection({ projectId: 'p', name: '  Review ', order: 3 });
-    expect(create).toHaveBeenCalledWith({ projectId: 'p', name: 'Review', sortOrder: 3 });
+    expect(create).toHaveBeenCalledWith({
+      projectId: 'p',
+      name: 'Review',
+      sortOrder: 3,
+      members: [],
+    });
   });
 
   it('renames a section', async () => {

@@ -23,5 +23,7 @@ export async function spawnNextOccurrence(task: TaskRecord | null | undefined): 
     sortOrder: (task.sortOrder ?? 0) + 1,
     repeat: task.repeat,
     labelIds: (task.labelIds ?? []).filter((x): x is string => !!x),
+    // Carry the same project membership so collaborators see the next occurrence.
+    members: (task.members ?? []).filter((x): x is string => !!x),
   });
 }

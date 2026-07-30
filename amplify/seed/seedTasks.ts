@@ -24,6 +24,7 @@ export async function createTaskWithSubtasks(
   task: SeedTask,
   order: number,
   labelMap: Map<string, string>,
+  members: string[],
 ): Promise<string> {
   const { data: created, errors } = await client.models.Task.create(
     {
@@ -40,6 +41,7 @@ export async function createTaskWithSubtasks(
       labelIds: labelIdsFor(task, labelMap),
       repeat: task.repeat ?? 'NONE',
       isMilestone: task.isMilestone ?? false,
+      members,
     },
     OWNER_WRITE,
   );
@@ -54,6 +56,7 @@ export async function createTaskWithSubtasks(
         status: 'TODO',
         priority: 'NONE',
         sortOrder: i,
+        members,
       },
       OWNER_WRITE,
     );

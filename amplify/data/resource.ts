@@ -3,11 +3,14 @@ import { type ClientSchema, a, defineData } from '@aws-amplify/backend';
 /**
  * Taskflow data schema — an Asana-style project & task manager.
  *
- * Taskflow is ACCOUNT-BASED and owner-scoped: every model uses allow.owner()
- * (userPool), so a signed-in user only ever reads and writes their own rows.
- * There is no guest read path (unlike the spork reference) — a task manager
- * needs an identity to own work. Read/write everything with authMode
- * 'userPool'; the seed signs in as the test user. See CLAUDE.md decisions.
+ * Taskflow is ACCOUNT-BASED with PER-PROJECT SHARING: every project-scoped model
+ * carries a `members` string[] (emails) and authorizes via
+ * allow.ownersDefinedIn('members').identityClaim('email') — so every member of a
+ * project has full read/write on its sections/tasks/comments/attachments. The
+ * creator is added to members on create; invites append (and cascade the array
+ * to child records). Labels remain a personal owner-scoped registry. There is no
+ * guest read path. Read/write everything with authMode 'userPool'; the seed signs
+ * in as the test user. See CLAUDE.md decisions.
  *
  * Shape (grows one vertical slice at a time):
  * - Project   — a board/list of work (name, color, view, archived).
@@ -33,10 +36,14 @@ const schema = a.schema({
       sortOrder: a.integer().default(0),
       isArchived: a.boolean().default(false),
       favorite: a.boolean().default(false),
+      // Per-project sharing: the emails of everyone with access (the creator is
+      // added on create; invites append). Every model in the project mirrors
+      // this list so AppSync per-record owner auth grants each member access.
+      members: a.string().array(),
       sections: a.hasMany('Section', 'projectId'),
       tasks: a.hasMany('Task', 'projectId'),
     })
-    .authorization((allow) => [allow.owner()]),
+    .authorization((allow) => [allow.ownersDefinedIn('members').identityClaim('email')]),
 
   // A named column (Board view) / group (List view) within a project. Tasks
   // belong to exactly one section; sortOrder positions columns left→right.
@@ -46,11 +53,13 @@ const schema = a.schema({
       project: a.belongsTo('Project', 'projectId'),
       name: a.string().required(),
       sortOrder: a.integer().default(0),
+      // Mirrors the parent project's members (see Project.members).
+      members: a.string().array(),
       tasks: a.hasMany('Task', 'sectionId'),
     })
     // Read all sections for a project, ordered — the board/list read path.
     .secondaryIndexes((index) => [index('projectId').sortKeys(['sortOrder'])])
-    .authorization((allow) => [allow.owner()]),
+    .authorization((allow) => [allow.ownersDefinedIn('members').identityClaim('email')]),
 
   // The unit of work. Ordered within its section by sortOrder (drag reorders).
   // Subtasks self-reference the parent via parentTaskId. assigneeEmail carries
@@ -99,6 +108,8 @@ const schema = a.schema({
       subtasks: a.hasMany('Task', 'parentTaskId'),
       comments: a.hasMany('Comment', 'taskId'),
       attachments: a.hasMany('Attachment', 'taskId'),
+      // Mirrors the parent project's members (see Project.members).
+      members: a.string().array(),
     })
     // Board read path: all tasks in a project, then group by section client-side
     // on the bounded page. Subtask read path: children of a parent task.
@@ -106,7 +117,7 @@ const schema = a.schema({
       index('projectId').sortKeys(['sortOrder']),
       index('parentTaskId'),
     ])
-    .authorization((allow) => [allow.owner()]),
+    .authorization((allow) => [allow.ownersDefinedIn('members').identityClaim('email')]),
 
   // An activity/discussion entry on a task. authorEmail is denormalized so the
   // thread renders without a user lookup. Ordered by createdAt (the model's
@@ -117,10 +128,12 @@ const schema = a.schema({
       task: a.belongsTo('Task', 'taskId'),
       body: a.string().required(),
       authorEmail: a.string(),
+      // Mirrors the task's project members so every collaborator sees the thread.
+      members: a.string().array(),
     })
     // Read all comments for a task.
     .secondaryIndexes((index) => [index('taskId')])
-    .authorization((allow) => [allow.owner()]),
+    .authorization((allow) => [allow.ownersDefinedIn('members').identityClaim('email')]),
 
   // A link attached to a task (a named URL). No file uploads — this is a
   // links-only v1; the url is safeHref-guarded before render. Ordered by
@@ -131,12 +144,16 @@ const schema = a.schema({
       task: a.belongsTo('Task', 'taskId'),
       url: a.string().required(),
       title: a.string(),
+      // Mirrors the task's project members so every collaborator sees the link.
+      members: a.string().array(),
     })
     .secondaryIndexes((index) => [index('taskId')])
-    .authorization((allow) => [allow.owner()]),
+    .authorization((allow) => [allow.ownersDefinedIn('members').identityClaim('email')]),
 
   // A reusable colored tag. Tasks carry denormalized labelIds[] referencing
-  // these; the label registry gives each id a name + color.
+  // these; the label registry gives each id a name + color. Labels stay a
+  // PERSONAL registry (owner-scoped) — shared-project label chips resolving for
+  // every member is a follow-up; not needed for the sharing foundation.
   Label: a
     .model({
       name: a.string().required(),
