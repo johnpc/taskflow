@@ -263,6 +263,14 @@ export const seedProjects: SeedProject[] = [
     sections: ['To do'],
     tasks: [{ title: 'Reschedule me', section: 'To do', priority: 'NONE', dueOffsetDays: 2 }],
   },
+  // Dedicated project for adding a task while grouped by a non-section field —
+  // this area creates a task, so it needs its own project to stay parallel-safe.
+  {
+    name: 'List Add Lab',
+    color: 'green',
+    sections: ['To do'],
+    tasks: [{ title: 'Existing item', section: 'To do', priority: 'HIGH' }],
+  },
   // Dedicated project for drag-to-reorder: two ordered cards only this area
   // touches, so reordering them can't disturb a parallel run.
   {

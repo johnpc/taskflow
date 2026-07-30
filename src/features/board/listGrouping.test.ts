@@ -27,6 +27,13 @@ describe('groupListBy', () => {
     expect(groups[0].tasks.map((t) => t.id)).toEqual(['a', 'b']);
   });
 
+  it('NONE returns a single flat group of every task', () => {
+    const groups = groupListBy(columns, 'NONE', '2025-01-01');
+    expect(groups).toHaveLength(1);
+    expect(groups[0].name).toBe('All tasks');
+    expect(groups[0].tasks.map((t) => t.id).sort()).toEqual(['a', 'b', 'c']);
+  });
+
   it('PRIORITY buckets across sections, high first, empties dropped', () => {
     const groups = groupListBy(columns, 'PRIORITY', '2025-01-01');
     expect(groups.map((g) => g.name)).toEqual(['High priority', 'No priority']);

@@ -41,6 +41,19 @@ When('the user sorts the list by {string}', async ({ page }, column: string) => 
   await page.getByTestId(`list-sort-${column}`).first().click();
 });
 
+When(
+  'the user adds a task titled {string} from the list composer',
+  async ({ page }, title: string) => {
+    // Idempotent for CI retries: if a prior attempt already created it (the
+    // sandbox persists), skip re-adding to avoid a duplicate row.
+    if ((await page.getByTestId('task-card').filter({ hasText: title }).count()) > 0) return;
+    await page.getByTestId('add-card').last().click();
+    const input = page.getByTestId('add-card-input').last();
+    await input.fill(title);
+    await input.press('Enter');
+  },
+);
+
 Then('the list is sorted by {string} {word}', async ({ page }, column: string, dir: string) => {
   const header = page.getByTestId(`list-sort-${column}`).first();
   await expect(header).toHaveAttribute('aria-pressed', 'true', { timeout: 15_000 });

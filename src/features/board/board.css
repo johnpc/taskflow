@@ -139,6 +139,12 @@
   color: var(--tf-text-muted);
 }
 
+/* Top-level add composer shown when the list is grouped by anything but
+ * Section (where each section has its own inline composer). */
+.list-view__add {
+  margin-top: -6px;
+}
+
 .list-group-by__select {
   background: var(--tf-surface);
   border: 1px solid var(--tf-border);

@@ -42,6 +42,17 @@ Feature: List view
     Then a list section named "Medium priority" is visible
     And a task titled "Design hero banner" is visible on the board
 
+  # You can add a task no matter how the list is grouped: switch List Add Lab to
+  # group-by Priority (no single section target) and the top-level composer still
+  # files a new task into the project.
+  Scenario: Adding a task while grouped by a non-section field
+    Given a signed-in user
+    And the user opens the "List Add Lab" project
+    When the user switches to the list view
+    And the user groups the list by "PRIORITY"
+    And the user adds a task titled "Added while grouped" from the list composer
+    Then a task titled "Added while grouped" is visible on the board
+
   # Sort by any column: clicking a column header sorts the list by it and marks
   # it active ascending; clicking again flips to descending.
   Scenario: Sorting the list by a column header

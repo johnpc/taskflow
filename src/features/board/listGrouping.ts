@@ -2,11 +2,13 @@ import type { Column } from './taskGrouping';
 import type { TaskRecord } from '../../lib/dataClient';
 import { dueStatus, type Priority } from '../task/taskMeta';
 
-/** How the List view buckets its rows. SECTION is the model's own columns; the
- * rest dynamically re-bucket the flattened tasks (Asana-style group-by). */
-export type GroupBy = 'SECTION' | 'ASSIGNEE' | 'DUE' | 'PRIORITY';
+/** How the List view buckets its rows. NONE is a single flat list; SECTION is
+ * the model's own columns; the rest dynamically re-bucket the flattened tasks
+ * (Asana-style group-by). */
+export type GroupBy = 'NONE' | 'SECTION' | 'ASSIGNEE' | 'DUE' | 'PRIORITY';
 
 export const GROUP_BY_LABELS: Record<GroupBy, string> = {
+  NONE: 'None',
   SECTION: 'Section',
   ASSIGNEE: 'Assignee',
   DUE: 'Due date',
@@ -64,6 +66,9 @@ export function groupListBy(columns: Column[], by: GroupBy, today: string): List
     return columns.map((c) => ({ id: c.section.id, name: c.section.name, tasks: c.tasks }));
   }
   const tasks = flatten(columns);
+  if (by === 'NONE') {
+    return [{ id: '_all', name: 'All tasks', tasks }];
+  }
   if (by === 'PRIORITY') {
     return bucketBy(
       tasks,
