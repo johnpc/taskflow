@@ -37,6 +37,16 @@ When('the user groups the list by {string}', async ({ page }, groupBy: string) =
   await page.getByTestId('list-group-by-select').selectOption(groupBy);
 });
 
+When('the user sorts the list by {string}', async ({ page }, column: string) => {
+  await page.getByTestId(`list-sort-${column}`).first().click();
+});
+
+Then('the list is sorted by {string} {word}', async ({ page }, column: string, dir: string) => {
+  const header = page.getByTestId(`list-sort-${column}`).first();
+  await expect(header).toHaveAttribute('aria-pressed', 'true', { timeout: 15_000 });
+  await expect(header).toContainText(dir === 'ascending' ? '▲' : '▼', { timeout: 15_000 });
+});
+
 Then(
   'the list row {string} shows the priority {string}',
   async ({ page }, title: string, priority: string) => {
