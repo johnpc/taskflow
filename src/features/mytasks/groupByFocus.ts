@@ -28,5 +28,7 @@ export function groupByFocus(tasks: TaskRecord[]): TaskBucket[] {
         (a.title ?? '').localeCompare(b.title ?? ''),
     );
   }
-  return ORDER.map((b) => ({ ...b, tasks: byKey.get(b.key)! })).filter((b) => b.tasks.length > 0);
+  // Keep ALL focus buckets, even empty ones: they're planning columns + drag
+  // targets (you must be able to drop a task into a currently-empty bucket).
+  return ORDER.map((b) => ({ ...b, tasks: byKey.get(b.key)! }));
 }

@@ -52,4 +52,36 @@ describe('MyTasksBucket', () => {
     fireEvent.change(screen.getByTestId('focus-bucket-select'), { target: { value: 'LATER' } });
     expect(onSetBucket).toHaveBeenCalledWith({ id: 't1', myBucket: 'LATER' });
   });
+
+  it('re-files a task dropped onto the bucket (focus mode)', () => {
+    const onSetBucket = vi.fn();
+    renderWithProviders(
+      <MyTasksBucket
+        bucket={{ key: 'LATER', label: 'Later', tasks: [] }}
+        showFocusPicker
+        projectsById={projectsById}
+        onToggleDone={vi.fn()}
+        onSetBucket={onSetBucket}
+      />,
+    );
+    const data = { getData: () => 'dragged-id' } as unknown as DataTransfer;
+    fireEvent.drop(screen.getByTestId('bucket-LATER'), { dataTransfer: data });
+    expect(onSetBucket).toHaveBeenCalledWith({ id: 'dragged-id', myBucket: 'LATER' });
+  });
+
+  it('is not a drop target outside focus mode', () => {
+    const onSetBucket = vi.fn();
+    renderWithProviders(
+      <MyTasksBucket
+        bucket={bucket}
+        showFocusPicker={false}
+        projectsById={projectsById}
+        onToggleDone={vi.fn()}
+        onSetBucket={onSetBucket}
+      />,
+    );
+    const data = { getData: () => 't1' } as unknown as DataTransfer;
+    fireEvent.drop(screen.getByTestId('bucket-TODAY'), { dataTransfer: data });
+    expect(onSetBucket).not.toHaveBeenCalled();
+  });
 });

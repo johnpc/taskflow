@@ -11,3 +11,12 @@ Feature: My Tasks focus buckets
     And the user groups My Tasks by focus
     And the user files "Renew passport" into "Today"
     Then the "Today" focus bucket contains "Renew passport"
+
+  # Drag-and-drop between buckets (Asana parity). "Plan Q3 goals" is a stable
+  # open task; dragging it onto Later re-files it there.
+  Scenario: Dragging a task into the Later bucket
+    Given a signed-in user
+    When the user opens My Tasks
+    And the user groups My Tasks by focus
+    And the user drags "Plan Q3 goals" into the "Later" bucket
+    Then the "Later" focus bucket contains "Plan Q3 goals"

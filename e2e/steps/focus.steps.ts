@@ -19,6 +19,22 @@ When('the user files {string} into {string}', async ({ page }, title: string, bu
   await row.getByTestId('focus-bucket-select').selectOption(bucketValue[bucket]);
 });
 
+When(
+  'the user drags {string} into the {string} bucket',
+  async ({ page }, title: string, bucket: string) => {
+    // The draggable is the row <li> wrapping the card; the drop target is the
+    // bucket section. Dispatch HTML5 DnD with a SHARED DataTransfer (Playwright's
+    // dragTo doesn't fire native DnD, and the app reads the task id off it).
+    const row = page.getByTestId('task-card').filter({ hasText: title }).first().locator('..');
+    const target = page.getByTestId(`bucket-${bucketValue[bucket]}`);
+    const dt = await page.evaluateHandle(() => new DataTransfer());
+    await row.dispatchEvent('dragstart', { dataTransfer: dt });
+    await target.dispatchEvent('dragover', { dataTransfer: dt });
+    await target.dispatchEvent('drop', { dataTransfer: dt });
+    await row.dispatchEvent('dragend', { dataTransfer: dt });
+  },
+);
+
 Then(
   'the {string} focus bucket contains {string}',
   async ({ page }, bucket: string, title: string) => {
