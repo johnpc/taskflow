@@ -19,3 +19,13 @@ Feature: List view
     When the user switches to the list view
     And the user collapses the "To do" list section
     Then a task titled "Finalize press list" is not visible
+
+  # The Asana-style list is columnar: a header row (Task/Assignee/Due/Priority)
+  # and each row shows its priority in the Priority column. "Finalize press list"
+  # is seeded MEDIUM.
+  Scenario: The list view shows aligned columns
+    Given a signed-in user
+    And the user opens the "Product Launch" project
+    When the user switches to the list view
+    Then the list shows a column header row
+    And the list row "Finalize press list" shows the priority "Medium"

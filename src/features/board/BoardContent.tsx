@@ -55,7 +55,6 @@ export function BoardContent({
             defaultOpen={i === 0 || column.tasks.length > 0}
             onAddTask={onAddTask}
             onToggleDone={onToggleDone}
-            onReorder={onReorder}
             onQuickEdit={onQuickEdit}
             selectedIds={selectedIds}
             onSelect={onSelect}
