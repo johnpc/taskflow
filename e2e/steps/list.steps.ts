@@ -50,7 +50,12 @@ Then('the list is sorted by {string} {word}', async ({ page }, column: string, d
 Then(
   'the list row {string} shows the priority {string}',
   async ({ page }, title: string, priority: string) => {
-    const row = page.getByTestId('task-card').filter({ hasText: title }).first();
+    // Match by EXACT title (the open button) so a partial-title sibling can't be
+    // picked by hasText.
+    const row = page
+      .getByTestId('task-card')
+      .filter({ has: page.getByTestId('task-open').getByText(title, { exact: true }) })
+      .first();
     await expect(row.getByTestId('row-priority')).toHaveText(priority, { timeout: 15_000 });
   },
 );

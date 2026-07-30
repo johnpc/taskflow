@@ -19,6 +19,7 @@ import { useProjectActions } from './useProjectActions';
 import { ViewToggle } from './ViewToggle';
 import { FilterBar } from './FilterBar';
 import { ProjectHeader } from './ProjectHeader';
+import { ProjectShareRegion } from './ProjectShareRegion';
 import { ProjectMenu } from './ProjectMenu';
 import { SelectionBar } from './SelectionBar';
 import { useBulkSelection } from './useBulkSelection';
@@ -40,6 +41,7 @@ export function ProjectView() {
   const edit = useProjectEdit(id);
   const actions = useProjectActions(id);
   const bulk = useBulkSelection(board);
+  const memberList = (project.data?.members ?? []).filter((m): m is string => !!m);
   useDocumentTitle(project.data?.name ?? 'Project');
 
   return (
@@ -63,6 +65,7 @@ export function ProjectView() {
             onAddSection={(name) => board.addSection.mutate(name)}
           />
         )}
+        <ProjectShareRegion projectId={id} members={memberList} />
         <ViewToggle mode={mode} onChange={choose} />
         <FilterBar filter={filter} labels={board.labels} onChange={update} />
         {mode === 'LIST' && bulk.selection.active && (

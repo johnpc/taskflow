@@ -473,3 +473,91 @@ li.list-row.task-card--done .task-card__title {
   color: var(--tf-text);
   cursor: pointer;
 }
+
+/* Project sharing (members) */
+.project-members {
+  margin-bottom: 16px;
+}
+
+.project-members__head {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--tf-text-muted);
+  margin: 0 0 8px;
+}
+
+.project-members__list {
+  list-style: none;
+  margin: 0 0 10px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.project-members__row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.project-members__email {
+  flex: 1;
+  font-size: 0.88rem;
+  color: var(--tf-text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.project-members__owner {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--tf-text-muted);
+  background: var(--tf-surface-2);
+  border-radius: 999px;
+  padding: 1px 8px;
+}
+
+.project-members__remove {
+  background: none;
+  border: none;
+  color: var(--tf-text-muted);
+  cursor: pointer;
+  display: inline-flex;
+  padding: 2px;
+}
+
+.project-members__add {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--tf-text-muted);
+}
+
+.project-members__input {
+  border: none;
+  background: transparent;
+  color: var(--tf-text);
+  font-size: 0.9rem;
+  outline: none;
+  min-width: 0;
+}
+
+.project-members__invite {
+  background: var(--tf-accent-soft);
+  border: 1px solid var(--tf-accent);
+  color: var(--tf-accent-strong);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.project-members__invite[disabled] {
+  opacity: 0.5;
+  cursor: default;
+}

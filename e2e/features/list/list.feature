@@ -21,14 +21,15 @@ Feature: List view
     Then a task titled "Finalize press list" is not visible
 
   # The Asana-style list is columnar: a header row (Task/Assignee/Due/Priority)
-  # and each row shows its priority in the Priority column. "Finalize press list"
-  # is seeded MEDIUM.
+  # and each row shows its priority in the Priority column. "Column check" is a
+  # dedicated HIGH-priority anchor no other area mutates (parallel-safe; unlike
+  # "Finalize press list", whose priority the quickedit area cycles).
   Scenario: The list view shows aligned columns
     Given a signed-in user
     And the user opens the "Product Launch" project
     When the user switches to the list view
     Then the list shows a column header row
-    And the list row "Finalize press list" shows the priority "Medium"
+    And the list row "Column check" shows the priority "High"
 
   # Group by any column: switching the group-by to Priority re-buckets the rows
   # into priority groups. "Design hero banner" is seeded MEDIUM, so a
