@@ -13,6 +13,7 @@ const render = (over: Partial<ProjectRecord>, props: Record<string, unknown> = {
       project={project(over)}
       onDescribe={vi.fn()}
       onSetStatus={vi.fn()}
+      onSetColor={vi.fn()}
       onAddSection={vi.fn()}
       {...props}
     />,

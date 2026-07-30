@@ -281,6 +281,14 @@ export const seedProjects: SeedProject[] = [
     sections: ['To do'],
     tasks: [{ title: 'Fav target', section: 'To do', priority: 'NONE' }],
   },
+  // Dedicated project for recoloring: this area changes its color, so an
+  // isolated project keeps the accent stable for other areas.
+  {
+    name: 'Color Lab',
+    color: 'indigo',
+    sections: ['To do'],
+    tasks: [{ title: 'Color target', section: 'To do', priority: 'NONE' }],
+  },
   // Dedicated project for timeline drag-to-reschedule: one dated bar this area
   // moves, so mutating its due date can't disturb a parallel run.
   {
