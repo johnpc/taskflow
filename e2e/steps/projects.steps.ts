@@ -25,6 +25,11 @@ When('the user creates a project named {string}', async ({ page }, name: string)
 Given('the user opens the {string} project', async ({ page }, name: string) => {
   // Reach the project list first (the signed-in landing is Home), then open it.
   await page.goto('/projects');
-  await page.getByTestId('project-card').filter({ hasText: name }).getByRole('link').click();
+  // Match the card by EXACT name so a "<name> (copy)" (from a duplicate) can't
+  // also match the substring and make the locator ambiguous.
+  const card = page
+    .getByTestId('project-card')
+    .filter({ has: page.getByTestId('project-name').getByText(name, { exact: true }) });
+  await card.getByRole('link').first().click();
   await expect(page.getByTestId('board')).toBeVisible({ timeout: 15_000 });
 });

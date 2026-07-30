@@ -31,7 +31,9 @@ export function ProjectCard({
           style={{ background: projectColorVar(project.color) }}
           aria-hidden="true"
         />
-        <span className="project-card__name">{project.name}</span>
+        <span className="project-card__name" data-testid="project-name">
+          {project.name}
+        </span>
         <StatusPill status={project.status} />
         {count > 0 && (
           <span className="project-card__count" data-testid="project-count">

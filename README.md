@@ -18,57 +18,58 @@ iOS and Android.
 
 ## Features
 
-| Area                | What you get                                                                                          | Status |
-| ------------------- | ----------------------------------------------------------------------------------------------------- | ------ |
-| **Home**            | Dashboard: greeting, due-today / overdue stats, a "coming up" task list, project links                | ✅     |
-| **Projects**        | Create color-coded projects, favorite them, add a description, archive/delete                         | ✅     |
-| **Archived**        | Browse archived projects in a collapsible section and restore any of them                             | ✅     |
-| **Templates**       | Start a ready-made project (Sprint / Content / Launch) with sections + tasks                          | ✅     |
-| **Counts**          | Open-task count badge per project; overdue count on My Tasks                                          | ✅     |
-| **Progress**        | Each project card shows a completion bar and "X of Y done"                                            | ✅     |
-| **Project status**  | Set a project On track / At risk / Off track with a note; a colored pill shows on card+header         | ✅     |
-| **Sections**        | Add, rename, delete, and reorder a project's columns/sections                                         | ✅     |
-| **Board**           | Kanban columns (To do / In progress / Done) with inline task creation                                 | ✅     |
-| **List view**       | Asana columns; group by None/Section/Assignee/Due/Priority & sort by any; add a task in any grouping  | ✅     |
-| **Timeline**        | Gantt-style two-week view — dated tasks as bars; tap to open, drag a bar to reschedule                | ✅     |
-| **Tasks**           | Title, notes, priority (Low→High), due dates with overdue/today/upcoming cues                         | ✅     |
-| **Start date**      | Give a task a start date; not-yet-started tasks show a "Starts Mon D" chip                            | ✅     |
-| **Due presets**     | One-tap Today / Tomorrow / Next week due-date buttons                                                 | ✅     |
-| **Due time**        | Add a time of day to a due date; the card chip shows it (e.g. "Aug 3 2:00 PM")                        | ✅     |
-| **Drag & drop**     | Drag a card to a column to move it, or onto a card to drop it at that position                        | ✅     |
-| **Reorder**         | Drag onto a card, or move a task up/down within its section                                           | ✅     |
-| **Multi-select**    | Select tasks in the list view and bulk-complete, move-to-section, or delete                           | ✅     |
-| **Quick-edit**      | Set a due date and cycle priority straight from a card, no detail needed                              | ✅     |
-| **Inline rename**   | Rename a task in place from its card (pencil), no detail needed                                       | ✅     |
-| **Milestones**      | Mark a task a milestone; its card shows a ◆ marker for key checkpoints                                | ✅     |
-| **Highlight color** | Give a task a color; its card gets a left accent stripe for visual grouping                           | ✅     |
-| **Subtasks**        | Checklist with a "2/3" chip; open a subtask + breadcrumb back; confirm if incomplete                  | ✅     |
-| **Attachments**     | Attach labelled links to a task; each opens in a new tab (XSS-guarded hrefs)                          | ✅     |
-| **Dependencies**    | "Blocked by" + "Blocking" lines, board badge, and a confirm before completing early                   | ✅     |
-| **Recurring**       | Repeat daily/weekly/monthly (card shows the cadence); completing spawns the next                      | ✅     |
-| **Rich notes**      | Notes render **bold**, safe links, and [ ]/[x] checklists (XSS-guarded hrefs)                         | ✅     |
-| **Comments**        | Discuss on any task with relative timestamps; edit or delete a comment                                | ✅     |
-| **Labels**          | Reusable colored tags; apply on task detail, chips render on every card                               | ✅     |
-| **Move & assign**   | Move a task between sections/projects, and assign it to any project member                            | ✅     |
-| **Duplicate**       | Copy a task (title, notes, dates, labels, flags) into the same section                                | ✅     |
-| **Copy link**       | Copy a task's shareable deep link from its detail, with "Copied!" feedback                            | ✅     |
-| **Delete task**     | Delete a task (with confirm) from its detail; it leaves the board                                     | ✅     |
-| **My Tasks**        | Open tasks across projects (project-tagged) — group, completed, filter to assigned-to-me              | ✅     |
-| **Focus plan**      | File tasks into Today / Upcoming / Later in My Tasks — drag between buckets or pick                   | ✅     |
-| **Calendar**        | Two-week forward view of upcoming dated tasks, grouped by day (project-tagged)                        | ✅     |
-| **Search**          | Live title/notes search — rows show project + due; filter by priority/project/status                  | ✅     |
-| **Complete**        | One-tap complete on the board and in lists, with a strike-through state                               | ✅     |
-| **Undo**            | An undo toast after completing a task — one tap to bring it back                                      | ✅     |
-| **Celebration**     | A confetti burst on completing a task (intermittent; respects reduced-motion)                         | ✅     |
-| **Completed view**  | Per-project archive of done tasks (with when), each reopenable                                        | ✅     |
-| **Activity**        | Created / completed relative timestamps on task detail                                                | ✅     |
-| **Filter & sort**   | Hide/show completed, filter by label / priority / due / assignee, sort by due or priority             | ✅     |
-| **Saved views**     | Save a filter/sort combo as a named view per project; re-apply or delete in one tap                   | ✅     |
-| **Custom fields**   | Manage text/select/number/date fields from the board; fill per task; values chip on cards + list rows | ✅     |
-| **Dark mode**       | Follows your OS, with an in-app Light / Dark / System override                                        | ✅     |
-| **Accounts**        | Email sign-up/sign-in; your workspace is private by default                                           | ✅     |
-| **Sharing**         | Invite people to a project by email; every member sees & edits its board (Asana-style)                | ✅     |
-| **Shortcuts**       | Keyboard nav — `g` then h/p/t/c to jump around, `/` to search, `?` for help                           | ✅     |
+| Area                  | What you get                                                                                          | Status |
+| --------------------- | ----------------------------------------------------------------------------------------------------- | ------ |
+| **Home**              | Dashboard: greeting, due-today / overdue stats, a "coming up" task list, project links                | ✅     |
+| **Projects**          | Create color-coded projects, favorite them, add a description, archive/delete                         | ✅     |
+| **Duplicate project** | Copy a whole project — its sections + open tasks — into a fresh "(copy)" from the board menu          | ✅     |
+| **Archived**          | Browse archived projects in a collapsible section and restore any of them                             | ✅     |
+| **Templates**         | Start a ready-made project (Sprint / Content / Launch) with sections + tasks                          | ✅     |
+| **Counts**            | Open-task count badge per project; overdue count on My Tasks                                          | ✅     |
+| **Progress**          | Each project card shows a completion bar and "X of Y done"                                            | ✅     |
+| **Project status**    | Set a project On track / At risk / Off track with a note; a colored pill shows on card+header         | ✅     |
+| **Sections**          | Add, rename, delete, and reorder a project's columns/sections                                         | ✅     |
+| **Board**             | Kanban columns (To do / In progress / Done) with inline task creation                                 | ✅     |
+| **List view**         | Asana columns; group by None/Section/Assignee/Due/Priority & sort by any; add a task in any grouping  | ✅     |
+| **Timeline**          | Gantt-style two-week view — dated tasks as bars; tap to open, drag a bar to reschedule                | ✅     |
+| **Tasks**             | Title, notes, priority (Low→High), due dates with overdue/today/upcoming cues                         | ✅     |
+| **Start date**        | Give a task a start date; not-yet-started tasks show a "Starts Mon D" chip                            | ✅     |
+| **Due presets**       | One-tap Today / Tomorrow / Next week due-date buttons                                                 | ✅     |
+| **Due time**          | Add a time of day to a due date; the card chip shows it (e.g. "Aug 3 2:00 PM")                        | ✅     |
+| **Drag & drop**       | Drag a card to a column to move it, or onto a card to drop it at that position                        | ✅     |
+| **Reorder**           | Drag onto a card, or move a task up/down within its section                                           | ✅     |
+| **Multi-select**      | Select tasks in the list view and bulk-complete, move-to-section, or delete                           | ✅     |
+| **Quick-edit**        | Set a due date and cycle priority straight from a card, no detail needed                              | ✅     |
+| **Inline rename**     | Rename a task in place from its card (pencil), no detail needed                                       | ✅     |
+| **Milestones**        | Mark a task a milestone; its card shows a ◆ marker for key checkpoints                                | ✅     |
+| **Highlight color**   | Give a task a color; its card gets a left accent stripe for visual grouping                           | ✅     |
+| **Subtasks**          | Checklist with a "2/3" chip; open a subtask + breadcrumb back; confirm if incomplete                  | ✅     |
+| **Attachments**       | Attach labelled links to a task; each opens in a new tab (XSS-guarded hrefs)                          | ✅     |
+| **Dependencies**      | "Blocked by" + "Blocking" lines, board badge, and a confirm before completing early                   | ✅     |
+| **Recurring**         | Repeat daily/weekly/monthly (card shows the cadence); completing spawns the next                      | ✅     |
+| **Rich notes**        | Notes render **bold**, safe links, and [ ]/[x] checklists (XSS-guarded hrefs)                         | ✅     |
+| **Comments**          | Discuss on any task with relative timestamps; edit or delete a comment                                | ✅     |
+| **Labels**            | Reusable colored tags; apply on task detail, chips render on every card                               | ✅     |
+| **Move & assign**     | Move a task between sections/projects, and assign it to any project member                            | ✅     |
+| **Duplicate**         | Copy a task (title, notes, dates, labels, flags) into the same section                                | ✅     |
+| **Copy link**         | Copy a task's shareable deep link from its detail, with "Copied!" feedback                            | ✅     |
+| **Delete task**       | Delete a task (with confirm) from its detail; it leaves the board                                     | ✅     |
+| **My Tasks**          | Open tasks across projects (project-tagged) — group, completed, filter to assigned-to-me              | ✅     |
+| **Focus plan**        | File tasks into Today / Upcoming / Later in My Tasks — drag between buckets or pick                   | ✅     |
+| **Calendar**          | Two-week forward view of upcoming dated tasks, grouped by day (project-tagged)                        | ✅     |
+| **Search**            | Live title/notes search — rows show project + due; filter by priority/project/status                  | ✅     |
+| **Complete**          | One-tap complete on the board and in lists, with a strike-through state                               | ✅     |
+| **Undo**              | An undo toast after completing a task — one tap to bring it back                                      | ✅     |
+| **Celebration**       | A confetti burst on completing a task (intermittent; respects reduced-motion)                         | ✅     |
+| **Completed view**    | Per-project archive of done tasks (with when), each reopenable                                        | ✅     |
+| **Activity**          | Created / completed relative timestamps on task detail                                                | ✅     |
+| **Filter & sort**     | Hide/show completed, filter by label / priority / due / assignee, sort by due or priority             | ✅     |
+| **Saved views**       | Save a filter/sort combo as a named view per project; re-apply or delete in one tap                   | ✅     |
+| **Custom fields**     | Manage text/select/number/date fields from the board; fill per task; values chip on cards + list rows | ✅     |
+| **Dark mode**         | Follows your OS, with an in-app Light / Dark / System override                                        | ✅     |
+| **Accounts**          | Email sign-up/sign-in; your workspace is private by default                                           | ✅     |
+| **Sharing**           | Invite people to a project by email; every member sees & edits its board (Asana-style)                | ✅     |
+| **Shortcuts**         | Keyboard nav — `g` then h/p/t/c to jump around, `/` to search, `?` for help                           | ✅     |
 
 ## The vision
 

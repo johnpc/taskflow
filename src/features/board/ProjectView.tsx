@@ -1,12 +1,4 @@
-import {
-  IonBackButton,
-  IonButtons,
-  IonContent,
-  IonHeader,
-  IonPage,
-  IonTitle,
-  IonToolbar,
-} from '@ionic/react';
+import { IonContent, IonPage } from '@ionic/react';
 import { useParams } from 'react-router-dom';
 import { useBoard } from './useBoard';
 import { useProject } from './useProject';
@@ -22,7 +14,7 @@ import { SavedViewsRegion } from './SavedViewsRegion';
 import { ProjectHeader } from './ProjectHeader';
 import { ProjectShareRegion } from './ProjectShareRegion';
 import { ProjectFieldsRegion } from '../customfields/ProjectFieldsRegion';
-import { ProjectMenu } from './ProjectMenu';
+import { ProjectTopBar } from './ProjectTopBar';
 import { SelectionBar } from './SelectionBar';
 import { useBulkSelection } from './useBulkSelection';
 import { BoardRegion } from './BoardRegion';
@@ -48,17 +40,12 @@ export function ProjectView() {
 
   return (
     <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonButtons slot="start">
-            <IonBackButton defaultHref="/projects" data-testid="board-back" />
-          </IonButtons>
-          <IonTitle>{project.data?.name ?? 'Project'}</IonTitle>
-          <IonButtons slot="end">
-            <ProjectMenu onArchive={actions.archiveAndLeave} onDelete={actions.deleteAndLeave} />
-          </IonButtons>
-        </IonToolbar>
-      </IonHeader>
+      <ProjectTopBar
+        project={project.data ?? undefined}
+        onDuplicate={() => project.data && actions.duplicate.mutate(project.data)}
+        onArchive={actions.archiveAndLeave}
+        onDelete={actions.deleteAndLeave}
+      />
       <IonContent className="ion-padding">
         {project.data && (
           <ProjectHeader
