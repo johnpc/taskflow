@@ -218,6 +218,8 @@ jobs:
             paths: .features-gen/e2e/features/projectchip
           - name: searchrich
             paths: .features-gen/e2e/features/searchrich
+          - name: members
+            paths: .features-gen/e2e/features/members
     steps:
       - uses: actions/checkout@v4
 
