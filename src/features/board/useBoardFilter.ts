@@ -10,5 +10,7 @@ export function useBoardFilter() {
     (patch: Partial<BoardFilter>) => setFilter((f) => ({ ...f, ...patch })),
     [],
   );
-  return { filter, update };
+  // Replace the whole filter at once — used to apply a saved view.
+  const replace = useCallback((next: BoardFilter) => setFilter(next), []);
+  return { filter, update, replace };
 }

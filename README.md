@@ -61,6 +61,7 @@ iOS and Android.
 | **Completed view**  | Per-project archive of done tasks (with when), each reopenable                            | ✅     |
 | **Activity**        | Created / completed relative timestamps on task detail                                    | ✅     |
 | **Filter & sort**   | Hide/show completed, filter by label / priority / due / assignee, sort by due or priority | ✅     |
+| **Saved views**     | Save a filter/sort combo as a named view per project; re-apply or delete in one tap       | ✅     |
 | **Dark mode**       | Follows your OS, with an in-app Light / Dark / System override                            | ✅     |
 | **Accounts**        | Email sign-up/sign-in; your workspace is private by default                               | ✅     |
 | **Sharing**         | Invite people to a project by email; every member sees & edits its board (Asana-style)    | ✅     |

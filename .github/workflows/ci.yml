@@ -222,6 +222,8 @@ jobs:
             paths: .features-gen/e2e/features/members
           - name: celebration
             paths: .features-gen/e2e/features/celebration
+          - name: savedviews
+            paths: .features-gen/e2e/features/savedviews
     steps:
       - uses: actions/checkout@v4
 
