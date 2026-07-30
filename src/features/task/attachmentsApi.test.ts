@@ -27,7 +27,12 @@ describe('attachmentsApi', () => {
   it('adds an attachment, trimming and dropping a blank title', async () => {
     create.mockResolvedValue({ data: { id: 'x' }, errors: null });
     await addAttachment({ taskId: 't', url: '  https://x.co ', title: '  ' });
-    expect(create).toHaveBeenCalledWith({ taskId: 't', url: 'https://x.co', title: undefined });
+    expect(create).toHaveBeenCalledWith({
+      taskId: 't',
+      url: 'https://x.co',
+      title: undefined,
+      members: [],
+    });
   });
 
   it('throws when add errors', async () => {

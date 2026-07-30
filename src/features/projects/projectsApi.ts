@@ -5,6 +5,8 @@
 import { dataClient, type ProjectRecord } from '../../lib/dataClient';
 import { nextProjectColor } from './projectColors';
 import { sortProjects } from './sortProjects';
+import { deleteProjectChildren } from './deleteProjectCascade';
+import { currentMembers } from '../auth/members';
 
 export type { ProjectRecord } from '../../lib/dataClient';
 
@@ -32,6 +34,7 @@ export async function createProject(input: {
     sortOrder: input.existingCount,
     isArchived: false,
     favorite: false,
+    members: await currentMembers(),
   });
   if (errors || !data) throw new Error(`Create project failed: ${JSON.stringify(errors)}`);
   return data;
@@ -66,33 +69,6 @@ export async function deleteProject(id: string): Promise<void> {
   const { errors } = await dataClient.models.Project.delete({ id });
   if (errors) throw new Error(`Delete project failed: ${JSON.stringify(errors)}`);
   // Best-effort child cleanup — never let it fail the delete (the project row is
-  // already gone; orphaned owner-scoped children surface nowhere).
+  // already gone; orphaned member-scoped children surface nowhere).
   await deleteProjectChildren(id).catch((e) => console.warn('Project child cleanup failed', e));
-}
-
-/** Best-effort removal of a deleted project's sections, tasks, and comments. */
-async function deleteProjectChildren(projectId: string): Promise<void> {
-  const [sections, tasks] = await Promise.all([
-    dataClient.models.Section.listSectionByProjectIdAndSortOrder({ projectId }, { limit: 500 }),
-    dataClient.models.Task.listTaskByProjectIdAndSortOrder({ projectId }, { limit: 1000 }),
-  ]);
-  const taskRows = (tasks.data ?? []).filter(Boolean) as { id: string }[];
-  await Promise.all(
-    taskRows.map(async (t) => {
-      const { data: comments } = await dataClient.models.Comment.listCommentByTaskId({
-        taskId: t.id,
-      });
-      await Promise.all(
-        (comments ?? [])
-          .filter(Boolean)
-          .map((c) => dataClient.models.Comment.delete({ id: c!.id })),
-      );
-      await dataClient.models.Task.delete({ id: t.id });
-    }),
-  );
-  await Promise.all(
-    ((sections.data ?? []).filter(Boolean) as { id: string }[]).map((s) =>
-      dataClient.models.Section.delete({ id: s.id }),
-    ),
-  );
 }

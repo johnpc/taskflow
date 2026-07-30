@@ -25,6 +25,15 @@ if (existsSync(envLocal)) {
   }
 }
 
+// Per-project sharing: every seeded record must list the seed user as a member
+// (models authorize via ownersDefinedIn('members').identityClaim('email')), or
+// the signed-in seed user can't read back what it just wrote. Single member in
+// the seed — the demo workspace belongs to the test user.
+export function seedMembers(): string[] {
+  const email = process.env.TEST_USERNAME;
+  return email ? [email] : [];
+}
+
 /** Minimal shape of an Amplify model needed to wipe it generically. */
 interface ClearableModel {
   list: (opts: {

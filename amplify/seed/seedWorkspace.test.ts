@@ -18,6 +18,7 @@ vi.mock('./seedClient', () => ({
     },
   },
   OWNER_WRITE: { authMode: 'userPool' },
+  seedMembers: () => ['seed@example.com'],
 }));
 
 import { seedWorkspaceData } from './seedWorkspace';

@@ -1,6 +1,7 @@
 /** Attachment (link) server state for a task — thin I/O over the Amplify
  * client. One bounded per-task GSI list, plus add/remove. */
 import { dataClient, type AttachmentRecord } from '../../lib/dataClient';
+import { membersForTask } from '../auth/members';
 
 /** List a task's attachments, oldest first. */
 export async function fetchAttachments(taskId: string): Promise<AttachmentRecord[]> {
@@ -24,6 +25,7 @@ export async function addAttachment(input: {
     taskId: input.taskId,
     url: input.url.trim(),
     title: input.title.trim() || undefined,
+    members: await membersForTask(input.taskId),
   });
   if (errors || !data) throw new Error(`Add attachment failed: ${JSON.stringify(errors)}`);
   return data;

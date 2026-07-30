@@ -1,6 +1,7 @@
 /** Section mutations — add / rename / delete columns within a project. Thin I/O
  * over the Amplify client; the board query re-reads sections after each change. */
 import { dataClient } from '../../lib/dataClient';
+import { membersForProject } from '../auth/members';
 
 /** Create a section appended after the current last (highest sortOrder + 1). */
 export async function createSection(input: {
@@ -12,6 +13,7 @@ export async function createSection(input: {
     projectId: input.projectId,
     name: input.name.trim(),
     sortOrder: input.order,
+    members: await membersForProject(input.projectId),
   });
   if (errors) throw new Error(`Create section failed: ${JSON.stringify(errors)}`);
 }

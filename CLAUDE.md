@@ -69,9 +69,10 @@ echo "https://files.jpc.io/d/${HASH}-${FILENAME}"   # PERMANENT — the 307 on c
 - **Backend:** AWS Amplify Gen2 — Cognito auth + AppSync (GraphQL) + DynamoDB. Lives in `amplify/`.
 - **Server state:** react-query wrapping the Amplify data client. **Client state:** Context + hooks.
 
-## The core structure — account-based, owner-scoped
+## The core structure — account-based, per-project sharing
 
-Taskflow is a **single-user workspace** (per Cognito account). Every model is scoped to its owner.
+Taskflow is **account-based with per-project sharing** (Asana-style). A project can be shared with
+other people by email; each project-scoped record carries a `members` list of everyone with access.
 
 - **`Project`** — a board/list of work (name, color, view, favorite, archived).
 - **`Section`** — a named column/group within a project, ordered by sortOrder.
@@ -85,14 +86,18 @@ client-side. My Tasks + Search reuse a single "all my tasks" fetch.
 
 ### Amplify auth contract (this is where Taskflow diverges from spork)
 
-**Taskflow is account-based, NOT guest-first.** A task manager needs a signed-in identity to own
-projects and sync across devices, so:
+**Taskflow is account-based, NOT guest-first, with per-project sharing.** A task manager needs a
+signed-in identity to own projects and sync across devices, so:
 
-- **Every model uses `allow.owner()`** (userPool) — a signed-in user only ever reads/writes their own
-  rows. There is **no guest/`identityPool` read path** (unlike spork's guest-first games).
+- **Project-scoped models use `allow.ownersDefinedIn('members').identityClaim('email')`** (userPool):
+  every email in a record's `members` array has full read/write. `Project/Section/Task/Comment/
+Attachment` all carry `members`; creating a record sets it (creator on a new project; a copy of the
+  project's/task's members for children — see `src/features/auth/members.ts`). `Label` stays a
+  personal `allow.owner()` registry. There is **no guest/`identityPool` read path**.
 - The data client (`src/lib/dataClient.ts`) fixes **`authMode: 'userPool'`**.
 - Every workspace route is wrapped in **`RequireAuth`** (redirects signed-out visitors to `/welcome`).
-- The seed signs in as the test user; all writes go through userPool.
+- The seed signs in as the test user; every seeded record lists that user in `members` (via
+  `seedMembers()`), or the signed-in seed user couldn't read back its own writes.
 
 A request is authorized only when the **client authMode** and the model's **`allow.*` rule** name the
 same provider (userPool ↔ owner). A mismatch returns empty results, not a loud error.
@@ -200,9 +205,13 @@ npx ampx sandbox       # personal cloud backend sandbox
 
 Significant, hard-to-reverse choices (read before re-opening a settled question):
 
-- **Account-based & owner-scoped, not guest-first.** A task manager needs an identity to own work, be
-  assigned tasks, and sync. Every model is `allow.owner()`; there's a `RequireAuth` guard + `/welcome`
-  landing. This is the deliberate divergence from spork's guest-first reference.
+- **Account-based & per-project sharing, not guest-first.** A task manager needs an identity to own
+  work, be assigned tasks, and sync; and real collaboration needs sharing. Project-scoped models
+  authorize via `allow.ownersDefinedIn('members').identityClaim('email')` — a `members` email list per
+  record, mirrored from project → sections/tasks → comments/attachments. (`Label` stays owner-scoped.)
+  There's a `RequireAuth` guard + `/welcome` landing. This is the deliberate divergence from spork's
+  guest-first reference. (Superseded the original single-user owner-scoped design once collaboration
+  was required — the `members` cascade is the migration.)
 - **Subtasks are a self-relation on Task** (`parentTaskId`), not a separate model — a subtask is just a
   task with a parent, so it reuses all task machinery (complete, priority, due date).
 - **Board reads client-side-group a single per-project query.** Sections + tasks are two bounded GSI

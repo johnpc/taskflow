@@ -4,6 +4,7 @@
  * per-project GSI query, shaped into columns client-side.
  */
 import { dataClient, type SectionRecord, type TaskRecord } from '../../lib/dataClient';
+import { membersForProject } from '../auth/members';
 
 export interface BoardData {
   sections: SectionRecord[];
@@ -29,12 +30,14 @@ export async function ensureDefaultSections(
 ): Promise<SectionRecord[]> {
   if (existing.length > 0) return existing;
   const defaults = ['To do', 'In progress', 'Done'];
+  const members = await membersForProject(projectId);
   const created: SectionRecord[] = [];
   for (let i = 0; i < defaults.length; i++) {
     const { data } = await dataClient.models.Section.create({
       projectId,
       name: defaults[i],
       sortOrder: i,
+      members,
     });
     if (data) created.push(data);
   }
