@@ -305,3 +305,19 @@
 .task-card[draggable='true']:active {
   cursor: grabbing;
 }
+
+/* Assignee avatar chip: round initials badge on cards, so you can see who owns
+ * a task at a glance. */
+.task-card__avatar {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--tf-accent-soft);
+  color: var(--tf-accent-strong);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
