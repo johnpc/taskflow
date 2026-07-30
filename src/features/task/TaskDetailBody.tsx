@@ -6,9 +6,7 @@ import { TaskSettings } from './TaskSettings';
 import { TaskLabels } from './TaskLabels';
 import { TaskDependencies } from './TaskDependencies';
 import { Subtasks } from './Subtasks';
-import { Comments } from './Comments';
-import { Attachments } from './Attachments';
-import { CustomFieldsRegion } from '../customfields/CustomFieldsRegion';
+import { TaskDetailExtras } from './TaskDetailExtras';
 import { TaskActions } from './TaskActions';
 import { nextSubtaskOrder } from './nextSubtaskOrder';
 import { nowISO } from './today';
@@ -24,8 +22,8 @@ import type { TaskRecord } from '../../lib/dataClient';
  * labels, subtasks, comments. Split out of TaskDetail so the screen stays a
  * thin load-gate shell. All mutations come from the useTaskDetail hook. */
 export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDetailHook }) {
-  const { query, patch, toggleDone, addSubtask, comments, labels } = hook;
-  const { attachments, projects, move, duplicate } = hook;
+  const { query, patch, toggleDone, addSubtask, labels } = hook;
+  const { projects, move, duplicate, promote } = hook;
   const sections = useTaskSections(task.projectId);
   const blocked = useTaskBlocked(task);
   const { email } = useAuth();
@@ -35,7 +33,11 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
 
   return (
     <div className="task-detail" data-testid="task-detail">
-      <ParentBreadcrumb parentTaskId={task.parentTaskId} onOpen={openTask} />
+      <ParentBreadcrumb
+        parentTaskId={task.parentTaskId}
+        onOpen={openTask}
+        onPromote={() => promote.mutate(task)}
+      />
       <TaskHeader
         task={task}
         warning={warning}
@@ -70,24 +72,7 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
         onToggle={(input) => toggleDone.mutate(input)}
         onOpen={openTask}
       />
-      <Attachments
-        attachments={query.data?.attachments ?? []}
-        busy={attachments.add.isPending}
-        onAdd={(input) => attachments.add.mutate(input)}
-        onRemove={(id) => attachments.remove.mutate(id)}
-      />
-      <CustomFieldsRegion
-        task={task}
-        onPatch={(customValues) => patch.mutate({ id: task.id, customValues })}
-      />
-      <Comments
-        comments={query.data?.comments ?? []}
-        busy={comments.add.isPending}
-        nowMs={Date.now()}
-        onPost={(body) => comments.add.mutate(body)}
-        onEdit={(input) => comments.edit.mutate(input)}
-        onDelete={(id) => comments.remove.mutate(id)}
-      />
+      <TaskDetailExtras task={task} hook={hook} />
       <TaskActions
         taskId={task.id}
         duplicating={duplicate.isPending}

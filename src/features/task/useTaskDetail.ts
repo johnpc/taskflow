@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchTaskDetail } from './taskDetailApi';
 import { createTask, setTaskDone, updateTask, deleteTask, duplicateTask } from './tasksApi';
+import { promoteSubtask } from './promoteSubtask';
 import { useAttachments } from './useAttachments';
 import { useComments } from './useComments';
 import { useTaskMove } from './useTaskMove';
@@ -55,6 +56,14 @@ export function useTaskDetail(id: string) {
     onSuccess: invalidate,
   });
 
+  // Promote a subtask to a standalone task: clear its parent and drop it into
+  // the project's first section so it surfaces on the board (subtasks carry no
+  // section). Resolves the target section itself, so callers pass only the task.
+  const promote = useMutation({
+    mutationFn: (task: TaskRecord) => promoteSubtask(task),
+    onSuccess: invalidate,
+  });
+
   const labels = useLabels();
   const attachments = useAttachments(id, invalidate);
   const { projects, move } = useTaskMove(invalidate);
@@ -67,6 +76,7 @@ export function useTaskDetail(id: string) {
     comments,
     remove,
     duplicate,
+    promote,
     labels,
     attachments,
     projects,

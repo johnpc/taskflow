@@ -29,4 +29,18 @@ describe('ParentBreadcrumb', () => {
     render(<ParentBreadcrumb parentTaskId="p" onOpen={vi.fn()} />);
     expect(screen.getByText('Parent task')).toBeInTheDocument();
   });
+
+  it('promotes the subtask when the promote button is clicked', () => {
+    const onPromote = vi.fn();
+    useParentTask.mockReturnValue({ data: { id: 'p', title: 'Parent task' } });
+    render(<ParentBreadcrumb parentTaskId="p" onOpen={vi.fn()} onPromote={onPromote} />);
+    fireEvent.click(screen.getByTestId('task-promote'));
+    expect(onPromote).toHaveBeenCalled();
+  });
+
+  it('hides the promote button when no handler is given', () => {
+    useParentTask.mockReturnValue({ data: { id: 'p', title: 'Parent task' } });
+    render(<ParentBreadcrumb parentTaskId="p" onOpen={vi.fn()} />);
+    expect(screen.queryByTestId('task-promote')).toBeNull();
+  });
 });

@@ -224,6 +224,13 @@
   color: var(--tf-text-muted);
 }
 
+.task-breadcrumb-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 8px;
+}
+
 .task-breadcrumb {
   display: inline-flex;
   align-items: center;
@@ -236,6 +243,25 @@
   font-weight: 600;
   color: var(--tf-accent-strong);
   cursor: pointer;
+}
+
+.task-breadcrumb__promote {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  background: none;
+  border: 1px solid var(--tf-border);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--tf-text-muted);
+  cursor: pointer;
+}
+
+.task-breadcrumb__promote:hover {
+  color: var(--tf-accent-strong);
+  border-color: var(--tf-accent-strong);
 }
 
 .comment {
