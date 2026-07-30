@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { createSection, renameSection, deleteSection, setSectionOrder } from './sectionsApi';
+import { duplicateSection } from './duplicateSectionApi';
 import { reorderSections } from './reorderSections';
 import type { SectionRecord } from '../../lib/dataClient';
 
@@ -26,6 +27,11 @@ export function useSectionMutations(
     onSuccess: invalidate,
   });
 
+  const copySection = useMutation({
+    mutationFn: (section: SectionRecord) => duplicateSection(section),
+    onSuccess: invalidate,
+  });
+
   const moveSection = useMutation({
     mutationFn: async (input: { sectionId: string; direction: 'left' | 'right' }) => {
       const updates = reorderSections(sections, input.sectionId, input.direction);
@@ -34,5 +40,5 @@ export function useSectionMutations(
     onSuccess: invalidate,
   });
 
-  return { addSection, editSection, removeSection, moveSection };
+  return { addSection, editSection, removeSection, copySection, moveSection };
 }

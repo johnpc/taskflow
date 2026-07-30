@@ -15,6 +15,13 @@ describe('SectionActions', () => {
     expect(onDelete).toHaveBeenCalledOnce();
   });
 
+  it('duplicates on the copy button', () => {
+    const onDuplicate = vi.fn();
+    render(<SectionActions name="To do" onDuplicate={onDuplicate} />);
+    fireEvent.click(screen.getByTestId('section-duplicate'));
+    expect(onDuplicate).toHaveBeenCalledOnce();
+  });
+
   it('renames via the edit affordance', () => {
     const onRename = vi.fn();
     render(<SectionActions name="To do" onRename={onRename} />);

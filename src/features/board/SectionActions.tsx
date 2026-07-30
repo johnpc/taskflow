@@ -1,26 +1,28 @@
 import { useState } from 'react';
 import { IonIcon } from '@ionic/react';
-import { createOutline, trashOutline, checkmarkOutline } from 'ionicons/icons';
+import { createOutline, trashOutline, checkmarkOutline, copyOutline } from 'ionicons/icons';
 import { SectionMoveButtons } from './SectionMoveButtons';
 
-/** Inline rename + delete + move controls for a board section header. Enter or
- * the check commits the rename; the trash deletes; the chevrons move the column.
- * Local edit state only; all mutations delegated. Renders nothing until handlers
- * exist. */
+/** Inline rename + duplicate + delete + move controls for a board section
+ * header. Enter or the check commits the rename; the copy duplicates the column
+ * with its tasks; the trash deletes; the chevrons move the column. Local edit
+ * state only; all mutations delegated. Renders nothing until handlers exist. */
 export function SectionActions({
   name,
   onRename,
+  onDuplicate,
   onDelete,
   onMove,
 }: {
   name: string;
   onRename?: (name: string) => void;
+  onDuplicate?: () => void;
   onDelete?: () => void;
   onMove?: (direction: 'left' | 'right') => void;
 }) {
   const [editing, setEditing] = useState(false);
   const [draft, setDraft] = useState(name);
-  if (!onRename && !onDelete && !onMove) return null;
+  if (!onRename && !onDuplicate && !onDelete && !onMove) return null;
 
   const commit = () => {
     const trimmed = draft.trim();
@@ -66,6 +68,17 @@ export function SectionActions({
           }}
         >
           <IonIcon icon={createOutline} />
+        </button>
+      )}
+      {onDuplicate && (
+        <button
+          type="button"
+          className="section-actions__btn"
+          data-testid="section-duplicate"
+          aria-label={`Duplicate ${name}`}
+          onClick={onDuplicate}
+        >
+          <IonIcon icon={copyOutline} />
         </button>
       )}
       {onDelete && (

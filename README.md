@@ -28,7 +28,7 @@ iOS and Android.
 | **Counts**            | Open-task count badge per project; overdue count on My Tasks                                                | ✅     |
 | **Progress**          | Each project card shows a completion bar and "X of Y done"                                                  | ✅     |
 | **Project status**    | Set a project On track / At risk / Off track with a note; a colored pill shows on card+header               | ✅     |
-| **Sections**          | Add, rename, delete, and reorder a project's columns/sections                                               | ✅     |
+| **Sections**          | Add, rename, duplicate (with tasks), delete, and reorder a project's columns/sections                       | ✅     |
 | **Board**             | Kanban columns (To do / In progress / Done) with inline task creation                                       | ✅     |
 | **List view**         | Asana columns; group by None/Section/Assignee/Due/Priority & sort by any; add a task in any grouping        | ✅     |
 | **Timeline**          | Gantt-style two-week view — dated tasks as bars; tap to open, drag a bar to reschedule                      | ✅     |
