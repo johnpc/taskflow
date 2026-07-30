@@ -20,7 +20,7 @@ iOS and Android.
 
 | Area                | What you get                                                                              | Status |
 | ------------------- | ----------------------------------------------------------------------------------------- | ------ |
-| **Home**            | Dashboard landing: greeting, due-today / overdue stats, what's coming up                  | ✅     |
+| **Home**            | Dashboard: greeting, due-today / overdue stats, a "coming up" task list, project links    | ✅     |
 | **Projects**        | Create color-coded projects, favorite them, add a description, archive/delete             | ✅     |
 | **Archived**        | Browse archived projects in a collapsible section and restore any of them                 | ✅     |
 | **Templates**       | Start a ready-made project (Sprint / Content / Launch) with sections + tasks              | ✅     |

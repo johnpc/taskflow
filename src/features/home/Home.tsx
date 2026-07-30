@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import { useHome } from './useHome';
 import { greeting } from './greeting';
 import { HomeSummaryCards } from './HomeSummaryCards';
+import { UpcomingTasks } from './UpcomingTasks';
 import { LoadState } from '../shell/LoadState';
 import { TabBar } from '../shell/TabBar';
 import { useAuth } from '../auth/useAuth';
@@ -31,6 +32,7 @@ export function Home() {
         </h1>
         <LoadState isLoading={tasks.isLoading} isError={tasks.isError} onRetry={tasks.refetch}>
           <HomeSummaryCards summary={summary} />
+          <UpcomingTasks tasks={summary.upcoming} />
         </LoadState>
         <section className="home__projects">
           <h2 className="home__section-head">Your projects</h2>
