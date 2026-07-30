@@ -21,7 +21,7 @@ const task = (over: Partial<TaskRecord>): TaskRecord =>
   }) as TaskRecord;
 
 describe('ListSection', () => {
-  it('renders the section name, count, and rows when open', () => {
+  it('renders the section name, count, column header, and rows when open', () => {
     renderWithProviders(
       <ListSection
         column={column([task({ id: 'a', title: 'Alpha' })])}
@@ -31,6 +31,14 @@ describe('ListSection', () => {
     );
     expect(screen.getByText('To do')).toBeInTheDocument();
     expect(screen.getByText('Alpha')).toBeInTheDocument();
+    expect(screen.getByTestId('list-head-row')).toBeInTheDocument();
+  });
+
+  it('omits the column header when the section is empty', () => {
+    renderWithProviders(
+      <ListSection column={column([])} onAddTask={vi.fn()} onToggleDone={vi.fn()} />,
+    );
+    expect(screen.queryByTestId('list-head-row')).not.toBeInTheDocument();
   });
 
   it('collapses and expands on the header toggle', () => {

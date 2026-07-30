@@ -28,3 +28,15 @@ Then('a task titled {string} is not visible', async ({ page }, title: string) =>
     timeout: 15_000,
   });
 });
+
+Then('the list shows a column header row', async ({ page }) => {
+  await expect(page.getByTestId('list-head-row').first()).toBeVisible({ timeout: 15_000 });
+});
+
+Then(
+  'the list row {string} shows the priority {string}',
+  async ({ page }, title: string, priority: string) => {
+    const row = page.getByTestId('task-card').filter({ hasText: title }).first();
+    await expect(row.getByTestId('row-priority')).toHaveText(priority, { timeout: 15_000 });
+  },
+);

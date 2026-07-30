@@ -127,7 +127,109 @@
   flex-direction: column;
   gap: 18px;
   padding-bottom: 96px;
-  max-width: 640px;
+  max-width: 860px;
+}
+
+/* Aligned list rows: lead (select+check) | Task (flex) | Assignee | Due |
+ * Priority. The header row and every task row share this grid so columns line
+ * up. On narrow screens the fixed columns shrink but never wrap. */
+.list-row {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr) 140px 130px 110px;
+  align-items: center;
+  gap: 10px;
+}
+
+.list-row--head {
+  padding: 4px 2px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--tf-text-muted);
+  border-bottom: 1px solid var(--tf-border);
+}
+
+.list-row__lead {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.list-row__task {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+
+.list-row__chips {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 6px;
+}
+
+.list-row__assignee {
+  font-size: 0.82rem;
+  color: var(--tf-text-muted);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.list-row__due-input {
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius-sm);
+  padding: 4px 6px;
+  font-size: 0.8rem;
+  color: var(--tf-text);
+}
+
+.list-row__due {
+  font-size: 0.82rem;
+  color: var(--tf-text-muted);
+}
+
+.list-row__prio {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--tf-surface-2);
+  border: 1px solid var(--tf-border);
+  border-radius: 999px;
+  padding: 3px 10px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--tf-text-muted);
+  cursor: pointer;
+}
+
+.list-row__prio[disabled] {
+  cursor: default;
+}
+
+.list-row__prio--high {
+  color: var(--tf-priority-high, var(--tf-overdue));
+  border-color: currentColor;
+}
+
+.list-row__prio--medium {
+  color: var(--tf-priority-medium, var(--tf-accent-strong));
+}
+
+li.list-row {
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius-sm);
+  box-shadow: var(--tf-shadow);
+  padding: 10px 14px;
+}
+
+li.list-row.task-card--done .task-card__title {
+  text-decoration: line-through;
+  color: var(--tf-text-muted);
 }
 
 .list-section__head {

@@ -1,6 +1,6 @@
 import { IonIcon } from '@ionic/react';
 import { chevronDown, chevronForward } from 'ionicons/icons';
-import { TaskCard } from '../task/TaskCard';
+import { ListRow } from '../task/ListRow';
 import { AddCard } from './AddCard';
 import { useSectionCollapse } from './useSectionCollapse';
 import { nowISO } from '../task/today';
@@ -8,11 +8,11 @@ import { resolveLabels } from '../labels/resolveLabels';
 import type { Column } from './taskGrouping';
 import type { QuickEditFn } from './boardHandlers';
 import type { SubProgress } from '../task/subtaskProgress';
-import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
+import type { LabelRecord } from '../../lib/dataClient';
 
-/** One section in the List view: a collapsible header (name + count) over a
- * stacked list of task rows, with an inline add at the bottom. Same data +
- * mutations as a board column, laid out as a vertical list. */
+/** One section in the List view: a collapsible header (name + count) over
+ * aligned task rows (Task/Assignee/Due/Priority columns), with an inline add at
+ * the bottom. Same data + mutations as a board column, laid out as a table. */
 export function ListSection({
   column,
   labels = [],
@@ -21,7 +21,6 @@ export function ListSection({
   defaultOpen = true,
   onAddTask,
   onToggleDone,
-  onReorder,
   onQuickEdit,
   selectedIds,
   onSelect,
@@ -33,11 +32,6 @@ export function ListSection({
   defaultOpen?: boolean;
   onAddTask: (input: { sectionId: string; title: string; order: number }) => void;
   onToggleDone: (input: { id: string; done: boolean; now: string }) => void;
-  onReorder?: (input: {
-    columnTasks: TaskRecord[];
-    taskId: string;
-    direction: 'up' | 'down';
-  }) => void;
   onQuickEdit?: QuickEditFn;
   selectedIds?: Set<string>;
   onSelect?: (id: string) => void;
@@ -60,9 +54,18 @@ export function ListSection({
       </button>
       {open && (
         <>
+          {column.tasks.length > 0 && (
+            <div className="list-row list-row--head" data-testid="list-head-row" aria-hidden="true">
+              <span className="list-row__lead" />
+              <span className="list-row__task">Task</span>
+              <span className="list-row__assignee">Assignee</span>
+              <span className="list-row__due">Due</span>
+              <span className="list-row__prio">Priority</span>
+            </div>
+          )}
           <ul className="list-section__rows">
             {column.tasks.map((task) => (
-              <TaskCard
+              <ListRow
                 key={task.id}
                 task={task}
                 labels={resolveLabels(task.labelIds, labels)}
@@ -70,11 +73,6 @@ export function ListSection({
                 subtasks={subtaskProgress?.get(task.id)}
                 onToggleDone={(t) =>
                   onToggleDone({ id: t.id, done: t.status !== 'DONE', now: nowISO() })
-                }
-                onReorder={
-                  onReorder &&
-                  ((direction) =>
-                    onReorder({ columnTasks: column.tasks, taskId: task.id, direction }))
                 }
                 onQuickEdit={onQuickEdit && ((patch) => onQuickEdit(task.id, patch))}
                 selected={selectedIds?.has(task.id)}
