@@ -1,8 +1,7 @@
 import { useHistory } from 'react-router-dom';
-import { IonIcon } from '@ionic/react';
-import { ellipseOutline, checkmarkCircle } from 'ionicons/icons';
 import { isDone, type Priority } from './taskMeta';
 import { CardTitle } from './CardTitle';
+import { CompleteToggle } from './CompleteToggle';
 import { ListRowChips } from './ListRowChips';
 import { ListRowCells } from './ListRowCells';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
@@ -56,16 +55,7 @@ export function ListRow({
             onChange={onSelect}
           />
         )}
-        <button
-          type="button"
-          className="task-card__check"
-          data-testid="task-check"
-          aria-pressed={done}
-          aria-label={done ? `Mark ${task.title} not done` : `Complete ${task.title}`}
-          onClick={() => onToggleDone(task)}
-        >
-          <IonIcon icon={done ? checkmarkCircle : ellipseOutline} />
-        </button>
+        <CompleteToggle task={task} done={done} onToggle={() => onToggleDone(task)} />
       </span>
       <span className="list-row__task">
         <CardTitle
