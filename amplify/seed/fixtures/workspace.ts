@@ -136,6 +136,10 @@ export const seedProjects: SeedProject[] = [
         priority: 'LOW',
         subtasks: ['Chip sub one', 'Chip sub two'],
       },
+      // Read-only search-project-filter anchor: the unique token "Zephyr"
+      // appears in exactly two projects (here + Website Redesign), so a search
+      // returns both and picking one project narrows to a single hit.
+      { title: 'Zephyr report', section: 'To do', priority: 'LOW' },
     ],
   },
   {
@@ -146,6 +150,8 @@ export const seedProjects: SeedProject[] = [
       { title: 'Audit current pages', section: 'Backlog', priority: 'MEDIUM' },
       { title: 'New nav prototype', section: 'This week', priority: 'HIGH', dueOffsetDays: 0 },
       { title: 'Migrate blog', section: 'Backlog', priority: 'LOW', dueOffsetDays: 10 },
+      // Second "Zephyr" anchor for the search-project-filter scenario.
+      { title: 'Zephyr report', section: 'Backlog', priority: 'LOW' },
     ],
   },
   {

@@ -4,14 +4,16 @@ import type { SearchFilters } from './matchTasks';
 const PRIORITIES: (Priority | '')[] = ['', 'HIGH', 'MEDIUM', 'LOW'];
 const labelFor = (p: Priority | '') => (p === '' ? 'Any' : PRIORITY_META[p].label);
 
-/** Search filter row: a priority chip set (Any/High/Medium/Low) plus a
- * hide-completed toggle. Renders only; the chosen filters are owned by
- * useSearch and applied after the text match. */
+/** Search filter row: a priority chip set (Any/High/Medium/Low), a project
+ * picker, plus a hide-completed toggle. Renders only; the chosen filters are
+ * owned by useSearch and applied after the text match. */
 export function SearchFilterBar({
   filters,
+  projects,
   onChange,
 }: {
   filters: SearchFilters;
+  projects: { id: string; name: string }[];
   onChange: (filters: SearchFilters) => void;
 }) {
   return (
@@ -30,6 +32,20 @@ export function SearchFilterBar({
           </button>
         ))}
       </div>
+      <select
+        className="search__project"
+        data-testid="search-project"
+        aria-label="Filter by project"
+        value={filters.projectId}
+        onChange={(e) => onChange({ ...filters, projectId: e.target.value })}
+      >
+        <option value="">All projects</option>
+        {projects.map((p) => (
+          <option key={p.id} value={p.id}>
+            {p.name}
+          </option>
+        ))}
+      </select>
       <label className="search__hide-done">
         <input
           type="checkbox"
