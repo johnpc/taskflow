@@ -33,3 +33,18 @@ Given('the user opens the {string} project', async ({ page }, name: string) => {
   await card.getByRole('link').first().click();
   await expect(page.getByTestId('board')).toBeVisible({ timeout: 15_000 });
 });
+
+When('the user favorites the project from the header', async ({ page }) => {
+  // Idempotent for CI retries: only click when not already favorited, since the
+  // control toggles (a second click would unfavorite it).
+  const star = page.getByTestId('project-favorite');
+  if ((await star.getAttribute('aria-label')) === 'Favorite project') await star.click();
+});
+
+Then('the project header shows it as favorited', async ({ page }) => {
+  await expect(page.getByTestId('project-favorite')).toHaveAttribute(
+    'aria-label',
+    'Unfavorite project',
+    { timeout: 15_000 },
+  );
+});

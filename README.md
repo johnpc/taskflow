@@ -21,7 +21,7 @@ iOS and Android.
 | Area                  | What you get                                                                                                | Status |
 | --------------------- | ----------------------------------------------------------------------------------------------------------- | ------ |
 | **Home**              | Dashboard: greeting, due-today / overdue stats, a "coming up" task list, project links                      | ✅     |
-| **Projects**          | Create color-coded projects, favorite them, add a description, archive/delete                               | ✅     |
+| **Projects**          | Create color-coded projects, favorite them (list or board header), add a description, archive/delete        | ✅     |
 | **Duplicate project** | Copy a whole project — its sections + open tasks — into a fresh "(copy)" from the board menu                | ✅     |
 | **Archived**          | Browse archived projects in a collapsible section and restore any of them                                   | ✅     |
 | **Templates**         | Start a ready-made project (Sprint / Content / Launch) with sections + tasks                                | ✅     |

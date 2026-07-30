@@ -273,6 +273,14 @@ export const seedProjects: SeedProject[] = [
     sections: ['Backlog'],
     tasks: [{ title: 'Backlog item', section: 'Backlog', priority: 'NONE' }],
   },
+  // Dedicated project for the header favorite toggle: this area flips its
+  // favorite flag, so an isolated project keeps list ordering stable elsewhere.
+  {
+    name: 'Fav Lab',
+    color: 'rose',
+    sections: ['To do'],
+    tasks: [{ title: 'Fav target', section: 'To do', priority: 'NONE' }],
+  },
   // Dedicated project for timeline drag-to-reschedule: one dated bar this area
   // moves, so mutating its due date can't disturb a parallel run.
   {

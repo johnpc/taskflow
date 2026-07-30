@@ -21,6 +21,9 @@ export function useToggleFavorite() {
   return useMutation({
     mutationFn: (input: { id: string; favorite: boolean }) =>
       setProjectFavorite(input.id, input.favorite),
-    onSuccess: () => qc.invalidateQueries({ queryKey: ['projects'] }),
+    onSuccess: (_data, input) => {
+      qc.invalidateQueries({ queryKey: ['projects'] });
+      qc.invalidateQueries({ queryKey: ['project', input.id] });
+    },
   });
 }
