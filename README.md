@@ -30,7 +30,7 @@ iOS and Android.
 | **Sections**        | Add, rename, delete, and reorder a project's columns/sections                                 | ✅     |
 | **Board**           | Kanban columns (To do / In progress / Done) with inline task creation                         | ✅     |
 | **List view**       | Asana columns; group by & sort by any column (Section/Assignee/Due/Priority)                  | ✅     |
-| **Timeline**        | Gantt-style two-week view — dated tasks as bars across a day axis; tap a bar to open          | ✅     |
+| **Timeline**        | Gantt-style two-week view — dated tasks as bars; tap to open, drag a bar to reschedule        | ✅     |
 | **Tasks**           | Title, notes, priority (Low→High), due dates with overdue/today/upcoming cues                 | ✅     |
 | **Start date**      | Give a task a start date; not-yet-started tasks show a "Starts Mon D" chip                    | ✅     |
 | **Due presets**     | One-tap Today / Tomorrow / Next week due-date buttons                                         | ✅     |

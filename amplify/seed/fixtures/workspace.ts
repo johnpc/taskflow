@@ -255,6 +255,14 @@ export const seedProjects: SeedProject[] = [
     sections: ['To do'],
     tasks: [{ title: 'Status target', section: 'To do', priority: 'NONE' }],
   },
+  // Dedicated project for timeline drag-to-reschedule: one dated bar this area
+  // moves, so mutating its due date can't disturb a parallel run.
+  {
+    name: 'Timeline Lab',
+    color: 'sky',
+    sections: ['To do'],
+    tasks: [{ title: 'Reschedule me', section: 'To do', priority: 'NONE', dueOffsetDays: 2 }],
+  },
   // Dedicated project for drag-to-reorder: two ordered cards only this area
   // touches, so reordering them can't disturb a parallel run.
   {
