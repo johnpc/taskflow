@@ -247,6 +247,14 @@ export const seedProjects: SeedProject[] = [
     sections: ['To do'],
     tasks: [{ title: 'Random idea', section: 'To do', priority: 'NONE' }],
   },
+  // Dedicated project for the project-status flow: only this area sets its
+  // health, so a parallel run can't race the pill it asserts on.
+  {
+    name: 'Status Lab',
+    color: 'amber',
+    sections: ['To do'],
+    tasks: [{ title: 'Status target', section: 'To do', priority: 'NONE' }],
+  },
   // Dedicated project for drag-to-reorder: two ordered cards only this area
   // touches, so reordering them can't disturb a parallel run.
   {

@@ -2,19 +2,24 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { IonIcon } from '@ionic/react';
 import { addOutline, checkmarkDoneOutline } from 'ionicons/icons';
+import { StatusPill } from '../projects/StatusPill';
+import { StatusPicker } from '../projects/StatusPicker';
+import type { ProjectStatus } from '../projects/projectStatus';
 import type { ProjectRecord } from '../../lib/dataClient';
 import './board.css';
 
-/** Project overview header: an editable one-line description and an inline
- * "add section" composer. Presentational + local draft state; the description
- * commits on blur and the section name on Enter, both delegated up. */
+/** Project overview header: a health status pill + picker, an editable one-line
+ * description, and an inline "add section" composer. Presentational + local
+ * draft state; edits commit on blur/Enter and are delegated up. */
 export function ProjectHeader({
   project,
   onDescribe,
+  onSetStatus,
   onAddSection,
 }: {
   project: ProjectRecord;
   onDescribe: (description: string) => void;
+  onSetStatus: (next: { status: ProjectStatus | null; statusNote?: string }) => void;
   onAddSection: (name: string) => void;
 }) {
   const [section, setSection] = useState('');
@@ -27,6 +32,15 @@ export function ProjectHeader({
 
   return (
     <div className="project-header" data-testid="project-header">
+      <div className="project-header__status">
+        <StatusPill status={project.status} />
+        <StatusPicker status={project.status} note={project.statusNote} onChange={onSetStatus} />
+      </div>
+      {project.status && project.statusNote && (
+        <p className="project-header__status-note" data-testid="status-note-text">
+          {project.statusNote}
+        </p>
+      )}
       <input
         className="project-header__desc"
         data-testid="project-description"

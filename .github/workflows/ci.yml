@@ -228,6 +228,8 @@ jobs:
             paths: .features-gen/e2e/features/customfields
           - name: timeline
             paths: .features-gen/e2e/features/timeline
+          - name: projectstatus
+            paths: .features-gen/e2e/features/projectstatus
     steps:
       - uses: actions/checkout@v4
 

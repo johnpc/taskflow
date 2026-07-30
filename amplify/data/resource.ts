@@ -36,6 +36,9 @@ const schema = a.schema({
       sortOrder: a.integer().default(0),
       isArchived: a.boolean().default(false),
       favorite: a.boolean().default(false),
+      // Asana-style project health, surfaced as a colored pill on the header/card.
+      status: a.enum(['ON_TRACK', 'AT_RISK', 'OFF_TRACK']),
+      statusNote: a.string(),
       // Per-project sharing: the emails of everyone with access (the creator is
       // added on create; invites append). Every model in the project mirrors
       // this list so AppSync per-record owner auth grants each member access.

@@ -625,3 +625,14 @@ li.list-row.task-card--done .task-card__title {
   color: var(--tf-text);
   outline: none;
 }
+
+/* Health status row + committed note above the project description. */
+.project-header__status {
+  margin-bottom: 10px;
+}
+
+.project-header__status-note {
+  margin: 0 0 10px;
+  color: var(--tf-text-muted);
+  font-size: 0.9rem;
+}
