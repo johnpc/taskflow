@@ -230,6 +230,8 @@ jobs:
             paths: .features-gen/e2e/features/timeline
           - name: projectstatus
             paths: .features-gen/e2e/features/projectstatus
+          - name: duplicateproject
+            paths: .features-gen/e2e/features/duplicateproject
     steps:
       - uses: actions/checkout@v4
 

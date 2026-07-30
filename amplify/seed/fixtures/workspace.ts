@@ -279,6 +279,14 @@ export const seedProjects: SeedProject[] = [
     sections: ['To do'],
     tasks: [{ title: 'Manager target', section: 'To do', priority: 'NONE' }],
   },
+  // Dedicated source project for the duplicate-project flow: this area creates a
+  // "<name> (copy)", so an isolated source keeps a parallel run from racing it.
+  {
+    name: 'Dup Source Lab',
+    color: 'violet',
+    sections: ['To do'],
+    tasks: [{ title: 'Copy me', section: 'To do', priority: 'MEDIUM' }],
+  },
   // Dedicated project for drag-to-reorder: two ordered cards only this area
   // touches, so reordering them can't disturb a parallel run.
   {

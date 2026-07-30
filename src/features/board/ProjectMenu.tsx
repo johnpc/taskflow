@@ -2,12 +2,15 @@ import { useState } from 'react';
 import { IonActionSheet, IonAlert, IonButton, IonIcon } from '@ionic/react';
 import { ellipsisHorizontal } from 'ionicons/icons';
 
-/** Board-header overflow menu: archive or delete the project. Archive is
- * immediate; delete asks for confirmation. Both actions are delegated up. */
+/** Board-header overflow menu: duplicate, archive, or delete the project.
+ * Duplicate + archive are immediate; delete asks for confirmation. All actions
+ * are delegated up. */
 export function ProjectMenu({
+  onDuplicate,
   onArchive,
   onDelete,
 }: {
+  onDuplicate: () => void;
   onArchive: () => void;
   onDelete: () => void;
 }) {
@@ -29,6 +32,11 @@ export function ProjectMenu({
         onDidDismiss={() => setSheet(false)}
         header="Project"
         buttons={[
+          {
+            text: 'Duplicate project',
+            htmlAttributes: { 'data-testid': 'project-duplicate' },
+            handler: onDuplicate,
+          },
           {
             text: 'Archive project',
             htmlAttributes: { 'data-testid': 'project-archive' },
