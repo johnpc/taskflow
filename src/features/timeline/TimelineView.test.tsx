@@ -28,6 +28,17 @@ describe('TimelineView', () => {
     expect(screen.getByTestId('timeline-bar')).toHaveTextContent('Ship it');
   });
 
+  it("marks today's column", () => {
+    renderWithProviders(
+      <TimelineView
+        columns={cols([
+          { id: 'a', title: 'Ship it', status: 'TODO', dueDate: inWindow(2) } as TaskRecord,
+        ])}
+      />,
+    );
+    expect(screen.getByTestId('timeline-today')).toHaveTextContent('Today');
+  });
+
   it('shows the empty state when nothing is dated in the window', () => {
     renderWithProviders(
       <TimelineView

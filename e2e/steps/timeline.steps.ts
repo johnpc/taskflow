@@ -13,3 +13,7 @@ Then('a timeline bar for {string} is visible', async ({ page }, title: string) =
     timeout: 15_000,
   });
 });
+
+Then("the timeline marks today's column", async ({ page }) => {
+  await expect(page.getByTestId('timeline-today')).toHaveText('Today', { timeout: 15_000 });
+});

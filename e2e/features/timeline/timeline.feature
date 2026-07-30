@@ -10,3 +10,4 @@ Feature: Timeline view
     And the user opens the "Product Launch" project
     When the user switches to the timeline view
     Then a timeline bar for "Design hero banner" is visible
+    And the timeline marks today's column
