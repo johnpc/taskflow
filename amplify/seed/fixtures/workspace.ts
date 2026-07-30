@@ -271,6 +271,14 @@ export const seedProjects: SeedProject[] = [
     sections: ['To do'],
     tasks: [{ title: 'Existing item', section: 'To do', priority: 'HIGH' }],
   },
+  // Dedicated project for defining a custom field from the board-level manager
+  // (no task opened). Its own project so the field it adds can't race a parallel run.
+  {
+    name: 'Field Manager Lab',
+    color: 'rose',
+    sections: ['To do'],
+    tasks: [{ title: 'Manager target', section: 'To do', priority: 'NONE' }],
+  },
   // Dedicated project for drag-to-reorder: two ordered cards only this area
   // touches, so reordering them can't disturb a parallel run.
   {

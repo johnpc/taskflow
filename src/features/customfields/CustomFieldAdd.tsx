@@ -1,8 +1,9 @@
 import { useState } from 'react';
 import { IonIcon } from '@ionic/react';
 import { addOutline } from 'ionicons/icons';
+import { FIELD_TYPE_LABEL, type FieldType } from './fieldType';
 
-export type FieldType = 'TEXT' | 'SELECT' | 'NUMBER' | 'DATE';
+export type { FieldType } from './fieldType';
 
 export interface NewField {
   name: string;
@@ -10,12 +11,7 @@ export interface NewField {
   options?: string[];
 }
 
-const TYPES: { value: FieldType; label: string }[] = [
-  { value: 'TEXT', label: 'Text' },
-  { value: 'SELECT', label: 'Select' },
-  { value: 'NUMBER', label: 'Number' },
-  { value: 'DATE', label: 'Date' },
-];
+const TYPES = Object.entries(FIELD_TYPE_LABEL) as [FieldType, string][];
 
 /** The "add a custom field" composer: a name, a type toggle (Text / Select /
  * Number / Date), and — for Select — a comma-separated options input. Local
@@ -54,9 +50,9 @@ export function CustomFieldAdd({ onAdd }: { onAdd: (field: NewField) => void }) 
         value={fieldType}
         onChange={(e) => setType(e.target.value as FieldType)}
       >
-        {TYPES.map((t) => (
-          <option key={t.value} value={t.value}>
-            {t.label}
+        {TYPES.map(([value, label]) => (
+          <option key={value} value={value}>
+            {label}
           </option>
         ))}
       </select>

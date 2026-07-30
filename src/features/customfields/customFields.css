@@ -1,0 +1,78 @@
+/* Project-level custom-fields manager, shown as a collapsible panel on the
+ * board so fields can be defined without opening a task. */
+.project-fields {
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius-sm);
+  background: var(--tf-surface);
+  margin-bottom: var(--tf-gap);
+}
+
+.project-fields__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--tf-text);
+  cursor: pointer;
+}
+
+.project-fields__count {
+  margin-left: auto;
+  min-width: 20px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: var(--tf-surface-2);
+  color: var(--tf-text-muted);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.project-fields__body {
+  padding: 0 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.project-fields__empty {
+  margin: 0;
+  color: var(--tf-text-muted);
+  font-size: 0.85rem;
+}
+
+.project-fields__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.project-fields__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border-radius: var(--tf-radius-sm);
+  background: var(--tf-surface-2);
+}
+
+.project-fields__name {
+  font-weight: 500;
+  color: var(--tf-text);
+}
+
+.project-fields__type {
+  margin-left: auto;
+  font-size: 0.74rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--tf-text-muted);
+}

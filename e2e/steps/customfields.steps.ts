@@ -93,3 +93,22 @@ Then(
     });
   },
 );
+
+When('the user opens the custom-fields manager', async ({ page }) => {
+  // Expand only if collapsed (idempotent for CI retries).
+  const toggle = page.getByTestId('project-fields-toggle');
+  if ((await toggle.getAttribute('aria-expanded')) !== 'true') await toggle.click();
+  await expect(page.getByTestId('custom-field-name')).toBeVisible({ timeout: 15_000 });
+});
+
+When('the user adds the custom field {string} from the manager', async ({ page }, name: string) => {
+  if ((await page.getByTestId('project-field').filter({ hasText: name }).count()) > 0) return;
+  await page.getByTestId('custom-field-name').fill(name);
+  await page.getByTestId('custom-field-add').click();
+});
+
+Then('the custom-fields manager lists the field {string}', async ({ page }, name: string) => {
+  await expect(page.getByTestId('project-field').filter({ hasText: name })).toBeVisible({
+    timeout: 15_000,
+  });
+});
