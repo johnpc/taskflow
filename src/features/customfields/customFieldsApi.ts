@@ -16,16 +16,20 @@ export async function fetchCustomFields(projectId: string): Promise<CustomFieldR
   );
 }
 
-/** Create a TEXT custom field on a project, appended after the current last. */
+/** Create a custom field (TEXT or SELECT) on a project, appended after the
+ * current last. SELECT fields carry their allowed option labels. */
 export async function createCustomField(input: {
   projectId: string;
   name: string;
   order: number;
+  fieldType?: 'TEXT' | 'SELECT';
+  options?: string[];
 }): Promise<CustomFieldRecord> {
   const { data, errors } = await dataClient.models.CustomField.create({
     projectId: input.projectId,
     name: input.name.trim(),
-    fieldType: 'TEXT',
+    fieldType: input.fieldType ?? 'TEXT',
+    options: input.options?.map((o) => o.trim()).filter(Boolean),
     sortOrder: input.order,
     members: await membersForProject(input.projectId),
   });

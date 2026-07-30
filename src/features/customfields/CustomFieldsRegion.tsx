@@ -22,7 +22,7 @@ export function CustomFieldsRegion({
       onSetValue={(fieldId, value) =>
         onPatch(serializeCustomValues(setCustomValue(values, fieldId, value)))
       }
-      onAddField={(name) => add.mutate(name)}
+      onAddField={(field) => add.mutate(field)}
     />
   );
 }
