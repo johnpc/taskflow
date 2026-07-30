@@ -1,5 +1,11 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+
+// Self-fetching (react-query) child — stub it so this stays a bare render.
+vi.mock('../customfields/CardCustomFieldChips', () => ({
+  CardCustomFieldChips: () => null,
+}));
+
 import { ListRowChips } from './ListRowChips';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 
@@ -7,9 +13,11 @@ const task = (over: Partial<TaskRecord>): TaskRecord =>
   ({ id: 't', title: 'T', status: 'TODO', ...over }) as TaskRecord;
 
 describe('ListRowChips', () => {
-  it('renders nothing when there are no chips', () => {
-    const { container } = render(<ListRowChips task={task({})} labels={[]} />);
-    expect(container.firstChild).toBeNull();
+  it('renders no base chips when the task has none', () => {
+    render(<ListRowChips task={task({})} labels={[]} />);
+    expect(screen.queryByTestId('task-milestone')).toBeNull();
+    expect(screen.queryByTestId('task-blocked')).toBeNull();
+    expect(screen.queryByTestId('task-subs')).toBeNull();
   });
 
   it('shows milestone, blocked, subtask, and label chips', () => {

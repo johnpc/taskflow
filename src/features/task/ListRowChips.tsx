@@ -1,9 +1,11 @@
 import { LabelChips } from '../labels/LabelChips';
+import { CardCustomFieldChips } from '../customfields/CardCustomFieldChips';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 
 /** The secondary chips shown under a List-view row title: milestone marker,
- * Blocked badge, subtask progress, and label chips. Due + priority are their
- * own aligned columns in the list, so they're intentionally omitted here. */
+ * Blocked badge, subtask progress, label chips, and custom-field values (so the
+ * list surfaces the same custom data as the board card). Due + priority are
+ * their own aligned columns in the list, so they're intentionally omitted here. */
 export function ListRowChips({
   task,
   labels,
@@ -16,9 +18,8 @@ export function ListRowChips({
   subtasks?: { done: number; total: number };
 }) {
   const hasSubs = subtasks && subtasks.total > 0;
-  if (!task.isMilestone && !blocked && !hasSubs && labels.length === 0) return null;
   return (
-    <span className="list-row__chips">
+    <span className="list-row__chips" data-testid="list-row-chips">
       {task.isMilestone && (
         <span className="task-card__milestone" data-testid="task-milestone" aria-label="Milestone">
           ◆ Milestone
@@ -35,6 +36,7 @@ export function ListRowChips({
         </span>
       )}
       <LabelChips labels={labels} />
+      <CardCustomFieldChips task={task} />
     </span>
   );
 }
