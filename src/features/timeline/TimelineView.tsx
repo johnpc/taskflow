@@ -25,8 +25,12 @@ export function TimelineView({ columns }: { columns: Column[] }) {
     <div className="timeline" data-testid="timeline-view">
       <div className="timeline__head" style={cols}>
         {days.map((d) => (
-          <span key={d} className="timeline__day">
-            {Number(d.slice(8, 10))}
+          <span
+            key={d}
+            className={d === start ? 'timeline__day timeline__day--today' : 'timeline__day'}
+            data-testid={d === start ? 'timeline-today' : undefined}
+          >
+            {d === start ? 'Today' : Number(d.slice(8, 10))}
           </span>
         ))}
       </div>
