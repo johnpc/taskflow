@@ -8,3 +8,7 @@ When('the user shows completed tasks', async ({ page }) => {
   await expect(toggle).toHaveText('Show completed', { timeout: 15_000 });
   await toggle.click();
 });
+
+When('the user filters the board to {string} priority', async ({ page }, priority: string) => {
+  await page.getByTestId('filter-priority').selectOption(priority);
+});

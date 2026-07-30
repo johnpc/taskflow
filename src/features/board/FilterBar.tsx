@@ -1,9 +1,11 @@
+import { FilterFacets } from './FilterFacets';
 import type { BoardFilter, SortKey } from './taskFilter';
 import type { LabelRecord } from '../../lib/dataClient';
 import './board.css';
 
-/** Board controls: show/hide completed, filter by label, and sort. Presentational
- * — reports partial filter updates to the parent (useBoardFilter). */
+/** Board controls: show/hide completed, filter by label / priority / due window,
+ * and sort. Presentational — reports partial filter updates to the parent
+ * (useBoardFilter). Shared by the board and the list view. */
 export function FilterBar({
   filter,
   labels,
@@ -37,6 +39,7 @@ export function FilterBar({
           </option>
         ))}
       </select>
+      <FilterFacets filter={filter} onChange={onChange} />
       <select
         className="filter-bar__select"
         data-testid="filter-sort"

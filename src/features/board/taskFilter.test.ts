@@ -67,4 +67,25 @@ describe('applyFilter', () => {
     );
     expect(out.map((t) => t.id)).toEqual(['a', 'b']);
   });
+
+  it('filters by priority', () => {
+    const out = applyFilter(
+      [task({ id: 'a', priority: 'HIGH' }), task({ id: 'b', priority: 'LOW' })],
+      { ...DEFAULT_FILTER, priority: 'HIGH' },
+    );
+    expect(out.map((t) => t.id)).toEqual(['a']);
+  });
+
+  it('filters by due window against the injected today', () => {
+    const tasks = [
+      task({ id: 'over', dueDate: '2026-01-01' }),
+      task({ id: 'today', dueDate: '2026-02-02' }),
+      task({ id: 'soon', dueDate: '2026-03-03' }),
+      task({ id: 'none', dueDate: null }),
+    ];
+    const overdue = applyFilter(tasks, { ...DEFAULT_FILTER, dueWindow: 'overdue' }, '2026-02-02');
+    expect(overdue.map((t) => t.id)).toEqual(['over']);
+    const today = applyFilter(tasks, { ...DEFAULT_FILTER, dueWindow: 'today' }, '2026-02-02');
+    expect(today.map((t) => t.id)).toEqual(['today']);
+  });
 });
