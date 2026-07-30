@@ -22,7 +22,7 @@ export async function createCustomField(input: {
   projectId: string;
   name: string;
   order: number;
-  fieldType?: 'TEXT' | 'SELECT';
+  fieldType?: 'TEXT' | 'SELECT' | 'NUMBER' | 'DATE';
   options?: string[];
 }): Promise<CustomFieldRecord> {
   const { data, errors } = await dataClient.models.CustomField.create({
