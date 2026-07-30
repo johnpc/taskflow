@@ -46,10 +46,10 @@ export async function setProjectFavorite(id: string, favorite: boolean): Promise
   if (errors) throw new Error(`Update project failed: ${JSON.stringify(errors)}`);
 }
 
-/** Update a project's editable header fields (name, description, status). */
+/** Update a project's editable header fields (name, description, status, color). */
 export async function updateProject(
   input: { id: string } & Partial<
-    Pick<ProjectRecord, 'name' | 'description' | 'status' | 'statusNote'>
+    Pick<ProjectRecord, 'name' | 'description' | 'status' | 'statusNote' | 'color'>
   >,
 ): Promise<void> {
   const { errors } = await dataClient.models.Project.update(input);

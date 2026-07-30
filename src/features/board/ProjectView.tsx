@@ -57,6 +57,7 @@ export function ProjectView() {
             project={project.data}
             onDescribe={(description) => edit.mutate({ id, description })}
             onSetStatus={(next) => edit.mutate({ id, ...next })}
+            onSetColor={(color) => edit.mutate({ id, color })}
             onAddSection={(name) => board.addSection.mutate(name)}
           />
         )}

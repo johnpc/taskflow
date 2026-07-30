@@ -273,3 +273,24 @@
   background: var(--tf-surface);
   color: var(--tf-text);
 }
+
+/* Project color picker: a row of round swatches; the active one is ringed. */
+.project-colors {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.project-colors__swatch {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  border: 2px solid transparent;
+  cursor: pointer;
+  padding: 0;
+}
+
+.project-colors__swatch[aria-pressed='true'] {
+  border-color: var(--tf-text);
+  box-shadow: 0 0 0 2px var(--tf-surface) inset;
+}

@@ -23,3 +23,11 @@ Feature: Projects
     And the user opens the "Fav Lab" project
     When the user favorites the project from the header
     Then the project header shows it as favorited
+
+  # Recoloring: "Color Lab" is dedicated to this area so changing its accent
+  # can't disturb another area's card color.
+  Scenario: Recoloring a project from its header
+    Given a signed-in user
+    And the user opens the "Color Lab" project
+    When the user picks the project color "sky"
+    Then the project color "sky" is selected

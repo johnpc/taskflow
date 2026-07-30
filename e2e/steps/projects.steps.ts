@@ -16,6 +16,8 @@ Then('a project named {string} is visible', async ({ page }, name: string) => {
 
 When('the user creates a project named {string}', async ({ page }, name: string) => {
   await page.goto('/projects');
+  // Idempotent for reruns against a persisted sandbox: skip if it already exists.
+  if ((await page.getByTestId('project-name').getByText(name, { exact: true }).count()) > 0) return;
   await page.getByTestId('new-project').click();
   const input = page.getByTestId('new-project-input');
   await input.fill(name);
@@ -47,4 +49,14 @@ Then('the project header shows it as favorited', async ({ page }) => {
     'Unfavorite project',
     { timeout: 15_000 },
   );
+});
+
+When('the user picks the project color {string}', async ({ page }, color: string) => {
+  await page.getByTestId(`project-color-${color}`).click();
+});
+
+Then('the project color {string} is selected', async ({ page }, color: string) => {
+  await expect(page.getByTestId(`project-color-${color}`)).toHaveAttribute('aria-pressed', 'true', {
+    timeout: 15_000,
+  });
 });
