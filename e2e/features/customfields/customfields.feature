@@ -15,3 +15,14 @@ Feature: Custom fields
     Then the custom field "Story points" has the value "8"
     When the user reloads the task
     Then the custom field "Story points" has the value "8"
+
+  # A SELECT field renders a dropdown of its options; picking one persists. Uses
+  # its own project ("Select Lab") since this feature's scenarios run in parallel.
+  Scenario: A single-select custom field
+    Given a signed-in user
+    And the user opens the "Select Lab" project
+    When the user opens the task titled "Select target"
+    And the user adds the select field "Stage" with options "Todo, Doing, Done"
+    And the user sets the custom field "Stage" to "Doing"
+    When the user reloads the task
+    Then the custom field "Stage" has the value "Doing"

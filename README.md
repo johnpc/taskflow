@@ -62,7 +62,7 @@ iOS and Android.
 | **Activity**        | Created / completed relative timestamps on task detail                                    | ✅     |
 | **Filter & sort**   | Hide/show completed, filter by label / priority / due / assignee, sort by due or priority | ✅     |
 | **Saved views**     | Save a filter/sort combo as a named view per project; re-apply or delete in one tap       | ✅     |
-| **Custom fields**   | Define project text fields; fill them in per task on the detail (values persist)          | ✅     |
+| **Custom fields**   | Define project text or single-select fields; fill them in per task (values persist)       | ✅     |
 | **Dark mode**       | Follows your OS, with an in-app Light / Dark / System override                            | ✅     |
 | **Accounts**        | Email sign-up/sign-in; your workspace is private by default                               | ✅     |
 | **Sharing**         | Invite people to a project by email; every member sees & edits its board (Asana-style)    | ✅     |

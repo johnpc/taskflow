@@ -172,7 +172,9 @@ const schema = a.schema({
     .model({
       projectId: a.id().required(),
       name: a.string().required(),
-      fieldType: a.enum(['TEXT']),
+      fieldType: a.enum(['TEXT', 'SELECT']),
+      // For SELECT fields: the allowed option labels (ignored for TEXT).
+      options: a.string().array(),
       sortOrder: a.integer().default(0),
       members: a.string().array(),
     })

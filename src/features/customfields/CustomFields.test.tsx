@@ -33,12 +33,39 @@ describe('CustomFields', () => {
     expect(onSetValue).toHaveBeenCalledWith('f2', 'Platform');
   });
 
-  it('adds a field on Enter', () => {
+  it('adds a TEXT field on Enter', () => {
     const onAddField = vi.fn();
     render(<CustomFields fields={[]} values={{}} onSetValue={vi.fn()} onAddField={onAddField} />);
     const input = screen.getByTestId('custom-field-name');
     fireEvent.change(input, { target: { value: 'Priority note' } });
     fireEvent.keyDown(input, { key: 'Enter' });
-    expect(onAddField).toHaveBeenCalledWith('Priority note');
+    expect(onAddField).toHaveBeenCalledWith({
+      name: 'Priority note',
+      fieldType: 'TEXT',
+      options: undefined,
+    });
+  });
+
+  it('renders a SELECT field as a dropdown of its options', () => {
+    const onSetValue = vi.fn();
+    render(
+      <CustomFields
+        fields={[
+          {
+            id: 'f1',
+            name: 'Stage',
+            fieldType: 'SELECT',
+            options: ['Todo', 'Doing'],
+          } as CustomFieldRecord,
+        ]}
+        values={{ f1: 'Doing' }}
+        onSetValue={onSetValue}
+        onAddField={vi.fn()}
+      />,
+    );
+    const select = screen.getByTestId('custom-field-input-f1') as HTMLSelectElement;
+    expect(select.value).toBe('Doing');
+    fireEvent.change(select, { target: { value: 'Todo' } });
+    expect(onSetValue).toHaveBeenCalledWith('f1', 'Todo');
   });
 });

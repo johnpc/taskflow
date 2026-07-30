@@ -14,7 +14,8 @@ export function useCustomFields(projectId: string) {
   const fields = query.data ?? [];
 
   const add = useMutation({
-    mutationFn: (name: string) => createCustomField({ projectId, name, order: fields.length }),
+    mutationFn: (input: { name: string; fieldType?: 'TEXT' | 'SELECT'; options?: string[] }) =>
+      createCustomField({ projectId, order: fields.length, ...input }),
     onSuccess: () => qc.invalidateQueries({ queryKey: key }),
   });
 

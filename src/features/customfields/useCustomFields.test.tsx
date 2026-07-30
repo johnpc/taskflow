@@ -22,8 +22,13 @@ describe('useCustomFields', () => {
     const { result } = renderHook(() => useCustomFields('p'), { wrapper: hookWrapper() });
     await waitFor(() => expect(result.current.fields).toHaveLength(1));
     await act(async () => {
-      await result.current.add.mutateAsync('Team');
+      await result.current.add.mutateAsync({ name: 'Team', fieldType: 'TEXT' });
     });
-    expect(createCustomField).toHaveBeenCalledWith({ projectId: 'p', name: 'Team', order: 1 });
+    expect(createCustomField).toHaveBeenCalledWith({
+      projectId: 'p',
+      order: 1,
+      name: 'Team',
+      fieldType: 'TEXT',
+    });
   });
 });
