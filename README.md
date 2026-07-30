@@ -68,7 +68,7 @@ iOS and Android.
 | **Custom fields**     | Manage text/select/number/date fields from the board; fill per task; values chip on cards + list rows       | ✅     |
 | **Dark mode**         | Follows your OS, with an in-app Light / Dark / System override                                              | ✅     |
 | **Accounts**          | Email sign-up/sign-in; your workspace is private by default                                                 | ✅     |
-| **Sharing**           | Invite people to a project by email; every member sees & edits its board (Asana-style)                      | ✅     |
+| **Sharing**           | Invite people by email; every member sees & edits its board; a header avatar stack shows who's on it        | ✅     |
 | **Shortcuts**         | Keyboard nav — `g` then h/p/t/c to jump around, `/` to search, `?` for help                                 | ✅     |
 
 ## The vision

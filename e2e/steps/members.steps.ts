@@ -22,3 +22,7 @@ Then('the project is shared with {string}', async ({ page }, email: string) => {
 Then('the project is not shared with {string}', async ({ page }, email: string) => {
   await expect(memberRow(page, email)).toHaveCount(0, { timeout: 15_000 });
 });
+
+Then('the project header shows {int} member avatars', async ({ page }, n: number) => {
+  await expect(page.getByTestId('member-avatar')).toHaveCount(n, { timeout: 15_000 });
+});
