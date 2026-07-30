@@ -171,6 +171,14 @@ export const seedProjects: SeedProject[] = [
     sections: ['To do', 'Done'],
     tasks: [{ title: 'Wrap up', section: 'To do', priority: 'LOW' }],
   },
+  // Dedicated project for the sharing (members) area: only that area invites +
+  // removes a teammate here, so its member list can't disturb a parallel run.
+  {
+    name: 'Share Lab',
+    color: 'sky',
+    sections: ['To do'],
+    tasks: [{ title: 'Shared task', section: 'To do', priority: 'LOW' }],
+  },
   {
     name: 'Scratchpad',
     color: 'violet',
