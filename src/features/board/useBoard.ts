@@ -8,6 +8,7 @@ import { useBoardDerived } from './useBoardDerived';
 import { useSectionMutations } from './useSectionMutations';
 import { useBulkMutations } from './useBulkMutations';
 import { createTask, setTaskDone, updateTask } from '../task/tasksApi';
+import { todayISO } from '../task/today';
 import { useLabels } from '../labels/useLabels';
 import type { TaskRecord } from '../../lib/dataClient';
 
@@ -32,7 +33,8 @@ export function useBoard(projectId: string, filter: BoardFilter = DEFAULT_FILTER
   const columns = useMemo(() => {
     if (!query.data) return [];
     const grouped = groupTasksBySection(query.data.sections, query.data.tasks);
-    return grouped.map((col) => ({ ...col, tasks: applyFilter(col.tasks, filter) }));
+    const today = todayISO();
+    return grouped.map((col) => ({ ...col, tasks: applyFilter(col.tasks, filter, today) }));
   }, [query.data, filter]);
 
   // Blocked-task ids + subtask progress, derived from the full task set.
