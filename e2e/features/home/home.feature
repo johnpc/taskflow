@@ -11,3 +11,9 @@ Feature: Home dashboard
     Then the home dashboard shows a greeting
     And the home dashboard shows the overdue stat
     And a home project shortcut "Product Launch" is visible
+
+  # "Design hero banner" is seeded due in 3 days (upcoming), so it shows in the
+  # Home "Coming up" list.
+  Scenario: The home dashboard lists upcoming tasks
+    Given a signed-in user
+    Then a home upcoming task "Design hero banner" is visible

@@ -21,4 +21,18 @@ describe('Home', () => {
     expect(screen.getByTestId('home-greeting')).toHaveTextContent('sam');
     expect(screen.getByText('Launch')).toBeInTheDocument();
   });
+
+  it('lists upcoming tasks when there are any', () => {
+    useHome.mockReturnValue({
+      tasks: { isLoading: false, isError: false, refetch: vi.fn() },
+      projects: { data: [] },
+      summary: {
+        today: [],
+        overdue: 0,
+        upcoming: [{ id: 'a', title: 'Ship it', status: 'TODO', dueDate: '2030-01-01' }],
+      },
+    });
+    renderWithProviders(<Home />);
+    expect(screen.getByTestId('home-upcoming-item')).toHaveTextContent('Ship it');
+  });
 });
