@@ -20,3 +20,12 @@ Feature: My Tasks
     And the user groups My Tasks by priority
     Then a due bucket "High priority" is visible
     And a task titled "Renew passport" is visible in My Tasks
+
+  # "My assigned task" is the only task assigned to the seed user, so the
+  # "Assigned to me" filter narrows to it and hides "Renew passport".
+  Scenario: My Tasks can filter to tasks assigned to me
+    Given a signed-in user
+    When the user opens My Tasks
+    And the user filters My Tasks to assigned-to-me
+    Then a task titled "My assigned task" is visible in My Tasks
+    And a task titled "Renew passport" is not visible

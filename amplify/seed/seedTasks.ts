@@ -41,6 +41,7 @@ export async function createTaskWithSubtasks(
       labelIds: labelIdsFor(task, labelMap),
       repeat: task.repeat ?? 'NONE',
       isMilestone: task.isMilestone ?? false,
+      assigneeEmail: task.assigned ? members[0] : undefined,
       members,
     },
     OWNER_WRITE,
