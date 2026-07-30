@@ -21,6 +21,7 @@ import { FilterBar } from './FilterBar';
 import { SavedViewsRegion } from './SavedViewsRegion';
 import { ProjectHeader } from './ProjectHeader';
 import { ProjectShareRegion } from './ProjectShareRegion';
+import { ProjectFieldsRegion } from '../customfields/ProjectFieldsRegion';
 import { ProjectMenu } from './ProjectMenu';
 import { SelectionBar } from './SelectionBar';
 import { useBulkSelection } from './useBulkSelection';
@@ -68,6 +69,7 @@ export function ProjectView() {
           />
         )}
         <ProjectShareRegion projectId={id} members={memberList} />
+        <ProjectFieldsRegion projectId={id} />
         <ViewToggle mode={mode} onChange={choose} />
         <FilterBar filter={filter} labels={board.labels} members={memberList} onChange={update} />
         <SavedViewsRegion projectId={id} filter={filter} onApply={replace} />

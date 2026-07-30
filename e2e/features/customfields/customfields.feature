@@ -3,6 +3,15 @@ Feature: Custom fields
   I want to define custom fields on a project and fill them in on tasks
   So that I can track project-specific data (Asana custom fields)
 
+  # You can define a project's custom fields straight from the board — no task
+  # needed. "Field Manager Lab" is dedicated to this area for parallel isolation.
+  Scenario: Defining a custom field from the board-level manager
+    Given a signed-in user
+    And the user opens the "Field Manager Lab" project
+    When the user opens the custom-fields manager
+    And the user adds the custom field "Team" from the manager
+    Then the custom-fields manager lists the field "Team"
+
   # "Fields Lab" is a dedicated project only this area touches, so defining a
   # field + setting its value here can't disturb a parallel run.
   Scenario: Defining a custom field and setting its value on a task
