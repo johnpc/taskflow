@@ -2,13 +2,10 @@ import { describe, it, expect, vi } from 'vitest';
 import { screen, fireEvent } from '@testing-library/react';
 import { ListSection } from './ListSection';
 import { renderWithProviders } from '../../test/renderWithProviders';
-import type { Column } from './taskGrouping';
-import type { SectionRecord, TaskRecord } from '../../lib/dataClient';
+import type { ListGroup } from './listGrouping';
+import type { TaskRecord } from '../../lib/dataClient';
 
-const column = (tasks: TaskRecord[]): Column => ({
-  section: { id: 's1', name: 'To do', sortOrder: 0 } as SectionRecord,
-  tasks,
-});
+const group = (tasks: TaskRecord[]): ListGroup => ({ id: 's1', name: 'To do', tasks });
 const task = (over: Partial<TaskRecord>): TaskRecord =>
   ({
     id: 't',
@@ -21,10 +18,10 @@ const task = (over: Partial<TaskRecord>): TaskRecord =>
   }) as TaskRecord;
 
 describe('ListSection', () => {
-  it('renders the section name, count, column header, and rows when open', () => {
+  it('renders the group name, count, column header, and rows when open', () => {
     renderWithProviders(
       <ListSection
-        column={column([task({ id: 'a', title: 'Alpha' })])}
+        group={group([task({ id: 'a', title: 'Alpha' })])}
         onAddTask={vi.fn()}
         onToggleDone={vi.fn()}
       />,
@@ -34,9 +31,9 @@ describe('ListSection', () => {
     expect(screen.getByTestId('list-head-row')).toBeInTheDocument();
   });
 
-  it('omits the column header when the section is empty', () => {
+  it('omits the column header when the group is empty', () => {
     renderWithProviders(
-      <ListSection column={column([])} onAddTask={vi.fn()} onToggleDone={vi.fn()} />,
+      <ListSection group={group([])} onAddTask={vi.fn()} onToggleDone={vi.fn()} />,
     );
     expect(screen.queryByTestId('list-head-row')).not.toBeInTheDocument();
   });
@@ -44,7 +41,7 @@ describe('ListSection', () => {
   it('collapses and expands on the header toggle', () => {
     renderWithProviders(
       <ListSection
-        column={column([task({ id: 'a', title: 'Alpha' })])}
+        group={group([task({ id: 'a', title: 'Alpha' })])}
         onAddTask={vi.fn()}
         onToggleDone={vi.fn()}
       />,
@@ -55,11 +52,11 @@ describe('ListSection', () => {
     expect(screen.getByText('Alpha')).toBeInTheDocument();
   });
 
-  it('adds a task with the next order', () => {
+  it('adds a task with the next order when onAddTask is given', () => {
     const onAddTask = vi.fn();
     renderWithProviders(
       <ListSection
-        column={column([task({ id: 'a', sortOrder: 4 })])}
+        group={group([task({ id: 'a', sortOrder: 4 })])}
         onAddTask={onAddTask}
         onToggleDone={vi.fn()}
       />,
@@ -69,5 +66,10 @@ describe('ListSection', () => {
     fireEvent.change(input, { target: { value: 'New' } });
     fireEvent.keyDown(input, { key: 'Enter' });
     expect(onAddTask).toHaveBeenCalledWith({ sectionId: 's1', title: 'New', order: 5 });
+  });
+
+  it('omits the add-task composer when onAddTask is not given (non-section grouping)', () => {
+    renderWithProviders(<ListSection group={group([task({ id: 'a' })])} onToggleDone={vi.fn()} />);
+    expect(screen.queryByTestId('add-card')).not.toBeInTheDocument();
   });
 });

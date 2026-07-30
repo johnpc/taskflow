@@ -1,17 +1,20 @@
 import { BoardColumn } from './BoardColumn';
-import { ListSection } from './ListSection';
+import { ListView } from './ListView';
 import type { Column } from './taskGrouping';
 import type { ViewMode } from './viewMode';
+import type { GroupBy } from './listGrouping';
 import type { AddTaskFn, ToggleDoneFn, ReorderFn, QuickEditFn, BoardDrag } from './boardHandlers';
 import type { SubProgress } from '../task/subtaskProgress';
 import type { LabelRecord } from '../../lib/dataClient';
 
 /** Renders the project's sections either as horizontal board columns or as a
- * vertical list of collapsible sections, per the chosen view mode. Passes the
- * label registry + reorder + quick-edit + section handlers down. */
+ * grouped, columnar List view, per the chosen view mode. Passes the label
+ * registry + reorder + quick-edit + section/group handlers down. */
 export function BoardContent({
   mode,
   columns,
+  groupBy = 'SECTION',
+  onGroupBy = () => {},
   labels = [],
   blockedIds,
   subtaskProgress,
@@ -28,6 +31,8 @@ export function BoardContent({
 }: {
   mode: ViewMode;
   columns: Column[];
+  groupBy?: GroupBy;
+  onGroupBy?: (by: GroupBy) => void;
   labels?: LabelRecord[];
   blockedIds?: Set<string>;
   subtaskProgress?: Map<string, SubProgress>;
@@ -44,23 +49,19 @@ export function BoardContent({
 }) {
   if (mode === 'LIST') {
     return (
-      <div className="list-view" data-testid="list-view">
-        {columns.map((column, i) => (
-          <ListSection
-            key={column.section.id}
-            column={column}
-            labels={labels}
-            blockedIds={blockedIds}
-            subtaskProgress={subtaskProgress}
-            defaultOpen={i === 0 || column.tasks.length > 0}
-            onAddTask={onAddTask}
-            onToggleDone={onToggleDone}
-            onQuickEdit={onQuickEdit}
-            selectedIds={selectedIds}
-            onSelect={onSelect}
-          />
-        ))}
-      </div>
+      <ListView
+        columns={columns}
+        groupBy={groupBy}
+        onGroupBy={onGroupBy}
+        labels={labels}
+        blockedIds={blockedIds}
+        subtaskProgress={subtaskProgress}
+        onAddTask={onAddTask}
+        onToggleDone={onToggleDone}
+        onQuickEdit={onQuickEdit}
+        selectedIds={selectedIds}
+        onSelect={onSelect}
+      />
     );
   }
   return (

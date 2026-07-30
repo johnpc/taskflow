@@ -6,19 +6,24 @@ import { nowISO } from '../task/today';
 import type { useBoard } from './useBoard';
 import type { useBulkSelection } from './useBulkSelection';
 import type { ViewMode } from './viewMode';
+import type { GroupBy } from './listGrouping';
 
 /** The load-gated board/list region of ProjectView: wires every board mutation
- * to BoardContent, threads list-mode multi-select, and drives board drag-and-drop
- * (drop a card on a column to move it; onto a card to reorder). Split out to keep
- * the screen shell under the line limit. */
+ * to BoardContent, threads list-mode multi-select + group-by, and drives board
+ * drag-and-drop (drop a card on a column to move it; onto a card to reorder).
+ * Split out to keep the screen shell under the line limit. */
 export function BoardRegion({
   board,
   mode,
   bulk,
+  groupBy = 'SECTION',
+  onGroupBy = () => {},
 }: {
   board: ReturnType<typeof useBoard>;
   mode: ViewMode;
   bulk: ReturnType<typeof useBulkSelection>;
+  groupBy?: GroupBy;
+  onGroupBy?: (by: GroupBy) => void;
 }) {
   const { query, columns } = board;
   const inList = mode === 'LIST';
@@ -46,6 +51,8 @@ export function BoardRegion({
       <BoardContent
         mode={mode}
         columns={columns}
+        groupBy={groupBy}
+        onGroupBy={onGroupBy}
         labels={board.labels}
         blockedIds={board.blockedIds}
         subtaskProgress={board.subtaskProgress}
