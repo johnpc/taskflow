@@ -23,6 +23,7 @@ export function ListView({
   labels = [],
   blockedIds,
   subtaskProgress,
+  members = [],
   onAddTask,
   onToggleDone,
   onQuickEdit,
@@ -37,6 +38,7 @@ export function ListView({
   labels?: LabelRecord[];
   blockedIds?: Set<string>;
   subtaskProgress?: Map<string, SubProgress>;
+  members?: string[];
   onAddTask: AddTaskFn;
   onToggleDone: ToggleDoneFn;
   onQuickEdit?: QuickEditFn;
@@ -59,6 +61,7 @@ export function ListView({
           labels={labels}
           blockedIds={blockedIds}
           subtaskProgress={subtaskProgress}
+          members={members}
           defaultOpen={i === 0 || group.tasks.length > 0}
           sort={sort}
           onSort={onSort}

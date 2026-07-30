@@ -69,6 +69,10 @@ Then(
       .getByTestId('task-card')
       .filter({ has: page.getByTestId('task-open').getByText(title, { exact: true }) })
       .first();
-    await expect(row.getByTestId('row-priority')).toHaveText(priority, { timeout: 15_000 });
+    // The Priority cell is a dropdown (quick-edit): assert its selected value's
+    // label rather than the element's concatenated option text.
+    await expect(row.getByTestId('row-priority')).toHaveValue(priority.toUpperCase(), {
+      timeout: 15_000,
+    });
   },
 );

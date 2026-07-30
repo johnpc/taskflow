@@ -85,6 +85,7 @@ export function ProjectView() {
           board={board}
           mode={mode}
           bulk={bulk}
+          members={memberList}
           groupBy={groupBy}
           onGroupBy={chooseGroup}
           sort={sort}

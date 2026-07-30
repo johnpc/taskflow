@@ -48,7 +48,7 @@ describe('ListRow', () => {
     expect(onQuickEdit).toHaveBeenCalledWith({ dueDate: '2030-01-02' });
   });
 
-  it('cycles priority on the priority cell when quick-edit is enabled', () => {
+  it('sets priority from the dropdown when quick-edit is enabled', () => {
     const onQuickEdit = vi.fn();
     renderWithProviders(
       <ListRow
@@ -57,7 +57,7 @@ describe('ListRow', () => {
         onQuickEdit={onQuickEdit}
       />,
     );
-    fireEvent.click(screen.getByTestId('row-priority'));
+    fireEvent.change(screen.getByTestId('row-priority'), { target: { value: 'LOW' } });
     expect(onQuickEdit).toHaveBeenCalledWith({ priority: 'LOW' });
   });
 

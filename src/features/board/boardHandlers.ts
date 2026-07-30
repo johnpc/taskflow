@@ -13,7 +13,12 @@ export type ReorderFn = (input: {
 }) => void;
 export type QuickEditFn = (
   taskId: string,
-  patch: { dueDate?: string | null; priority?: Priority; title?: string },
+  patch: {
+    dueDate?: string | null;
+    priority?: Priority;
+    title?: string;
+    assigneeEmail?: string | null;
+  },
 ) => void;
 
 /** Drag-and-drop wiring for the board: begin/end a card drag, drop it onto a
