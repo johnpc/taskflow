@@ -76,3 +76,20 @@ Then(
     await expect(fieldInput(page, name)).toHaveValue(value, { timeout: 15_000 });
   },
 );
+
+When('the user goes back to the board', async ({ page }) => {
+  await page.goBack();
+  await expect(page.getByTestId('board').or(page.getByTestId('list-view')).first()).toBeVisible({
+    timeout: 15_000,
+  });
+});
+
+Then(
+  'the board card {string} shows the custom-field chip {string}',
+  async ({ page }, title: string, chip: string) => {
+    const card = page.getByTestId('task-card').filter({ hasText: title }).first();
+    await expect(card.getByTestId('task-cf-chip').filter({ hasText: chip })).toBeVisible({
+      timeout: 15_000,
+    });
+  },
+);

@@ -1,5 +1,8 @@
 import { describe, it, expect, vi } from 'vitest';
 import { screen, fireEvent } from '@testing-library/react';
+// Stub the card's custom-field chips (they fetch via react-query) so TaskCard
+// renders without a QueryClient in the bare-render cases.
+vi.mock('../customfields/CardCustomFieldChips', () => ({ CardCustomFieldChips: () => null }));
 import { TaskCard } from './TaskCard';
 import { renderWithProviders } from '../../test/renderWithProviders';
 import type { TaskRecord } from '../../lib/dataClient';

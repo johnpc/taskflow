@@ -1,5 +1,8 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi } from 'vitest';
 import { render, screen } from '@testing-library/react';
+// CardMeta renders CardCustomFieldChips, which fetches via react-query; stub it
+// so CardMeta stays a pure presentational render in these tests.
+vi.mock('../customfields/CardCustomFieldChips', () => ({ CardCustomFieldChips: () => null }));
 import { CardMeta } from './CardMeta';
 import type { TaskRecord } from '../../lib/dataClient';
 
