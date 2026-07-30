@@ -255,6 +255,16 @@ export const seedProjects: SeedProject[] = [
     sections: ['To do'],
     tasks: [{ title: 'Status target', section: 'To do', priority: 'NONE' }],
   },
+  // Dedicated project for promoting a subtask: this area lifts the subtask out
+  // of its parent, so an isolated parent+subtask keeps a parallel run safe.
+  {
+    name: 'Promote Lab',
+    color: 'green',
+    sections: ['To do'],
+    tasks: [
+      { title: 'Promote parent', section: 'To do', priority: 'NONE', subtasks: ['Promote me'] },
+    ],
+  },
   // Dedicated project for timeline drag-to-reschedule: one dated bar this area
   // moves, so mutating its due date can't disturb a parallel run.
   {

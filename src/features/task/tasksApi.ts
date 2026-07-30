@@ -81,6 +81,7 @@ export async function updateTask(
       | 'isMilestone'
       | 'color'
       | 'customValues'
+      | 'parentTaskId'
     >
   >,
 ): Promise<void> {
