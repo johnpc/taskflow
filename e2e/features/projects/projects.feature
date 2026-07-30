@@ -15,3 +15,11 @@ Feature: Projects
     Given a signed-in user
     When the user creates a project named "QA Sweep 8f3a"
     Then a project named "QA Sweep 8f3a" is visible
+
+  # Favoriting from the board header: "Fav Lab" is dedicated to this area so
+  # flipping its flag can't disturb another area's project ordering.
+  Scenario: Favoriting a project from its board header
+    Given a signed-in user
+    And the user opens the "Fav Lab" project
+    When the user favorites the project from the header
+    Then the project header shows it as favorited

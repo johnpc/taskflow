@@ -8,6 +8,7 @@ import { useListSort } from './useListSort';
 import { useBoardFilter } from './useBoardFilter';
 import { useProjectEdit } from './useProjectEdit';
 import { useProjectActions } from './useProjectActions';
+import { useToggleFavorite } from '../projects/useProjects';
 import { ViewToggle } from './ViewToggle';
 import { FilterBar } from './FilterBar';
 import { SavedViewsRegion } from './SavedViewsRegion';
@@ -34,6 +35,7 @@ export function ProjectView() {
   const { sort, toggle: toggleSort } = useListSort(id);
   const edit = useProjectEdit(id);
   const actions = useProjectActions(id);
+  const favorite = useToggleFavorite();
   const bulk = useBulkSelection(board);
   const memberList = (project.data?.members ?? []).filter((m): m is string => !!m);
   useDocumentTitle(project.data?.name ?? 'Project');
@@ -42,6 +44,9 @@ export function ProjectView() {
     <IonPage>
       <ProjectTopBar
         project={project.data ?? undefined}
+        onToggleFavorite={() =>
+          project.data && favorite.mutate({ id, favorite: !project.data.favorite })
+        }
         onDuplicate={() => project.data && actions.duplicate.mutate(project.data)}
         onArchive={actions.archiveAndLeave}
         onDelete={actions.deleteAndLeave}
