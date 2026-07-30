@@ -11,3 +11,12 @@ Feature: Timeline view
     When the user switches to the timeline view
     Then a timeline bar for "Design hero banner" is visible
     And the timeline marks today's column
+
+  # "Reschedule me" is seeded in Timeline Lab due 2 days out; dragging its bar
+  # onto the day 6 days out changes its due date to that day.
+  Scenario: Dragging a bar to reschedule a task
+    Given a signed-in user
+    And the user opens the "Timeline Lab" project
+    When the user switches to the timeline view
+    And the user drags the "Reschedule me" bar to 6 days out
+    Then the task "Reschedule me" is due 6 days out

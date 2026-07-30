@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { screen } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import { screen, fireEvent } from '@testing-library/react';
 import { renderWithProviders } from '../../test/renderWithProviders';
 import { TimelineView } from './TimelineView';
 import { todayISO } from '../task/today';
@@ -37,6 +37,21 @@ describe('TimelineView', () => {
       />,
     );
     expect(screen.getByTestId('timeline-today')).toHaveTextContent('Today');
+  });
+
+  it('reschedules a bar dragged onto a different day', () => {
+    const onReschedule = vi.fn();
+    renderWithProviders(
+      <TimelineView
+        columns={cols([
+          { id: 'a', title: 'Ship it', status: 'TODO', dueDate: inWindow(2) } as TaskRecord,
+        ])}
+        onReschedule={onReschedule}
+      />,
+    );
+    fireEvent.dragStart(screen.getByTestId('timeline-bar'));
+    fireEvent.drop(screen.getByTestId(`timeline-day-${inWindow(5)}`));
+    expect(onReschedule).toHaveBeenCalledWith({ id: 'a', dueDate: inWindow(5) });
   });
 
   it('shows the empty state when nothing is dated in the window', () => {

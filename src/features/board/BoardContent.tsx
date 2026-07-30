@@ -1,4 +1,4 @@
-import { BoardColumn } from './BoardColumn';
+import { BoardGrid } from './BoardGrid';
 import { ListView } from './ListView';
 import { TimelineView } from '../timeline/TimelineView';
 import type { Column } from './taskGrouping';
@@ -26,6 +26,7 @@ export function BoardContent({
   onToggleDone,
   onReorder,
   onQuickEdit,
+  onReschedule,
   onRenameSection,
   onDeleteSection,
   onMoveSection,
@@ -46,6 +47,7 @@ export function BoardContent({
   onToggleDone: ToggleDoneFn;
   onReorder?: ReorderFn;
   onQuickEdit?: QuickEditFn;
+  onReschedule?: (patch: { id: string; dueDate: string; startDate?: string }) => void;
   onRenameSection?: (input: { id: string; name: string }) => void;
   onDeleteSection?: (id: string) => void;
   onMoveSection?: (input: { sectionId: string; direction: 'left' | 'right' }) => void;
@@ -54,7 +56,7 @@ export function BoardContent({
   drag?: BoardDrag;
 }) {
   if (mode === 'TIMELINE') {
-    return <TimelineView columns={columns} />;
+    return <TimelineView columns={columns} onReschedule={onReschedule} />;
   }
   if (mode === 'LIST') {
     return (
@@ -76,24 +78,19 @@ export function BoardContent({
     );
   }
   return (
-    <div className="board" data-testid="board">
-      {columns.map((column) => (
-        <BoardColumn
-          key={column.section.id}
-          column={column}
-          labels={labels}
-          blockedIds={blockedIds}
-          subtaskProgress={subtaskProgress}
-          onAddTask={onAddTask}
-          onToggleDone={onToggleDone}
-          onReorder={onReorder}
-          onQuickEdit={onQuickEdit}
-          onRenameSection={onRenameSection}
-          onDeleteSection={onDeleteSection}
-          onMoveSection={onMoveSection}
-          drag={drag}
-        />
-      ))}
-    </div>
+    <BoardGrid
+      columns={columns}
+      labels={labels}
+      blockedIds={blockedIds}
+      subtaskProgress={subtaskProgress}
+      onAddTask={onAddTask}
+      onToggleDone={onToggleDone}
+      onReorder={onReorder}
+      onQuickEdit={onQuickEdit}
+      onRenameSection={onRenameSection}
+      onDeleteSection={onDeleteSection}
+      onMoveSection={onMoveSection}
+      drag={drag}
+    />
   );
 }

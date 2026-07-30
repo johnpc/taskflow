@@ -71,6 +71,7 @@ export function BoardRegion({
         onToggleDone={toggleDone}
         onReorder={(input) => board.reorder.mutate(input)}
         onQuickEdit={(taskId, patch) => board.quickEdit.mutate({ id: taskId, ...patch })}
+        onReschedule={(patch) => board.quickEdit.mutate(patch)}
         onRenameSection={(input) => board.editSection.mutate(input)}
         onDeleteSection={(sectionId) => board.removeSection.mutate(sectionId)}
         onMoveSection={(input) => board.moveSection.mutate(input)}
