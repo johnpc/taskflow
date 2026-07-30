@@ -52,7 +52,7 @@ iOS and Android.
 | **Copy link**       | Copy a task's shareable deep link from its detail, with "Copied!" feedback                | ✅     |
 | **Delete task**     | Delete a task (with confirm) from its detail; it leaves the board                         | ✅     |
 | **My Tasks**        | Open tasks across projects (project-tagged) — group, completed, filter to assigned-to-me  | ✅     |
-| **Focus plan**      | File tasks into Today / Upcoming / Later in My Tasks, independent of due dates            | ✅     |
+| **Focus plan**      | File tasks into Today / Upcoming / Later in My Tasks — drag between buckets or pick       | ✅     |
 | **Calendar**        | Two-week forward view of upcoming dated tasks, grouped by day (project-tagged)            | ✅     |
 | **Search**          | Live title/notes search — rows show project + due; filter by priority/project/status      | ✅     |
 | **Complete**        | One-tap complete on the board and in lists, with a strike-through state                   | ✅     |

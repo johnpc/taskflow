@@ -6,21 +6,26 @@ const task = (over: Partial<TaskRecord>): TaskRecord =>
   ({ id: 't', title: 'T', status: 'TODO', myBucket: 'NONE', dueDate: null, ...over }) as TaskRecord;
 
 describe('groupByFocus', () => {
-  it('orders Today → Upcoming → Later → Unsorted and drops empties', () => {
+  it('always returns all four buckets in order (they are drag targets)', () => {
     const out = groupByFocus([
       task({ id: 'l', myBucket: 'LATER' }),
       task({ id: 't', myBucket: 'TODAY' }),
       task({ id: 'n', myBucket: 'NONE' }),
     ]);
-    expect(out.map((b) => b.key)).toEqual(['TODAY', 'LATER', 'NONE']);
+    expect(out.map((b) => b.key)).toEqual(['TODAY', 'UPCOMING', 'LATER', 'NONE']);
+    // UPCOMING is empty but still present as a drop target.
+    expect(out.find((b) => b.key === 'UPCOMING')!.tasks).toEqual([]);
   });
 
   it('treats a missing bucket as Unsorted (NONE)', () => {
-    expect(groupByFocus([task({ myBucket: null })]).map((b) => b.key)).toEqual(['NONE']);
+    const out = groupByFocus([task({ myBucket: null })]);
+    expect(out.find((b) => b.key === 'NONE')!.tasks.map((t) => t.id)).toEqual(['t']);
   });
 
-  it('excludes done tasks', () => {
-    expect(groupByFocus([task({ status: 'DONE', myBucket: 'TODAY' })])).toEqual([]);
+  it('excludes done tasks (buckets remain but empty)', () => {
+    const out = groupByFocus([task({ status: 'DONE', myBucket: 'TODAY' })]);
+    expect(out).toHaveLength(4);
+    expect(out.every((b) => b.tasks.length === 0)).toBe(true);
   });
 
   it('sorts within a bucket by due date then title', () => {
@@ -31,7 +36,7 @@ describe('groupByFocus', () => {
     expect(out[0].tasks.map((t) => t.id)).toEqual(['a', 'b']);
   });
 
-  it('returns nothing for an empty list', () => {
-    expect(groupByFocus([])).toEqual([]);
+  it('returns four empty buckets for an empty list', () => {
+    expect(groupByFocus([]).map((b) => b.key)).toEqual(['TODAY', 'UPCOMING', 'LATER', 'NONE']);
   });
 });
