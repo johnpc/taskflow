@@ -4,6 +4,7 @@ import { repeats, REPEAT_META, type Repeat } from './recurrence';
 import { projectColorVar } from '../projects/projectColors';
 import { LabelChips } from '../labels/LabelChips';
 import { CardCustomFieldChips } from '../customfields/CardCustomFieldChips';
+import { AssigneeAvatar } from './AssigneeAvatar';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 
 /** The meta row under a card title: an optional project chip (cross-project
@@ -78,6 +79,7 @@ export function CardMeta({
       )}
       <LabelChips labels={labels} />
       <CardCustomFieldChips task={task} />
+      <AssigneeAvatar email={task.assigneeEmail} />
     </span>
   );
 }

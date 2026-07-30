@@ -25,3 +25,8 @@ When('the user assigns the task to themselves', async ({ page }) => {
 Then('the task is shown as assigned', async ({ page }) => {
   await expect(page.getByTestId('task-assignee-select')).not.toHaveValue('', { timeout: 15_000 });
 });
+
+Then('the board card {string} shows an assignee avatar', async ({ page }, title: string) => {
+  const card = page.getByTestId('task-card').filter({ hasText: title }).first();
+  await expect(card.getByTestId('task-assignee-avatar')).toBeVisible({ timeout: 15_000 });
+});

@@ -19,3 +19,5 @@ Feature: Move and assign tasks
     When the user opens the task titled "Set up analytics"
     And the user assigns the task to themselves
     Then the task is shown as assigned
+    When the user goes back to the board
+    Then the board card "Set up analytics" shows an assignee avatar
