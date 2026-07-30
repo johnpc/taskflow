@@ -67,7 +67,7 @@ iOS and Android.
 | **Saved views**       | Save a filter/sort combo as a named view per project; re-apply or delete in one tap                         | ✅     |
 | **Custom fields**     | Manage text/select/number/date fields from the board; fill per task; values chip on cards + list rows       | ✅     |
 | **Dark mode**         | Follows your OS, with an in-app Light / Dark / System override                                              | ✅     |
-| **Accounts**          | Email sign-up/sign-in; your workspace is private by default                                                 | ✅     |
+| **Accounts**          | Email sign-up/sign-in; a "You" tab to change your password, switch theme, or sign out                       | ✅     |
 | **Sharing**           | Invite people by email; every member sees & edits its board; a header avatar stack shows who's on it        | ✅     |
 | **Shortcuts**         | Keyboard nav — `g` then h/p/t/c to jump around, `/` to search, `?` for help                                 | ✅     |
 

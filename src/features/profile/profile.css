@@ -87,3 +87,49 @@
   font-size: 0.95rem;
   cursor: pointer;
 }
+
+/* Change-password form on the You tab. */
+.change-password {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 320px;
+}
+
+.change-password__input {
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius-sm);
+  padding: 8px 10px;
+  font-size: 0.9rem;
+  background: var(--tf-surface);
+  color: var(--tf-text);
+}
+
+.change-password__save {
+  align-self: flex-start;
+  background: var(--tf-accent);
+  color: var(--tf-accent-contrast);
+  border: none;
+  border-radius: var(--tf-radius-sm);
+  padding: 8px 16px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.change-password__save:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.change-password__msg {
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.change-password__msg--ok {
+  color: var(--tf-done);
+}
+
+.change-password__msg--err {
+  color: var(--tf-danger);
+}
