@@ -8,6 +8,7 @@ import {
   signUp as amplifySignUp,
   confirmSignUp as amplifyConfirmSignUp,
   signOut as amplifySignOut,
+  updatePassword as amplifyUpdatePassword,
 } from 'aws-amplify/auth';
 import type { SignUpResult } from './types';
 
@@ -40,4 +41,19 @@ export async function confirmSignUp(email: string, code: string): Promise<void> 
 
 export async function signOut(): Promise<void> {
   await amplifySignOut();
+}
+
+/** Change the signed-in user's password (Cognito verifies the old one). Returns
+ * a result flag instead of throwing, so callers branch on a value (no
+ * exception control flow) — `ok:false` when Cognito rejects. */
+export async function changePassword(
+  oldPassword: string,
+  newPassword: string,
+): Promise<{ ok: boolean }> {
+  try {
+    await amplifyUpdatePassword({ oldPassword, newPassword });
+    return { ok: true };
+  } catch {
+    return { ok: false };
+  }
 }

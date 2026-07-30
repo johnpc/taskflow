@@ -2,6 +2,7 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/rea
 import { useHistory } from 'react-router-dom';
 import { useAuth } from '../auth/useAuth';
 import { ThemeToggle } from '../settings/ThemeToggle';
+import { ChangePassword } from './ChangePassword';
 import { TabBar } from '../shell/TabBar';
 import { useDocumentTitle } from '../shell/useDocumentTitle';
 import './profile.css';
@@ -36,6 +37,11 @@ export function Profile() {
           <section className="profile__section">
             <h2 className="profile__section-head">Appearance</h2>
             <ThemeToggle />
+          </section>
+
+          <section className="profile__section">
+            <h2 className="profile__section-head">Security</h2>
+            <ChangePassword />
           </section>
 
           <section className="profile__section">

@@ -236,6 +236,8 @@ jobs:
             paths: .features-gen/e2e/features/promote
           - name: sectioncopy
             paths: .features-gen/e2e/features/sectioncopy
+          - name: profile
+            paths: .features-gen/e2e/features/profile
     steps:
       - uses: actions/checkout@v4
 
