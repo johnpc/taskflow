@@ -224,6 +224,8 @@ jobs:
             paths: .features-gen/e2e/features/celebration
           - name: savedviews
             paths: .features-gen/e2e/features/savedviews
+          - name: customfields
+            paths: .features-gen/e2e/features/customfields
     steps:
       - uses: actions/checkout@v4
 

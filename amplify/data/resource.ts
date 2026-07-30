@@ -98,6 +98,10 @@ const schema = a.schema({
       // Denormalized reusable-label ids (see Label). Kept on the task so the
       // board renders chips without a per-task join.
       labelIds: a.string().array(),
+      // Custom-field values: a denormalized { [customFieldId]: string } map,
+      // stored as a JSON STRING (a.json()'s AWSJSON variable rejects a raw object
+      // on update — a string round-trips cleanly). Parsed by readCustomValues.
+      customValues: a.string(),
       // Task dependencies: ids of same-project tasks that must finish first.
       // Denormalized (like labelIds) so the board can flag "Blocked" without a
       // join — it already holds every task in the project.
@@ -160,6 +164,20 @@ const schema = a.schema({
       color: a.string(),
     })
     .authorization((allow) => [allow.owner()]),
+
+  // A project-defined custom field (Asana-style). v1 is TEXT only; tasks store
+  // values in their denormalized customValues map keyed by this field's id.
+  // Member-scoped like the rest of the project (mirrors Project.members).
+  CustomField: a
+    .model({
+      projectId: a.id().required(),
+      name: a.string().required(),
+      fieldType: a.enum(['TEXT']),
+      sortOrder: a.integer().default(0),
+      members: a.string().array(),
+    })
+    .secondaryIndexes((index) => [index('projectId')])
+    .authorization((allow) => [allow.ownersDefinedIn('members').identityClaim('email')]),
 });
 
 export type Schema = ClientSchema<typeof schema>;

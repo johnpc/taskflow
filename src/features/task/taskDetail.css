@@ -608,3 +608,35 @@
 .attachments__add:disabled {
   opacity: 0.5;
 }
+
+/* Custom fields (task detail) */
+.custom-fields {
+  margin-top: 18px;
+}
+
+.custom-fields__input {
+  flex: 1;
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius-sm);
+  padding: 6px 10px;
+  font-size: 0.9rem;
+  color: var(--tf-text);
+  outline: none;
+}
+
+.custom-fields__add {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--tf-text-muted);
+  margin-top: 8px;
+}
+
+.custom-fields__name {
+  border: none;
+  background: transparent;
+  color: var(--tf-text);
+  font-size: 0.9rem;
+  outline: none;
+}

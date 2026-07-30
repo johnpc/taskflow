@@ -80,6 +80,7 @@ export async function updateTask(
       | 'myBucket'
       | 'isMilestone'
       | 'color'
+      | 'customValues'
     >
   >,
 ): Promise<void> {
