@@ -18,4 +18,22 @@ describe('useBoardFilter', () => {
     // Prior update is preserved.
     expect(result.current.filter.hideDone).toBe(false);
   });
+
+  it('replaces the whole filter (applying a saved view)', () => {
+    const { result } = renderHook(() => useBoardFilter());
+    act(() => result.current.update({ hideDone: false }));
+    act(() =>
+      result.current.replace({
+        hideDone: true,
+        labelId: '',
+        priority: 'HIGH',
+        dueWindow: '',
+        assignee: '',
+        sort: 'due',
+      }),
+    );
+    expect(result.current.filter.priority).toBe('HIGH');
+    expect(result.current.filter.sort).toBe('due');
+    expect(result.current.filter.hideDone).toBe(true);
+  });
 });

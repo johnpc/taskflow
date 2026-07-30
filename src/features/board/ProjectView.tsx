@@ -18,6 +18,7 @@ import { useProjectEdit } from './useProjectEdit';
 import { useProjectActions } from './useProjectActions';
 import { ViewToggle } from './ViewToggle';
 import { FilterBar } from './FilterBar';
+import { SavedViewsRegion } from './SavedViewsRegion';
 import { ProjectHeader } from './ProjectHeader';
 import { ProjectShareRegion } from './ProjectShareRegion';
 import { ProjectMenu } from './ProjectMenu';
@@ -33,7 +34,7 @@ import './board.css';
 export function ProjectView() {
   const { id } = useParams<{ id: string }>();
   const project = useProject(id);
-  const { filter, update } = useBoardFilter();
+  const { filter, update, replace } = useBoardFilter();
   const board = useBoard(id, filter);
   const { mode, choose } = useViewMode(id, project.data?.view as ViewMode | undefined);
   const { groupBy, choose: chooseGroup } = useGroupBy(id);
@@ -68,6 +69,7 @@ export function ProjectView() {
         <ProjectShareRegion projectId={id} members={memberList} />
         <ViewToggle mode={mode} onChange={choose} />
         <FilterBar filter={filter} labels={board.labels} members={memberList} onChange={update} />
+        <SavedViewsRegion projectId={id} filter={filter} onApply={replace} />
         {mode === 'LIST' && bulk.selection.active && (
           <SelectionBar
             count={bulk.selection.count}
