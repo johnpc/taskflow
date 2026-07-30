@@ -1,10 +1,13 @@
 import { useState } from 'react';
 import type { CustomFieldRecord } from '../../lib/dataClient';
 
-/** One custom-field row. A SELECT field renders a dropdown of its options
- * (commits immediately on change); a TEXT field renders an input holding its own
- * draft (so an eventually-consistent re-fetch post-save can't blank what you
- * typed) that commits on blur. */
+/** HTML input type for a value-entry field type. */
+const INPUT_TYPE: Record<string, string> = { NUMBER: 'number', DATE: 'date' };
+
+/** One custom-field row. SELECT renders a dropdown of its options (commits on
+ * change); TEXT / NUMBER / DATE render an input of the matching HTML type,
+ * holding its own draft (so an eventually-consistent re-fetch post-save can't
+ * blank what you typed) that commits on blur. Values are stored as strings. */
 export function CustomFieldRow({
   field,
   value,
@@ -38,6 +41,7 @@ export function CustomFieldRow({
         <input
           className="custom-fields__input"
           data-testid={`custom-field-input-${field.id}`}
+          type={INPUT_TYPE[field.fieldType ?? 'TEXT'] ?? 'text'}
           value={draft}
           onChange={(e) => setDraft(e.target.value)}
           onBlur={() => draft !== value && onSetValue(field.id, draft)}

@@ -26,3 +26,14 @@ Feature: Custom fields
     And the user sets the custom field "Stage" to "Doing"
     When the user reloads the task
     Then the custom field "Stage" has the value "Doing"
+
+  # A NUMBER field renders a numeric input; its value persists like any other.
+  # Own project ("Number Lab") — scenarios run in parallel on one backend.
+  Scenario: A number custom field
+    Given a signed-in user
+    And the user opens the "Number Lab" project
+    When the user opens the task titled "Number target"
+    And the user adds the "NUMBER" field "Estimate"
+    And the user sets the custom field "Estimate" to "13"
+    When the user reloads the task
+    Then the custom field "Estimate" has the value "13"

@@ -2,18 +2,27 @@ import { useState } from 'react';
 import { IonIcon } from '@ionic/react';
 import { addOutline } from 'ionicons/icons';
 
+export type FieldType = 'TEXT' | 'SELECT' | 'NUMBER' | 'DATE';
+
 export interface NewField {
   name: string;
-  fieldType: 'TEXT' | 'SELECT';
+  fieldType: FieldType;
   options?: string[];
 }
 
-/** The "add a custom field" composer: a name, a type toggle (Text / Select),
- * and — for Select — a comma-separated options input. Local state only; commits
- * the new field on Enter / the Add button. */
+const TYPES: { value: FieldType; label: string }[] = [
+  { value: 'TEXT', label: 'Text' },
+  { value: 'SELECT', label: 'Select' },
+  { value: 'NUMBER', label: 'Number' },
+  { value: 'DATE', label: 'Date' },
+];
+
+/** The "add a custom field" composer: a name, a type toggle (Text / Select /
+ * Number / Date), and — for Select — a comma-separated options input. Local
+ * state only; commits the new field on Enter / the Add button. */
 export function CustomFieldAdd({ onAdd }: { onAdd: (field: NewField) => void }) {
   const [name, setName] = useState('');
-  const [fieldType, setType] = useState<'TEXT' | 'SELECT'>('TEXT');
+  const [fieldType, setType] = useState<FieldType>('TEXT');
   const [options, setOptions] = useState('');
 
   const commit = () => {
@@ -43,10 +52,13 @@ export function CustomFieldAdd({ onAdd }: { onAdd: (field: NewField) => void }) 
         className="custom-fields__type"
         data-testid="custom-field-type"
         value={fieldType}
-        onChange={(e) => setType(e.target.value as 'TEXT' | 'SELECT')}
+        onChange={(e) => setType(e.target.value as FieldType)}
       >
-        <option value="TEXT">Text</option>
-        <option value="SELECT">Select</option>
+        {TYPES.map((t) => (
+          <option key={t.value} value={t.value}>
+            {t.label}
+          </option>
+        ))}
       </select>
       {fieldType === 'SELECT' && (
         <input

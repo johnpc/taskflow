@@ -230,6 +230,12 @@ export const seedProjects: SeedProject[] = [
     tasks: [{ title: 'Select target', section: 'To do', priority: 'LOW' }],
   },
   {
+    name: 'Number Lab',
+    color: 'sky',
+    sections: ['To do'],
+    tasks: [{ title: 'Number target', section: 'To do', priority: 'LOW' }],
+  },
+  {
     name: 'Scratchpad',
     color: 'violet',
     sections: ['To do'],

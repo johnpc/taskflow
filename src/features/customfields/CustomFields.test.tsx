@@ -68,4 +68,20 @@ describe('CustomFields', () => {
     fireEvent.change(select, { target: { value: 'Todo' } });
     expect(onSetValue).toHaveBeenCalledWith('f1', 'Todo');
   });
+
+  it('renders NUMBER and DATE fields with the matching input type', () => {
+    render(
+      <CustomFields
+        fields={[
+          { id: 'n', name: 'Estimate', fieldType: 'NUMBER' } as CustomFieldRecord,
+          { id: 'd', name: 'Ship by', fieldType: 'DATE' } as CustomFieldRecord,
+        ]}
+        values={{}}
+        onSetValue={vi.fn()}
+        onAddField={vi.fn()}
+      />,
+    );
+    expect(screen.getByTestId('custom-field-input-n')).toHaveAttribute('type', 'number');
+    expect(screen.getByTestId('custom-field-input-d')).toHaveAttribute('type', 'date');
+  });
 });

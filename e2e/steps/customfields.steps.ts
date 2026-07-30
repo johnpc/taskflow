@@ -30,6 +30,16 @@ When(
   },
 );
 
+When(
+  'the user adds the {string} field {string}',
+  async ({ page }, fieldType: string, name: string) => {
+    if ((await fieldExists(page, name)) > 0) return;
+    await page.getByTestId('custom-field-name').fill(name);
+    await page.getByTestId('custom-field-type').selectOption(fieldType);
+    await page.getByTestId('custom-field-add').click();
+  },
+);
+
 Then('the custom field {string} is shown on the task', async ({ page }, name: string) => {
   await expect(page.getByTestId('custom-field').filter({ hasText: name })).toBeVisible({
     timeout: 15_000,

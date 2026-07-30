@@ -33,4 +33,23 @@ describe('CustomFieldAdd', () => {
     fireEvent.click(screen.getByTestId('custom-field-add'));
     expect(onAdd).not.toHaveBeenCalled();
   });
+
+  it('adds a NUMBER field (no options)', () => {
+    const onAdd = vi.fn();
+    render(<CustomFieldAdd onAdd={onAdd} />);
+    fireEvent.change(screen.getByTestId('custom-field-name'), { target: { value: 'Estimate' } });
+    fireEvent.change(screen.getByTestId('custom-field-type'), { target: { value: 'NUMBER' } });
+    fireEvent.click(screen.getByTestId('custom-field-add'));
+    expect(onAdd).toHaveBeenCalledWith({
+      name: 'Estimate',
+      fieldType: 'NUMBER',
+      options: undefined,
+    });
+  });
+
+  it('offers Number and Date type options', () => {
+    render(<CustomFieldAdd onAdd={vi.fn()} />);
+    expect(screen.getByRole('option', { name: 'Number' })).toBeInTheDocument();
+    expect(screen.getByRole('option', { name: 'Date' })).toBeInTheDocument();
+  });
 });
