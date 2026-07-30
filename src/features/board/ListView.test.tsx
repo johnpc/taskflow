@@ -31,7 +31,7 @@ describe('ListView', () => {
     expect(screen.getByTestId('add-card')).toBeInTheDocument();
   });
 
-  it('regroups by priority and hides the add composer', () => {
+  it('regroups by priority and still offers a top-level add composer', () => {
     renderWithProviders(
       <ListView
         columns={columns}
@@ -42,7 +42,38 @@ describe('ListView', () => {
       />,
     );
     expect(screen.getByText('High priority')).toBeInTheDocument();
-    expect(screen.queryByTestId('add-card')).not.toBeInTheDocument();
+    // The composer moves out of the (ambiguous) groups to the list level.
+    expect(screen.getByTestId('add-card')).toBeInTheDocument();
+  });
+
+  it('files a task into the first section when adding from a non-section group', () => {
+    const onAddTask = vi.fn();
+    renderWithProviders(
+      <ListView
+        columns={columns}
+        groupBy="NONE"
+        onGroupBy={vi.fn()}
+        onAddTask={onAddTask}
+        onToggleDone={vi.fn()}
+      />,
+    );
+    fireEvent.click(screen.getByTestId('add-card'));
+    fireEvent.change(screen.getByTestId('add-card-input'), { target: { value: 'New one' } });
+    fireEvent.keyDown(screen.getByTestId('add-card-input'), { key: 'Enter' });
+    expect(onAddTask).toHaveBeenCalledWith({ sectionId: 's1', title: 'New one', order: 1 });
+  });
+
+  it('NONE renders a single flat All tasks group', () => {
+    renderWithProviders(
+      <ListView
+        columns={columns}
+        groupBy="NONE"
+        onGroupBy={vi.fn()}
+        onAddTask={vi.fn()}
+        onToggleDone={vi.fn()}
+      />,
+    );
+    expect(screen.getByText('All tasks')).toBeInTheDocument();
   });
 
   it('reports a group-by change', () => {
