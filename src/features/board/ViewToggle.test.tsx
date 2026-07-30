@@ -15,4 +15,12 @@ describe('ViewToggle', () => {
     fireEvent.click(screen.getByTestId('view-board'));
     expect(onChange).toHaveBeenCalledWith('BOARD');
   });
+
+  it('offers and selects the Timeline view', () => {
+    const onChange = vi.fn();
+    render(<ViewToggle mode="TIMELINE" onChange={onChange} />);
+    expect(screen.getByTestId('view-timeline')).toHaveAttribute('aria-pressed', 'true');
+    fireEvent.click(screen.getByTestId('view-list'));
+    expect(onChange).toHaveBeenCalledWith('LIST');
+  });
 });

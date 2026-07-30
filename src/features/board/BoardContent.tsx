@@ -1,5 +1,6 @@
 import { BoardColumn } from './BoardColumn';
 import { ListView } from './ListView';
+import { TimelineView } from '../timeline/TimelineView';
 import type { Column } from './taskGrouping';
 import type { ViewMode } from './viewMode';
 import type { GroupBy } from './listGrouping';
@@ -52,6 +53,9 @@ export function BoardContent({
   onSelect?: (id: string) => void;
   drag?: BoardDrag;
 }) {
+  if (mode === 'TIMELINE') {
+    return <TimelineView columns={columns} />;
+  }
   if (mode === 'LIST') {
     return (
       <ListView

@@ -20,4 +20,9 @@ describe('viewMode store', () => {
     localStorage.setItem('tf-view-p1', 'weird');
     expect(readViewMode('p1', 'BOARD')).toBe('BOARD');
   });
+
+  it('round-trips the TIMELINE view', () => {
+    writeViewMode('p1', 'TIMELINE');
+    expect(readViewMode('p1', 'BOARD')).toBe('TIMELINE');
+  });
 });
