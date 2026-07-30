@@ -5,6 +5,7 @@ import { queryClient } from './lib/queryClient';
 import { AuthProvider } from './features/auth/AuthProvider';
 import { ThemeGate } from './features/settings/ThemeGate';
 import { ToastProvider } from './features/shell/ToastProvider';
+import { CelebrationProvider } from './features/celebration/CelebrationProvider';
 import { ShortcutsGate } from './features/shortcuts/ShortcutsGate';
 import { ErrorBoundary } from './features/shell/ErrorBoundary';
 import { AppRoutes } from './AppRoutes';
@@ -30,12 +31,14 @@ const App: React.FC = () => (
       <ThemeGate>
         <AuthProvider>
           <ToastProvider>
-            <IonReactRouter>
-              <ErrorBoundary>
-                <ShortcutsGate />
-                <AppRoutes />
-              </ErrorBoundary>
-            </IonReactRouter>
+            <CelebrationProvider>
+              <IonReactRouter>
+                <ErrorBoundary>
+                  <ShortcutsGate />
+                  <AppRoutes />
+                </ErrorBoundary>
+              </IonReactRouter>
+            </CelebrationProvider>
           </ToastProvider>
         </AuthProvider>
       </ThemeGate>

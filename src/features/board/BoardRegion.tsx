@@ -2,6 +2,7 @@ import { BoardContent } from './BoardContent';
 import { LoadState } from '../shell/LoadState';
 import { useBoardDrag } from './useBoardDrag';
 import { useToast } from '../shell/useToast';
+import { useCelebration } from '../celebration/useCelebration';
 import { nowISO } from '../task/today';
 import type { useBoard } from './useBoard';
 import type { useBulkSelection } from './useBulkSelection';
@@ -33,10 +34,13 @@ export function BoardRegion({
   const { query, columns } = board;
   const inList = mode === 'LIST';
   const { showUndo } = useToast();
-  // Completing a task hides it (hide-completed default); offer a one-tap undo.
+  const { celebrate } = useCelebration();
+  // Completing a task hides it (hide-completed default); offer a one-tap undo +
+  // an occasional confetti celebration.
   const toggleDone = (input: { id: string; done: boolean; now: string }) => {
     board.toggleDone.mutate(input);
     if (input.done) {
+      celebrate();
       showUndo({
         message: 'Task completed',
         onUndo: () => board.toggleDone.mutate({ id: input.id, done: false, now: nowISO() }),
