@@ -22,6 +22,8 @@ export function MyTasks() {
     setGroupMode,
     showCompleted,
     setShowCompleted,
+    assignedOnly,
+    setAssignedOnly,
     toggleDone,
     setBucket,
   } = useMyTasks();
@@ -53,6 +55,15 @@ export function MyTasks() {
             onChange={(e) => setShowCompleted(e.target.checked)}
           />
           Show completed
+        </label>
+        <label className="mytasks__show-done">
+          <input
+            type="checkbox"
+            data-testid="mytasks-assigned-only"
+            checked={assignedOnly}
+            onChange={(e) => setAssignedOnly(e.target.checked)}
+          />
+          Assigned to me
         </label>
         <LoadState
           isLoading={query.isLoading}

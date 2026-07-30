@@ -17,6 +17,8 @@ const base = {
   setGroupMode: vi.fn(),
   showCompleted: false,
   setShowCompleted: vi.fn(),
+  assignedOnly: false,
+  setAssignedOnly: vi.fn(),
   toggleDone: { mutate: vi.fn() },
   setBucket: { mutate: vi.fn() },
 };
@@ -54,6 +56,14 @@ describe('MyTasks', () => {
     renderWithProviders(<MyTasks />);
     fireEvent.click(screen.getByTestId('mytasks-show-completed'));
     expect(setShowCompleted).toHaveBeenCalledWith(true);
+  });
+
+  it('toggles assigned-to-me', () => {
+    const setAssignedOnly = vi.fn();
+    useMyTasks.mockReturnValue({ ...base, buckets: [], setAssignedOnly });
+    renderWithProviders(<MyTasks />);
+    fireEvent.click(screen.getByTestId('mytasks-assigned-only'));
+    expect(setAssignedOnly).toHaveBeenCalledWith(true);
   });
 
   it('shows the caught-up empty state', () => {

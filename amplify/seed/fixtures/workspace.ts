@@ -21,6 +21,8 @@ export interface SeedTask {
   isMilestone?: boolean;
   /** Seed this task already completed (for progress/completed acceptance). */
   done?: boolean;
+  /** Assign this task to the seed user (for the assigned-to-me acceptance). */
+  assigned?: boolean;
 }
 
 /** Reusable label registry — name + color key (a --tf-proj-* palette key). */
@@ -168,6 +170,9 @@ export const seedProjects: SeedProject[] = [
     tasks: [
       { title: 'Plan Q3 goals', section: 'To do', priority: 'MEDIUM', dueOffsetDays: 5 },
       { title: 'Renew passport', section: 'To do', priority: 'HIGH', dueOffsetDays: -1 },
+      // Assigned-to-me anchor: the only seed task assigned to the seed user, so
+      // My Tasks' "Assigned to me" filter narrows down to exactly this one.
+      { title: 'My assigned task', section: 'To do', priority: 'LOW', assigned: true },
     ],
   },
   // Dedicated throwaway projects for the archive + delete acceptance scenarios,
