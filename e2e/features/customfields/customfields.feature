@@ -57,3 +57,5 @@ Feature: Custom fields
     And the user sets the custom field "Owner" to "Alex"
     And the user goes back to the board
     Then the board card "Chip field target" shows the custom-field chip "Owner: Alex"
+    When the user switches to the list view
+    Then the board card "Chip field target" shows the custom-field chip "Owner: Alex"

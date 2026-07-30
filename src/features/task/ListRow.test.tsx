@@ -1,6 +1,12 @@
 import { describe, it, expect, vi } from 'vitest';
 import { screen, fireEvent } from '@testing-library/react';
 import { renderWithProviders } from '../../test/renderWithProviders';
+
+// Self-fetching (react-query) chip child — stub it so rows render deterministically.
+vi.mock('../customfields/CardCustomFieldChips', () => ({
+  CardCustomFieldChips: () => null,
+}));
+
 import { ListRow } from './ListRow';
 import type { TaskRecord } from '../../lib/dataClient';
 
