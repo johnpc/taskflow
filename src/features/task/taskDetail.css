@@ -499,6 +499,16 @@
   background: color-mix(in srgb, var(--tf-overdue) 12%, transparent);
 }
 
+.deps__blocking {
+  margin: 0 0 10px;
+  padding: 8px 12px;
+  border-radius: var(--tf-radius-sm);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--tf-text-muted);
+  background: var(--tf-surface-2);
+}
+
 .deps__empty {
   margin: 0;
   font-size: 0.9rem;

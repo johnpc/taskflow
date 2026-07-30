@@ -33,4 +33,20 @@ describe('TaskDependencies', () => {
     render(<TaskDependencies task={t} onPatch={vi.fn()} />);
     expect(screen.queryByTestId('blocked-banner')).not.toBeInTheDocument();
   });
+
+  it('shows a Blocking line naming the tasks this one blocks', () => {
+    const t = task({ id: 't', title: 'Design' });
+    useProjectTasks.mockReturnValue({
+      data: [t, task({ id: 'b', title: 'Announce', blockedByIds: ['t'] })],
+    });
+    render(<TaskDependencies task={t} onPatch={vi.fn()} />);
+    expect(screen.getByTestId('blocking-line')).toHaveTextContent('Blocking Announce');
+  });
+
+  it('omits the Blocking line when the task blocks nothing', () => {
+    const t = task({ id: 't' });
+    useProjectTasks.mockReturnValue({ data: [t] });
+    render(<TaskDependencies task={t} onPatch={vi.fn()} />);
+    expect(screen.queryByTestId('blocking-line')).not.toBeInTheDocument();
+  });
 });
