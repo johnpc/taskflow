@@ -8,6 +8,7 @@ const { fetchMyTasks, setTaskDone, updateTask } = vi.hoisted(() => ({
 }));
 vi.mock('./myTasksApi', () => ({ fetchMyTasks }));
 vi.mock('../task/tasksApi', () => ({ setTaskDone, updateTask }));
+vi.mock('../auth/useAuth', () => ({ useAuth: () => ({ email: 'me@x.co' }) }));
 
 import { hookWrapper } from '../../test/hookWrapper';
 import { useMyTasks } from './useMyTasks';
@@ -29,6 +30,19 @@ describe('useMyTasks', () => {
     await waitFor(() => expect(result.current.buckets.length).toBe(1));
     expect(result.current.buckets[0].key).toBe('noDate');
     expect(result.current.openTotal).toBe(1);
+  });
+
+  it('filters to my tasks when assigned-only is on (and persists it)', async () => {
+    fetchMyTasks.mockResolvedValue([
+      { id: 'a', status: 'TODO', dueDate: null, priority: 'HIGH', assigneeEmail: 'me@x.co' },
+      { id: 'b', status: 'TODO', dueDate: null, priority: 'LOW', assigneeEmail: 'other@x.co' },
+    ]);
+    const { result } = renderHook(() => useMyTasks(), { wrapper: hookWrapper() });
+    await waitFor(() => expect(result.current.openTotal).toBe(2));
+    act(() => result.current.setAssignedOnly(true));
+    expect(result.current.assignedOnly).toBe(true);
+    expect(result.current.openTotal).toBe(1);
+    expect(localStorage.getItem('tf-mytasks-assigned-only')).toBe('true');
   });
 
   it('regroups by priority when the mode switches (and persists it)', async () => {

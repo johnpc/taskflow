@@ -5,10 +5,13 @@ import { selectBuckets } from './selectBuckets';
 import { completedBucket } from './completedBucket';
 import { readGroupMode, writeGroupMode, type GroupMode } from './groupMode';
 import { readShowCompleted, writeShowCompleted } from './showCompletedStore';
+import { readAssignedOnly, writeAssignedOnly } from './assignedOnlyStore';
+import { filterAssignedToMe } from './assignedFilter';
 import { setTaskDone, updateTask } from '../task/tasksApi';
 import { isDone } from '../task/taskMeta';
 import { overdueCount } from '../projects/taskCounts';
 import { todayISO } from '../task/today';
+import { useAuth } from '../auth/useAuth';
 import type { FocusBucket } from './groupByFocus';
 
 /** My Tasks data: the owner's open tasks grouped by the chosen mode (due date,
@@ -16,9 +19,11 @@ import type { FocusBucket } from './groupByFocus';
  * persisted group-by switch, and a set-focus-bucket mutation. */
 export function useMyTasks() {
   const qc = useQueryClient();
+  const { email } = useAuth();
   const query = useQuery({ queryKey: ['my-tasks'], queryFn: fetchMyTasks });
   const [groupMode, setMode] = useState<GroupMode>(readGroupMode);
   const [showCompleted, setShow] = useState<boolean>(readShowCompleted);
+  const [assignedOnly, setAssigned] = useState<boolean>(readAssignedOnly);
 
   const setGroupMode = (mode: GroupMode) => {
     writeGroupMode(mode);
@@ -30,16 +35,21 @@ export function useMyTasks() {
     setShow(show);
   };
 
+  const setAssignedOnly = (on: boolean) => {
+    writeAssignedOnly(on);
+    setAssigned(on);
+  };
+
   const { buckets, overdue, openTotal } = useMemo(() => {
     const today = todayISO();
-    const data = query.data ?? [];
+    const data = filterAssignedToMe(query.data ?? [], email, assignedOnly);
     const open = selectBuckets(groupMode, data, today);
     return {
       buckets: showCompleted ? [...open, ...completedBucket(data)] : open,
       overdue: overdueCount(data, today),
       openTotal: data.filter((t) => !isDone(t)).length,
     };
-  }, [query.data, groupMode, showCompleted]);
+  }, [query.data, groupMode, showCompleted, assignedOnly, email]);
 
   const invalidate = () => qc.invalidateQueries({ queryKey: ['my-tasks'] });
 
@@ -63,6 +73,8 @@ export function useMyTasks() {
     setGroupMode,
     showCompleted,
     setShowCompleted,
+    assignedOnly,
+    setAssignedOnly,
     toggleDone,
     setBucket,
   };
