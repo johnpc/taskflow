@@ -15,3 +15,10 @@ Feature: Project sharing (members)
     Then the project is shared with "teammate@example.com"
     When the user removes "teammate@example.com" from the project
     Then the project is not shared with "teammate@example.com"
+
+  # "Team Board" is seeded with two members, so its header shows a presence stack
+  # of two member avatars. (Read-only; a different project than the invite flow.)
+  Scenario: The board header shows a member presence stack
+    Given a signed-in user
+    And the user opens the "Team Board" project
+    Then the project header shows 2 member avatars

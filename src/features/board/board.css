@@ -667,3 +667,34 @@ li.list-row.task-card--done .task-card__title {
   color: var(--tf-text-muted);
   font-size: 0.9rem;
 }
+
+/* Project member presence stack in the header: overlapping initials avatars. */
+.member-avatars {
+  display: inline-flex;
+  align-items: center;
+  padding-right: 4px;
+}
+
+.member-avatars__item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  margin-left: -6px;
+  border-radius: 50%;
+  border: 2px solid var(--tf-surface);
+  background: var(--tf-accent-soft);
+  color: var(--tf-accent-strong);
+  font-size: 0.62rem;
+  font-weight: 700;
+}
+
+.member-avatars__item:first-child {
+  margin-left: 0;
+}
+
+.member-avatars__more {
+  background: var(--tf-surface-2);
+  color: var(--tf-text-muted);
+}

@@ -44,6 +44,7 @@ export function ProjectView() {
     <IonPage>
       <ProjectTopBar
         project={project.data ?? undefined}
+        members={memberList}
         onToggleFavorite={() =>
           project.data && favorite.mutate({ id, favorite: !project.data.favorite })
         }
