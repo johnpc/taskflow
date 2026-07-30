@@ -15,11 +15,13 @@ Then("the task's section is {string}", async ({ page }, section: string) => {
 });
 
 When('the user assigns the task to themselves', async ({ page }) => {
-  await page.getByTestId('task-assign').click();
+  // The assignee select lists the project's members; the seed user is the only
+  // member, so its email is the second option (after "Unassigned").
+  const select = page.getByTestId('task-assignee-select');
+  const email = await select.locator('option').nth(1).getAttribute('value');
+  await select.selectOption(email!);
 });
 
 Then('the task is shown as assigned', async ({ page }) => {
-  await expect(page.getByTestId('task-assign')).toHaveAttribute('aria-pressed', 'true', {
-    timeout: 15_000,
-  });
+  await expect(page.getByTestId('task-assignee-select')).not.toHaveValue('', { timeout: 15_000 });
 });

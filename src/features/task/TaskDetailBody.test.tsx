@@ -76,7 +76,10 @@ describe('TaskDetailBody', () => {
     const hook = makeHook();
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     renderWithProviders(<TaskDetailBody task={task} hook={hook as any} />, '/tasks/t');
-    fireEvent.click(screen.getByTestId('task-assign'));
+    // The assignee select offers the signed-in user (me@x.co from the useAuth mock).
+    fireEvent.change(screen.getByTestId('task-assignee-select'), {
+      target: { value: 'me@x.co' },
+    });
     expect(hook.patch.mutate).toHaveBeenCalledWith({ id: 't', assigneeEmail: 'me@x.co' });
   });
 

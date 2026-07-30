@@ -26,34 +26,50 @@ describe('TaskAssignment', () => {
     expect(onMove).toHaveBeenCalledWith('s2');
   });
 
-  it('assigns to the current user when unassigned', () => {
+  it('assigns to a chosen member', () => {
     const onAssign = vi.fn();
     render(
       <TaskAssignment
-        task={task({})}
+        task={task({ members: ['owner@x.co', 'alice@x.co'] })}
         sections={sections}
-        currentEmail="me@x.co"
+        currentEmail="owner@x.co"
         onMove={vi.fn()}
         onAssign={onAssign}
       />,
     );
-    fireEvent.click(screen.getByTestId('task-assign'));
-    expect(onAssign).toHaveBeenCalledWith('me@x.co');
+    fireEvent.change(screen.getByTestId('task-assignee-select'), {
+      target: { value: 'alice@x.co' },
+    });
+    expect(onAssign).toHaveBeenCalledWith('alice@x.co');
   });
 
-  it('unassigns when already assigned', () => {
+  it('unassigns when Unassigned is chosen', () => {
     const onAssign = vi.fn();
     render(
       <TaskAssignment
-        task={task({ assigneeEmail: 'me@x.co' })}
+        task={task({ assigneeEmail: 'me@x.co', members: ['me@x.co'] })}
         sections={sections}
         currentEmail="me@x.co"
         onMove={vi.fn()}
         onAssign={onAssign}
       />,
     );
-    expect(screen.getByTestId('task-assign')).toHaveAttribute('aria-pressed', 'true');
-    fireEvent.click(screen.getByTestId('task-assign'));
+    const select = screen.getByTestId('task-assignee-select') as HTMLSelectElement;
+    expect(select.value).toBe('me@x.co');
+    fireEvent.change(select, { target: { value: '' } });
     expect(onAssign).toHaveBeenCalledWith(null);
+  });
+
+  it('ensures the current user is assignable in a solo project', () => {
+    render(
+      <TaskAssignment
+        task={task({ members: [] })}
+        sections={sections}
+        currentEmail="me@x.co"
+        onMove={vi.fn()}
+        onAssign={vi.fn()}
+      />,
+    );
+    expect(screen.getByRole('option', { name: 'me@x.co' })).toBeInTheDocument();
   });
 });

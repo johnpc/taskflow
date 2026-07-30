@@ -1,9 +1,11 @@
+import { AssigneePicker } from './AssigneePicker';
 import type { SectionRecord, TaskRecord } from '../../lib/dataClient';
 import './taskDetail.css';
 
-/** Task-detail assignment row: move the task to another section, and assign /
- * unassign it (to the signed-in user). Both patch the task; presentational +
- * delegating. */
+/** Task-detail assignment row: move the task to another section, and assign it
+ * to any project member (or unassign). Both patch the task; presentational +
+ * delegating. Assignee options come from the task's own member list, with the
+ * signed-in user ensured present so a solo project can still self-assign. */
 export function TaskAssignment({
   task,
   sections,
@@ -17,7 +19,11 @@ export function TaskAssignment({
   onMove: (sectionId: string) => void;
   onAssign: (email: string | null) => void;
 }) {
-  const assigned = !!task.assigneeEmail;
+  const taskMembers = (task.members ?? []).filter((m): m is string => !!m);
+  const members =
+    currentEmail && !taskMembers.includes(currentEmail)
+      ? [...taskMembers, currentEmail]
+      : taskMembers;
   return (
     <div className="task-assign">
       <label className="task-fields__row">
@@ -35,18 +41,10 @@ export function TaskAssignment({
           ))}
         </select>
       </label>
-      <div className="task-fields__row">
+      <label className="task-fields__row">
         <span className="task-fields__label">Assignee</span>
-        <button
-          type="button"
-          className={assigned ? 'task-assign__btn task-assign__btn--on' : 'task-assign__btn'}
-          data-testid="task-assign"
-          aria-pressed={assigned}
-          onClick={() => onAssign(assigned ? null : currentEmail)}
-        >
-          {assigned ? (task.assigneeEmail ?? 'Assigned') : 'Assign to me'}
-        </button>
-      </div>
+        <AssigneePicker assigneeEmail={task.assigneeEmail} members={members} onAssign={onAssign} />
+      </label>
     </div>
   );
 }
