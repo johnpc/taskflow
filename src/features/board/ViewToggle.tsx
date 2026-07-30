@@ -1,9 +1,9 @@
 import { IonIcon } from '@ionic/react';
-import { listOutline, gridOutline } from 'ionicons/icons';
+import { listOutline, gridOutline, gitBranchOutline } from 'ionicons/icons';
 import type { ViewMode } from './viewMode';
 
-/** Board / List segmented toggle for a project. Persisted choice is driven by
- * the parent (useViewMode); this only renders + reports the selection. */
+/** Board / List / Timeline segmented toggle for a project. Persisted choice is
+ * driven by the parent (useViewMode); this only renders + reports the selection. */
 export function ViewToggle({
   mode,
   onChange,
@@ -32,6 +32,18 @@ export function ViewToggle({
       >
         <IonIcon icon={gridOutline} aria-hidden="true" />
         <span>Board</span>
+      </button>
+      <button
+        type="button"
+        data-testid="view-timeline"
+        className={
+          mode === 'TIMELINE' ? 'view-toggle__seg view-toggle__seg--on' : 'view-toggle__seg'
+        }
+        aria-pressed={mode === 'TIMELINE'}
+        onClick={() => onChange('TIMELINE')}
+      >
+        <IonIcon icon={gitBranchOutline} aria-hidden="true" />
+        <span>Timeline</span>
       </button>
     </div>
   );

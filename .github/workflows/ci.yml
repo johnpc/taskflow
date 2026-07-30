@@ -226,6 +226,8 @@ jobs:
             paths: .features-gen/e2e/features/savedviews
           - name: customfields
             paths: .features-gen/e2e/features/customfields
+          - name: timeline
+            paths: .features-gen/e2e/features/timeline
     steps:
       - uses: actions/checkout@v4
 

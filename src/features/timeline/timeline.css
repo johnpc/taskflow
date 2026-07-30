@@ -1,0 +1,52 @@
+/* Timeline (Gantt) view: a day-header row + one grid row per task bar. */
+.timeline {
+  padding-bottom: 96px;
+  overflow-x: auto;
+}
+
+.timeline__head {
+  display: grid;
+  gap: 2px;
+  margin-bottom: 8px;
+  border-bottom: 1px solid var(--tf-border);
+  padding-bottom: 4px;
+}
+
+.timeline__day {
+  text-align: center;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--tf-text-muted);
+}
+
+.timeline__rows {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.timeline__row {
+  display: grid;
+  gap: 2px;
+}
+
+.timeline__bar {
+  border: none;
+  border-radius: 999px;
+  background: var(--tf-accent-soft);
+  color: var(--tf-accent-strong);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 6px 12px;
+  text-align: left;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+
+.timeline__empty {
+  color: var(--tf-text-muted);
+  font-size: 0.9rem;
+  padding: 12px 2px;
+}
