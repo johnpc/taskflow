@@ -220,6 +220,8 @@ jobs:
             paths: .features-gen/e2e/features/searchrich
           - name: members
             paths: .features-gen/e2e/features/members
+          - name: celebration
+            paths: .features-gen/e2e/features/celebration
     steps:
       - uses: actions/checkout@v4
 

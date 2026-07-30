@@ -146,6 +146,9 @@ export const seedProjects: SeedProject[] = [
       // so the list Priority-column assertion is stable (unlike "Finalize press
       // list", whose priority the quickedit area cycles MEDIUM→HIGH).
       { title: 'Column check', section: 'To do', priority: 'HIGH' },
+      // Dedicated completion target for the celebration area: completing it on a
+      // freshly-loaded board is the session's FIRST completion → fires confetti.
+      { title: 'Celebrate me', section: 'To do', priority: 'LOW' },
     ],
   },
   {
