@@ -16,17 +16,24 @@ export function matchTasks(tasks: TaskRecord[], query: string): TaskRecord[] {
 export interface SearchFilters {
   /** '' = any priority; otherwise only tasks with this priority. */
   priority: Priority | '';
+  /** '' = any project; otherwise only tasks in this project. */
+  projectId: string;
   /** When true, completed tasks are excluded. */
   hideDone: boolean;
 }
 
-export const DEFAULT_SEARCH_FILTERS: SearchFilters = { priority: '', hideDone: false };
+export const DEFAULT_SEARCH_FILTERS: SearchFilters = {
+  priority: '',
+  projectId: '',
+  hideDone: false,
+};
 
-/** Narrow already-matched tasks by priority and completion. Pure + total. */
+/** Narrow already-matched tasks by priority, project, and completion. Pure. */
 export function filterResults(tasks: TaskRecord[], f: SearchFilters): TaskRecord[] {
   return tasks.filter((t) => {
     if (f.hideDone && isDone(t)) return false;
     if (f.priority && (t.priority ?? 'NONE') !== f.priority) return false;
+    if (f.projectId && t.projectId !== f.projectId) return false;
     return true;
   });
 }

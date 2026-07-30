@@ -16,7 +16,7 @@ describe('Search', () => {
     expect(screen.getByTestId('search-prompt')).toBeInTheDocument();
   });
 
-  const filters = { priority: '' as const, hideDone: false };
+  const filters = { priority: '' as const, projectId: '', hideDone: false };
 
   it('shows no-match empty state', () => {
     useSearch.mockReturnValue({

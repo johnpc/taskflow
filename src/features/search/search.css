@@ -29,6 +29,17 @@
   color: var(--tf-accent-strong);
 }
 
+.search__project {
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--tf-text);
+  cursor: pointer;
+}
+
 .search__hide-done {
   display: flex;
   align-items: center;

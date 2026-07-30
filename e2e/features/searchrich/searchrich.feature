@@ -9,3 +9,12 @@ Feature: Rich search results
     Given a signed-in user
     When the user searches for "launch"
     Then a search result "Draft launch announcement" shows the project "Product Launch"
+
+  # "Zephyr report" is seeded in two projects (Product Launch + Website
+  # Redesign). Filtering the search to one project drops the other's hit.
+  Scenario: Filtering search by project narrows the results
+    Given a signed-in user
+    When the user searches for "zephyr"
+    Then exactly 2 search results are shown
+    When the user filters search to the project "Website Redesign"
+    Then exactly 1 search result is shown

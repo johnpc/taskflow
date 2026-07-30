@@ -17,6 +17,9 @@ export function Search() {
   const history = useHistory();
   const { query, setQuery, filters, setFilters, results } = useSearch();
   const projectsById = useProjectsById();
+  const projectOptions = [...projectsById.entries()]
+    .map(([id, p]) => ({ id, name: p.name }))
+    .sort((a, b) => a.name.localeCompare(b.name));
 
   return (
     <IonPage>
@@ -33,7 +36,9 @@ export function Search() {
           placeholder="Search tasks"
           onIonInput={(e) => setQuery(e.detail.value ?? '')}
         />
-        {query.trim() !== '' && <SearchFilterBar filters={filters} onChange={setFilters} />}
+        {query.trim() !== '' && (
+          <SearchFilterBar filters={filters} projects={projectOptions} onChange={setFilters} />
+        )}
         {query.trim() === '' ? (
           <EmptyState
             icon={searchOutline}

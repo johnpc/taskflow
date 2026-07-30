@@ -32,7 +32,7 @@ describe('useSearch', () => {
     await waitFor(() => expect(result.current.tasksQuery.data).toHaveLength(3));
     act(() => result.current.setQuery('ship'));
     await waitFor(() => expect(result.current.results).toHaveLength(3));
-    act(() => result.current.setFilters({ priority: 'HIGH', hideDone: true }));
+    act(() => result.current.setFilters({ priority: 'HIGH', projectId: '', hideDone: true }));
     await waitFor(() => expect(result.current.results.map((t) => t.id)).toEqual(['a']));
   });
 });
