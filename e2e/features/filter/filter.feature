@@ -13,3 +13,12 @@ Feature: Board filter and sort
     Then a task titled "Ship changelog" is not visible
     When the user shows completed tasks
     Then a task titled "Ship changelog" is visible on the board
+
+  # Filter by priority: "Draft launch announcement" is HIGH and "Design hero
+  # banner" is MEDIUM, so filtering to High keeps the former and drops the latter.
+  Scenario: Filtering the board by priority
+    Given a signed-in user
+    And the user opens the "Product Launch" project
+    When the user filters the board to "HIGH" priority
+    Then a task titled "Draft launch announcement" is visible on the board
+    And a task titled "Design hero banner" is not visible
