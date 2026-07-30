@@ -2,7 +2,7 @@ import { AddCard } from './AddCard';
 import { SectionActions } from './SectionActions';
 import { ColumnCards } from './ColumnCards';
 import type { Column } from './taskGrouping';
-import type { QuickEditFn, BoardDrag } from './boardHandlers';
+import type { QuickEditFn, BoardDrag, SectionHandlers } from './boardHandlers';
 import type { SubProgress } from '../task/subtaskProgress';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 
@@ -18,9 +18,7 @@ export function BoardColumn({
   onToggleDone,
   onReorder,
   onQuickEdit,
-  onRenameSection,
-  onDeleteSection,
-  onMoveSection,
+  sections,
   drag,
 }: {
   column: Column;
@@ -35,9 +33,7 @@ export function BoardColumn({
     direction: 'up' | 'down';
   }) => void;
   onQuickEdit?: QuickEditFn;
-  onRenameSection?: (input: { id: string; name: string }) => void;
-  onDeleteSection?: (id: string) => void;
-  onMoveSection?: (input: { sectionId: string; direction: 'left' | 'right' }) => void;
+  sections?: SectionHandlers;
   drag?: BoardDrag;
 }) {
   const sectionId = column.section.id;
@@ -63,12 +59,10 @@ export function BoardColumn({
         <span className="board-col__count">{column.tasks.length}</span>
         <SectionActions
           name={column.section.name}
-          onRename={onRenameSection && ((name) => onRenameSection({ id: column.section.id, name }))}
-          onDelete={onDeleteSection && (() => onDeleteSection(column.section.id))}
-          onMove={
-            onMoveSection &&
-            ((direction) => onMoveSection({ sectionId: column.section.id, direction }))
-          }
+          onRename={sections?.onRename && ((name) => sections.onRename!({ id: sectionId, name }))}
+          onDuplicate={sections?.onDuplicate && (() => sections.onDuplicate!(column.section))}
+          onDelete={sections?.onDelete && (() => sections.onDelete!(sectionId))}
+          onMove={sections?.onMove && ((direction) => sections.onMove!({ sectionId, direction }))}
         />
       </header>
       <ColumnCards

@@ -234,6 +234,8 @@ jobs:
             paths: .features-gen/e2e/features/duplicateproject
           - name: promote
             paths: .features-gen/e2e/features/promote
+          - name: sectioncopy
+            paths: .features-gen/e2e/features/sectioncopy
     steps:
       - uses: actions/checkout@v4
 

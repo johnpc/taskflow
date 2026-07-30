@@ -1,6 +1,13 @@
 import { BoardColumn } from './BoardColumn';
 import type { Column } from './taskGrouping';
-import type { AddTaskFn, ToggleDoneFn, ReorderFn, QuickEditFn, BoardDrag } from './boardHandlers';
+import type {
+  AddTaskFn,
+  ToggleDoneFn,
+  ReorderFn,
+  QuickEditFn,
+  BoardDrag,
+  SectionHandlers,
+} from './boardHandlers';
 import type { SubProgress } from '../task/subtaskProgress';
 import type { LabelRecord } from '../../lib/dataClient';
 
@@ -15,9 +22,7 @@ export function BoardGrid({
   onToggleDone,
   onReorder,
   onQuickEdit,
-  onRenameSection,
-  onDeleteSection,
-  onMoveSection,
+  sections,
   drag,
 }: {
   columns: Column[];
@@ -28,9 +33,7 @@ export function BoardGrid({
   onToggleDone: ToggleDoneFn;
   onReorder?: ReorderFn;
   onQuickEdit?: QuickEditFn;
-  onRenameSection?: (input: { id: string; name: string }) => void;
-  onDeleteSection?: (id: string) => void;
-  onMoveSection?: (input: { sectionId: string; direction: 'left' | 'right' }) => void;
+  sections?: SectionHandlers;
   drag?: BoardDrag;
 }) {
   return (
@@ -46,9 +49,7 @@ export function BoardGrid({
           onToggleDone={onToggleDone}
           onReorder={onReorder}
           onQuickEdit={onQuickEdit}
-          onRenameSection={onRenameSection}
-          onDeleteSection={onDeleteSection}
-          onMoveSection={onMoveSection}
+          sections={sections}
           drag={drag}
         />
       ))}

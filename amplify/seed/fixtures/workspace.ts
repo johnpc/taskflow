@@ -265,6 +265,14 @@ export const seedProjects: SeedProject[] = [
       { title: 'Promote parent', section: 'To do', priority: 'NONE', subtasks: ['Promote me'] },
     ],
   },
+  // Dedicated project for duplicating a section: this area copies a column, so
+  // an isolated project keeps the new "(copy)" column out of a parallel run.
+  {
+    name: 'Section Copy Lab',
+    color: 'sky',
+    sections: ['Backlog'],
+    tasks: [{ title: 'Backlog item', section: 'Backlog', priority: 'NONE' }],
+  },
   // Dedicated project for timeline drag-to-reschedule: one dated bar this area
   // moves, so mutating its due date can't disturb a parallel run.
   {

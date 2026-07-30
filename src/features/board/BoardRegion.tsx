@@ -75,9 +75,12 @@ export function BoardRegion({
         onReorder={(input) => board.reorder.mutate(input)}
         onQuickEdit={(taskId, patch) => board.quickEdit.mutate({ id: taskId, ...patch })}
         onReschedule={(patch) => board.quickEdit.mutate(patch)}
-        onRenameSection={(input) => board.editSection.mutate(input)}
-        onDeleteSection={(sectionId) => board.removeSection.mutate(sectionId)}
-        onMoveSection={(input) => board.moveSection.mutate(input)}
+        sectionHandlers={{
+          onRename: (input) => board.editSection.mutate(input),
+          onDuplicate: (section) => board.copySection.mutate(section),
+          onDelete: (sectionId) => board.removeSection.mutate(sectionId),
+          onMove: (input) => board.moveSection.mutate(input),
+        }}
         selectedIds={inList ? bulk.selection.ids : undefined}
         onSelect={inList ? bulk.selection.toggle : undefined}
         drag={inList ? undefined : drag}

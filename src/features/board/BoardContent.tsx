@@ -5,7 +5,8 @@ import type { Column } from './taskGrouping';
 import type { ViewMode } from './viewMode';
 import type { GroupBy } from './listGrouping';
 import type { ListSort, ListSortKey } from './listSort';
-import type { AddTaskFn, ToggleDoneFn, ReorderFn, QuickEditFn, BoardDrag } from './boardHandlers';
+import type { AddTaskFn, ToggleDoneFn, ReorderFn, QuickEditFn } from './boardHandlers';
+import type { BoardDrag, SectionHandlers } from './boardHandlers';
 import type { SubProgress } from '../task/subtaskProgress';
 import type { LabelRecord } from '../../lib/dataClient';
 
@@ -28,9 +29,7 @@ export function BoardContent({
   onReorder,
   onQuickEdit,
   onReschedule,
-  onRenameSection,
-  onDeleteSection,
-  onMoveSection,
+  sectionHandlers,
   selectedIds,
   onSelect,
   drag,
@@ -50,9 +49,7 @@ export function BoardContent({
   onReorder?: ReorderFn;
   onQuickEdit?: QuickEditFn;
   onReschedule?: (patch: { id: string; dueDate: string; startDate?: string }) => void;
-  onRenameSection?: (input: { id: string; name: string }) => void;
-  onDeleteSection?: (id: string) => void;
-  onMoveSection?: (input: { sectionId: string; direction: 'left' | 'right' }) => void;
+  sectionHandlers?: SectionHandlers;
   selectedIds?: Set<string>;
   onSelect?: (id: string) => void;
   drag?: BoardDrag;
@@ -90,9 +87,7 @@ export function BoardContent({
       onToggleDone={onToggleDone}
       onReorder={onReorder}
       onQuickEdit={onQuickEdit}
-      onRenameSection={onRenameSection}
-      onDeleteSection={onDeleteSection}
-      onMoveSection={onMoveSection}
+      sections={sectionHandlers}
       drag={drag}
     />
   );
