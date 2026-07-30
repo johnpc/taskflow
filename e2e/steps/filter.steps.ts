@@ -12,3 +12,7 @@ When('the user shows completed tasks', async ({ page }) => {
 When('the user filters the board to {string} priority', async ({ page }, priority: string) => {
   await page.getByTestId('filter-priority').selectOption(priority);
 });
+
+When('the user filters the board to the assignee {string}', async ({ page }, email: string) => {
+  await page.getByTestId('filter-assignee').selectOption(email);
+});

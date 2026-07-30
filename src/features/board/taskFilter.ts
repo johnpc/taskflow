@@ -15,6 +15,8 @@ export interface BoardFilter {
   priority: Priority | '';
   /** Only tasks in this due window (empty = any). */
   dueWindow: DueWindow;
+  /** Only tasks assigned to this email (empty = any; '_none' = unassigned). */
+  assignee: string;
   /** Sort order applied within each column. */
   sort: SortKey;
 }
@@ -24,35 +26,48 @@ export const DEFAULT_FILTER: BoardFilter = {
   labelId: '',
   priority: '',
   dueWindow: '',
+  assignee: '',
   sort: 'manual',
 };
 
 const PRIORITY_RANK: Record<string, number> = { HIGH: 0, MEDIUM: 1, LOW: 2, NONE: 3 };
 
-/** Apply the filter + sort to a single column's tasks. Pure + total: hides done
- * (unless disabled), keeps only the chosen label / priority / due window, then
- * orders by the sort key (manual = keep the incoming sortOrder). `today` is
+/** Whether a task passes the chosen assignee filter ('' = any, '_none' =
+ * unassigned, otherwise an exact email). */
+function matchesAssignee(task: TaskRecord, assignee: string): boolean {
+  if (!assignee) return true;
+  return assignee === '_none' ? !task.assigneeEmail : task.assigneeEmail === assignee;
+}
+
+/** Whether a single task passes every active filter facet. Pure; `today` feeds
+ * the due-window test. Split from applyFilter to keep each function's CRAP low. */
+function matchesFilter(task: TaskRecord, filter: BoardFilter, today: string): boolean {
+  if (filter.hideDone && isDone(task)) return false;
+  if (filter.labelId && !(task.labelIds ?? []).includes(filter.labelId)) return false;
+  if (filter.priority && (task.priority ?? 'NONE') !== filter.priority) return false;
+  if (filter.dueWindow && dueStatus(task.dueDate, today, isDone(task)) !== filter.dueWindow)
+    return false;
+  return matchesAssignee(task, filter.assignee);
+}
+
+/** Order a filtered column by the chosen sort key (manual keeps input order). */
+function sortColumn(tasks: TaskRecord[], sort: SortKey): TaskRecord[] {
+  const out = [...tasks];
+  if (sort === 'due') {
+    out.sort((a, b) => (a.dueDate ?? '9999').localeCompare(b.dueDate ?? '9999'));
+  } else if (sort === 'priority') {
+    const rank = (p?: string | null) => PRIORITY_RANK[p ?? 'NONE'] ?? 3;
+    out.sort((a, b) => rank(a.priority) - rank(b.priority));
+  }
+  return out;
+}
+
+/** Apply the filter + sort to a single column's tasks. Pure + total: keeps the
+ * rows matching every active facet, then orders by the sort key. `today` is
  * injected for the due-window test. */
 export function applyFilter(tasks: TaskRecord[], filter: BoardFilter, today = ''): TaskRecord[] {
-  let out = tasks;
-  if (filter.hideDone) out = out.filter((t) => !isDone(t));
-  if (filter.labelId) {
-    out = out.filter((t) => (t.labelIds ?? []).includes(filter.labelId));
-  }
-  if (filter.priority) {
-    out = out.filter((t) => (t.priority ?? 'NONE') === filter.priority);
-  }
-  if (filter.dueWindow) {
-    out = out.filter((t) => dueStatus(t.dueDate, today, isDone(t)) === filter.dueWindow);
-  }
-  const sorted = [...out];
-  if (filter.sort === 'due') {
-    sorted.sort((a, b) => (a.dueDate ?? '9999').localeCompare(b.dueDate ?? '9999'));
-  } else if (filter.sort === 'priority') {
-    sorted.sort(
-      (a, b) =>
-        (PRIORITY_RANK[a.priority ?? 'NONE'] ?? 3) - (PRIORITY_RANK[b.priority ?? 'NONE'] ?? 3),
-    );
-  }
-  return sorted;
+  return sortColumn(
+    tasks.filter((t) => matchesFilter(t, filter, today)),
+    filter.sort,
+  );
 }

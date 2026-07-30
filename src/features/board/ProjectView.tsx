@@ -67,7 +67,7 @@ export function ProjectView() {
         )}
         <ProjectShareRegion projectId={id} members={memberList} />
         <ViewToggle mode={mode} onChange={choose} />
-        <FilterBar filter={filter} labels={board.labels} onChange={update} />
+        <FilterBar filter={filter} labels={board.labels} members={memberList} onChange={update} />
         {mode === 'LIST' && bulk.selection.active && (
           <SelectionBar
             count={bulk.selection.count}

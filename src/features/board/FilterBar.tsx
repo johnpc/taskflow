@@ -9,10 +9,12 @@ import './board.css';
 export function FilterBar({
   filter,
   labels,
+  members = [],
   onChange,
 }: {
   filter: BoardFilter;
   labels: LabelRecord[];
+  members?: string[];
   onChange: (patch: Partial<BoardFilter>) => void;
 }) {
   return (
@@ -39,7 +41,7 @@ export function FilterBar({
           </option>
         ))}
       </select>
-      <FilterFacets filter={filter} onChange={onChange} />
+      <FilterFacets filter={filter} members={members} onChange={onChange} />
       <select
         className="filter-bar__select"
         data-testid="filter-sort"

@@ -23,7 +23,14 @@ export interface SeedTask {
   done?: boolean;
   /** Assign this task to the seed user (for the assigned-to-me acceptance). */
   assigned?: boolean;
+  /** Assign this task to a specific email — must be one of the project's members
+   * (for the shared-project assignee-filter acceptance). */
+  assignedTo?: string;
 }
+
+/** A stable non-seed-user teammate email used for shared-project seed fixtures.
+ * The user needn't exist in Cognito to appear as a member/assignee option. */
+export const SEED_TEAMMATE = 'teammate@example.com';
 
 /** Reusable label registry — name + color key (a --tf-proj-* palette key). */
 export const seedLabels: { name: string; color: string }[] = [
@@ -39,6 +46,9 @@ export interface SeedProject {
   favorite?: boolean;
   /** Seed this project already archived (for the archived-projects view). */
   archived?: boolean;
+  /** Extra member emails beyond the seed user (makes the project SHARED, so the
+   * assignee filter renders + tasks can be assigned to a teammate). */
+  extraMembers?: string[];
   sections: string[];
   tasks: SeedTask[];
 }
@@ -190,6 +200,19 @@ export const seedProjects: SeedProject[] = [
     color: 'sky',
     sections: ['To do'],
     tasks: [{ title: 'Shared task', section: 'To do', priority: 'LOW' }],
+  },
+  // Dedicated SHARED project for the assignee-filter area: seed user + a teammate
+  // as members, with one task assigned to each. The assignee filter renders
+  // (>1 member) and narrowing to the teammate leaves only their task.
+  {
+    name: 'Team Board',
+    color: 'emerald',
+    extraMembers: [SEED_TEAMMATE],
+    sections: ['To do'],
+    tasks: [
+      { title: 'Teammate task', section: 'To do', priority: 'LOW', assignedTo: SEED_TEAMMATE },
+      { title: 'Owner task', section: 'To do', priority: 'LOW', assigned: true },
+    ],
   },
   {
     name: 'Scratchpad',

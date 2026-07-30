@@ -8,14 +8,17 @@ const DUE_WINDOWS: { value: DueWindow; label: string }[] = [
   { value: 'upcoming', label: 'Upcoming' },
 ];
 
-/** The priority + due-window facet selects for the board/list filter bar.
- * Presentational; reports partial filter updates. Split from FilterBar to keep
- * each component focused + within the line limit. */
+/** The priority + due-window + assignee facet selects for the board/list filter
+ * bar. Presentational; reports partial filter updates. Split from FilterBar to
+ * keep each component focused. The assignee select only renders for a shared
+ * project (>1 member) — there's nothing to filter by when you're solo. */
 export function FilterFacets({
   filter,
+  members = [],
   onChange,
 }: {
   filter: BoardFilter;
+  members?: string[];
   onChange: (patch: Partial<BoardFilter>) => void;
 }) {
   return (
@@ -48,6 +51,23 @@ export function FilterFacets({
           </option>
         ))}
       </select>
+      {members.length > 1 && (
+        <select
+          className="filter-bar__select"
+          data-testid="filter-assignee"
+          aria-label="Filter by assignee"
+          value={filter.assignee}
+          onChange={(e) => onChange({ assignee: e.target.value })}
+        >
+          <option value="">Any assignee</option>
+          <option value="_none">Unassigned</option>
+          {members.map((m) => (
+            <option key={m} value={m}>
+              {m}
+            </option>
+          ))}
+        </select>
+      )}
     </>
   );
 }
