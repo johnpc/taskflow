@@ -170,6 +170,22 @@
   border-bottom: 1px solid var(--tf-border);
 }
 
+.list-head__sort {
+  background: none;
+  border: none;
+  padding: 0;
+  font: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+
+.list-head__sort[aria-pressed='true'] {
+  color: var(--tf-accent-strong);
+}
+
 .list-row__lead {
   display: inline-flex;
   align-items: center;

@@ -12,6 +12,7 @@ import { useBoard } from './useBoard';
 import { useProject } from './useProject';
 import { useViewMode } from './useViewMode';
 import { useGroupBy } from './useGroupBy';
+import { useListSort } from './useListSort';
 import { useBoardFilter } from './useBoardFilter';
 import { useProjectEdit } from './useProjectEdit';
 import { useProjectActions } from './useProjectActions';
@@ -35,6 +36,7 @@ export function ProjectView() {
   const board = useBoard(id, filter);
   const { mode, choose } = useViewMode(id, project.data?.view as ViewMode | undefined);
   const { groupBy, choose: chooseGroup } = useGroupBy(id);
+  const { sort, toggle: toggleSort } = useListSort(id);
   const edit = useProjectEdit(id);
   const actions = useProjectActions(id);
   const bulk = useBulkSelection(board);
@@ -79,6 +81,8 @@ export function ProjectView() {
           bulk={bulk}
           groupBy={groupBy}
           onGroupBy={chooseGroup}
+          sort={sort}
+          onSort={toggleSort}
         />
       </IonContent>
     </IonPage>

@@ -40,3 +40,14 @@ Feature: List view
     And the user groups the list by "PRIORITY"
     Then a list section named "Medium priority" is visible
     And a task titled "Design hero banner" is visible on the board
+
+  # Sort by any column: clicking a column header sorts the list by it and marks
+  # it active ascending; clicking again flips to descending.
+  Scenario: Sorting the list by a column header
+    Given a signed-in user
+    And the user opens the "Product Launch" project
+    When the user switches to the list view
+    And the user sorts the list by "due"
+    Then the list is sorted by "due" ascending
+    When the user sorts the list by "due"
+    Then the list is sorted by "due" descending
