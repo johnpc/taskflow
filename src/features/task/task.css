@@ -100,6 +100,15 @@
   padding: 2px 8px;
 }
 
+.task-card__cf {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--tf-accent-strong);
+  background: var(--tf-accent-soft);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
 .task-card__project {
   display: inline-flex;
   align-items: center;

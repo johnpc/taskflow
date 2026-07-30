@@ -3,12 +3,13 @@ import { todayISO } from './today';
 import { repeats, REPEAT_META, type Repeat } from './recurrence';
 import { projectColorVar } from '../projects/projectColors';
 import { LabelChips } from '../labels/LabelChips';
+import { CardCustomFieldChips } from '../customfields/CardCustomFieldChips';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 
 /** The meta row under a card title: an optional project chip (cross-project
  * views only), a Blocked badge, a start-or-due chip (a not-yet-started task
  * shows "Starts Mon D"), a priority flag, subtask-progress + repeat markers,
- * and label chips. Renders. */
+ * label chips, and any set custom-field value chips. Renders. */
 export function CardMeta({
   task,
   labels,
@@ -76,6 +77,7 @@ export function CardMeta({
         </span>
       )}
       <LabelChips labels={labels} />
+      <CardCustomFieldChips task={task} />
     </span>
   );
 }

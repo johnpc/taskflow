@@ -37,3 +37,14 @@ Feature: Custom fields
     And the user sets the custom field "Estimate" to "13"
     When the user reloads the task
     Then the custom field "Estimate" has the value "13"
+
+  # A set custom-field value shows as a chip on the task's board card. Own
+  # project ("Chips Lab") for parallel isolation.
+  Scenario: A set custom-field value shows as a card chip
+    Given a signed-in user
+    And the user opens the "Chips Lab" project
+    When the user opens the task titled "Chip field target"
+    And the user adds the "TEXT" field "Owner"
+    And the user sets the custom field "Owner" to "Alex"
+    And the user goes back to the board
+    Then the board card "Chip field target" shows the custom-field chip "Owner: Alex"

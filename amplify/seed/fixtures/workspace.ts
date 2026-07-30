@@ -236,6 +236,12 @@ export const seedProjects: SeedProject[] = [
     tasks: [{ title: 'Number target', section: 'To do', priority: 'LOW' }],
   },
   {
+    name: 'Chips Lab',
+    color: 'violet',
+    sections: ['To do'],
+    tasks: [{ title: 'Chip field target', section: 'To do', priority: 'LOW' }],
+  },
+  {
     name: 'Scratchpad',
     color: 'violet',
     sections: ['To do'],
