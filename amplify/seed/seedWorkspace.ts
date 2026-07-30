@@ -7,9 +7,11 @@ import { createTaskWithSubtasks, linkBlockers } from './seedTasks';
 /** Create every seed project with its sections + tasks. Returns project count. */
 export async function seedWorkspaceData(): Promise<number> {
   const labelMap = await seedLabelData();
-  const members = seedMembers();
+  const base = seedMembers();
   for (let p = 0; p < seedProjects.length; p++) {
     const proj = seedProjects[p];
+    // A shared project lists the seed user + any extra members.
+    const members = [...base, ...(proj.extraMembers ?? [])];
     const { data: project, errors } = await client.models.Project.create(
       {
         name: proj.name,

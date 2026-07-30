@@ -22,3 +22,13 @@ Feature: Board filter and sort
     When the user filters the board to "HIGH" priority
     Then a task titled "Draft launch announcement" is visible on the board
     And a task titled "Design hero banner" is not visible
+
+  # Filter by assignee (shared project only): "Team Board" has the seed user +
+  # teammate@example.com; "Teammate task" is assigned to the teammate and
+  # "Owner task" to the seed user, so filtering to the teammate drops "Owner task".
+  Scenario: Filtering a shared board by assignee
+    Given a signed-in user
+    And the user opens the "Team Board" project
+    When the user filters the board to the assignee "teammate@example.com"
+    Then a task titled "Teammate task" is visible on the board
+    And a task titled "Owner task" is not visible

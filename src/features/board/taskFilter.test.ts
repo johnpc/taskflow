@@ -88,4 +88,18 @@ describe('applyFilter', () => {
     const today = applyFilter(tasks, { ...DEFAULT_FILTER, dueWindow: 'today' }, '2026-02-02');
     expect(today.map((t) => t.id)).toEqual(['today']);
   });
+
+  it('filters by assignee, including an unassigned bucket', () => {
+    const tasks = [
+      task({ id: 'mine', assigneeEmail: 'me@x.co' }),
+      task({ id: 'theirs', assigneeEmail: 'you@x.co' }),
+      task({ id: 'none', assigneeEmail: null }),
+    ];
+    expect(applyFilter(tasks, { ...DEFAULT_FILTER, assignee: 'me@x.co' }).map((t) => t.id)).toEqual(
+      ['mine'],
+    );
+    expect(applyFilter(tasks, { ...DEFAULT_FILTER, assignee: '_none' }).map((t) => t.id)).toEqual([
+      'none',
+    ]);
+  });
 });
