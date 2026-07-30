@@ -130,6 +130,26 @@
   max-width: 860px;
 }
 
+.list-group-by {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--tf-text-muted);
+}
+
+.list-group-by__select {
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--tf-text);
+  cursor: pointer;
+}
+
 /* Aligned list rows: lead (select+check) | Task (flex) | Assignee | Due |
  * Priority. The header row and every task row share this grid so columns line
  * up. On narrow screens the fixed columns shrink but never wrap. */

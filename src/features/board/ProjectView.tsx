@@ -11,6 +11,7 @@ import { useParams } from 'react-router-dom';
 import { useBoard } from './useBoard';
 import { useProject } from './useProject';
 import { useViewMode } from './useViewMode';
+import { useGroupBy } from './useGroupBy';
 import { useBoardFilter } from './useBoardFilter';
 import { useProjectEdit } from './useProjectEdit';
 import { useProjectActions } from './useProjectActions';
@@ -33,6 +34,7 @@ export function ProjectView() {
   const { filter, update } = useBoardFilter();
   const board = useBoard(id, filter);
   const { mode, choose } = useViewMode(id, project.data?.view as ViewMode | undefined);
+  const { groupBy, choose: chooseGroup } = useGroupBy(id);
   const edit = useProjectEdit(id);
   const actions = useProjectActions(id);
   const bulk = useBulkSelection(board);
@@ -71,7 +73,13 @@ export function ProjectView() {
             onClear={bulk.selection.clear}
           />
         )}
-        <BoardRegion board={board} mode={mode} bulk={bulk} />
+        <BoardRegion
+          board={board}
+          mode={mode}
+          bulk={bulk}
+          groupBy={groupBy}
+          onGroupBy={chooseGroup}
+        />
       </IonContent>
     </IonPage>
   );

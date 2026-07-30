@@ -33,6 +33,10 @@ Then('the list shows a column header row', async ({ page }) => {
   await expect(page.getByTestId('list-head-row').first()).toBeVisible({ timeout: 15_000 });
 });
 
+When('the user groups the list by {string}', async ({ page }, groupBy: string) => {
+  await page.getByTestId('list-group-by-select').selectOption(groupBy);
+});
+
 Then(
   'the list row {string} shows the priority {string}',
   async ({ page }, title: string, priority: string) => {
