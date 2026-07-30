@@ -8,6 +8,9 @@ const { useTaskSections, useProjectTasks } = vi.hoisted(() => ({
 vi.mock('./useTaskSections', () => ({ useTaskSections }));
 vi.mock('./useProjectTasks', () => ({ useProjectTasks }));
 vi.mock('../auth/useAuth', () => ({ useAuth: () => ({ email: 'me@x.co' }) }));
+vi.mock('../customfields/useCustomFields', () => ({
+  useCustomFields: () => ({ fields: [], add: { mutate: vi.fn(), isPending: false } }),
+}));
 
 import { renderWithProviders } from '../../test/renderWithProviders';
 import { TaskDetailBody } from './TaskDetailBody';

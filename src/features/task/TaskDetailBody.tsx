@@ -8,6 +8,7 @@ import { TaskDependencies } from './TaskDependencies';
 import { Subtasks } from './Subtasks';
 import { Comments } from './Comments';
 import { Attachments } from './Attachments';
+import { CustomFieldsRegion } from '../customfields/CustomFieldsRegion';
 import { TaskActions } from './TaskActions';
 import { nextSubtaskOrder } from './nextSubtaskOrder';
 import { nowISO } from './today';
@@ -74,6 +75,10 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
         busy={attachments.add.isPending}
         onAdd={(input) => attachments.add.mutate(input)}
         onRemove={(id) => attachments.remove.mutate(id)}
+      />
+      <CustomFieldsRegion
+        task={task}
+        onPatch={(customValues) => patch.mutate({ id: task.id, customValues })}
       />
       <Comments
         comments={query.data?.comments ?? []}

@@ -214,6 +214,14 @@ export const seedProjects: SeedProject[] = [
       { title: 'Owner task', section: 'To do', priority: 'LOW', assigned: true },
     ],
   },
+  // Dedicated project for the custom-fields area: only that area defines a field
+  // + sets its value here, so the created field can't disturb a parallel run.
+  {
+    name: 'Fields Lab',
+    color: 'amber',
+    sections: ['To do'],
+    tasks: [{ title: 'Field target', section: 'To do', priority: 'LOW' }],
+  },
   {
     name: 'Scratchpad',
     color: 'violet',
