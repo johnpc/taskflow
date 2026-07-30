@@ -15,6 +15,7 @@
 }
 
 .task-card__check {
+  position: relative;
   background: none;
   border: none;
   color: var(--tf-text-muted);
@@ -23,6 +24,26 @@
   cursor: pointer;
   line-height: 1;
   display: flex;
+}
+
+.task-card__check-icon {
+  display: block;
+}
+
+/* Hover preview: a faded green check overlaid on the ring, revealed on hover so
+ * completing feels responsive before the click lands. */
+.task-card__check-hint {
+  position: absolute;
+  inset: 0;
+  color: var(--tf-done);
+  opacity: 0;
+  transition: opacity 0.12s ease;
+  pointer-events: none;
+}
+
+.task-card__check:hover .task-card__check-hint,
+.task-card__check:focus-visible .task-card__check-hint {
+  opacity: 0.45;
 }
 
 .task-card--done .task-card__check {
@@ -263,12 +284,17 @@
   color: var(--tf-accent-strong);
 }
 
+/* The multi-select checkbox. Deliberately square + indigo (vs the round green
+ * complete ring beside it) so the two controls aren't mistaken for each other;
+ * an extra gap sets it apart from the complete ring. */
 .task-card__select {
   align-self: center;
-  width: 18px;
-  height: 18px;
+  width: 16px;
+  height: 16px;
+  border-radius: 4px;
   accent-color: var(--tf-accent);
   cursor: pointer;
+  margin-right: 6px;
 }
 
 /* Card being dragged */

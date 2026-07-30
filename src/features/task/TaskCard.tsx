@@ -1,9 +1,8 @@
-import { IonIcon } from '@ionic/react';
-import { ellipseOutline, checkmarkCircle } from 'ionicons/icons';
 import { isDone } from './taskMeta';
 import { ReorderControls } from '../board/ReorderControls';
 import { QuickEdit } from './QuickEdit';
 import { CardBody } from './CardBody';
+import { CompleteToggle } from './CompleteToggle';
 import { taskCardShell } from './taskCardShell';
 import type { Priority } from './taskMeta';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
@@ -67,16 +66,7 @@ export function TaskCard({
           onChange={onSelect}
         />
       )}
-      <button
-        type="button"
-        className="task-card__check"
-        data-testid="task-check"
-        aria-pressed={done}
-        aria-label={done ? `Mark ${task.title} not done` : `Complete ${task.title}`}
-        onClick={() => onToggleDone(task)}
-      >
-        <IonIcon icon={done ? checkmarkCircle : ellipseOutline} />
-      </button>
+      <CompleteToggle task={task} done={done} onToggle={() => onToggleDone(task)} />
       <CardBody
         task={task}
         labels={labels}
