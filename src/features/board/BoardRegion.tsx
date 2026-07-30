@@ -18,6 +18,7 @@ export function BoardRegion({
   board,
   mode,
   bulk,
+  members = [],
   groupBy = 'SECTION',
   onGroupBy = () => {},
   sort,
@@ -26,6 +27,7 @@ export function BoardRegion({
   board: ReturnType<typeof useBoard>;
   mode: ViewMode;
   bulk: ReturnType<typeof useBulkSelection>;
+  members?: string[];
   groupBy?: GroupBy;
   onGroupBy?: (by: GroupBy) => void;
   sort?: ListSort;
@@ -60,6 +62,7 @@ export function BoardRegion({
       <BoardContent
         mode={mode}
         columns={columns}
+        members={members}
         groupBy={groupBy}
         onGroupBy={onGroupBy}
         sort={sort}

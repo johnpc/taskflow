@@ -22,6 +22,7 @@ export function BoardContent({
   labels = [],
   blockedIds,
   subtaskProgress,
+  members = [],
   onAddTask,
   onToggleDone,
   onReorder,
@@ -43,6 +44,7 @@ export function BoardContent({
   labels?: LabelRecord[];
   blockedIds?: Set<string>;
   subtaskProgress?: Map<string, SubProgress>;
+  members?: string[];
   onAddTask: AddTaskFn;
   onToggleDone: ToggleDoneFn;
   onReorder?: ReorderFn;
@@ -69,6 +71,7 @@ export function BoardContent({
         labels={labels}
         blockedIds={blockedIds}
         subtaskProgress={subtaskProgress}
+        members={members}
         onAddTask={onAddTask}
         onToggleDone={onToggleDone}
         onQuickEdit={onQuickEdit}

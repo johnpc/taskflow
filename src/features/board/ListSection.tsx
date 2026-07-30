@@ -22,6 +22,7 @@ export function ListSection({
   labels = [],
   blockedIds,
   subtaskProgress,
+  members = [],
   defaultOpen = true,
   sort,
   onSort,
@@ -35,6 +36,7 @@ export function ListSection({
   labels?: LabelRecord[];
   blockedIds?: Set<string>;
   subtaskProgress?: Map<string, SubProgress>;
+  members?: string[];
   defaultOpen?: boolean;
   sort?: ListSort;
   onSort?: (key: ListSortKey) => void;
@@ -72,6 +74,7 @@ export function ListSection({
                 labels={resolveLabels(task.labelIds, labels)}
                 blocked={blockedIds?.has(task.id)}
                 subtasks={subtaskProgress?.get(task.id)}
+                members={members}
                 onToggleDone={(t) =>
                   onToggleDone({ id: t.id, done: t.status !== 'DONE', now: nowISO() })
                 }

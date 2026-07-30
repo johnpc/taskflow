@@ -16,6 +16,7 @@ export function ListRow({
   labels = [],
   blocked,
   subtasks,
+  members = [],
   onToggleDone,
   onQuickEdit,
   selected,
@@ -25,8 +26,14 @@ export function ListRow({
   labels?: LabelRecord[];
   blocked?: boolean;
   subtasks?: { done: number; total: number };
+  members?: string[];
   onToggleDone: (task: TaskRecord) => void;
-  onQuickEdit?: (patch: { dueDate?: string | null; priority?: Priority; title?: string }) => void;
+  onQuickEdit?: (patch: {
+    dueDate?: string | null;
+    priority?: Priority;
+    title?: string;
+    assigneeEmail?: string | null;
+  }) => void;
   selected?: boolean;
   onSelect?: () => void;
 }) {
@@ -68,7 +75,7 @@ export function ListRow({
         />
         <ListRowChips task={task} labels={labels} blocked={blocked} subtasks={subtasks} />
       </span>
-      <ListRowCells task={task} onQuickEdit={onQuickEdit} />
+      <ListRowCells task={task} members={members} onQuickEdit={onQuickEdit} />
     </li>
   );
 }

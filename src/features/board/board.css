@@ -167,7 +167,9 @@
 }
 
 .list-row--head {
-  padding: 4px 2px;
+  /* Match the row's horizontal padding (li.list-row: 10px 14px) so the header
+   * column tracks line up exactly with the cells below. */
+  padding: 4px 14px;
   font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
@@ -259,6 +261,29 @@
 
 .list-row__prio--medium {
   color: var(--tf-priority-medium, var(--tf-accent-strong));
+}
+
+/* Inline dropdowns for the Priority + Assignee cells (quick-edit list rows). */
+.list-row__prio-select {
+  background: var(--tf-surface-2);
+  border: 1px solid var(--tf-border);
+  border-radius: 999px;
+  padding: 3px 8px;
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: inherit;
+  cursor: pointer;
+  max-width: 100%;
+}
+
+.list-row__assignee .task-assign__select {
+  width: 100%;
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius-sm);
+  padding: 4px 6px;
+  font-size: 0.8rem;
+  color: var(--tf-text);
 }
 
 li.list-row {
