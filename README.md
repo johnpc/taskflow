@@ -57,6 +57,7 @@ iOS and Android.
 | **Search**          | Live title/notes search — rows show project + due; filter by priority/project/status     | ✅     |
 | **Complete**        | One-tap complete on the board and in lists, with a strike-through state                  | ✅     |
 | **Undo**            | An undo toast after completing a task — one tap to bring it back                         | ✅     |
+| **Celebration**     | A confetti burst on completing a task (intermittent; respects reduced-motion)            | ✅     |
 | **Completed view**  | Per-project archive of done tasks (with when), each reopenable                           | ✅     |
 | **Activity**        | Created / completed relative timestamps on task detail                                   | ✅     |
 | **Filter & sort**   | Hide/show completed, filter by label / priority / due window, sort by due or priority    | ✅     |
