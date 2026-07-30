@@ -140,6 +140,10 @@ export const seedProjects: SeedProject[] = [
       // appears in exactly two projects (here + Website Redesign), so a search
       // returns both and picking one project narrows to a single hit.
       { title: 'Zephyr report', section: 'To do', priority: 'LOW' },
+      // Read-only list-columns anchor: a HIGH-priority task no area ever mutates,
+      // so the list Priority-column assertion is stable (unlike "Finalize press
+      // list", whose priority the quickedit area cycles MEDIUM→HIGH).
+      { title: 'Column check', section: 'To do', priority: 'HIGH' },
     ],
   },
   {
@@ -170,6 +174,14 @@ export const seedProjects: SeedProject[] = [
     color: 'amber',
     sections: ['To do', 'Done'],
     tasks: [{ title: 'Wrap up', section: 'To do', priority: 'LOW' }],
+  },
+  // Dedicated project for the sharing (members) area: only that area invites +
+  // removes a teammate here, so its member list can't disturb a parallel run.
+  {
+    name: 'Share Lab',
+    color: 'sky',
+    sections: ['To do'],
+    tasks: [{ title: 'Shared task', section: 'To do', priority: 'LOW' }],
   },
   {
     name: 'Scratchpad',
