@@ -2,6 +2,7 @@ import { IonIcon } from '@ionic/react';
 import { Link } from 'react-router-dom';
 import { star, starOutline, chevronForward } from 'ionicons/icons';
 import { projectColorVar } from './projectColors';
+import { StatusPill } from './StatusPill';
 import { progressPercent, type Progress } from './taskCounts';
 import type { ProjectRecord } from '../../lib/dataClient';
 import './projects.css';
@@ -31,6 +32,7 @@ export function ProjectCard({
           aria-hidden="true"
         />
         <span className="project-card__name">{project.name}</span>
+        <StatusPill status={project.status} />
         {count > 0 && (
           <span className="project-card__count" data-testid="project-count">
             {count}

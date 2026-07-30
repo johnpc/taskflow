@@ -210,3 +210,66 @@
   color: var(--tf-accent-strong);
   cursor: pointer;
 }
+
+/* Project health pill (On track / At risk / Off track). Driven by a single
+ * --pill color; the fill is a soft tint of it so the label stays readable. */
+.status-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 2px 9px;
+  border-radius: 999px;
+  font-size: 0.72rem;
+  font-weight: 700;
+  color: var(--pill);
+  background: color-mix(in srgb, var(--pill) 14%, transparent);
+  white-space: nowrap;
+}
+
+.status-pill__dot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--pill);
+}
+
+/* Header status control: three pickable buttons + an optional note field. */
+.status-picker {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+}
+
+.status-picker__buttons {
+  display: inline-flex;
+  gap: 6px;
+}
+
+.status-picker__btn {
+  border: 1px solid var(--tf-border);
+  background: var(--tf-surface);
+  color: var(--tf-text-muted);
+  border-radius: 999px;
+  padding: 3px 12px;
+  font-size: 0.74rem;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.status-picker__btn[aria-pressed='true'] {
+  color: var(--pill);
+  border-color: var(--pill);
+  background: color-mix(in srgb, var(--pill) 14%, transparent);
+}
+
+.status-picker__note {
+  flex: 1 1 180px;
+  min-width: 160px;
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius-sm);
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  background: var(--tf-surface);
+  color: var(--tf-text);
+}
