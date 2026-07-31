@@ -1,16 +1,20 @@
 import { projectColorVar } from '../projects/projectColors';
+import { AssigneeAvatar } from '../task/AssigneeAvatar';
 import type { ProjectRef } from '../projects/useProjectsById';
 
 /** One calendar day-row entry: the task title with its project chip (colored dot
- * + name) so a cross-project day view tells you which project each task is in,
- * consistent with My Tasks and Search. Opening is delegated up. */
+ * + name) and the assignee's avatar so a cross-project day view tells you which
+ * project each task is in and who owns it — consistent with My Tasks and Search.
+ * Opening is delegated up. */
 export function CalendarTask({
   title,
   project,
+  assigneeEmail,
   onOpen,
 }: {
   title: string;
   project?: ProjectRef;
+  assigneeEmail?: string | null;
   onOpen: () => void;
 }) {
   return (
@@ -26,6 +30,7 @@ export function CalendarTask({
           {project.name}
         </span>
       )}
+      <AssigneeAvatar email={assigneeEmail} />
     </button>
   );
 }
