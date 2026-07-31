@@ -18,3 +18,9 @@ Then('a search result reading {string} is visible', async ({ page }, text: strin
 Then('the search empty state is shown', async ({ page }) => {
   await expect(page.getByTestId('search-empty')).toBeVisible({ timeout: 15_000 });
 });
+
+Then('the search result {string} shows an assignee avatar', async ({ page }, text: string) => {
+  const hit = page.getByTestId('search-hit').filter({ hasText: text }).first();
+  await expect(hit).toBeVisible({ timeout: 15_000 });
+  await expect(hit.getByTestId('task-assignee-avatar')).toBeVisible({ timeout: 15_000 });
+});
