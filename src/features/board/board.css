@@ -306,6 +306,26 @@
   max-width: 100%;
 }
 
+/* Priority reads as a colored pill (Asana-style) — the select carries the same
+ * --high/--medium modifier as the read-only chip, but its own `color: inherit`
+ * above wins on equal specificity, so re-assert color + a soft tinted bg at
+ * higher specificity (.list-row__prio-select.list-row__prio--*). */
+.list-row__prio-select.list-row__prio--high {
+  color: var(--tf-priority-high, var(--tf-overdue));
+  background: color-mix(in srgb, var(--tf-priority-high, var(--tf-overdue)) 15%, transparent);
+  border-color: currentColor;
+}
+
+.list-row__prio-select.list-row__prio--medium {
+  color: var(--tf-priority-medium, var(--tf-accent-strong));
+  background: color-mix(
+    in srgb,
+    var(--tf-priority-medium, var(--tf-accent-strong)) 15%,
+    transparent
+  );
+  border-color: currentColor;
+}
+
 .list-row__assignee .task-assign__select {
   width: 100%;
   background: var(--tf-surface);
