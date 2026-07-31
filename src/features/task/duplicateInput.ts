@@ -2,8 +2,9 @@ import type { TaskRecord } from '../../lib/dataClient';
 
 /** The create payload for duplicating a task: a fresh TODO copy in the same
  * project/section with " (copy)" appended to the title, carrying notes,
- * priority, dates, labels, repeat, and milestone flag — but NOT status,
- * completedAt, comments, subtasks, or dependencies. Pure so it's testable. */
+ * priority, dates, labels, repeat, milestone flag, and custom-field values —
+ * but NOT status, completedAt, comments, or dependencies. (Subtasks are copied
+ * separately by duplicateTask.) Pure so it's testable. */
 export function duplicateInput(task: TaskRecord, order: number) {
   return {
     projectId: task.projectId,
@@ -18,6 +19,7 @@ export function duplicateInput(task: TaskRecord, order: number) {
     repeat: task.repeat ?? 'NONE',
     isMilestone: task.isMilestone ?? false,
     labelIds: (task.labelIds ?? []).filter((x): x is string => !!x),
+    customValues: task.customValues ?? undefined,
     sortOrder: order,
   };
 }
