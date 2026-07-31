@@ -1,20 +1,28 @@
-import { parseMentions } from './mentions';
+import { parseCommentBody } from './parseCommentBody';
 
-/** Renders a comment body with @mentions highlighted. Plain text otherwise;
- * pure presentational (parsing lives in parseMentions). */
+/** Renders a comment body with **bold**, safe [links](url), and @mention
+ * highlighting (the same rich inline formatting as task notes). Pure
+ * presentational — parsing lives in parseCommentBody. */
 export function CommentBody({ body }: { body: string }) {
-  const segments = parseMentions(body);
+  const spans = parseCommentBody(body);
   return (
     <span className="comment__body" data-testid="comment-body">
-      {segments.map((seg, i) =>
-        seg.mention ? (
-          <span key={i} className="comment__mention" data-testid="comment-mention">
-            {seg.text}
-          </span>
-        ) : (
-          <span key={i}>{seg.text}</span>
-        ),
-      )}
+      {spans.map((s, i) => {
+        if (s.kind === 'mention')
+          return (
+            <span key={i} className="comment__mention" data-testid="comment-mention">
+              {s.text}
+            </span>
+          );
+        if (s.kind === 'bold') return <strong key={i}>{s.text}</strong>;
+        if (s.kind === 'link')
+          return (
+            <a key={i} href={s.href} target="_blank" rel="noopener noreferrer">
+              {s.text}
+            </a>
+          );
+        return <span key={i}>{s.text}</span>;
+      })}
     </span>
   );
 }

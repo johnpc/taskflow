@@ -16,4 +16,11 @@ describe('CommentBody', () => {
     expect(screen.queryByTestId('comment-mention')).toBeNull();
     expect(screen.getByTestId('comment-body')).toHaveTextContent('just a note');
   });
+
+  it('renders **bold** and safe [links](url)', () => {
+    render(<CommentBody body="see **this** and [docs](https://x.co)" />);
+    expect(screen.getByText('this').tagName).toBe('STRONG');
+    const link = screen.getByRole('link', { name: 'docs' });
+    expect(link).toHaveAttribute('href', 'https://x.co');
+  });
 });
