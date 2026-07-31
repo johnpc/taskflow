@@ -29,6 +29,12 @@ describe('SearchHit', () => {
     );
     expect(screen.getByTestId('hit-project')).toHaveTextContent('Launch');
     expect(screen.getByText('Overdue')).toBeInTheDocument();
+    expect(screen.getByTestId('hit-due')).toHaveClass('search__hit-due--overdue');
+  });
+
+  it('does not flag a far-future due date as overdue', () => {
+    render(<SearchHit task={task({ dueDate: '2999-01-01' })} onOpen={vi.fn()} />);
+    expect(screen.getByTestId('hit-due')).not.toHaveClass('search__hit-due--overdue');
   });
 
   it('omits the project chip when no project is given', () => {

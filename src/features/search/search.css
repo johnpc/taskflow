@@ -91,3 +91,14 @@
   border-radius: 999px;
   padding: 2px 8px;
 }
+
+/* Overdue/due-today search results read red/amber, matching cards + list. */
+.search__hit-due--overdue {
+  color: var(--tf-overdue);
+  background: color-mix(in srgb, var(--tf-overdue) 15%, transparent);
+}
+
+.search__hit-due--today {
+  color: var(--tf-priority-medium);
+  background: color-mix(in srgb, var(--tf-priority-medium) 18%, transparent);
+}
