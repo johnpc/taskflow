@@ -5,6 +5,7 @@ import { ProjectMenu } from './ProjectMenu';
 const menu = (props: Partial<Parameters<typeof ProjectMenu>[0]> = {}) =>
   render(
     <ProjectMenu
+      onCopyLink={props.onCopyLink ?? vi.fn()}
       onDuplicate={props.onDuplicate ?? vi.fn()}
       onArchive={props.onArchive ?? vi.fn()}
       onDelete={props.onDelete ?? vi.fn()}
@@ -34,5 +35,14 @@ describe('ProjectMenu', () => {
     const dup = await screen.findByText('Duplicate project');
     fireEvent.click(dup);
     await waitFor(() => expect(onDuplicate).toHaveBeenCalledOnce());
+  });
+
+  it('copies the project link from the sheet', async () => {
+    const onCopyLink = vi.fn();
+    menu({ onCopyLink });
+    fireEvent.click(screen.getByTestId('project-menu'));
+    const copy = await screen.findByText('Copy link');
+    fireEvent.click(copy);
+    await waitFor(() => expect(onCopyLink).toHaveBeenCalledOnce());
   });
 });

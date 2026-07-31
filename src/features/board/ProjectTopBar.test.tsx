@@ -8,6 +8,7 @@ const bar = (over: Partial<ProjectRecord>, props: Record<string, unknown> = {}) 
     <ProjectTopBar
       project={{ id: 'p', name: 'Launch', ...over } as ProjectRecord}
       onToggleFavorite={vi.fn()}
+      onCopyLink={vi.fn()}
       onDuplicate={vi.fn()}
       onArchive={vi.fn()}
       onDelete={vi.fn()}

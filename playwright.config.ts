@@ -49,6 +49,8 @@ export default defineConfig({
   // holding 5173 (e.g. a sibling repo's dev server). CI uses the default 5173.
   use: {
     baseURL: `http://localhost:${process.env.TF_PORT ?? '5173'}`,
+    // Grant clipboard read/write so copy-link flows can verify the copied URL.
+    permissions: ['clipboard-read', 'clipboard-write'],
     trace: 'on-first-retry',
     actionTimeout: 15_000,
     navigationTimeout: 30_000,

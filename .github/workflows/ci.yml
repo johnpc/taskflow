@@ -246,6 +246,8 @@ jobs:
             paths: .features-gen/e2e/features/boardcollapse
           - name: activitylog
             paths: .features-gen/e2e/features/activitylog
+          - name: projectcopylink
+            paths: .features-gen/e2e/features/projectcopylink
     steps:
       - uses: actions/checkout@v4
 
