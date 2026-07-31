@@ -303,11 +303,16 @@
 }
 
 li.list-row {
+  /* A List row reads as a dense TABLE row, not a floating card: flush rows with
+   * a hairline divider + hover highlight (Asana-style), NOT the board card's
+   * border/shadow/radius. `.list-section__rows` zeroes the inter-row gap so the
+   * dividers butt together into one ruled table. */
   background: var(--tf-surface);
-  border: 1px solid var(--tf-border);
-  border-radius: var(--tf-radius-sm);
-  box-shadow: var(--tf-shadow);
-  padding: 10px 14px;
+  border: none;
+  border-bottom: 1px solid var(--tf-border);
+  border-radius: 0;
+  box-shadow: none;
+  padding: 8px 14px;
   /* A list row also carries `.task-card` (for shared card styling + testids),
    * whose `display:flex` has equal specificity to `.list-row`'s `display:grid`
    * and was winning by source order — collapsing the grid so cells no longer
@@ -317,6 +322,11 @@ li.list-row {
   grid-template-columns: 44px minmax(0, 1fr) 140px 130px 110px;
   align-items: center;
   gap: 10px;
+  transition: background 0.1s ease;
+}
+
+li.list-row:hover {
+  background: var(--tf-surface-2);
 }
 
 li.list-row.task-card--done .task-card__title {
@@ -354,11 +364,13 @@ li.list-row.task-card--done .task-card__title {
 
 .list-section__rows {
   list-style: none;
-  margin: 8px 0;
+  margin: 0 0 8px;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  /* Flush rows: no gap, so each row's bottom hairline butts against the next to
+   * form one continuous ruled table (the header row supplies the top rule). */
+  gap: 0;
 }
 
 /* Filter/sort controls bar */
