@@ -12,6 +12,10 @@ export function ActivityFeed({ taskId, nowMs }: { taskId: string; nowMs: number 
     queryKey: ['task-events', taskId],
     queryFn: () => fetchTaskEvents(taskId),
     enabled: !!taskId,
+    // Events are logged best-effort on other mutations + are eventually
+    // consistent on their GSI; a light poll lets a just-logged event surface
+    // without a manual refresh.
+    refetchInterval: 4000,
   });
   if (!events || events.length === 0) return null;
   return (
