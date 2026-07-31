@@ -4,9 +4,11 @@ import { createBdd } from 'playwright-bdd';
 const { When, Then } = createBdd();
 
 When('the user opens the task titled {string}', async ({ page }, title: string) => {
+  // Match the open button by EXACT title so a "(copy)"/substring sibling on the
+  // board (e.g. after duplicating, or on a CI retry) can't make this ambiguous.
   await page
     .getByTestId('task-card')
-    .filter({ hasText: title })
+    .filter({ has: page.getByTestId('task-open').getByText(title, { exact: true }) })
     .first()
     .getByTestId('task-open')
     .click();
