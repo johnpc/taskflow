@@ -165,6 +165,8 @@ export const seedProjects: SeedProject[] = [
       // Dedicated comment-like target: only the commentlike area posts + likes a
       // comment here (separate from "Comment me", which the edit/delete areas use).
       { title: 'Like comment me', section: 'To do', priority: 'LOW' },
+      // Dedicated approval target: only the approval area sets its outcome.
+      { title: 'Approve me', section: 'To do', priority: 'LOW' },
     ],
   },
   {

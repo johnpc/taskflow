@@ -1,7 +1,7 @@
 import { dueLabelWithTime, dueStatus, isDone, startsInFuture, startLabel } from './taskMeta';
 import { todayISO } from './today';
-import { repeats, REPEAT_META, type Repeat } from './recurrence';
-import { likeCount } from './taskLikes';
+import { approvalMeta, type Approval } from './approval';
+import { CardMarkers } from './CardMarkers';
 import { projectColorVar } from '../projects/projectColors';
 import { LabelChips } from '../labels/LabelChips';
 import { CardCustomFieldChips } from '../customfields/CardCustomFieldChips';
@@ -30,7 +30,7 @@ export function CardMeta({
   const notStarted = startsInFuture(task.startDate, today, done);
   const due = dueLabelWithTime(task.dueDate, task.dueTime, today);
   const dueKind = dueStatus(task.dueDate, today, done);
-  const likes = likeCount(task.likedBy);
+  const approval = approvalMeta(task.approval as Approval);
   return (
     <span className="task-card__meta">
       {project && (
@@ -46,6 +46,15 @@ export function CardMeta({
       {task.isMilestone && (
         <span className="task-card__milestone" data-testid="task-milestone" aria-label="Milestone">
           ◆ Milestone
+        </span>
+      )}
+      {approval && (
+        <span
+          className="task-card__approval"
+          data-testid="task-approval-badge"
+          style={{ color: `var(${approval.colorVar})` }}
+        >
+          {approval.label}
         </span>
       )}
       {blocked && (
@@ -69,21 +78,7 @@ export function CardMeta({
           {task.priority[0] + task.priority.slice(1).toLowerCase()}
         </span>
       )}
-      {subtasks && subtasks.total > 0 && (
-        <span className="task-card__subs" data-testid="task-subs" aria-label="Subtasks done">
-          ◑ {subtasks.done}/{subtasks.total}
-        </span>
-      )}
-      {repeats(task.repeat as Repeat) && (
-        <span className="task-card__repeat" data-testid="task-repeat-badge" aria-label="Repeats">
-          ↻ {REPEAT_META[task.repeat as Repeat]}
-        </span>
-      )}
-      {likes > 0 && (
-        <span className="task-card__likes" data-testid="task-likes" aria-label={`${likes} likes`}>
-          ♥ {likes}
-        </span>
-      )}
+      <CardMarkers task={task} subtasks={subtasks} />
       <LabelChips labels={labels} />
       <CardCustomFieldChips task={task} />
       <AssigneeAvatar email={task.assigneeEmail} />

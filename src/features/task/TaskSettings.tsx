@@ -1,6 +1,7 @@
 import { RepeatPicker } from './RepeatPicker';
 import { MilestoneToggle } from './MilestoneToggle';
 import { TaskColorPicker } from './TaskColorPicker';
+import { ApprovalPicker } from './ApprovalPicker';
 import { ProjectPicker } from './ProjectPicker';
 import { TaskAssignment } from './TaskAssignment';
 import type { ProjectRecord, SectionRecord, TaskRecord } from '../../lib/dataClient';
@@ -27,6 +28,7 @@ export function TaskSettings({
     <>
       <RepeatPicker task={task} onChange={(repeat) => onPatch({ repeat })} />
       <MilestoneToggle task={task} onToggle={(isMilestone) => onPatch({ isMilestone })} />
+      <ApprovalPicker task={task} onChange={(approval) => onPatch({ approval })} />
       <TaskColorPicker task={task} onChange={(color) => onPatch({ color })} />
       <ProjectPicker task={task} projects={projects} onMove={onMoveProject} />
       <TaskAssignment

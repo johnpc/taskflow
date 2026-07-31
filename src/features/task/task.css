@@ -131,6 +131,15 @@
   padding: 2px 8px;
 }
 
+/* Approval outcome badge (Asana approvals) — color set inline per outcome. */
+.task-card__approval {
+  font-size: 0.72rem;
+  font-weight: 700;
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 1px 8px;
+}
+
 .task-card__cf {
   font-size: 0.72rem;
   font-weight: 600;

@@ -71,6 +71,7 @@ export async function updateTask(
       | 'likedBy'
       | 'repeat'
       | 'myBucket'
+      | 'approval'
       | 'isMilestone'
       | 'color'
       | 'coverKey'

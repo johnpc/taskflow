@@ -98,6 +98,9 @@ const schema = a.schema({
       // My Tasks focus plan: a manual Today/Upcoming/Later bucket, independent of
       // the due date — for organizing "what I'll work on" across projects.
       myBucket: a.enum(['NONE', 'TODAY', 'UPCOMING', 'LATER']),
+      // Approval outcome (Asana approvals): mark a task Approved / Changes
+      // requested / Rejected. NONE = a regular task (no approval sought).
+      approval: a.enum(['NONE', 'APPROVED', 'CHANGES_REQUESTED', 'REJECTED']),
       completedAt: a.datetime(),
       sortOrder: a.integer().default(0),
       assigneeEmail: a.string(),
