@@ -354,6 +354,14 @@ export const seedProjects: SeedProject[] = [
     sections: ['To do'],
     tasks: [{ title: 'Mention target', section: 'To do', priority: 'NONE' }],
   },
+  // Dedicated project for My Tasks quick-add: this area creates a task into it,
+  // so the new task lands in an isolated project (and its own board section).
+  {
+    name: 'Quick Add Lab',
+    color: 'amber',
+    sections: ['To do'],
+    tasks: [{ title: 'Existing quickadd task', section: 'To do', priority: 'NONE' }],
+  },
   // Dedicated project for drag-to-reorder: two ordered cards only this area
   // touches, so reordering them can't disturb a parallel run.
   {

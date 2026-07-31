@@ -29,3 +29,14 @@ Then('a task titled {string} is visible in My Tasks', async ({ page }, title: st
     timeout: 15_000,
   });
 });
+
+When(
+  'the user quick-adds {string} to the {string} project',
+  async ({ page }, title: string, project: string) => {
+    // Idempotent for CI retries: skip if it's already here (sandbox persists it).
+    if ((await page.getByTestId('task-card').filter({ hasText: title }).count()) > 0) return;
+    await page.getByTestId('quickadd-title').fill(title);
+    await page.getByTestId('quickadd-project').selectOption({ label: project });
+    await page.getByTestId('quickadd-add').click();
+  },
+);

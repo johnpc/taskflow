@@ -29,3 +29,11 @@ Feature: My Tasks
     And the user filters My Tasks to assigned-to-me
     Then a task titled "My assigned task" is visible in My Tasks
     And a task titled "Renew passport" is not visible
+
+  # Quick-add captures a task into a chosen project without opening it; the new
+  # open task then appears in My Tasks. Uses a unique title + dedicated project.
+  Scenario: Quick-adding a task from My Tasks
+    Given a signed-in user
+    When the user opens My Tasks
+    And the user quick-adds "Quick capture 9f2a" to the "Quick Add Lab" project
+    Then a task titled "Quick capture 9f2a" is visible in My Tasks
