@@ -80,6 +80,10 @@ export const seedProjects: SeedProject[] = [
       },
       { title: 'Set up analytics', section: 'In progress', priority: 'LOW', dueOffsetDays: 1 },
       { title: 'Reserve launch domain', section: 'Done', priority: 'NONE' },
+      // Dedicated activity-log anchor in this (first, always-warm) project — the
+      // activity area completes it; no other area touches it. Kept here rather
+      // than a late lab project whose board GSI can lag under peak CI load.
+      { title: 'Activity target', section: 'To do', priority: 'NONE' },
       // Stable anchor: NO acceptance scenario ever completes/moves this, so
       // cross-area "is visible" assertions stay valid on the shared sandbox even
       // as parallel areas mutate other tasks (hide-completed is default-on).
@@ -361,14 +365,6 @@ export const seedProjects: SeedProject[] = [
     color: 'amber',
     sections: ['To do'],
     tasks: [{ title: 'Existing quickadd task', section: 'To do', priority: 'NONE' }],
-  },
-  // Dedicated project for the activity-log flow: this area completes a task to
-  // generate an event, so an isolated task keeps its state off other areas.
-  {
-    name: 'Activity Lab',
-    color: 'violet',
-    sections: ['To do'],
-    tasks: [{ title: 'Activity target', section: 'To do', priority: 'NONE' }],
   },
   // Dedicated project for drag-to-reorder: two ordered cards only this area
   // touches, so reordering them can't disturb a parallel run.
