@@ -1,20 +1,23 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 
-const { addComment, deleteComment, updateComment } = vi.hoisted(() => ({
+const { addComment, deleteComment, updateComment, setCommentLikes } = vi.hoisted(() => ({
   addComment: vi.fn(),
   deleteComment: vi.fn(),
   updateComment: vi.fn(),
+  setCommentLikes: vi.fn(),
 }));
-vi.mock('./taskDetailApi', () => ({ addComment, deleteComment, updateComment }));
+vi.mock('./taskDetailApi', () => ({ addComment, deleteComment, updateComment, setCommentLikes }));
 
 import { hookWrapper } from '../../test/hookWrapper';
 import { useComments } from './useComments';
+import type { CommentRecord } from '../../lib/dataClient';
 
 beforeEach(() => {
   addComment.mockReset();
   deleteComment.mockReset();
   updateComment.mockReset();
+  setCommentLikes.mockReset();
 });
 
 describe('useComments', () => {
@@ -51,5 +54,17 @@ describe('useComments', () => {
       await result.current.remove.mutateAsync('c1');
     });
     expect(deleteComment).toHaveBeenCalledWith('c1');
+  });
+
+  it('likes a comment by toggling the current user into likedBy', async () => {
+    setCommentLikes.mockResolvedValue(undefined);
+    const { result } = renderHook(() => useComments('t', 'me@x.co', vi.fn()), {
+      wrapper: hookWrapper(),
+    });
+    const comment = { id: 'c1', likedBy: ['you@x.co'] } as CommentRecord;
+    await act(async () => {
+      await result.current.like.mutateAsync(comment);
+    });
+    expect(setCommentLikes).toHaveBeenCalledWith('c1', ['you@x.co', 'me@x.co']);
   });
 });

@@ -58,3 +58,9 @@ export async function updateComment(id: string, body: string): Promise<void> {
   const { errors } = await dataClient.models.Comment.update({ id, body: body.trim() });
   if (errors) throw new Error(`Edit comment failed: ${JSON.stringify(errors)}`);
 }
+
+/** Replace a comment's likedBy list (the caller computes the toggle). */
+export async function setCommentLikes(id: string, likedBy: string[]): Promise<void> {
+  const { errors } = await dataClient.models.Comment.update({ id, likedBy });
+  if (errors) throw new Error(`Like comment failed: ${JSON.stringify(errors)}`);
+}

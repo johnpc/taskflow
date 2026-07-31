@@ -83,6 +83,7 @@ export function useTaskDetail(id: string) {
     attachments,
     projects,
     move,
+    email,
   };
 }
 

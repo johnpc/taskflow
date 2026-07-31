@@ -326,6 +326,7 @@
   gap: 6px;
 }
 
+.comment__like,
 .comment__edit,
 .comment__delete {
   background: none;
@@ -334,6 +335,21 @@
   font-size: 0.8rem;
   cursor: pointer;
   opacity: 0.6;
+}
+
+.comment__like[disabled] {
+  cursor: default;
+}
+
+/* A liked comment shows a filled red heart + count, always full-opacity. */
+.comment__like--on {
+  color: var(--tf-overdue);
+  opacity: 1;
+}
+
+.comment__like:hover {
+  opacity: 1;
+  color: var(--tf-overdue);
 }
 
 .comment__edit:hover {
@@ -348,6 +364,7 @@
 
 /* Touch devices have no hover — keep the row actions reachable. */
 @media (hover: none), (max-width: 640px) {
+  .comment__like,
   .comment__edit,
   .comment__delete {
     opacity: 0.8;
