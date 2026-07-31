@@ -43,6 +43,7 @@ export function Calendar() {
                       <CalendarTask
                         title={task.title}
                         project={projectsById.get(task.projectId)}
+                        assigneeEmail={task.assigneeEmail}
                         onOpen={() => history.push(`/tasks/${task.id}`)}
                       />
                     </li>

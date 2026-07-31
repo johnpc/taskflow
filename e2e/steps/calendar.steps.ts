@@ -24,3 +24,9 @@ Then(
     await expect(card.getByTestId('calendar-project')).toHaveText(project, { timeout: 15_000 });
   },
 );
+
+Then('the calendar task {string} shows an assignee avatar', async ({ page }, title: string) => {
+  const card = page.getByTestId('calendar-task').filter({ hasText: title }).first();
+  await expect(card).toBeVisible({ timeout: 15_000 });
+  await expect(card.getByTestId('task-assignee-avatar')).toBeVisible({ timeout: 15_000 });
+});

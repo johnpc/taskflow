@@ -181,8 +181,16 @@ export const seedProjects: SeedProject[] = [
       { title: 'Plan Q3 goals', section: 'To do', priority: 'MEDIUM', dueOffsetDays: 5 },
       { title: 'Renew passport', section: 'To do', priority: 'HIGH', dueOffsetDays: -1 },
       // Assigned-to-me anchor: the only seed task assigned to the seed user, so
-      // My Tasks' "Assigned to me" filter narrows down to exactly this one.
-      { title: 'My assigned task', section: 'To do', priority: 'LOW', assigned: true },
+      // My Tasks' "Assigned to me" filter narrows down to exactly this one. Due
+      // +4 (after the Home "Coming up" +1 anchor, so it can't displace it) so it
+      // also shows on the calendar with its assignee avatar.
+      {
+        title: 'My assigned task',
+        section: 'To do',
+        priority: 'LOW',
+        assigned: true,
+        dueOffsetDays: 4,
+      },
     ],
   },
   // Dedicated throwaway projects for the archive + delete acceptance scenarios,
