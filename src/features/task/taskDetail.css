@@ -80,6 +80,17 @@
   font-family: var(--tf-font-sans);
 }
 
+/* Overdue/due-today date reads red/amber, matching cards + list + search. */
+.task-fields__date--overdue {
+  color: var(--tf-overdue);
+  border-color: var(--tf-overdue);
+}
+
+.task-fields__date--today {
+  color: var(--tf-priority-medium);
+  border-color: var(--tf-priority-medium);
+}
+
 .task-fields__prios {
   display: flex;
   flex-wrap: wrap;

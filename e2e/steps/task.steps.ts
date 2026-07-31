@@ -45,3 +45,9 @@ Then('a comment reading {string} is visible', async ({ page }, body: string) => 
 Then('the task shows the project breadcrumb {string}', async ({ page }, name: string) => {
   await expect(page.getByTestId('task-project-crumb')).toHaveText(name, { timeout: 15_000 });
 });
+
+Then('the task detail due date is flagged overdue', async ({ page }) => {
+  await expect(page.getByTestId('task-due-input')).toHaveClass(/task-fields__date--overdue/, {
+    timeout: 15_000,
+  });
+});
