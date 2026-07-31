@@ -351,6 +351,12 @@
   white-space: pre-wrap;
 }
 
+/* @mention token inside a comment body. */
+.comment__mention {
+  color: var(--tf-accent-strong);
+  font-weight: 600;
+}
+
 .comments__composer {
   display: flex;
   flex-direction: column;

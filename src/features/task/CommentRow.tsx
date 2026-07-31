@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { relativeTime } from './relativeTime';
+import { CommentBody } from './CommentBody';
 import type { CommentRecord } from '../../lib/dataClient';
 
 /** One comment: author + relative timestamp + body, with Edit/Delete controls
@@ -64,7 +65,7 @@ export function CommentRow({
         </>
       ) : (
         <>
-          <span className="comment__body">{comment.body}</span>
+          <CommentBody body={comment.body} />
           <div className="comment__actions">
             <button
               type="button"

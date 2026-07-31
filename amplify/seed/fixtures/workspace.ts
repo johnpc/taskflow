@@ -346,6 +346,14 @@ export const seedProjects: SeedProject[] = [
     sections: ['To do'],
     tasks: [{ title: 'File attach target', section: 'To do', priority: 'NONE' }],
   },
+  // Dedicated project for the @mention comment flow: this area posts a comment,
+  // so an isolated task keeps its comment count off other comment areas.
+  {
+    name: 'Mention Lab',
+    color: 'rose',
+    sections: ['To do'],
+    tasks: [{ title: 'Mention target', section: 'To do', priority: 'NONE' }],
+  },
   // Dedicated project for drag-to-reorder: two ordered cards only this area
   // touches, so reordering them can't disturb a parallel run.
   {
