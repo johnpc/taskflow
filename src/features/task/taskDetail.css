@@ -666,3 +666,38 @@
   font-size: 0.9rem;
   outline: none;
 }
+
+/* Task-detail cover upload control. */
+.cover-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+}
+
+.cover-upload__img {
+  width: 100%;
+  max-height: 180px;
+  object-fit: cover;
+  border-radius: var(--tf-radius-sm);
+}
+
+.cover-upload__btn {
+  background: none;
+  border: 1px solid var(--tf-border);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--tf-accent-strong);
+  cursor: pointer;
+}
+
+.cover-upload__btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.cover-upload__file {
+  display: none;
+}

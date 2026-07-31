@@ -43,6 +43,7 @@ iOS and Android.
 | **Inline rename**     | Rename a task in place from its card (pencil), no detail needed                                             | ✅     |
 | **Milestones**        | Mark a task a milestone; its card shows a ◆ marker for key checkpoints                                      | ✅     |
 | **Highlight color**   | Give a task a color; its card gets a left accent stripe for visual grouping                                 | ✅     |
+| **Cover image**       | Upload a cover photo for a task; it shows as a banner on the board card                                     | ✅     |
 | **Subtasks**          | Checklist with a "2/3" chip; open a subtask + breadcrumb back; promote one to a task; confirm if incomplete | ✅     |
 | **Attachments**       | Attach labelled links to a task; each opens in a new tab (XSS-guarded hrefs)                                | ✅     |
 | **Dependencies**      | "Blocked by" + "Blocking" lines, board badge, and a confirm before completing early                         | ✅     |
