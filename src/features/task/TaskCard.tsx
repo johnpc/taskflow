@@ -63,6 +63,10 @@ export function TaskCard({
           data-testid="task-select"
           aria-label={`Select ${task.title}`}
           checked={!!selected}
+          draggable={false}
+          // The card is draggable; stop a pointer-down on the checkbox from
+          // starting a card drag so ticking it stays reliable (esp. on the board).
+          onPointerDown={(e) => e.stopPropagation()}
           onChange={onSelect}
         />
       )}

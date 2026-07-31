@@ -81,8 +81,8 @@ export function BoardRegion({
           onDelete: (sectionId) => board.removeSection.mutate(sectionId),
           onMove: (input) => board.moveSection.mutate(input),
         }}
-        selectedIds={inList ? bulk.selection.ids : undefined}
-        onSelect={inList ? bulk.selection.toggle : undefined}
+        selectedIds={bulk.selection.ids}
+        onSelect={bulk.selection.toggle}
         drag={inList ? undefined : drag}
       />
     </LoadState>
