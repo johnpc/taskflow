@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { duplicateInput } from './duplicateInput';
+import { duplicateInput, subtaskCopyInput } from './duplicateInput';
 import type { TaskRecord } from '../../lib/dataClient';
 
 const task = (over: Partial<TaskRecord>): TaskRecord =>
@@ -45,5 +45,22 @@ describe('duplicateInput', () => {
     expect(out.repeat).toBe('NONE');
     expect(out.isMilestone).toBe(false);
     expect(out.labelIds).toEqual([]);
+  });
+
+  it('subtaskCopyInput parents a fresh TODO child (no "(copy)" suffix)', () => {
+    const out = subtaskCopyInput(
+      task({ title: 'Step one', priority: 'LOW', dueDate: '2026-08-02', sortOrder: 2 }),
+      'newParent',
+      'p',
+    );
+    expect(out).toMatchObject({
+      projectId: 'p',
+      parentTaskId: 'newParent',
+      title: 'Step one',
+      status: 'TODO',
+      priority: 'LOW',
+      dueDate: '2026-08-02',
+      sortOrder: 2,
+    });
   });
 });

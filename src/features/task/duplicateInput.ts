@@ -21,3 +21,19 @@ export function duplicateInput(task: TaskRecord, order: number) {
     sortOrder: order,
   };
 }
+
+/** The create payload for copying a subtask under a duplicated parent: a fresh
+ * TODO child (title kept as-is — no " (copy)" suffix on children) carrying the
+ * essentials, parented to newParentId. Pure. */
+export function subtaskCopyInput(sub: TaskRecord, newParentId: string, projectId: string) {
+  return {
+    projectId,
+    parentTaskId: newParentId,
+    title: sub.title,
+    notes: sub.notes ?? undefined,
+    status: 'TODO' as const,
+    priority: sub.priority ?? 'NONE',
+    dueDate: sub.dueDate ?? undefined,
+    sortOrder: sub.sortOrder ?? 0,
+  };
+}

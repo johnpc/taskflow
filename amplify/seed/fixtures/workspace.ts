@@ -134,7 +134,9 @@ export const seedProjects: SeedProject[] = [
       // Read-only milestone anchor: its card always shows the ◆ marker.
       { title: 'Launch day', section: 'To do', priority: 'HIGH', isMilestone: true },
       // Dedicated duplicate target: only the duplicate area copies it.
-      { title: 'Clone me', section: 'To do', priority: 'MEDIUM' },
+      // Duplicate target: has a subtask so the duplicate area can assert the
+      // copy carries subtasks across (Asana copies subtasks).
+      { title: 'Clone me', section: 'To do', priority: 'MEDIUM', subtasks: ['Clone step one'] },
       // Dedicated highlight-color target: only the color area sets its color.
       { title: 'Color me', section: 'To do', priority: 'LOW' },
       // Dedicated comment target: only the comment-delete area posts here.
