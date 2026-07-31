@@ -31,11 +31,18 @@ export function dueStatus(
 
 /** Short, human due-date label, e.g. "Today", "Overdue", or "Aug 3". Injected
  * `today` keeps it deterministic. */
+/** The YYYY-MM-DD one calendar day after `date` (UTC). Pure. */
+function nextDay(date: string): string {
+  const [y, m, d] = date.split('-').map(Number);
+  return new Date(Date.UTC(y, m - 1, d + 1)).toISOString().slice(0, 10);
+}
+
 export function dueLabel(dueDate: string | null | undefined, today: string): string {
   const status = dueStatus(dueDate, today, false);
   if (status === 'none') return '';
   if (status === 'today') return 'Today';
   if (status === 'overdue') return 'Overdue';
+  if (dueDate === nextDay(today)) return 'Tomorrow';
   const [, m, d] = dueDate!.split('-').map(Number);
   const months = 'Jan Feb Mar Apr May Jun Jul Aug Sep Oct Nov Dec'.split(' ');
   return `${months[m - 1]} ${d}`;
