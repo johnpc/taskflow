@@ -15,3 +15,10 @@ Feature: Calendar
     Given a signed-in user
     When the user opens the calendar
     Then the calendar task "Plan Q3 goals" shows the project "Personal"
+
+  # "My assigned task" (Personal, due +4, assigned to the seed user) shows its
+  # assignee avatar on the calendar — the cross-project who-owns-it cue.
+  Scenario: A calendar task shows its assignee avatar
+    Given a signed-in user
+    When the user opens the calendar
+    Then the calendar task "My assigned task" shows an assignee avatar
