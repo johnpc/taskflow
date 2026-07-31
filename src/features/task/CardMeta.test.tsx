@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react';
 // CardMeta renders CardCustomFieldChips, which fetches via react-query; stub it
 // so CardMeta stays a pure presentational render in these tests.
 vi.mock('../customfields/CardCustomFieldChips', () => ({ CardCustomFieldChips: () => null }));
+vi.mock('./CardCover', () => ({ CardCover: () => null }));
 vi.mock('./AssigneeAvatar', () => ({ AssigneeAvatar: () => null }));
 import { CardMeta } from './CardMeta';
 import type { TaskRecord } from '../../lib/dataClient';

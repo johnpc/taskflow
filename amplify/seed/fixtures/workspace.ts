@@ -330,6 +330,14 @@ export const seedProjects: SeedProject[] = [
     sections: ['To do'],
     tasks: [{ title: 'Home upcoming anchor', section: 'To do', priority: 'LOW', dueOffsetDays: 1 }],
   },
+  // Dedicated project for the task cover-image flow: this area uploads a cover,
+  // so an isolated task keeps the image off a parallel run's anchors.
+  {
+    name: 'Cover Lab',
+    color: 'violet',
+    sections: ['To do'],
+    tasks: [{ title: 'Cover target', section: 'To do', priority: 'NONE' }],
+  },
   // Dedicated project for drag-to-reorder: two ordered cards only this area
   // touches, so reordering them can't disturb a parallel run.
   {

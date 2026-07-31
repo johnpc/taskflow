@@ -2,6 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { screen, fireEvent } from '@testing-library/react';
 // Stub the card's custom-field chips (react-query fetch) for bare renders.
 vi.mock('../customfields/CardCustomFieldChips', () => ({ CardCustomFieldChips: () => null }));
+vi.mock('../task/CardCover', () => ({ CardCover: () => null }));
 vi.mock('../task/AssigneeAvatar', () => ({ AssigneeAvatar: () => null }));
 import { BoardColumn } from './BoardColumn';
 import { renderWithProviders } from '../../test/renderWithProviders';

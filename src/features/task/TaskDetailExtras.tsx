@@ -1,6 +1,7 @@
 import { Attachments } from './Attachments';
 import { CustomFieldsRegion } from '../customfields/CustomFieldsRegion';
 import { Comments } from './Comments';
+import { CoverUpload } from './CoverUpload';
 import type { TaskDetailHook } from './useTaskDetail';
 import type { TaskRecord } from '../../lib/dataClient';
 
@@ -11,6 +12,7 @@ export function TaskDetailExtras({ task, hook }: { task: TaskRecord; hook: TaskD
   const { query, patch, comments, attachments } = hook;
   return (
     <>
+      <CoverUpload task={task} />
       <Attachments
         attachments={query.data?.attachments ?? []}
         busy={attachments.add.isPending}

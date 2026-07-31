@@ -1,6 +1,7 @@
 import { useHistory } from 'react-router-dom';
 import { CardTitle } from './CardTitle';
 import { CardMeta } from './CardMeta';
+import { CardCover } from './CardCover';
 import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 
 /** A task card's body: the (optionally-renamable) title that opens the task,
@@ -24,6 +25,7 @@ export function CardBody({
   const history = useHistory();
   return (
     <div className="task-card__body">
+      <CardCover task={task} />
       <CardTitle
         title={task.title}
         onOpen={() => history.push(`/tasks/${task.id}`)}

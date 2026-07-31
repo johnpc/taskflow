@@ -85,6 +85,9 @@ const schema = a.schema({
       // Optional highlight color (a --tf-proj-* palette key) — a left accent
       // stripe on the card for visual grouping. Null = no highlight.
       color: a.string(),
+      // Optional cover image: S3 key (under covers/) of a photo shown at the top
+      // of the card. Null = no cover. Resolved to a signed URL client-side.
+      coverKey: a.string(),
       dueDate: a.date(),
       // Optional time-of-day for the due date (HH:MM, 24h). A display refinement
       // on top of the date — bucketing (overdue/today/upcoming) stays date-level.
