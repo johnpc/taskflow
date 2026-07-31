@@ -10,6 +10,6 @@ Feature: Task activity log
   Scenario: Completing a task records an activity event
     Given a signed-in user
     And the user opens the "Activity Lab" project
-    When the user opens the task titled "Activity target"
+    When the user opens the activity task "Activity target"
     And the user marks the task done from its detail
     Then the activity feed shows a "completed" event
