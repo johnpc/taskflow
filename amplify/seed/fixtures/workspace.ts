@@ -80,10 +80,6 @@ export const seedProjects: SeedProject[] = [
       },
       { title: 'Set up analytics', section: 'In progress', priority: 'LOW', dueOffsetDays: 1 },
       { title: 'Reserve launch domain', section: 'Done', priority: 'NONE' },
-      // Dedicated activity-log anchor in this (first, always-warm) project — the
-      // activity area completes it; no other area touches it. Kept here rather
-      // than a late lab project whose board GSI can lag under peak CI load.
-      { title: 'Activity target', section: 'To do', priority: 'NONE' },
       // Stable anchor: NO acceptance scenario ever completes/moves this, so
       // cross-area "is visible" assertions stay valid on the shared sandbox even
       // as parallel areas mutate other tasks (hide-completed is default-on).
@@ -164,6 +160,15 @@ export const seedProjects: SeedProject[] = [
       // freshly-loaded board is the session's FIRST completion → fires confetti.
       { title: 'Celebrate me', section: 'To do', priority: 'LOW' },
     ],
+  },
+  // Dedicated activity-log project, placed EARLY (2nd) with a single-task board
+  // so its board loads fast + its GSI is warm — a task in a LATE, large project
+  // can lag the board read past the e2e timeout under peak CI acceptance load.
+  {
+    name: 'Activity Lab',
+    color: 'violet',
+    sections: ['To do'],
+    tasks: [{ title: 'Activity target', section: 'To do', priority: 'NONE' }],
   },
   {
     name: 'Website Redesign',
