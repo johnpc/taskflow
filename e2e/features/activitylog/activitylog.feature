@@ -3,13 +3,13 @@ Feature: Task activity log
   I want a log of what happened on a task
   So that I can see who did what and when
 
-  # "Activity target" (Product Launch — the first, always-warm project whose
-  # board many areas read reliably) is dedicated to this area; completing it
-  # generates a "completed" event and no other area touches it. The open step
-  # reloads-until-present to absorb any board-read GSI lag under peak CI load.
+  # Create the task LIVE via My Tasks quick-add (not a seeded anchor) so this
+  # doesn't depend on a fresh seed row's GSI having propagated to the board on
+  # the shared backend. Completing it records a "completed" activity event.
   Scenario: Completing a task records an activity event
     Given a signed-in user
-    And the user opens the "Product Launch" project
-    When the user opens the activity task "Activity target"
+    When the user opens My Tasks
+    And the user quick-adds "Activity capture 3b7e" to the "Product Launch" project
+    And the user opens the quick-added task "Activity capture 3b7e"
     And the user marks the task done from its detail
     Then the activity feed shows a "completed" event

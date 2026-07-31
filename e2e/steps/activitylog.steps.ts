@@ -3,20 +3,20 @@ import { createBdd } from 'playwright-bdd';
 
 const { When, Then } = createBdd();
 
-When('the user opens the activity task {string}', async ({ page }, title: string) => {
-  // The board's task read is a single GSI query; a just-seeded task can lag
-  // eventual consistency under peak CI load, leaving the column empty. The board
-  // only re-reads on reload, so reload until the card appears (bounded), then
-  // open it. (Locator polling alone can't re-trigger the react-query read.)
-  const card = page.getByTestId('task-card').filter({ hasText: title });
+When('the user opens the quick-added task {string}', async ({ page }, title: string) => {
+  // The task was just created live via quick-add (which invalidates My Tasks).
+  // First give the invalidation-driven refetch a chance (no reload — a reload
+  // would race the in-flight create); only reload if it hasn't shown, to absorb
+  // any read-your-write lag on the shared backend.
+  const row = page.getByTestId('task-card').filter({ hasText: title });
   await expect(async () => {
-    if ((await card.count()) === 0) {
-      await page.reload();
-      await expect(page.getByTestId('board')).toBeVisible({ timeout: 15_000 });
+    if (!(await row.count())) {
+      await page.waitForTimeout(2_000);
+      if (!(await row.count())) await page.reload();
     }
-    await expect(card.first()).toBeVisible({ timeout: 2_000 });
-  }).toPass({ timeout: 75_000 });
-  await card.first().getByTestId('task-open').click();
+    await expect(row.first()).toBeVisible({ timeout: 3_000 });
+  }).toPass({ timeout: 60_000 });
+  await row.first().getByTestId('task-open').click();
   await expect(page.getByTestId('task-detail')).toBeVisible({ timeout: 15_000 });
 });
 

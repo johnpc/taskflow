@@ -80,10 +80,6 @@ export const seedProjects: SeedProject[] = [
       },
       { title: 'Set up analytics', section: 'In progress', priority: 'LOW', dueOffsetDays: 1 },
       { title: 'Reserve launch domain', section: 'Done', priority: 'NONE' },
-      // Activity-log anchor in this first, always-warm project (its board is read
-      // reliably by many areas). The activity area completes it; no other area
-      // touches it. The e2e also reloads-until-present to absorb any GSI lag.
-      { title: 'Activity target', section: 'To do', priority: 'NONE' },
       // Stable anchor: NO acceptance scenario ever completes/moves this, so
       // cross-area "is visible" assertions stay valid on the shared sandbox even
       // as parallel areas mutate other tasks (hide-completed is default-on).
