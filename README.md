@@ -42,6 +42,8 @@ iOS and Android.
 | **Quick-edit**        | Set a due date and cycle priority straight from a card, no detail needed                                           | ✅     |
 | **Inline rename**     | Rename a task in place from its card (pencil), no detail needed                                                    | ✅     |
 | **Milestones**        | Mark a task a milestone; its card shows a ◆ marker for key checkpoints                                             | ✅     |
+| **Approvals**         | Mark a task Approved / Changes requested / Rejected; a colored outcome badge shows on the card                     | ✅     |
+| **Likes**             | Like a task or a comment with a heart; the count shows on the card and in the thread                               | ✅     |
 | **Highlight color**   | Give a task a color; its card gets a left accent stripe for visual grouping                                        | ✅     |
 | **Cover image**       | Upload a cover photo for a task; it shows as a banner on the board card                                            | ✅     |
 | **Subtasks**          | Checklist with a "2/3" chip; open a subtask + breadcrumb back; promote one to a task; confirm if incomplete        | ✅     |
