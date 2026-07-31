@@ -240,6 +240,8 @@ jobs:
             paths: .features-gen/e2e/features/profile
           - name: cover
             paths: .features-gen/e2e/features/cover
+          - name: mentions
+            paths: .features-gen/e2e/features/mentions
     steps:
       - uses: actions/checkout@v4
 
