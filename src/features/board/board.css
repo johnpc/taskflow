@@ -252,6 +252,20 @@
   color: var(--tf-text-muted);
 }
 
+/* Overdue/due-today dates read red/amber like Asana — on both the read-only
+ * label and the quick-edit date input. */
+.list-row__due--overdue,
+.list-row__due-input.list-row__due--overdue {
+  color: var(--tf-overdue);
+  border-color: var(--tf-overdue);
+}
+
+.list-row__due--today,
+.list-row__due-input.list-row__due--today {
+  color: var(--tf-priority-medium);
+  border-color: var(--tf-priority-medium);
+}
+
 .list-row__prio {
   display: inline-flex;
   align-items: center;
