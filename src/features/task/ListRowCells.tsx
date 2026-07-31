@@ -1,6 +1,7 @@
 import { PRIORITY_META, dueLabelWithTime, type Priority } from './taskMeta';
 import { todayISO } from './today';
 import { AssigneePicker } from './AssigneePicker';
+import { AssigneeName } from './AssigneeName';
 import type { TaskRecord } from '../../lib/dataClient';
 
 const PRIORITIES: Priority[] = ['NONE', 'LOW', 'MEDIUM', 'HIGH'];
@@ -24,9 +25,7 @@ export function ListRowCells({
   if (!onQuickEdit) {
     return (
       <>
-        <span className="list-row__assignee" data-testid="row-assignee">
-          {task.assigneeEmail ?? '—'}
-        </span>
+        <AssigneeName email={task.assigneeEmail} />
         <span className="list-row__due" data-testid="row-due">
           {dueLabelWithTime(task.dueDate, task.dueTime, todayISO()) ?? '—'}
         </span>

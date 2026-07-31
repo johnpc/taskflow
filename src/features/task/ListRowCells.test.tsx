@@ -1,5 +1,13 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
+
+// AssigneeName self-fetches (react-query) — stub it so this stays a bare render.
+vi.mock('./AssigneeName', () => ({
+  AssigneeName: ({ email }: { email: string | null }) => (
+    <span data-testid="row-assignee">{email ?? '—'}</span>
+  ),
+}));
+
 import { ListRowCells } from './ListRowCells';
 import type { TaskRecord } from '../../lib/dataClient';
 
