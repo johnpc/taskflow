@@ -142,6 +142,9 @@ const schema = a.schema({
       task: a.belongsTo('Task', 'taskId'),
       body: a.string().required(),
       authorEmail: a.string(),
+      // Likes (Asana hearts) on a comment: emails of members who liked it. Any
+      // member can toggle (project-scoped auth); the count is the array length.
+      likedBy: a.string().array(),
       // Mirrors the task's project members so every collaborator sees the thread.
       members: a.string().array(),
     })

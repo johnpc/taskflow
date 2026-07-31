@@ -206,6 +206,8 @@ jobs:
             paths: .features-gen/e2e/features/commentdelete
           - name: commentedit
             paths: .features-gen/e2e/features/commentedit
+          - name: commentlike
+            paths: .features-gen/e2e/features/commentlike
           - name: commenttime
             paths: .features-gen/e2e/features/commenttime
           - name: bulkmove

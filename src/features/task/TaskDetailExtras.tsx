@@ -10,7 +10,7 @@ import type { TaskRecord } from '../../lib/dataClient';
  * comments. Split from TaskDetailBody so that composer stays under the line
  * limit; all three read the loaded detail query + delegate mutations up. */
 export function TaskDetailExtras({ task, hook }: { task: TaskRecord; hook: TaskDetailHook }) {
-  const { query, patch, comments, attachments } = hook;
+  const { query, patch, comments, attachments, email } = hook;
   return (
     <>
       <CoverUpload task={task} />
@@ -29,9 +29,11 @@ export function TaskDetailExtras({ task, hook }: { task: TaskRecord; hook: TaskD
         comments={query.data?.comments ?? []}
         busy={comments.add.isPending}
         nowMs={Date.now()}
+        currentEmail={email}
         onPost={(body) => comments.add.mutate(body)}
         onEdit={(input) => comments.edit.mutate(input)}
         onDelete={(id) => comments.remove.mutate(id)}
+        onLike={(comment) => comments.like.mutate(comment)}
       />
       <ActivityFeed taskId={task.id} nowMs={Date.now()} />
     </>

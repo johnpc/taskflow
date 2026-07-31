@@ -162,6 +162,9 @@ export const seedProjects: SeedProject[] = [
       // Dedicated like target: only the likes area toggles its heart (like +
       // unlike leaves it back at zero, so it's idempotent across CI retries).
       { title: 'Like me', section: 'To do', priority: 'LOW' },
+      // Dedicated comment-like target: only the commentlike area posts + likes a
+      // comment here (separate from "Comment me", which the edit/delete areas use).
+      { title: 'Like comment me', section: 'To do', priority: 'LOW' },
     ],
   },
   {

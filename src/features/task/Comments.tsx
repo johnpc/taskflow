@@ -9,16 +9,20 @@ export function Comments({
   comments,
   busy,
   nowMs,
+  currentEmail,
   onPost,
   onEdit,
   onDelete,
+  onLike,
 }: {
   comments: CommentRecord[];
   busy: boolean;
   nowMs: number;
+  currentEmail: string | null;
   onPost: (body: string) => void;
   onEdit: (input: { id: string; body: string }) => void;
   onDelete: (id: string) => void;
+  onLike: (comment: CommentRecord) => void;
 }) {
   const [draft, setDraft] = useState('');
 
@@ -34,7 +38,15 @@ export function Comments({
       <h2 className="comments__head">Comments</h2>
       <ul className="comments__list">
         {comments.map((c) => (
-          <CommentRow key={c.id} comment={c} nowMs={nowMs} onEdit={onEdit} onDelete={onDelete} />
+          <CommentRow
+            key={c.id}
+            comment={c}
+            nowMs={nowMs}
+            currentEmail={currentEmail}
+            onEdit={onEdit}
+            onDelete={onDelete}
+            onLike={onLike}
+          />
         ))}
       </ul>
       <div className="comments__composer">
