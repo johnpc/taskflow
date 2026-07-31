@@ -41,3 +41,7 @@ Then('a comment reading {string} is visible', async ({ page }, body: string) => 
     timeout: 15_000,
   });
 });
+
+Then('the task shows the project breadcrumb {string}', async ({ page }, name: string) => {
+  await expect(page.getByTestId('task-project-crumb')).toHaveText(name, { timeout: 15_000 });
+});

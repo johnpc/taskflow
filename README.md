@@ -32,7 +32,7 @@ iOS and Android.
 | **Board**             | Kanban columns (To do / In progress / Done) with inline task creation; collapse a column to focus           | ✅     |
 | **List view**         | Asana columns; group by None/Section/Assignee/Due/Priority & sort by any; add a task in any grouping        | ✅     |
 | **Timeline**          | Gantt-style two-week view — dated tasks as bars; tap to open, drag a bar to reschedule                      | ✅     |
-| **Tasks**             | Title, notes, priority (Low→High), due dates with overdue/today/upcoming cues                               | ✅     |
+| **Tasks**             | Title, notes, priority (Low→High), due dates with overdue/today/upcoming cues; project breadcrumb           | ✅     |
 | **Start date**        | Give a task a start date; not-yet-started tasks show a "Starts Mon D" chip                                  | ✅     |
 | **Due presets**       | One-tap Today / Tomorrow / Next week due-date buttons                                                       | ✅     |
 | **Due time**          | Add a time of day to a due date; the card chip shows it (e.g. "Aug 3 2:00 PM")                              | ✅     |
