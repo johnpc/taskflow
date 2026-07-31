@@ -76,3 +76,15 @@ Then(
     });
   },
 );
+
+Then('the {string} column header lines up with its cells', async ({ page }, label: string) => {
+  // Guards the grid alignment: the Assignee header and a row's assignee cell
+  // must share (about) the same left edge — they regressed when `.task-card`'s
+  // flex display overrode the row's grid.
+  const header = page.getByTestId('list-sort-assignee').first();
+  const cell = page.getByTestId('row-assignee').first();
+  const [h, c] = [await header.boundingBox(), await cell.boundingBox()];
+  expect(label).toBe('Assignee');
+  expect(h && c).toBeTruthy();
+  expect(Math.abs(h!.x - c!.x)).toBeLessThan(8);
+});
