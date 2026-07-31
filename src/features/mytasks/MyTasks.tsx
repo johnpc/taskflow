@@ -2,6 +2,9 @@ import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/rea
 import { useMyTasks } from './useMyTasks';
 import { GroupBySegment } from './GroupBySegment';
 import { MyTasksBucket } from './MyTasksBucket';
+import { MyTasksQuickAdd } from './MyTasksQuickAdd';
+import { useQuickAdd } from './useQuickAdd';
+import { useProjects } from '../projects/useProjects';
 import { useProjectsById } from '../projects/useProjectsById';
 import { LoadState } from '../shell/LoadState';
 import { TabBar } from '../shell/TabBar';
@@ -28,6 +31,8 @@ export function MyTasks() {
     setBucket,
   } = useMyTasks();
   const projectsById = useProjectsById();
+  const projects = useProjects().data ?? [];
+  const quickAdd = useQuickAdd();
 
   return (
     <IonPage>
@@ -46,6 +51,7 @@ export function MyTasks() {
             </span>
           )}
         </p>
+        <MyTasksQuickAdd projects={projects} onAdd={(input) => quickAdd.mutate(input)} />
         <GroupBySegment mode={groupMode} onChange={setGroupMode} />
         <label className="mytasks__show-done">
           <input
