@@ -222,6 +222,8 @@ jobs:
             paths: .features-gen/e2e/features/members
           - name: celebration
             paths: .features-gen/e2e/features/celebration
+          - name: likes
+            paths: .features-gen/e2e/features/likes
           - name: savedviews
             paths: .features-gen/e2e/features/savedviews
           - name: customfields

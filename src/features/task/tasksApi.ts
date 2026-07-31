@@ -68,6 +68,7 @@ export async function updateTask(
       | 'sortOrder'
       | 'labelIds'
       | 'blockedByIds'
+      | 'likedBy'
       | 'repeat'
       | 'myBucket'
       | 'isMilestone'

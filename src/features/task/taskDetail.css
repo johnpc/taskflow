@@ -13,6 +13,38 @@
   gap: 10px;
 }
 
+/* Like (heart) toggle — sits under the header, self-aligned left. */
+.task-like {
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: -12px;
+  background: var(--tf-surface-2);
+  border: 1px solid var(--tf-border);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--tf-text-muted);
+  cursor: pointer;
+}
+
+.task-like[disabled] {
+  cursor: default;
+  opacity: 0.6;
+}
+
+.task-like--on {
+  color: var(--tf-overdue);
+  border-color: currentColor;
+  background: color-mix(in srgb, var(--tf-overdue) 12%, transparent);
+}
+
+.task-like__count {
+  font-variant-numeric: tabular-nums;
+}
+
 .task-header__check {
   background: none;
   border: none;
