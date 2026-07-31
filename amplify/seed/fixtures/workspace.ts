@@ -321,6 +321,15 @@ export const seedProjects: SeedProject[] = [
     sections: ['To do'],
     tasks: [{ title: 'Copy me', section: 'To do', priority: 'MEDIUM' }],
   },
+  // Dedicated Home upcoming-list anchor: due TOMORROW (+1, the soonest possible
+  // "upcoming"), so it's always within the Home top-5 no matter how many other
+  // dated tasks the seed grows. A read-only anchor no other area mutates.
+  {
+    name: 'Home Lab',
+    color: 'sky',
+    sections: ['To do'],
+    tasks: [{ title: 'Home upcoming anchor', section: 'To do', priority: 'LOW', dueOffsetDays: 1 }],
+  },
   // Dedicated project for drag-to-reorder: two ordered cards only this area
   // touches, so reordering them can't disturb a parallel run.
   {

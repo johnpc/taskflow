@@ -12,8 +12,9 @@ Feature: Home dashboard
     And the home dashboard shows the overdue stat
     And a home project shortcut "Product Launch" is visible
 
-  # "Design hero banner" is seeded due in 3 days (upcoming), so it shows in the
-  # Home "Coming up" list.
+  # "Home upcoming anchor" (Home Lab) is seeded due tomorrow — the soonest
+  # possible "upcoming", so it's always within the Home top-5 "Coming up" list
+  # no matter how many other dated tasks the seed grows.
   Scenario: The home dashboard lists upcoming tasks
     Given a signed-in user
-    Then a home upcoming task "Design hero banner" is visible
+    Then a home upcoming task "Home upcoming anchor" is visible
