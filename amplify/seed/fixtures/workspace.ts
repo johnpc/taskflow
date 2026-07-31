@@ -159,6 +159,9 @@ export const seedProjects: SeedProject[] = [
       // Dedicated completion target for the celebration area: completing it on a
       // freshly-loaded board is the session's FIRST completion → fires confetti.
       { title: 'Celebrate me', section: 'To do', priority: 'LOW' },
+      // Dedicated like target: only the likes area toggles its heart (like +
+      // unlike leaves it back at zero, so it's idempotent across CI retries).
+      { title: 'Like me', section: 'To do', priority: 'LOW' },
     ],
   },
   {

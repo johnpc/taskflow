@@ -112,6 +112,10 @@ const schema = a.schema({
       // Denormalized (like labelIds) so the board can flag "Blocked" without a
       // join — it already holds every task in the project.
       blockedByIds: a.string().array(),
+      // Likes (Asana hearts): the emails of members who liked this task. A heart
+      // toggle on the detail adds/removes the current user; the count is the
+      // array length. Any member can update (project-scoped auth).
+      likedBy: a.string().array(),
       // Subtasks: a task can have a parent task (self-relation).
       parentTaskId: a.id(),
       parent: a.belongsTo('Task', 'parentTaskId'),
