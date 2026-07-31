@@ -30,6 +30,7 @@ Feature: List view
     When the user switches to the list view
     Then the list shows a column header row
     And the list row "Column check" shows the priority "High"
+    And the "Assignee" column header lines up with its cells
 
   # Group by any column: switching the group-by to Priority re-buckets the rows
   # into priority groups. "Design hero banner" is seeded MEDIUM, so a
