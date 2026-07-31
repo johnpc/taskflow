@@ -69,6 +69,13 @@ describe('CardMeta', () => {
     expect(screen.getByTestId('task-likes')).toHaveTextContent('2');
   });
 
+  it('shows an approval badge only when an outcome is set', () => {
+    const { rerender } = render(<CardMeta task={task({ approval: 'NONE' })} labels={[]} />);
+    expect(screen.queryByTestId('task-approval-badge')).not.toBeInTheDocument();
+    rerender(<CardMeta task={task({ approval: 'APPROVED' })} labels={[]} />);
+    expect(screen.getByTestId('task-approval-badge')).toHaveTextContent('Approved');
+  });
+
   it('omits chips when nothing is set', () => {
     render(<CardMeta task={task({})} labels={[]} />);
     expect(screen.queryByTestId('task-blocked')).not.toBeInTheDocument();

@@ -120,6 +120,8 @@ jobs:
             paths: .features-gen/e2e/features/list
           - name: task
             paths: .features-gen/e2e/features/task
+          - name: approval
+            paths: .features-gen/e2e/features/approval
           - name: mytasks
             paths: .features-gen/e2e/features/mytasks
           - name: search
