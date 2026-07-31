@@ -36,6 +36,16 @@
   padding: 2px 4px;
 }
 
+.board-col__toggle {
+  display: inline-flex;
+  align-items: center;
+  background: none;
+  border: none;
+  padding: 0;
+  color: var(--tf-text-muted);
+  cursor: pointer;
+}
+
 .board-col__name {
   font-weight: 700;
   font-size: 0.95rem;

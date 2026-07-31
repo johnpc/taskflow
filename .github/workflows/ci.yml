@@ -242,6 +242,8 @@ jobs:
             paths: .features-gen/e2e/features/cover
           - name: mentions
             paths: .features-gen/e2e/features/mentions
+          - name: boardcollapse
+            paths: .features-gen/e2e/features/boardcollapse
     steps:
       - uses: actions/checkout@v4
 
