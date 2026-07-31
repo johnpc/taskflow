@@ -8,6 +8,7 @@ import { dataClient } from '../../lib/dataClient';
 export interface UserProfile {
   email: string;
   displayName: string | null;
+  avatarKey: string | null;
 }
 
 /** The raw first profile row for an email (with its id), or null. */
@@ -19,7 +20,12 @@ async function profileRow(email: string) {
 /** Fetch a single user's profile by email, or null if they haven't set one. */
 export async function fetchProfile(email: string): Promise<UserProfile | null> {
   const row = await profileRow(email);
-  return row ? { email: row.email, displayName: row.displayName ?? null } : null;
+  if (!row) return null;
+  return {
+    email: row.email,
+    displayName: row.displayName ?? null,
+    avatarKey: row.avatarKey ?? null,
+  };
 }
 
 /** Set the signed-in user's display name — updates their existing profile row or
@@ -29,4 +35,11 @@ export async function saveDisplayName(email: string, displayName: string): Promi
   const row = await profileRow(email);
   if (row) await dataClient.models.UserProfile.update({ id: row.id, displayName: name });
   else await dataClient.models.UserProfile.create({ email, displayName: name });
+}
+
+/** Persist the signed-in user's uploaded avatar S3 key (upsert their profile). */
+export async function saveAvatarKey(email: string, avatarKey: string): Promise<void> {
+  const row = await profileRow(email);
+  if (row) await dataClient.models.UserProfile.update({ id: row.id, avatarKey });
+  else await dataClient.models.UserProfile.create({ email, avatarKey });
 }

@@ -193,6 +193,9 @@ const schema = a.schema({
     .model({
       email: a.string().required(),
       displayName: a.string(),
+      // S3 key of the user's uploaded avatar (under avatars/{identity}/…); the
+      // client resolves it to a signed URL. Null = show the initials fallback.
+      avatarKey: a.string(),
     })
     .secondaryIndexes((index) => [index('email')])
     .authorization((allow) => [

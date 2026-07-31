@@ -16,3 +16,9 @@ Feature: Account profile
     When the user opens the You tab
     And the user sets their display name to "Test Person"
     Then the display name is saved
+
+  Scenario: Uploading a profile avatar
+    Given a signed-in user
+    When the user opens the You tab
+    And the user uploads an avatar image
+    Then the avatar image is shown

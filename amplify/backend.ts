@@ -3,6 +3,7 @@ import { ServicePrincipal } from 'aws-cdk-lib/aws-iam';
 import { auth } from './auth/resource';
 import { preTokenGeneration } from './auth/pre-token-generation/resource';
 import { data } from './data/resource';
+import { storage } from './storage/resource';
 
 /**
  * Taskflow backend.
@@ -18,6 +19,7 @@ const backend = defineBackend({
   auth,
   preTokenGeneration,
   data,
+  storage,
 });
 
 const fn = backend.preTokenGeneration.resources.lambda;

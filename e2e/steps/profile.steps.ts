@@ -36,3 +36,20 @@ Then('the display name is saved', async ({ page }) => {
     timeout: 15_000,
   });
 });
+
+When('the user uploads an avatar image', async ({ page }) => {
+  // A 1x1 PNG uploaded straight into the (hidden) file input.
+  const png = Buffer.from(
+    'iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mNk+M9QDwADhgGAWjR9awAAAABJRU5ErkJggg==',
+    'base64',
+  );
+  await page.getByTestId('avatar-file').setInputFiles({
+    name: 'avatar.png',
+    mimeType: 'image/png',
+    buffer: png,
+  });
+});
+
+Then('the avatar image is shown', async ({ page }) => {
+  await expect(page.getByTestId('avatar-image')).toBeVisible({ timeout: 20_000 });
+});

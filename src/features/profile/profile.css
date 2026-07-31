@@ -172,3 +172,39 @@
   font-size: 0.85rem;
   font-weight: 600;
 }
+
+/* Avatar upload on the You tab. */
+.avatar-upload {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.avatar-upload__img {
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  object-fit: cover;
+  border: 2px solid var(--tf-border);
+}
+
+.avatar-upload__btn {
+  background: none;
+  border: 1px solid var(--tf-border);
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--tf-accent-strong);
+  cursor: pointer;
+}
+
+.avatar-upload__btn:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.avatar-upload__file {
+  display: none;
+}
