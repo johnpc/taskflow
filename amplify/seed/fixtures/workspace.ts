@@ -167,10 +167,6 @@ export const seedProjects: SeedProject[] = [
       { title: 'Like comment me', section: 'To do', priority: 'LOW' },
       // Dedicated approval target: only the approval area sets its outcome.
       { title: 'Approve me', section: 'To do', priority: 'LOW' },
-      // Dedicated board multi-select targets: only the boardbulk area completes
-      // these (from the board, no list switch). Touched by no other area.
-      { title: 'Board bulk one', section: 'To do', priority: 'LOW' },
-      { title: 'Board bulk two', section: 'To do', priority: 'LOW' },
     ],
   },
   {
@@ -381,6 +377,18 @@ export const seedProjects: SeedProject[] = [
     color: 'amber',
     sections: ['To do'],
     tasks: [{ title: 'Existing quickadd task', section: 'To do', priority: 'NONE' }],
+  },
+  // Dedicated project for board multi-select: two cards only the boardbulk area
+  // completes, in a short single-column board so no scroll/contention with the
+  // busy Product Launch column (the earlier flake cause under parallel CI).
+  {
+    name: 'Board Bulk Lab',
+    color: 'sky',
+    sections: ['To do'],
+    tasks: [
+      { title: 'Board bulk one', section: 'To do', priority: 'LOW' },
+      { title: 'Board bulk two', section: 'To do', priority: 'LOW' },
+    ],
   },
   // Dedicated project for drag-to-reorder: two ordered cards only this area
   // touches, so reordering them can't disturb a parallel run.
