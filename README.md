@@ -49,7 +49,7 @@ iOS and Android.
 | **Dependencies**      | "Blocked by" + "Blocking" lines, board badge, and a confirm before completing early                         | ✅     |
 | **Recurring**         | Repeat daily/weekly/monthly (card shows the cadence); completing spawns the next                            | ✅     |
 | **Rich notes**        | Notes render **bold**, safe links, and [ ]/[x] checklists (XSS-guarded hrefs)                               | ✅     |
-| **Comments**          | Discuss on any task with relative timestamps; @mention teammates; edit or delete a comment                  | ✅     |
+| **Comments**          | Discuss on any task; **bold**, safe links & @mentions; relative timestamps; edit or delete                  | ✅     |
 | **Labels**            | Reusable colored tags; apply on task detail, chips render on every card                                     | ✅     |
 | **Move & assign**     | Move a task between sections/projects, assign it to any member; a name-resolved avatar shows on the card    | ✅     |
 | **Duplicate**         | Copy a task (title, notes, dates, labels, flags) into the same section                                      | ✅     |

@@ -8,3 +8,11 @@ Then('the comment mention {string} is highlighted', async ({ page }, mention: st
     page.getByTestId('comment-mention').filter({ hasText: mention }).first(),
   ).toBeVisible({ timeout: 15_000 });
 });
+
+Then('the comment bold text {string} is emphasized', async ({ page }, text: string) => {
+  await expect(page.locator('.comment__body strong').filter({ hasText: text }).first()).toBeVisible(
+    {
+      timeout: 15_000,
+    },
+  );
+});
