@@ -31,6 +31,25 @@ export async function addAttachment(input: {
   return data;
 }
 
+/** Attach an uploaded FILE to a task: record its S3 key (resolved to a signed
+ * URL at render) + the filename as the title. `url` holds a placeholder marker
+ * (the model requires it) — a file attachment renders from storageKey. */
+export async function addFileAttachment(input: {
+  taskId: string;
+  storageKey: string;
+  title: string;
+}): Promise<AttachmentRecord> {
+  const { data, errors } = await dataClient.models.Attachment.create({
+    taskId: input.taskId,
+    url: `file:${input.storageKey}`,
+    storageKey: input.storageKey,
+    title: input.title.trim() || undefined,
+    members: await membersForTask(input.taskId),
+  });
+  if (errors || !data) throw new Error(`Add file attachment failed: ${JSON.stringify(errors)}`);
+  return data;
+}
+
 /** Remove an attachment by id. */
 export async function removeAttachment(id: string): Promise<void> {
   const { errors } = await dataClient.models.Attachment.delete({ id });

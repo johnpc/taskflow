@@ -1,23 +1,27 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { safeHref } from './safeHref';
+import { AttachmentItem } from './AttachmentItem';
 import type { AttachmentRecord } from '../../lib/dataClient';
 
-/** Task-detail attachments: a list of link chips (title or url, safeHref-guarded)
- * each with a remove button, plus an add form (title + url). A url that fails
- * the safeHref guard is rejected on add. Delegates add/remove to the parent. */
+/** Task-detail attachments: a list of link + uploaded-file chips, each with a
+ * remove button, plus an add form (title + url link) and a file-upload button.
+ * A url that fails the safeHref guard is rejected on add. Delegates up. */
 export function Attachments({
   attachments,
   busy,
   onAdd,
+  onAddFile,
   onRemove,
 }: {
   attachments: AttachmentRecord[];
   busy: boolean;
   onAdd: (input: { url: string; title: string }) => void;
+  onAddFile: (file: File) => void;
   onRemove: (id: string) => void;
 }) {
   const [url, setUrl] = useState('');
   const [title, setTitle] = useState('');
+  const fileRef = useRef<HTMLInputElement>(null);
 
   const submit = () => {
     if (!safeHref(url)) return;
@@ -30,34 +34,9 @@ export function Attachments({
     <section className="attachments" data-testid="attachments">
       <h2 className="subtasks__head">Attachments</h2>
       <ul className="attachments__list">
-        {attachments.map((a) => {
-          const href = safeHref(a.url);
-          return (
-            <li key={a.id} className="attachment" data-testid="attachment">
-              {href ? (
-                <a
-                  className="attachment__link"
-                  href={href}
-                  target="_blank"
-                  rel="noreferrer noopener"
-                >
-                  {a.title || a.url}
-                </a>
-              ) : (
-                <span className="attachment__link attachment__link--bad">{a.title || a.url}</span>
-              )}
-              <button
-                type="button"
-                className="attachment__remove"
-                data-testid="attachment-remove"
-                aria-label={`Remove ${a.title || a.url}`}
-                onClick={() => onRemove(a.id)}
-              >
-                ✕
-              </button>
-            </li>
-          );
-        })}
+        {attachments.map((a) => (
+          <AttachmentItem key={a.id} attachment={a} onRemove={onRemove} />
+        ))}
       </ul>
       <div className="attachments__composer">
         <input
@@ -85,6 +64,25 @@ export function Attachments({
         >
           Attach
         </button>
+        <button
+          type="button"
+          className="attachments__upload"
+          data-testid="attachment-upload"
+          disabled={busy}
+          onClick={() => fileRef.current?.click()}
+        >
+          Upload file
+        </button>
+        <input
+          ref={fileRef}
+          type="file"
+          className="attachments__file"
+          data-testid="attachment-file"
+          onChange={(e) => {
+            const file = e.target.files?.[0];
+            if (file) onAddFile(file);
+          }}
+        />
       </div>
     </section>
   );

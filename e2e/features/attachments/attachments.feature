@@ -12,3 +12,12 @@ Feature: Task attachments
     When the user opens the task titled "Draft launch announcement"
     And the user attaches the link "https://taskflow.example/brief-7c2b" titled "Creative brief"
     Then a task attachment titled "Creative brief" links to "https://taskflow.example/brief-7c2b"
+
+  # Uploading a FILE creates an attachment rendered from its stored key (its
+  # filename is the label). Dedicated "File Attach Lab" task avoids cross-counting.
+  Scenario: Uploading a file attachment
+    Given a signed-in user
+    And the user opens the "File Attach Lab" project
+    When the user opens the task titled "File attach target"
+    And the user uploads a file attachment
+    Then a task attachment titled "note.txt" is shown
