@@ -24,6 +24,8 @@ export function BoardGrid({
   onQuickEdit,
   sections,
   drag,
+  selectedIds,
+  onSelect,
 }: {
   columns: Column[];
   labels?: LabelRecord[];
@@ -35,6 +37,8 @@ export function BoardGrid({
   onQuickEdit?: QuickEditFn;
   sections?: SectionHandlers;
   drag?: BoardDrag;
+  selectedIds?: Set<string>;
+  onSelect?: (id: string) => void;
 }) {
   return (
     <div className="board" data-testid="board">
@@ -51,6 +55,8 @@ export function BoardGrid({
           onQuickEdit={onQuickEdit}
           sections={sections}
           drag={drag}
+          selectedIds={selectedIds}
+          onSelect={onSelect}
         />
       ))}
     </div>

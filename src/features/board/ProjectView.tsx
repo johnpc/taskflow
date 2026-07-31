@@ -71,7 +71,7 @@ export function ProjectView() {
         <ViewToggle mode={mode} onChange={choose} />
         <FilterBar filter={filter} labels={board.labels} members={memberList} onChange={update} />
         <SavedViewsRegion projectId={id} filter={filter} onApply={replace} />
-        {mode === 'LIST' && bulk.selection.active && (
+        {bulk.selection.active && (
           <SelectionBar
             count={bulk.selection.count}
             sections={board.columns.map((c) => c.section)}

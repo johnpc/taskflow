@@ -167,6 +167,10 @@ export const seedProjects: SeedProject[] = [
       { title: 'Like comment me', section: 'To do', priority: 'LOW' },
       // Dedicated approval target: only the approval area sets its outcome.
       { title: 'Approve me', section: 'To do', priority: 'LOW' },
+      // Dedicated board multi-select targets: only the boardbulk area completes
+      // these (from the board, no list switch). Touched by no other area.
+      { title: 'Board bulk one', section: 'To do', priority: 'LOW' },
+      { title: 'Board bulk two', section: 'To do', priority: 'LOW' },
     ],
   },
   {

@@ -1,7 +1,5 @@
-import { IonIcon } from '@ionic/react';
-import { chevronDown, chevronForward } from 'ionicons/icons';
 import { AddCard } from './AddCard';
-import { SectionActions } from './SectionActions';
+import { BoardColumnHead } from './BoardColumnHead';
 import { ColumnCards } from './ColumnCards';
 import { useSectionCollapse } from './useSectionCollapse';
 import type { Column } from './taskGrouping';
@@ -24,6 +22,8 @@ export function BoardColumn({
   onQuickEdit,
   sections,
   drag,
+  selectedIds,
+  onSelect,
 }: {
   column: Column;
   labels?: LabelRecord[];
@@ -35,6 +35,8 @@ export function BoardColumn({
   onQuickEdit?: QuickEditFn;
   sections?: SectionHandlers;
   drag?: BoardDrag;
+  selectedIds?: Set<string>;
+  onSelect?: (id: string) => void;
 }) {
   const sectionId = column.section.id;
   const { open, toggle } = useSectionCollapse(sectionId, true);
@@ -55,27 +57,7 @@ export function BoardColumn({
       aria-label={column.section.name}
       {...dropProps}
     >
-      <header className="board-col__head">
-        <button
-          type="button"
-          className="board-col__toggle"
-          data-testid="board-col-toggle"
-          aria-expanded={open}
-          aria-label={open ? `Collapse ${column.section.name}` : `Expand ${column.section.name}`}
-          onClick={toggle}
-        >
-          <IonIcon icon={open ? chevronDown : chevronForward} aria-hidden="true" />
-        </button>
-        <span className="board-col__name">{column.section.name}</span>
-        <span className="board-col__count">{column.tasks.length}</span>
-        <SectionActions
-          name={column.section.name}
-          onRename={sections?.onRename && ((name) => sections.onRename!({ id: sectionId, name }))}
-          onDuplicate={sections?.onDuplicate && (() => sections.onDuplicate!(column.section))}
-          onDelete={sections?.onDelete && (() => sections.onDelete!(sectionId))}
-          onMove={sections?.onMove && ((direction) => sections.onMove!({ sectionId, direction }))}
-        />
-      </header>
+      <BoardColumnHead column={column} open={open} onToggle={toggle} sections={sections} />
       {open && (
         <>
           <ColumnCards
@@ -87,6 +69,8 @@ export function BoardColumn({
             onReorder={onReorder}
             onQuickEdit={onQuickEdit}
             drag={drag}
+            selectedIds={selectedIds}
+            onSelect={onSelect}
           />
           <AddCard
             busy={false}

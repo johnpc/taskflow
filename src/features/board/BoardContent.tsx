@@ -89,6 +89,8 @@ export function BoardContent({
       onQuickEdit={onQuickEdit}
       sections={sectionHandlers}
       drag={drag}
+      selectedIds={selectedIds}
+      onSelect={onSelect}
     />
   );
 }

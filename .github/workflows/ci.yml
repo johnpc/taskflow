@@ -164,6 +164,8 @@ jobs:
             paths: .features-gen/e2e/features/richnotes
           - name: bulk
             paths: .features-gen/e2e/features/bulk
+          - name: boardbulk
+            paths: .features-gen/e2e/features/boardbulk
           - name: dragdrop
             paths: .features-gen/e2e/features/dragdrop
           - name: undo

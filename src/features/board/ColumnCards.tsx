@@ -18,6 +18,8 @@ export function ColumnCards({
   onReorder,
   onQuickEdit,
   drag,
+  selectedIds,
+  onSelect,
 }: {
   column: Column;
   labels: LabelRecord[];
@@ -31,6 +33,8 @@ export function ColumnCards({
   }) => void;
   onQuickEdit?: QuickEditFn;
   drag?: BoardDrag;
+  selectedIds?: Set<string>;
+  onSelect?: (id: string) => void;
 }) {
   return (
     <ul className="board-col__list">
@@ -47,6 +51,8 @@ export function ColumnCards({
             ((direction) => onReorder({ columnTasks: column.tasks, taskId: task.id, direction }))
           }
           onQuickEdit={onQuickEdit && ((patch) => onQuickEdit(task.id, patch))}
+          selected={selectedIds?.has(task.id)}
+          onSelect={onSelect && (() => onSelect(task.id))}
           onDragStart={drag && (() => drag.onStart(task.id))}
           onDragEnd={drag && drag.onEnd}
           onDropTask={drag && (() => drag.onDropToTask(task.id))}
