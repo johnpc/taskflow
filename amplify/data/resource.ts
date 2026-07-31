@@ -183,6 +183,22 @@ const schema = a.schema({
     })
     .secondaryIndexes((index) => [index('projectId')])
     .authorization((allow) => [allow.ownersDefinedIn('members').identityClaim('email')]),
+
+  // A user's public-within-the-workspace profile: their display name, keyed by
+  // email so members can resolve a friendly name for an assignee/collaborator.
+  // Any signed-in user can READ (to render names on shared work); only the
+  // owner can write their own. Kept separate from Cognito attributes, which are
+  // only readable by their owner.
+  UserProfile: a
+    .model({
+      email: a.string().required(),
+      displayName: a.string(),
+    })
+    .secondaryIndexes((index) => [index('email')])
+    .authorization((allow) => [
+      allow.owner().to(['create', 'update', 'read']),
+      allow.authenticated().to(['read']),
+    ]),
 });
 
 export type Schema = ClientSchema<typeof schema>;

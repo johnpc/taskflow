@@ -10,3 +10,9 @@ Feature: Account profile
     When the user opens the You tab
     And the user submits a password change with current "wrongpass9" and new "brandnew12345"
     Then the password change shows an error
+
+  Scenario: Setting a display name
+    Given a signed-in user
+    When the user opens the You tab
+    And the user sets their display name to "Test Person"
+    Then the display name is saved
