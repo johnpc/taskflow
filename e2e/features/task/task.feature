@@ -12,6 +12,7 @@ Feature: Task detail
     When the user opens the task titled "Draft launch announcement"
     Then the task detail title is "Draft launch announcement"
     And the task shows the project breadcrumb "Product Launch"
+    And the task detail due date is flagged overdue
 
   Scenario: Adding a subtask persists
     Given a signed-in user

@@ -28,6 +28,15 @@ describe('TaskFields', () => {
     expect(onPatch).toHaveBeenCalledWith({ dueDate: null, dueTime: null });
   });
 
+  it('flags an overdue due date, not a far-future one', () => {
+    const { rerender } = render(
+      <TaskFields task={task({ dueDate: '2000-01-01' })} onPatch={vi.fn()} />,
+    );
+    expect(screen.getByTestId('task-due-input')).toHaveClass('task-fields__date--overdue');
+    rerender(<TaskFields task={task({ dueDate: '2999-01-01' })} onPatch={vi.fn()} />);
+    expect(screen.getByTestId('task-due-input')).not.toHaveClass('task-fields__date--overdue');
+  });
+
   it('patches the due time and disables it without a date', () => {
     const onPatch = vi.fn();
     const { rerender } = render(<TaskFields task={task({})} onPatch={onPatch} />);
