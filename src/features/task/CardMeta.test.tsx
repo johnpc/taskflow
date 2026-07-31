@@ -62,6 +62,13 @@ describe('CardMeta', () => {
     expect(screen.getByTestId('task-repeat-badge')).toHaveTextContent('Weekly');
   });
 
+  it('shows a like count only when the task has likes', () => {
+    const { rerender } = render(<CardMeta task={task({})} labels={[]} />);
+    expect(screen.queryByTestId('task-likes')).not.toBeInTheDocument();
+    rerender(<CardMeta task={task({ likedBy: ['a@x.co', 'b@x.co'] })} labels={[]} />);
+    expect(screen.getByTestId('task-likes')).toHaveTextContent('2');
+  });
+
   it('omits chips when nothing is set', () => {
     render(<CardMeta task={task({})} labels={[]} />);
     expect(screen.queryByTestId('task-blocked')).not.toBeInTheDocument();

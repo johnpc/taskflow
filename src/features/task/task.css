@@ -121,6 +121,16 @@
   padding: 2px 8px;
 }
 
+/* Like count on a card (Asana hearts) — shown only when a task has likes. */
+.task-card__likes {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--tf-overdue);
+  background: color-mix(in srgb, var(--tf-overdue) 12%, transparent);
+  border-radius: 999px;
+  padding: 2px 8px;
+}
+
 .task-card__cf {
   font-size: 0.72rem;
   font-weight: 600;

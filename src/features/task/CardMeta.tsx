@@ -1,6 +1,7 @@
 import { dueLabelWithTime, dueStatus, isDone, startsInFuture, startLabel } from './taskMeta';
 import { todayISO } from './today';
 import { repeats, REPEAT_META, type Repeat } from './recurrence';
+import { likeCount } from './taskLikes';
 import { projectColorVar } from '../projects/projectColors';
 import { LabelChips } from '../labels/LabelChips';
 import { CardCustomFieldChips } from '../customfields/CardCustomFieldChips';
@@ -29,6 +30,7 @@ export function CardMeta({
   const notStarted = startsInFuture(task.startDate, today, done);
   const due = dueLabelWithTime(task.dueDate, task.dueTime, today);
   const dueKind = dueStatus(task.dueDate, today, done);
+  const likes = likeCount(task.likedBy);
   return (
     <span className="task-card__meta">
       {project && (
@@ -75,6 +77,11 @@ export function CardMeta({
       {repeats(task.repeat as Repeat) && (
         <span className="task-card__repeat" data-testid="task-repeat-badge" aria-label="Repeats">
           ↻ {REPEAT_META[task.repeat as Repeat]}
+        </span>
+      )}
+      {likes > 0 && (
+        <span className="task-card__likes" data-testid="task-likes" aria-label={`${likes} likes`}>
+          ♥ {likes}
         </span>
       )}
       <LabelChips labels={labels} />
