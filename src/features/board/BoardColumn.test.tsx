@@ -37,6 +37,21 @@ describe('BoardColumn', () => {
     expect(screen.getByTestId('board-column')).toHaveTextContent('1');
   });
 
+  it('collapses to hide its cards and add composer when toggled', () => {
+    renderWithProviders(
+      <BoardColumn
+        column={column([task({ id: 'a', title: 'Alpha' })])}
+        onAddTask={vi.fn()}
+        onToggleDone={vi.fn()}
+      />,
+    );
+    expect(screen.getByText('Alpha')).toBeInTheDocument();
+    fireEvent.click(screen.getByTestId('board-col-toggle'));
+    expect(screen.queryByText('Alpha')).not.toBeInTheDocument();
+    expect(screen.queryByTestId('add-card')).not.toBeInTheDocument();
+    expect(screen.getByText('To do')).toBeInTheDocument();
+  });
+
   it('adds a task with the next order', () => {
     const onAddTask = vi.fn();
     renderWithProviders(
