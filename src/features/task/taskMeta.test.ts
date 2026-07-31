@@ -46,7 +46,13 @@ describe('dueLabel', () => {
     expect(dueLabel('2026-07-28', today)).toBe('Today');
     expect(dueLabel('2026-07-01', today)).toBe('Overdue');
   });
-  it('formats a future date as Mon D', () => {
+  it('labels tomorrow with a friendly word', () => {
+    expect(dueLabel('2026-07-29', today)).toBe('Tomorrow');
+  });
+  it('crosses month boundaries for tomorrow', () => {
+    expect(dueLabel('2026-08-01', '2026-07-31')).toBe('Tomorrow');
+  });
+  it('formats a further-out date as Mon D', () => {
     expect(dueLabel('2026-08-03', today)).toBe('Aug 3');
   });
 });
