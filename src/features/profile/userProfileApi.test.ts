@@ -11,7 +11,7 @@ vi.mock('../../lib/dataClient', () => ({
   },
 }));
 
-import { fetchProfile, saveDisplayName } from './userProfileApi';
+import { fetchProfile, saveDisplayName, saveAvatarKey } from './userProfileApi';
 
 beforeEach(() => {
   list.mockReset();
@@ -21,8 +21,20 @@ beforeEach(() => {
 
 describe('userProfileApi', () => {
   it('fetchProfile returns the display name for an email', async () => {
-    list.mockResolvedValue({ data: [{ id: 'p1', email: 'a@x.co', displayName: 'Ada' }] });
-    expect(await fetchProfile('a@x.co')).toEqual({ email: 'a@x.co', displayName: 'Ada' });
+    list.mockResolvedValue({
+      data: [{ id: 'p1', email: 'a@x.co', displayName: 'Ada', avatarKey: 'avatars/x/a.jpg' }],
+    });
+    expect(await fetchProfile('a@x.co')).toEqual({
+      email: 'a@x.co',
+      displayName: 'Ada',
+      avatarKey: 'avatars/x/a.jpg',
+    });
+  });
+
+  it('saveAvatarKey updates an existing row', async () => {
+    list.mockResolvedValue({ data: [{ id: 'p1', email: 'a@x.co' }] });
+    await saveAvatarKey('a@x.co', 'avatars/x/a.jpg');
+    expect(update).toHaveBeenCalledWith({ id: 'p1', avatarKey: 'avatars/x/a.jpg' });
   });
 
   it('fetchProfile returns null when no profile exists', async () => {

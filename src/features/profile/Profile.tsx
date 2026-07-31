@@ -4,6 +4,7 @@ import { useAuth } from '../auth/useAuth';
 import { ThemeToggle } from '../settings/ThemeToggle';
 import { ChangePassword } from './ChangePassword';
 import { DisplayNameField } from './DisplayNameField';
+import { AvatarUpload } from './AvatarUpload';
 import { TabBar } from '../shell/TabBar';
 import { useDocumentTitle } from '../shell/useDocumentTitle';
 import './profile.css';
@@ -28,9 +29,7 @@ export function Profile() {
       </IonHeader>
       <IonContent className="ion-padding">
         <div className="profile" data-testid="profile">
-          <div className="profile__avatar" aria-hidden="true">
-            {(email ?? '?').charAt(0).toUpperCase()}
-          </div>
+          <AvatarUpload fallback={(email ?? '?').charAt(0).toUpperCase()} />
           <p className="profile__email tf-heading" data-testid="profile-email">
             {email ?? 'Signed in'}
           </p>
