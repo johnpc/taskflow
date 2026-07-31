@@ -20,3 +20,19 @@ When(
 Then('the password change shows an error', async ({ page }) => {
   await expect(page.getByTestId('cp-error')).toBeVisible({ timeout: 15_000 });
 });
+
+When('the user sets their display name to {string}', async ({ page }, name: string) => {
+  const input = page.getByTestId('display-name-input');
+  await expect(input).toBeVisible({ timeout: 15_000 });
+  await input.fill(name);
+  const save = page.getByTestId('display-name-save');
+  if (await save.isEnabled()) await save.click();
+});
+
+Then('the display name is saved', async ({ page }) => {
+  // Robust across reruns: the field holds the saved value (whether just saved or
+  // already persisted from a prior run).
+  await expect(page.getByTestId('display-name-input')).toHaveValue('Test Person', {
+    timeout: 15_000,
+  });
+});

@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 import { useAuth } from '../auth/useAuth';
 import { ThemeToggle } from '../settings/ThemeToggle';
 import { ChangePassword } from './ChangePassword';
+import { DisplayNameField } from './DisplayNameField';
 import { TabBar } from '../shell/TabBar';
 import { useDocumentTitle } from '../shell/useDocumentTitle';
 import './profile.css';
@@ -33,6 +34,11 @@ export function Profile() {
           <p className="profile__email tf-heading" data-testid="profile-email">
             {email ?? 'Signed in'}
           </p>
+
+          <section className="profile__section">
+            <h2 className="profile__section-head">Display name</h2>
+            <DisplayNameField />
+          </section>
 
           <section className="profile__section">
             <h2 className="profile__section-head">Appearance</h2>

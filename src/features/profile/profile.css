@@ -133,3 +133,42 @@
 .change-password__msg--err {
   color: var(--tf-danger);
 }
+
+/* Display-name editor on the You tab. */
+.display-name {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  max-width: 360px;
+}
+
+.display-name__input {
+  flex: 1;
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius-sm);
+  padding: 8px 10px;
+  font-size: 0.9rem;
+  background: var(--tf-surface);
+  color: var(--tf-text);
+}
+
+.display-name__save {
+  background: var(--tf-accent);
+  color: var(--tf-accent-contrast);
+  border: none;
+  border-radius: var(--tf-radius-sm);
+  padding: 8px 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.display-name__save:disabled {
+  opacity: 0.5;
+  cursor: default;
+}
+
+.display-name__ok {
+  color: var(--tf-done);
+  font-size: 0.85rem;
+  font-weight: 600;
+}
