@@ -1,4 +1,5 @@
 import { ParentBreadcrumb } from './ParentBreadcrumb';
+import { ProjectCrumb } from './ProjectCrumb';
 import { TaskHeader } from './TaskHeader';
 import { TaskActivity } from './TaskActivity';
 import { TaskFields } from './TaskFields';
@@ -30,14 +31,19 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
   const { deleteTask, duplicateTask, openTask } = useTaskDetailNav(task, hook);
   const subtasks = query.data?.subtasks ?? [];
   const warning = completeWarning(blocked, subtasks);
+  const projectName = (projects.data ?? []).find((p) => p.id === task.projectId)?.name;
 
   return (
     <div className="task-detail" data-testid="task-detail">
-      <ParentBreadcrumb
-        parentTaskId={task.parentTaskId}
-        onOpen={openTask}
-        onPromote={() => promote.mutate(task)}
-      />
+      {task.parentTaskId ? (
+        <ParentBreadcrumb
+          parentTaskId={task.parentTaskId}
+          onOpen={openTask}
+          onPromote={() => promote.mutate(task)}
+        />
+      ) : (
+        <ProjectCrumb projectId={task.projectId} projectName={projectName} />
+      )}
       <TaskHeader
         task={task}
         warning={warning}

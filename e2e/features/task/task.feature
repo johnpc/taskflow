@@ -11,6 +11,7 @@ Feature: Task detail
     And the user opens the "Product Launch" project
     When the user opens the task titled "Draft launch announcement"
     Then the task detail title is "Draft launch announcement"
+    And the task shows the project breadcrumb "Product Launch"
 
   Scenario: Adding a subtask persists
     Given a signed-in user
