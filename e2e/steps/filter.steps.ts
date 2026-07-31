@@ -16,3 +16,7 @@ When('the user filters the board to {string} priority', async ({ page }, priorit
 When('the user filters the board to the assignee {string}', async ({ page }, email: string) => {
   await page.getByTestId('filter-assignee').selectOption(email);
 });
+
+When('the user clears the board filters', async ({ page }) => {
+  await page.getByTestId('filter-clear').click();
+});

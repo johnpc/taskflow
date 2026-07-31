@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { applyFilter, DEFAULT_FILTER } from './taskFilter';
+import { applyFilter, DEFAULT_FILTER, activeFilterCount, clearedFilter } from './taskFilter';
 import type { TaskRecord } from '../../lib/dataClient';
 
 const task = (over: Partial<TaskRecord>): TaskRecord =>
@@ -101,5 +101,34 @@ describe('applyFilter', () => {
     expect(applyFilter(tasks, { ...DEFAULT_FILTER, assignee: '_none' }).map((t) => t.id)).toEqual([
       'none',
     ]);
+  });
+});
+
+describe('activeFilterCount', () => {
+  it('counts only narrowing facets, ignoring hideDone + sort', () => {
+    expect(activeFilterCount(DEFAULT_FILTER)).toBe(0);
+    expect(activeFilterCount({ ...DEFAULT_FILTER, hideDone: false, sort: 'due' })).toBe(0);
+    expect(activeFilterCount({ ...DEFAULT_FILTER, priority: 'HIGH', assignee: 'a@x.co' })).toBe(2);
+  });
+});
+
+describe('clearedFilter', () => {
+  it('resets facets but preserves hideDone + sort', () => {
+    const cleared = clearedFilter({
+      hideDone: false,
+      sort: 'due',
+      labelId: 'l',
+      priority: 'HIGH',
+      dueWindow: 'today',
+      assignee: 'a@x.co',
+    });
+    expect(cleared).toEqual({
+      hideDone: false,
+      sort: 'due',
+      labelId: '',
+      priority: '',
+      dueWindow: '',
+      assignee: '',
+    });
   });
 });

@@ -38,4 +38,26 @@ describe('FilterBar', () => {
     );
     expect(screen.getByTestId('toggle-completed')).toHaveTextContent('Hide completed');
   });
+
+  it('hides the clear-filters chip when no facets are active', () => {
+    render(<FilterBar filter={DEFAULT_FILTER} labels={labels} onChange={vi.fn()} />);
+    expect(screen.queryByTestId('filter-clear')).toBeNull();
+  });
+
+  it('shows a count and clears facets (keeping hideDone + sort)', () => {
+    const onChange = vi.fn();
+    render(
+      <FilterBar
+        filter={{ ...DEFAULT_FILTER, hideDone: false, sort: 'due', priority: 'HIGH', labelId: 'x' }}
+        labels={labels}
+        onChange={onChange}
+      />,
+    );
+    const clear = screen.getByTestId('filter-clear');
+    expect(clear).toHaveTextContent('Clear filters (2)');
+    fireEvent.click(clear);
+    expect(onChange).toHaveBeenCalledWith(
+      expect.objectContaining({ priority: '', labelId: '', hideDone: false, sort: 'due' }),
+    );
+  });
 });
