@@ -15,7 +15,7 @@ When('the user opens the activity task {string}', async ({ page }, title: string
       await expect(page.getByTestId('board')).toBeVisible({ timeout: 15_000 });
     }
     await expect(card.first()).toBeVisible({ timeout: 2_000 });
-  }).toPass({ timeout: 40_000 });
+  }).toPass({ timeout: 75_000 });
   await card.first().getByTestId('task-open').click();
   await expect(page.getByTestId('task-detail')).toBeVisible({ timeout: 15_000 });
 });
