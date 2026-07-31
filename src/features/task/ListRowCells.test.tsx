@@ -36,4 +36,14 @@ describe('ListRowCells', () => {
     expect(screen.queryByTestId('row-due-input')).not.toBeInTheDocument();
     expect(screen.queryByTestId('task-assignee-select')).not.toBeInTheDocument();
   });
+
+  it('flags an overdue due date on the editable Due input', () => {
+    render(<ListRowCells task={task({ dueDate: '2000-01-01' })} onQuickEdit={vi.fn()} />);
+    expect(screen.getByTestId('row-due-input')).toHaveClass('list-row__due--overdue');
+  });
+
+  it('does not flag a far-future due date', () => {
+    render(<ListRowCells task={task({ dueDate: '2999-01-01' })} onQuickEdit={vi.fn()} />);
+    expect(screen.getByTestId('row-due-input')).not.toHaveClass('list-row__due--overdue');
+  });
 });

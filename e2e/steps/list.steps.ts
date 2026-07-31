@@ -77,6 +77,17 @@ Then(
   },
 );
 
+Then('the list row {string} shows an overdue due date', async ({ page }, title: string) => {
+  const row = page
+    .getByTestId('task-card')
+    .filter({ has: page.getByTestId('task-open').getByText(title, { exact: true }) })
+    .first();
+  // The overdue date reads red via the --overdue modifier on the Due cell.
+  await expect(row.getByTestId('row-due-input')).toHaveClass(/list-row__due--overdue/, {
+    timeout: 15_000,
+  });
+});
+
 Then('the {string} column header lines up with its cells', async ({ page }, label: string) => {
   // Guards the grid alignment: the Assignee header and a row's assignee cell
   // must share (about) the same left edge — they regressed when `.task-card`'s
