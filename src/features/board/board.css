@@ -171,7 +171,12 @@
  * up. On narrow screens the fixed columns shrink but never wrap. */
 .list-row {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) 140px 130px 110px;
+  /* Lead column is FIXED (not `auto`) so the header row — whose lead is empty —
+   * and each task row — whose lead holds the complete ring + optional select
+   * box — resolve the same first-column width. With `auto`, the two independent
+   * grids sized column 1 differently, shifting Assignee/Due/Priority out from
+   * under their headers. */
+  grid-template-columns: 44px minmax(0, 1fr) 140px 130px 110px;
   align-items: center;
   gap: 10px;
 }
@@ -208,6 +213,7 @@
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  min-width: 0;
 }
 
 .list-row__task {
@@ -302,6 +308,15 @@ li.list-row {
   border-radius: var(--tf-radius-sm);
   box-shadow: var(--tf-shadow);
   padding: 10px 14px;
+  /* A list row also carries `.task-card` (for shared card styling + testids),
+   * whose `display:flex` has equal specificity to `.list-row`'s `display:grid`
+   * and was winning by source order — collapsing the grid so cells no longer
+   * lined up under their headers. Re-assert the grid at higher specificity
+   * (li.list-row) so the columns match the header row exactly. */
+  display: grid;
+  grid-template-columns: 44px minmax(0, 1fr) 140px 130px 110px;
+  align-items: center;
+  gap: 10px;
 }
 
 li.list-row.task-card--done .task-card__title {
