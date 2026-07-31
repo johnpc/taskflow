@@ -53,7 +53,7 @@ iOS and Android.
 | **Labels**            | Reusable colored tags; apply on task detail, chips render on every card                                     | ✅     |
 | **Move & assign**     | Move a task between sections/projects, assign it to any member; a name-resolved avatar shows on the card    | ✅     |
 | **Duplicate**         | Copy a task (title, notes, dates, labels, flags) into the same section                                      | ✅     |
-| **Copy link**         | Copy a task's shareable deep link from its detail, with "Copied!" feedback                                  | ✅     |
+| **Copy link**         | Copy a task's deep link (with "Copied!" feedback) or a project's link from its board menu                   | ✅     |
 | **Delete task**       | Delete a task (with confirm) from its detail; it leaves the board                                           | ✅     |
 | **My Tasks**          | Open tasks across projects — quick-add into any project, group, completed, filter to assigned-to-me         | ✅     |
 | **Focus plan**        | File tasks into Today / Upcoming / Later in My Tasks — drag between buckets or pick                         | ✅     |

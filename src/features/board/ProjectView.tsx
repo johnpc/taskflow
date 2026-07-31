@@ -8,6 +8,7 @@ import { useListSort } from './useListSort';
 import { useBoardFilter } from './useBoardFilter';
 import { useProjectEdit } from './useProjectEdit';
 import { useProjectActions } from './useProjectActions';
+import { projectLink } from './projectLink';
 import { useToggleFavorite } from '../projects/useProjects';
 import { ViewToggle } from './ViewToggle';
 import { FilterBar } from './FilterBar';
@@ -48,6 +49,9 @@ export function ProjectView() {
         onToggleFavorite={() =>
           project.data && favorite.mutate({ id, favorite: !project.data.favorite })
         }
+        onCopyLink={() => {
+          void navigator.clipboard?.writeText(projectLink(window.location.origin, id));
+        }}
         onDuplicate={() => project.data && actions.duplicate.mutate(project.data)}
         onArchive={actions.archiveAndLeave}
         onDelete={actions.deleteAndLeave}

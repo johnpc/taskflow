@@ -19,6 +19,7 @@ export function ProjectTopBar({
   project,
   members = [],
   onToggleFavorite,
+  onCopyLink,
   onDuplicate,
   onArchive,
   onDelete,
@@ -26,6 +27,7 @@ export function ProjectTopBar({
   project?: ProjectRecord;
   members?: string[];
   onToggleFavorite: () => void;
+  onCopyLink: () => void;
   onDuplicate: () => void;
   onArchive: () => void;
   onDelete: () => void;
@@ -49,7 +51,12 @@ export function ProjectTopBar({
           >
             <IonIcon slot="icon-only" icon={fav ? star : starOutline} />
           </IonButton>
-          <ProjectMenu onDuplicate={onDuplicate} onArchive={onArchive} onDelete={onDelete} />
+          <ProjectMenu
+            onCopyLink={onCopyLink}
+            onDuplicate={onDuplicate}
+            onArchive={onArchive}
+            onDelete={onDelete}
+          />
         </IonButtons>
       </IonToolbar>
     </IonHeader>
