@@ -64,7 +64,7 @@ iOS and Android.
 | **Celebration**       | A confetti burst on completing a task (intermittent; respects reduced-motion)                               | ✅     |
 | **Completed view**    | Per-project archive of done tasks (with when), each reopenable                                              | ✅     |
 | **Activity**          | Created / completed timestamps + an activity feed (who created / completed / reopened, when)                | ✅     |
-| **Filter & sort**     | Hide/show completed, filter by label / priority / due / assignee, sort by due or priority                   | ✅     |
+| **Filter & sort**     | Hide/show completed, filter by label / priority / due / assignee, sort; a "Clear filters (N)" reset         | ✅     |
 | **Saved views**       | Save a filter/sort combo as a named view per project; re-apply or delete in one tap                         | ✅     |
 | **Custom fields**     | Manage text/select/number/date fields from the board; fill per task; values chip on cards + list rows       | ✅     |
 | **Dark mode**         | Follows your OS, with an in-app Light / Dark / System override                                              | ✅     |

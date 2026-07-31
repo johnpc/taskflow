@@ -1,4 +1,5 @@
 import { FilterFacets } from './FilterFacets';
+import { activeFilterCount, clearedFilter } from './taskFilter';
 import type { BoardFilter, SortKey } from './taskFilter';
 import type { LabelRecord } from '../../lib/dataClient';
 import './board.css';
@@ -17,6 +18,7 @@ export function FilterBar({
   members?: string[];
   onChange: (patch: Partial<BoardFilter>) => void;
 }) {
+  const active = activeFilterCount(filter);
   return (
     <div className="filter-bar" data-testid="filter-bar">
       <button
@@ -52,6 +54,16 @@ export function FilterBar({
         <option value="due">Sort by due date</option>
         <option value="priority">Sort by priority</option>
       </select>
+      {active > 0 && (
+        <button
+          type="button"
+          className="filter-bar__clear"
+          data-testid="filter-clear"
+          onClick={() => onChange(clearedFilter(filter))}
+        >
+          Clear filters ({active})
+        </button>
+      )}
     </div>
   );
 }

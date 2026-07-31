@@ -23,6 +23,16 @@ Feature: Board filter and sort
     Then a task titled "Draft launch announcement" is visible on the board
     And a task titled "Design hero banner" is not visible
 
+  # Clearing filters: after filtering to High, "Clear filters" resets the facet
+  # and the dropped Medium task returns.
+  Scenario: Clearing an active board filter
+    Given a signed-in user
+    And the user opens the "Product Launch" project
+    When the user filters the board to "HIGH" priority
+    Then a task titled "Design hero banner" is not visible
+    When the user clears the board filters
+    Then a task titled "Design hero banner" is visible on the board
+
   # Filter by assignee (shared project only): "Team Board" has the seed user +
   # teammate@example.com; "Teammate task" is assigned to the teammate and
   # "Owner task" to the seed user, so filtering to the teammate drops "Owner task".

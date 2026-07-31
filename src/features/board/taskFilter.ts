@@ -30,6 +30,19 @@ export const DEFAULT_FILTER: BoardFilter = {
   sort: 'manual',
 };
 
+/** How many narrowing facets are active (label / priority / due window /
+ * assignee). Excludes hideDone + sort, which are always-present view controls,
+ * not "filters" the user needs reminding to clear. Pure. */
+export function activeFilterCount(filter: BoardFilter): number {
+  return [filter.labelId, filter.priority, filter.dueWindow, filter.assignee].filter(Boolean)
+    .length;
+}
+
+/** Reset only the narrowing facets, preserving hideDone + sort. Pure. */
+export function clearedFilter(filter: BoardFilter): BoardFilter {
+  return { ...filter, labelId: '', priority: '', dueWindow: '', assignee: '' };
+}
+
 const PRIORITY_RANK: Record<string, number> = { HIGH: 0, MEDIUM: 1, LOW: 2, NONE: 3 };
 
 /** Whether a task passes the chosen assignee filter ('' = any, '_none' =
