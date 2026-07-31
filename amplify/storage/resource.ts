@@ -17,5 +17,7 @@ export const storage = defineStorage({
       allow.authenticated.to(['read']),
     ],
     'covers/*': [allow.authenticated.to(['read', 'write', 'delete'])],
+    // Uploaded task file attachments — shared media on member-scoped tasks.
+    'attachments/*': [allow.authenticated.to(['read', 'write', 'delete'])],
   }),
 });

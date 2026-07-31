@@ -15,8 +15,9 @@ export function TaskDetailExtras({ task, hook }: { task: TaskRecord; hook: TaskD
       <CoverUpload task={task} />
       <Attachments
         attachments={query.data?.attachments ?? []}
-        busy={attachments.add.isPending}
+        busy={attachments.add.isPending || attachments.addFile.isPending}
         onAdd={(input) => attachments.add.mutate(input)}
+        onAddFile={(file) => attachments.addFile.mutate(file)}
         onRemove={(id) => attachments.remove.mutate(id)}
       />
       <CustomFieldsRegion

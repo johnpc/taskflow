@@ -45,7 +45,7 @@ iOS and Android.
 | **Highlight color**   | Give a task a color; its card gets a left accent stripe for visual grouping                                 | ✅     |
 | **Cover image**       | Upload a cover photo for a task; it shows as a banner on the board card                                     | ✅     |
 | **Subtasks**          | Checklist with a "2/3" chip; open a subtask + breadcrumb back; promote one to a task; confirm if incomplete | ✅     |
-| **Attachments**       | Attach labelled links to a task; each opens in a new tab (XSS-guarded hrefs)                                | ✅     |
+| **Attachments**       | Attach labelled links or upload files to a task; each opens in a new tab (XSS-guarded hrefs)                | ✅     |
 | **Dependencies**      | "Blocked by" + "Blocking" lines, board badge, and a confirm before completing early                         | ✅     |
 | **Recurring**         | Repeat daily/weekly/monthly (card shows the cadence); completing spawns the next                            | ✅     |
 | **Rich notes**        | Notes render **bold**, safe links, and [ ]/[x] checklists (XSS-guarded hrefs)                               | ✅     |

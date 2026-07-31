@@ -338,6 +338,14 @@ export const seedProjects: SeedProject[] = [
     sections: ['To do'],
     tasks: [{ title: 'Cover target', section: 'To do', priority: 'NONE' }],
   },
+  // Dedicated project for uploading a FILE attachment (separate task from the
+  // link-attachment anchor so parallel scenarios don't cross-count rows).
+  {
+    name: 'File Attach Lab',
+    color: 'sky',
+    sections: ['To do'],
+    tasks: [{ title: 'File attach target', section: 'To do', priority: 'NONE' }],
+  },
   // Dedicated project for drag-to-reorder: two ordered cards only this area
   // touches, so reordering them can't disturb a parallel run.
   {

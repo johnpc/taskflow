@@ -43,7 +43,11 @@ function makeHook() {
     remove: { mutate: vi.fn() },
     duplicate: { mutate: vi.fn(), isPending: false },
     labels: { query: { data: [] }, create: { mutate: vi.fn() } },
-    attachments: { add: { mutate: vi.fn(), isPending: false }, remove: { mutate: vi.fn() } },
+    attachments: {
+      add: { mutate: vi.fn(), isPending: false },
+      addFile: { mutate: vi.fn(), isPending: false },
+      remove: { mutate: vi.fn() },
+    },
     projects: { data: [{ id: 'p', name: 'Product Launch' }] },
     move: { mutate: vi.fn() },
   };

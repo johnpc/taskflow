@@ -7,7 +7,12 @@ vi.mock('../../lib/dataClient', () => ({
   },
 }));
 
-import { fetchAttachments, addAttachment, removeAttachment } from './attachmentsApi';
+import {
+  fetchAttachments,
+  addAttachment,
+  addFileAttachment,
+  removeAttachment,
+} from './attachmentsApi';
 
 beforeEach(() => {
   list.mockReset();
@@ -38,6 +43,18 @@ describe('attachmentsApi', () => {
   it('throws when add errors', async () => {
     create.mockResolvedValue({ data: null, errors: [{ message: 'x' }] });
     await expect(addAttachment({ taskId: 't', url: 'https://x.co', title: 'T' })).rejects.toThrow();
+  });
+
+  it('adds a file attachment with a placeholder url + storageKey', async () => {
+    create.mockResolvedValue({ data: { id: 'f' }, errors: null });
+    await addFileAttachment({ taskId: 't', storageKey: 'attachments/t/doc.pdf', title: 'doc.pdf' });
+    expect(create).toHaveBeenCalledWith({
+      taskId: 't',
+      url: 'file:attachments/t/doc.pdf',
+      storageKey: 'attachments/t/doc.pdf',
+      title: 'doc.pdf',
+      members: [],
+    });
   });
 
   it('removes an attachment by id', async () => {

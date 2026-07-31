@@ -21,3 +21,19 @@ Then(
     await expect(link).toHaveAttribute('href', url);
   },
 );
+
+When('the user uploads a file attachment', async ({ page }) => {
+  // Idempotent for CI retries: skip if this task already has the file row.
+  if ((await page.getByTestId('attachment').filter({ hasText: 'note.txt' }).count()) > 0) return;
+  await page.getByTestId('attachment-file').setInputFiles({
+    name: 'note.txt',
+    mimeType: 'text/plain',
+    buffer: Buffer.from('hello from taskflow'),
+  });
+});
+
+Then('a task attachment titled {string} is shown', async ({ page }, title: string) => {
+  await expect(page.getByTestId('attachment').filter({ hasText: title }).first()).toBeVisible({
+    timeout: 20_000,
+  });
+});

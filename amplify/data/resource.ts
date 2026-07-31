@@ -152,7 +152,11 @@ const schema = a.schema({
     .model({
       taskId: a.id().required(),
       task: a.belongsTo('Task', 'taskId'),
+      // A link attachment stores its href in `url`; an uploaded FILE stores its
+      // S3 key in `storageKey` (resolved to a signed URL at render) and a
+      // placeholder in `url`. `title` is the label (filename for files).
       url: a.string().required(),
+      storageKey: a.string(),
       title: a.string(),
       // Mirrors the task's project members so every collaborator sees the link.
       members: a.string().array(),
