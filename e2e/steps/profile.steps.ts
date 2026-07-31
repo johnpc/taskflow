@@ -24,17 +24,18 @@ Then('the password change shows an error', async ({ page }) => {
 When('the user sets their display name to {string}', async ({ page }, name: string) => {
   const input = page.getByTestId('display-name-input');
   await expect(input).toBeVisible({ timeout: 15_000 });
+  // Force a change (clear → fill) so Save is always dirty/enabled — a click
+  // always fires a real mutation, even on a rerun where the name is unchanged.
+  await input.fill('');
   await input.fill(name);
-  const save = page.getByTestId('display-name-save');
-  if (await save.isEnabled()) await save.click();
+  await page.getByTestId('display-name-save').click();
 });
 
 Then('the display name is saved', async ({ page }) => {
-  // Robust across reruns: the field holds the saved value (whether just saved or
-  // already persisted from a prior run).
-  await expect(page.getByTestId('display-name-input')).toHaveValue('Test Person', {
-    timeout: 15_000,
-  });
+  // The "Saved" marker only shows on a CONFIRMED mutation success (isSuccess +
+  // not dirty) — so this waits for the server write to actually land, not just
+  // the local input value or the ambiguous mid-flight disabled state.
+  await expect(page.getByTestId('display-name-ok')).toBeVisible({ timeout: 15_000 });
 });
 
 When('the user uploads an avatar image', async ({ page }) => {
@@ -52,4 +53,14 @@ When('the user uploads an avatar image', async ({ page }) => {
 
 Then('the avatar image is shown', async ({ page }) => {
   await expect(page.getByTestId('avatar-image')).toBeVisible({ timeout: 20_000 });
+});
+
+Then('a member avatar for {string} is shown', async ({ page }, name: string) => {
+  // The resolved name is the avatar element's own title attribute.
+  await expect(
+    page
+      .getByTestId('member-avatar')
+      .and(page.locator(`[title="${name}"]`))
+      .first(),
+  ).toBeVisible({ timeout: 15_000 });
 });

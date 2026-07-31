@@ -50,7 +50,7 @@ iOS and Android.
 | **Rich notes**        | Notes render **bold**, safe links, and [ ]/[x] checklists (XSS-guarded hrefs)                               | ✅     |
 | **Comments**          | Discuss on any task with relative timestamps; edit or delete a comment                                      | ✅     |
 | **Labels**            | Reusable colored tags; apply on task detail, chips render on every card                                     | ✅     |
-| **Move & assign**     | Move a task between sections/projects, assign it to any member; an initials avatar shows on the card        | ✅     |
+| **Move & assign**     | Move a task between sections/projects, assign it to any member; a name-resolved avatar shows on the card    | ✅     |
 | **Duplicate**         | Copy a task (title, notes, dates, labels, flags) into the same section                                      | ✅     |
 | **Copy link**         | Copy a task's shareable deep link from its detail, with "Copied!" feedback                                  | ✅     |
 | **Delete task**       | Delete a task (with confirm) from its detail; it leaves the board                                           | ✅     |
@@ -68,7 +68,7 @@ iOS and Android.
 | **Custom fields**     | Manage text/select/number/date fields from the board; fill per task; values chip on cards + list rows       | ✅     |
 | **Dark mode**         | Follows your OS, with an in-app Light / Dark / System override                                              | ✅     |
 | **Accounts**          | "You" tab: upload an avatar, set a display name, change your password, switch theme, or sign out            | ✅     |
-| **Sharing**           | Invite people by email; every member sees & edits its board; a header avatar stack shows who's on it        | ✅     |
+| **Sharing**           | Invite people by email; a header avatar stack (display-name-resolved) shows who's on the project            | ✅     |
 | **Shortcuts**         | Keyboard nav — `g` then h/p/t/c to jump around, `/` to search, `?` for help                                 | ✅     |
 
 ## The vision

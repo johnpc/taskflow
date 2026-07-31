@@ -1,4 +1,4 @@
-import { assigneeInitials } from '../task/assigneeInitials';
+import { MemberAvatar } from './MemberAvatar';
 import './board.css';
 
 /** An overlapping stack of member initials-avatars for the project header — an
@@ -16,14 +16,7 @@ export function MemberAvatars({ members, max = 4 }: { members: string[]; max?: n
       aria-label={`${members.length} members`}
     >
       {shown.map((email) => (
-        <span
-          key={email}
-          className="member-avatars__item"
-          data-testid="member-avatar"
-          title={email}
-        >
-          {assigneeInitials(email)}
-        </span>
+        <MemberAvatar key={email} email={email} />
       ))}
       {extra > 0 && (
         <span

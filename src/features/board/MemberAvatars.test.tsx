@@ -1,6 +1,19 @@
-import { describe, it, expect } from 'vitest';
+import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { render, screen } from '@testing-library/react';
+
+// MemberAvatar self-fetches its display via useProfileDisplay — stub it so this
+// stays a bare render; echo initials from the email's first two letters.
+const { useProfileDisplay } = vi.hoisted(() => ({ useProfileDisplay: vi.fn() }));
+vi.mock('../profile/useProfileDisplay', () => ({ useProfileDisplay }));
+
 import { MemberAvatars } from './MemberAvatars';
+
+beforeEach(() =>
+  useProfileDisplay.mockImplementation((email: string) => ({
+    label: email,
+    initials: (email ?? '').slice(0, 2).toUpperCase(),
+  })),
+);
 
 describe('MemberAvatars', () => {
   it('renders nothing for a solo or empty project', () => {
@@ -10,12 +23,9 @@ describe('MemberAvatars', () => {
     expect(none).toBeEmptyDOMElement();
   });
 
-  it('shows one initials avatar per member', () => {
-    render(<MemberAvatars members={['ada.lovelace@x.co', 'grace@x.co']} />);
-    const avatars = screen.getAllByTestId('member-avatar');
-    expect(avatars).toHaveLength(2);
-    expect(avatars[0]).toHaveTextContent('AL');
-    expect(avatars[1]).toHaveTextContent('GR');
+  it('shows one avatar per member', () => {
+    render(<MemberAvatars members={['ada@x.co', 'grace@x.co']} />);
+    expect(screen.getAllByTestId('member-avatar')).toHaveLength(2);
   });
 
   it('caps the stack and shows a "+N" overflow chip', () => {
