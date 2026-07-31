@@ -1,6 +1,7 @@
 import { dueLabelWithTime } from '../task/taskMeta';
 import { todayISO } from '../task/today';
 import { projectColorVar } from '../projects/projectColors';
+import { AssigneeAvatar } from '../task/AssigneeAvatar';
 import type { ProjectRef } from '../projects/useProjectsById';
 import type { TaskRecord } from '../../lib/dataClient';
 
@@ -31,6 +32,7 @@ export function SearchHit({
           </span>
         )}
         {due && <span className="search__hit-due">{due}</span>}
+        <AssigneeAvatar email={task.assigneeEmail} />
       </span>
     </button>
   );

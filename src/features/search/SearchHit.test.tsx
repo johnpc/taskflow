@@ -1,5 +1,9 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
+
+// AssigneeAvatar self-fetches (react-query) — stub it for these bare renders.
+vi.mock('../task/AssigneeAvatar', () => ({ AssigneeAvatar: () => null }));
+
 import { SearchHit } from './SearchHit';
 import type { TaskRecord } from '../../lib/dataClient';
 
