@@ -725,3 +725,26 @@
 .cover-upload__file {
   display: none;
 }
+
+/* Task activity feed (created / completed / reopened events). */
+.activity-feed__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.activity-feed__item {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  font-size: 0.85rem;
+  color: var(--tf-text-muted);
+}
+
+.activity-feed__when {
+  flex: 0 0 auto;
+  font-size: 0.78rem;
+}

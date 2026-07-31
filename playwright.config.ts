@@ -38,7 +38,10 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   reporter: process.env.CI ? [['list'], ['html', { open: 'never' }]] : 'list',
-  timeout: 60_000,
+  // 90s per test: most finish in seconds, but a few flows reload-until a
+  // just-seeded task's GSI entry propagates on the shared backend under peak CI
+  // load, which can take longer than the 60s default in the worst case.
+  timeout: 90_000,
   // Reads against the shared backend can exceed Playwright's 5s default; give
   // assertions and actions more headroom so genuine slowness isn't a failure.
   expect: { timeout: 15_000 },

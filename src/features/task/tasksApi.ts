@@ -4,7 +4,7 @@
  */
 import { dataClient, type TaskRecord } from '../../lib/dataClient';
 import { spawnNextOccurrence } from './spawnRecurrence';
-import { duplicateInput } from './duplicateInput';
+import { logTaskEvent } from './taskEventsApi';
 import { membersForProject } from '../auth/members';
 
 export type { TaskRecord } from '../../lib/dataClient';
@@ -29,18 +29,8 @@ export async function createTask(input: {
     members: await membersForProject(input.projectId),
   });
   if (errors || !data) throw new Error(`Create task failed: ${JSON.stringify(errors)}`);
-  return data;
-}
-
-/** Duplicate a task: a fresh TODO copy in the same section (see duplicateInput
- * for what carries over). Returns the new task. */
-export async function duplicateTask(task: TaskRecord, order: number): Promise<TaskRecord> {
-  const members = await membersForProject(task.projectId);
-  const { data, errors } = await dataClient.models.Task.create({
-    ...duplicateInput(task, order),
-    members,
-  });
-  if (errors || !data) throw new Error(`Duplicate task failed: ${JSON.stringify(errors)}`);
+  // Best-effort activity log — never fail the create if the event write does.
+  await logTaskEvent(data.id, 'CREATED').catch(() => undefined);
   return data;
 }
 
@@ -53,6 +43,8 @@ export async function setTaskDone(id: string, done: boolean, now: string): Promi
     completedAt: done ? now : null,
   });
   if (errors) throw new Error(`Update task failed: ${JSON.stringify(errors)}`);
+  // Best-effort activity log for the completion toggle.
+  await logTaskEvent(id, done ? 'COMPLETED' : 'REOPENED').catch(() => undefined);
   // Completing a recurring task rolls its next occurrence forward. Uses the
   // record the mutation returned (read-your-write) — never a stale re-read.
   if (done) await spawnNextOccurrence(data);
