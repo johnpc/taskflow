@@ -244,6 +244,8 @@ jobs:
             paths: .features-gen/e2e/features/mentions
           - name: boardcollapse
             paths: .features-gen/e2e/features/boardcollapse
+          - name: activitylog
+            paths: .features-gen/e2e/features/activitylog
     steps:
       - uses: actions/checkout@v4
 

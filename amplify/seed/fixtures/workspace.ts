@@ -362,6 +362,14 @@ export const seedProjects: SeedProject[] = [
     sections: ['To do'],
     tasks: [{ title: 'Existing quickadd task', section: 'To do', priority: 'NONE' }],
   },
+  // Dedicated project for the activity-log flow: this area completes a task to
+  // generate an event, so an isolated task keeps its state off other areas.
+  {
+    name: 'Activity Lab',
+    color: 'violet',
+    sections: ['To do'],
+    tasks: [{ title: 'Activity target', section: 'To do', priority: 'NONE' }],
+  },
   // Dedicated project for drag-to-reorder: two ordered cards only this area
   // touches, so reordering them can't disturb a parallel run.
   {

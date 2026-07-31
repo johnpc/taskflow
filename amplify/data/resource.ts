@@ -209,6 +209,19 @@ const schema = a.schema({
       allow.owner().to(['create', 'update', 'read']),
       allow.authenticated().to(['read']),
     ]),
+
+  // An activity-log entry on a task: who did what, when (created / completed /
+  // reopened). Written on the task's create + done-toggle paths; the detail
+  // renders them as a feed. Member-scoped like the task, ordered by createdAt.
+  TaskEvent: a
+    .model({
+      taskId: a.id().required(),
+      kind: a.enum(['CREATED', 'COMPLETED', 'REOPENED']),
+      actorEmail: a.string(),
+      members: a.string().array(),
+    })
+    .secondaryIndexes((index) => [index('taskId')])
+    .authorization((allow) => [allow.ownersDefinedIn('members').identityClaim('email')]),
 });
 
 export type Schema = ClientSchema<typeof schema>;

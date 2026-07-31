@@ -26,7 +26,8 @@ vi.mock('./taskDetailApi', () => ({
   deleteComment,
   updateComment: vi.fn(),
 }));
-vi.mock('./tasksApi', () => ({ createTask, setTaskDone, updateTask, deleteTask, duplicateTask }));
+vi.mock('./tasksApi', () => ({ createTask, setTaskDone, updateTask, deleteTask }));
+vi.mock('./duplicateTaskApi', () => ({ duplicateTask }));
 vi.mock('../auth/useAuth', () => ({ useAuth: () => ({ email: 'me@x.co' }) }));
 
 import { hookWrapper } from '../../test/hookWrapper';

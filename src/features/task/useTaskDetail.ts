@@ -1,6 +1,7 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
 import { fetchTaskDetail } from './taskDetailApi';
-import { createTask, setTaskDone, updateTask, deleteTask, duplicateTask } from './tasksApi';
+import { createTask, setTaskDone, updateTask, deleteTask } from './tasksApi';
+import { duplicateTask } from './duplicateTaskApi';
 import { promoteSubtask } from './promoteSubtask';
 import { useAttachments } from './useAttachments';
 import { useComments } from './useComments';
@@ -25,6 +26,7 @@ export function useTaskDetail(id: string) {
     qc.invalidateQueries({ queryKey: ['board'] });
     qc.invalidateQueries({ queryKey: ['my-tasks'] });
     qc.invalidateQueries({ queryKey: ['project-tasks'] });
+    qc.invalidateQueries({ queryKey: ['task-events', id] });
   };
 
   const patch = useMutation({

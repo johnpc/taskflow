@@ -63,7 +63,7 @@ iOS and Android.
 | **Undo**              | An undo toast after completing a task — one tap to bring it back                                            | ✅     |
 | **Celebration**       | A confetti burst on completing a task (intermittent; respects reduced-motion)                               | ✅     |
 | **Completed view**    | Per-project archive of done tasks (with when), each reopenable                                              | ✅     |
-| **Activity**          | Created / completed relative timestamps on task detail                                                      | ✅     |
+| **Activity**          | Created / completed timestamps + an activity feed (who created / completed / reopened, when)                | ✅     |
 | **Filter & sort**     | Hide/show completed, filter by label / priority / due / assignee, sort by due or priority                   | ✅     |
 | **Saved views**       | Save a filter/sort combo as a named view per project; re-apply or delete in one tap                         | ✅     |
 | **Custom fields**     | Manage text/select/number/date fields from the board; fill per task; values chip on cards + list rows       | ✅     |

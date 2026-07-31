@@ -2,6 +2,7 @@ import { Attachments } from './Attachments';
 import { CustomFieldsRegion } from '../customfields/CustomFieldsRegion';
 import { Comments } from './Comments';
 import { CoverUpload } from './CoverUpload';
+import { ActivityFeed } from './ActivityFeed';
 import type { TaskDetailHook } from './useTaskDetail';
 import type { TaskRecord } from '../../lib/dataClient';
 
@@ -32,6 +33,7 @@ export function TaskDetailExtras({ task, hook }: { task: TaskRecord; hook: TaskD
         onEdit={(input) => comments.edit.mutate(input)}
         onDelete={(id) => comments.remove.mutate(id)}
       />
+      <ActivityFeed taskId={task.id} nowMs={Date.now()} />
     </>
   );
 }
