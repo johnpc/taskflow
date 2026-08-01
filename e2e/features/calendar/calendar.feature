@@ -22,3 +22,13 @@ Feature: Calendar
     Given a signed-in user
     When the user opens the calendar
     Then the calendar task "My assigned task" shows an assignee avatar
+
+  # Paging a week forward moves "Plan Q3 goals" (+5d) out of the window; the
+  # "Today" button brings the current window (and the task) back.
+  Scenario: Paging the calendar forward and back
+    Given a signed-in user
+    When the user opens the calendar
+    And the user pages the calendar to the next week
+    Then a calendar task "Plan Q3 goals" is not visible
+    When the user returns the calendar to today
+    Then a calendar task "Plan Q3 goals" is visible

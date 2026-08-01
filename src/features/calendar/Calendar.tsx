@@ -13,7 +13,7 @@ import './calendar.css';
 export function Calendar() {
   useDocumentTitle('Calendar');
   const history = useHistory();
-  const { query, days } = useCalendar();
+  const { query, days, atStart, prevWeek, nextWeek, goToday } = useCalendar();
   const projectsById = useProjectsById();
 
   return (
@@ -24,7 +24,38 @@ export function Calendar() {
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">
-        <h1 className="tf-heading calendar__title">The next two weeks</h1>
+        <div className="calendar__nav">
+          <h1 className="tf-heading calendar__title">Two weeks</h1>
+          <span className="calendar__nav-controls">
+            <button
+              type="button"
+              className="calendar__nav-btn"
+              data-testid="calendar-prev"
+              aria-label="Previous week"
+              disabled={atStart}
+              onClick={prevWeek}
+            >
+              ‹
+            </button>
+            <button
+              type="button"
+              className="calendar__nav-btn"
+              data-testid="calendar-today"
+              onClick={goToday}
+            >
+              Today
+            </button>
+            <button
+              type="button"
+              className="calendar__nav-btn"
+              data-testid="calendar-next"
+              aria-label="Next week"
+              onClick={nextWeek}
+            >
+              ›
+            </button>
+          </span>
+        </div>
         <LoadState
           isLoading={query.isLoading}
           isError={query.isError}

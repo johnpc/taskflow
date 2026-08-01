@@ -1,5 +1,5 @@
 import { describe, it, expect } from 'vitest';
-import { horizonDates } from './horizon';
+import { horizonDates, shiftDate } from './horizon';
 
 describe('horizonDates', () => {
   it('lists count days from the start inclusive', () => {
@@ -12,5 +12,13 @@ describe('horizonDates', () => {
 
   it('returns a single day for count 1', () => {
     expect(horizonDates('2026-07-30', 1)).toEqual(['2026-07-30']);
+  });
+});
+
+describe('shiftDate', () => {
+  it('shifts forward and back, month-safe', () => {
+    expect(shiftDate('2026-07-30', 7)).toBe('2026-08-06');
+    expect(shiftDate('2026-08-06', -7)).toBe('2026-07-30');
+    expect(shiftDate('2026-07-30', 0)).toBe('2026-07-30');
   });
 });
