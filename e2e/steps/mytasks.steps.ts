@@ -26,6 +26,14 @@ When('the user filters My Tasks to following', async ({ page }) => {
   await page.getByTestId('mytasks-following-only').check();
 });
 
+When('the user collapses the {string} bucket', async ({ page }, label: string) => {
+  await page
+    .getByTestId('mytasks-summary') // ensure the page is loaded
+    .waitFor({ timeout: 15_000 });
+  const head = page.getByTestId('bucket-toggle').filter({ hasText: label }).first();
+  await head.click();
+});
+
 When('the user sorts My Tasks by {string}', async ({ page }, label: string) => {
   await page.getByTestId('mytasks-sort-key').selectOption({ label });
 });

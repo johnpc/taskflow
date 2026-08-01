@@ -84,4 +84,22 @@ describe('MyTasksBucket', () => {
     fireEvent.drop(screen.getByTestId('bucket-TODAY'), { dataTransfer: data });
     expect(onSetBucket).not.toHaveBeenCalled();
   });
+
+  it('collapses and expands its cards via the header toggle', () => {
+    localStorage.clear();
+    renderWithProviders(
+      <MyTasksBucket
+        bucket={bucket}
+        showFocusPicker={false}
+        projectsById={projectsById}
+        onToggleDone={vi.fn()}
+        onSetBucket={vi.fn()}
+      />,
+    );
+    expect(screen.getByText('Ship it')).toBeInTheDocument();
+    fireEvent.click(screen.getByTestId('bucket-toggle'));
+    expect(screen.queryByText('Ship it')).not.toBeInTheDocument();
+    fireEvent.click(screen.getByTestId('bucket-toggle'));
+    expect(screen.getByText('Ship it')).toBeInTheDocument();
+  });
 });
