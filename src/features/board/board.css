@@ -111,6 +111,19 @@
   margin-bottom: 16px;
 }
 
+/* Divider that separates the relocated project overview from the board above it,
+   so the board reads as the hero and the settings as a distinct section below. */
+.project-overview-head {
+  margin: 32px 0 12px;
+  padding-top: 20px;
+  border-top: 1px solid var(--tf-border);
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--tf-text-muted);
+}
+
 .view-toggle {
   display: inline-flex;
   gap: 4px;
