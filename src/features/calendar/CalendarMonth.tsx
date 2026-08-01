@@ -1,13 +1,18 @@
 import { useCalendarMonth } from './useCalendarMonth';
+import { useCalendarDrag } from './useCalendarDrag';
+import { useCalendarReschedule } from './useCalendarReschedule';
 import { CalendarCell } from './CalendarCell';
 import { LoadState } from '../shell/LoadState';
 
 const WEEKDAYS = 'Sun Mon Tue Wed Thu Fri Sat'.split(' ');
 
 /** The month-grid view: a Sunday-first calendar matrix with each day's dated
- * tasks as chips, paging a month at a time. Renders only. */
+ * tasks as chips, paging a month at a time. Drag a chip onto another day to
+ * reschedule it. Renders only. */
 export function CalendarMonth() {
   const { query, weeks, title, atStart, prevMonth, nextMonth, goThisMonth } = useCalendarMonth();
+  const reschedule = useCalendarReschedule();
+  const drag = useCalendarDrag((patch) => reschedule.mutate(patch));
 
   return (
     <>
@@ -56,7 +61,7 @@ export function CalendarMonth() {
             </div>
           ))}
           {weeks.flat().map((cell) => (
-            <CalendarCell key={cell.date} cell={cell} />
+            <CalendarCell key={cell.date} cell={cell} drag={drag} />
           ))}
         </div>
       </LoadState>
