@@ -20,6 +20,10 @@ export function useBulkSelection(board: ReturnType<typeof useBoard>) {
     board.bulkMove.mutate({ ids: [...selection.ids], sectionId });
     selection.clear();
   };
+  const assignSelected = (assigneeEmail: string | null) => {
+    board.bulkAssign.mutate({ ids: [...selection.ids], assigneeEmail });
+    selection.clear();
+  };
 
-  return { selection, completeSelected, deleteSelected, moveSelected };
+  return { selection, completeSelected, deleteSelected, moveSelected, assignSelected };
 }

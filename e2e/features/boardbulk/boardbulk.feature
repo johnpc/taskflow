@@ -14,3 +14,13 @@ Feature: Board multi-select
     And the user bulk-completes the selection
     Then a task titled "Board bulk one" is not visible
     And a task titled "Board bulk two" is not visible
+
+  # Bulk-assign: select two cards in a shared project and assign them to a member
+  # via the selection bar; both cards then show an assignee avatar.
+  Scenario: Bulk-assigning selected cards to a member
+    Given a signed-in user
+    And the user opens the "Bulk Assign Lab" project
+    When the user selects the tasks "Assign bulk one" and "Assign bulk two"
+    And the user bulk-assigns the selection to a member
+    Then the board card "Assign bulk one" shows an assignee avatar
+    And the board card "Assign bulk two" shows an assignee avatar

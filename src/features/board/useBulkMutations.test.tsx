@@ -34,6 +34,12 @@ describe('useBulkMutations', () => {
     expect(updateTask).toHaveBeenCalledWith({ id: 'b', sectionId: 's2' });
 
     await act(async () => {
+      await result.current.bulkAssign.mutateAsync({ ids: ['a', 'b'], assigneeEmail: 'sam@x.co' });
+    });
+    expect(updateTask).toHaveBeenCalledWith({ id: 'a', assigneeEmail: 'sam@x.co' });
+    expect(updateTask).toHaveBeenCalledWith({ id: 'b', assigneeEmail: 'sam@x.co' });
+
+    await act(async () => {
       await result.current.bulkDelete.mutateAsync(['c']);
     });
     expect(deleteTask).toHaveBeenCalledWith('c');
