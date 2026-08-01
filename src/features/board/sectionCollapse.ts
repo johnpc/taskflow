@@ -1,8 +1,18 @@
-/** Per-section collapse preference for the List view, persisted in localStorage
- * keyed by section id. Pure read/write helpers so the toggle is unit-testable
- * and the hook stays thin. Mirrors the viewMode store. */
+/** Reactive per-section collapse store for the board/list views, persisted in
+ * localStorage keyed by section id. A tiny subscribe/notify layer lets a
+ * "collapse all" toolbar drive every mounted section at once (via
+ * useSyncExternalStore), while each section still toggles itself. Pure helpers
+ * keep it unit-testable; the hook stays thin. Mirrors the viewMode store. */
 
 const key = (sectionId: string) => `tf-collapse-${sectionId}`;
+
+const listeners = new Set<() => void>();
+
+/** Subscribe to any collapse change (for useSyncExternalStore). */
+export function subscribeCollapse(listener: () => void): () => void {
+  listeners.add(listener);
+  return () => listeners.delete(listener);
+}
 
 /** Read a section's stored collapsed state, falling back to `fallback`. */
 export function readCollapsed(sectionId: string, fallback: boolean): boolean {
@@ -16,11 +26,27 @@ export function readCollapsed(sectionId: string, fallback: boolean): boolean {
   return fallback;
 }
 
-/** Persist a section's collapsed state (best-effort). */
-export function writeCollapsed(sectionId: string, collapsed: boolean): void {
+function persist(sectionId: string, collapsed: boolean): void {
   try {
     localStorage.setItem(key(sectionId), collapsed ? 'true' : 'false');
   } catch {
     /* ignore */
   }
+}
+
+/** Persist a section's collapsed state (best-effort) and notify subscribers. */
+export function writeCollapsed(sectionId: string, collapsed: boolean): void {
+  persist(sectionId, collapsed);
+  listeners.forEach((l) => l());
+}
+
+/** Collapse/expand many sections at once, notifying subscribers once. */
+export function setManyCollapsed(sectionIds: string[], collapsed: boolean): void {
+  sectionIds.forEach((id) => persist(id, collapsed));
+  listeners.forEach((l) => l());
+}
+
+/** True when every listed section is currently collapsed (fallback per id). */
+export function areAllCollapsed(sectionIds: string[], defaultOpen: boolean): boolean {
+  return sectionIds.length > 0 && sectionIds.every((id) => readCollapsed(id, !defaultOpen));
 }
