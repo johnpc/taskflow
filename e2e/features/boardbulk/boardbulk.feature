@@ -24,3 +24,12 @@ Feature: Board multi-select
     And the user bulk-assigns the selection to a member
     Then the board card "Assign bulk one" shows an assignee avatar
     And the board card "Assign bulk two" shows an assignee avatar
+
+  # Bulk-priority: select two LOW cards and bump them to High via the bar.
+  Scenario: Bulk-setting the priority of selected cards
+    Given a signed-in user
+    And the user opens the "Board Bulk Lab" project
+    When the user selects the tasks "Prio bulk one" and "Prio bulk two"
+    And the user bulk-sets the selection priority to "HIGH"
+    Then the board card "Prio bulk one" shows the "High" priority
+    And the board card "Prio bulk two" shows the "High" priority

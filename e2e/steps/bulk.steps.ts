@@ -1,7 +1,7 @@
 import { expect } from '@playwright/test';
 import { createBdd } from 'playwright-bdd';
 
-const { When } = createBdd();
+const { When, Then } = createBdd();
 
 const selectCard = async (page: import('@playwright/test').Page, title: string) => {
   await page
@@ -29,3 +29,21 @@ When('the user bulk-assigns the selection to a member', async ({ page }) => {
   const value = await select.locator('option').nth(1).getAttribute('value');
   await select.selectOption(value!);
 });
+
+When(
+  'the user bulk-sets the selection priority to {string}',
+  async ({ page }, priority: string) => {
+    await expect(page.getByTestId('selection-bar')).toBeVisible({ timeout: 15_000 });
+    await page.getByTestId('bulk-priority').selectOption(priority);
+  },
+);
+
+Then(
+  'the board card {string} shows the {string} priority',
+  async ({ page }, title: string, label: string) => {
+    const card = page.getByTestId('task-card').filter({ hasText: title }).first();
+    await expect(card.locator('[class*="task-card__prio"]').first()).toHaveText(label, {
+      timeout: 15_000,
+    });
+  },
+);

@@ -402,6 +402,9 @@ export const seedProjects: SeedProject[] = [
     tasks: [
       { title: 'Board bulk one', section: 'To do', priority: 'LOW' },
       { title: 'Board bulk two', section: 'To do', priority: 'LOW' },
+      // Dedicated bulk-priority targets (start LOW; the area bumps them HIGH).
+      { title: 'Prio bulk one', section: 'To do', priority: 'LOW' },
+      { title: 'Prio bulk two', section: 'To do', priority: 'LOW' },
     ],
   },
   // Dedicated project for bulk-ASSIGN: shared with a teammate so the selection

@@ -40,6 +40,11 @@ describe('useBulkMutations', () => {
     expect(updateTask).toHaveBeenCalledWith({ id: 'b', assigneeEmail: 'sam@x.co' });
 
     await act(async () => {
+      await result.current.bulkPriority.mutateAsync({ ids: ['a'], priority: 'HIGH' });
+    });
+    expect(updateTask).toHaveBeenCalledWith({ id: 'a', priority: 'HIGH' });
+
+    await act(async () => {
       await result.current.bulkDelete.mutateAsync(['c']);
     });
     expect(deleteTask).toHaveBeenCalledWith('c');
