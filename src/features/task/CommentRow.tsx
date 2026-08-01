@@ -3,6 +3,7 @@ import { relativeTime } from './relativeTime';
 import { CommentBody } from './CommentBody';
 import { CommentEditor } from './CommentEditor';
 import { hasLiked, likeCount } from './taskLikes';
+import { wasEdited } from './wasEdited';
 import type { CommentRecord } from '../../lib/dataClient';
 
 /** One comment: author + relative timestamp + body, with Like/Edit/Delete
@@ -26,6 +27,7 @@ export function CommentRow({
 }) {
   const [editing, setEditing] = useState(false);
   const when = relativeTime(comment.createdAt, nowMs);
+  const edited = wasEdited(comment.createdAt, comment.updatedAt);
   const liked = currentEmail ? hasLiked(comment.likedBy, currentEmail) : false;
   const likes = likeCount(comment.likedBy);
 
@@ -36,6 +38,11 @@ export function CommentRow({
         {when && (
           <span className="comment__time" data-testid="comment-time">
             {when}
+          </span>
+        )}
+        {edited && (
+          <span className="comment__edited" data-testid="comment-edited">
+            (edited)
           </span>
         )}
       </span>
