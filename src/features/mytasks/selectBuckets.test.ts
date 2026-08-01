@@ -26,4 +26,8 @@ describe('selectBuckets', () => {
   it('groups by focus', () => {
     expect(selectBuckets('focus', data, today)[0].key).toBe('TODAY');
   });
+  it('groups by project via the name resolver', () => {
+    const tasks = [task({ projectId: 'p1' })];
+    expect(selectBuckets('project', tasks, today, () => 'Alpha')[0].label).toBe('Alpha');
+  });
 });
