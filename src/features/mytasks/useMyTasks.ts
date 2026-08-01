@@ -6,7 +6,9 @@ import { completedBucket } from './completedBucket';
 import { readGroupMode, writeGroupMode, type GroupMode } from './groupMode';
 import { readShowCompleted, writeShowCompleted } from './showCompletedStore';
 import { readAssignedOnly, writeAssignedOnly } from './assignedOnlyStore';
+import { readFollowingOnly, writeFollowingOnly } from './followingOnlyStore';
 import { filterAssignedToMe } from './assignedFilter';
+import { filterFollowing } from './followingFilter';
 import { setTaskDone, updateTask } from '../task/tasksApi';
 import { isDone } from '../task/taskMeta';
 import { overdueCount } from '../projects/taskCounts';
@@ -24,6 +26,7 @@ export function useMyTasks() {
   const [groupMode, setMode] = useState<GroupMode>(readGroupMode);
   const [showCompleted, setShow] = useState<boolean>(readShowCompleted);
   const [assignedOnly, setAssigned] = useState<boolean>(readAssignedOnly);
+  const [followingOnly, setFollowing] = useState<boolean>(readFollowingOnly);
 
   const setGroupMode = (mode: GroupMode) => {
     writeGroupMode(mode);
@@ -40,16 +43,22 @@ export function useMyTasks() {
     setAssigned(on);
   };
 
+  const setFollowingOnly = (on: boolean) => {
+    writeFollowingOnly(on);
+    setFollowing(on);
+  };
+
   const { buckets, overdue, openTotal } = useMemo(() => {
     const today = todayISO();
-    const data = filterAssignedToMe(query.data ?? [], email, assignedOnly);
+    const assigned = filterAssignedToMe(query.data ?? [], email, assignedOnly);
+    const data = filterFollowing(assigned, email, followingOnly);
     const open = selectBuckets(groupMode, data, today);
     return {
       buckets: showCompleted ? [...open, ...completedBucket(data)] : open,
       overdue: overdueCount(data, today),
       openTotal: data.filter((t) => !isDone(t)).length,
     };
-  }, [query.data, groupMode, showCompleted, assignedOnly, email]);
+  }, [query.data, groupMode, showCompleted, assignedOnly, followingOnly, email]);
 
   const invalidate = () => qc.invalidateQueries({ queryKey: ['my-tasks'] });
 
@@ -75,6 +84,8 @@ export function useMyTasks() {
     setShowCompleted,
     assignedOnly,
     setAssignedOnly,
+    followingOnly,
+    setFollowingOnly,
     toggleDone,
     setBucket,
   };

@@ -30,6 +30,15 @@ Feature: My Tasks
     Then a task titled "My assigned task" is visible in My Tasks
     And a task titled "Renew passport" is not visible
 
+  # "Followed report" is followed (not assigned) by the seed user, so the
+  # "Following" filter surfaces it and hides "Renew passport" (unfollowed).
+  Scenario: My Tasks can filter to followed tasks
+    Given a signed-in user
+    When the user opens My Tasks
+    And the user filters My Tasks to following
+    Then a task titled "Followed report" is visible in My Tasks
+    And a task titled "Renew passport" is not visible
+
   # Quick-add captures a task into a chosen project without opening it; the new
   # open task then appears in My Tasks. Uses a unique title + dedicated project.
   Scenario: Quick-adding a task from My Tasks

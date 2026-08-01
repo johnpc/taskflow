@@ -3,6 +3,7 @@ import { useMyTasks } from './useMyTasks';
 import { GroupBySegment } from './GroupBySegment';
 import { MyTasksBucket } from './MyTasksBucket';
 import { MyTasksQuickAdd } from './MyTasksQuickAdd';
+import { MyTasksFilters } from './MyTasksFilters';
 import { useQuickAdd } from './useQuickAdd';
 import { useProjects } from '../projects/useProjects';
 import { useProjectsById } from '../projects/useProjectsById';
@@ -27,6 +28,8 @@ export function MyTasks() {
     setShowCompleted,
     assignedOnly,
     setAssignedOnly,
+    followingOnly,
+    setFollowingOnly,
     toggleDone,
     setBucket,
   } = useMyTasks();
@@ -53,24 +56,14 @@ export function MyTasks() {
         </p>
         <MyTasksQuickAdd projects={projects} onAdd={(input) => quickAdd.mutate(input)} />
         <GroupBySegment mode={groupMode} onChange={setGroupMode} />
-        <label className="mytasks__show-done">
-          <input
-            type="checkbox"
-            data-testid="mytasks-show-completed"
-            checked={showCompleted}
-            onChange={(e) => setShowCompleted(e.target.checked)}
-          />
-          Show completed
-        </label>
-        <label className="mytasks__show-done">
-          <input
-            type="checkbox"
-            data-testid="mytasks-assigned-only"
-            checked={assignedOnly}
-            onChange={(e) => setAssignedOnly(e.target.checked)}
-          />
-          Assigned to me
-        </label>
+        <MyTasksFilters
+          showCompleted={showCompleted}
+          onShowCompleted={setShowCompleted}
+          assignedOnly={assignedOnly}
+          onAssignedOnly={setAssignedOnly}
+          followingOnly={followingOnly}
+          onFollowingOnly={setFollowingOnly}
+        />
         <LoadState
           isLoading={query.isLoading}
           isError={query.isError}

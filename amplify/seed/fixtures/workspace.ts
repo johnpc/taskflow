@@ -23,6 +23,8 @@ export interface SeedTask {
   done?: boolean;
   /** Assign this task to the seed user (for the assigned-to-me acceptance). */
   assigned?: boolean;
+  /** Seed the seed user as a follower (for the My Tasks "Following" filter). */
+  following?: boolean;
   /** Assign this task to a specific email — must be one of the project's members
    * (for the shared-project assignee-filter acceptance). */
   assignedTo?: string;
@@ -204,6 +206,10 @@ export const seedProjects: SeedProject[] = [
         assigned: true,
         dueOffsetDays: 4,
       },
+      // Following anchor: the seed user follows (but is NOT assigned) this task,
+      // so the My Tasks "Following" filter surfaces it while "Assigned to me"
+      // hides it — the two filters are independently testable.
+      { title: 'Followed report', section: 'To do', priority: 'LOW', following: true },
     ],
   },
   // Dedicated throwaway projects for the archive + delete acceptance scenarios,
