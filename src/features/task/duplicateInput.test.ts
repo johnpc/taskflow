@@ -19,6 +19,7 @@ describe('duplicateInput', () => {
         repeat: 'WEEKLY',
         isMilestone: true,
         labelIds: ['l1', null],
+        customValues: '{"f1":"v"}',
       }),
       3,
     );
@@ -35,6 +36,7 @@ describe('duplicateInput', () => {
       repeat: 'WEEKLY',
       isMilestone: true,
       labelIds: ['l1'],
+      customValues: '{"f1":"v"}',
       sortOrder: 3,
     });
   });
