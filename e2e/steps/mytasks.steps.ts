@@ -26,6 +26,14 @@ When('the user filters My Tasks to following', async ({ page }) => {
   await page.getByTestId('mytasks-following-only').check();
 });
 
+When('the user sorts My Tasks by {string}', async ({ page }, label: string) => {
+  await page.getByTestId('mytasks-sort-key').selectOption({ label });
+});
+
+Then('the My Tasks sort direction toggle is visible', async ({ page }) => {
+  await expect(page.getByTestId('mytasks-sort-dir')).toBeVisible({ timeout: 15_000 });
+});
+
 Then('a due bucket {string} is visible', async ({ page }, label: string) => {
   await expect(page.getByRole('heading', { name: new RegExp(label) })).toBeVisible({
     timeout: 15_000,

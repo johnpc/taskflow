@@ -1,79 +1,70 @@
-import { useMemo, useState } from 'react';
-import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query';
+import { useMemo } from 'react';
+import { useQuery } from '@tanstack/react-query';
 import { fetchMyTasks } from './myTasksApi';
-import { selectBuckets } from './selectBuckets';
-import { completedBucket } from './completedBucket';
+import { buildMyTasksBuckets } from './myTasksView';
+import { usePersistedState } from './usePersistedState';
+import { useMyTasksMutations } from './useMyTasksMutations';
 import { readGroupMode, writeGroupMode, type GroupMode } from './groupMode';
 import { readShowCompleted, writeShowCompleted } from './showCompletedStore';
 import { readAssignedOnly, writeAssignedOnly } from './assignedOnlyStore';
 import { readFollowingOnly, writeFollowingOnly } from './followingOnlyStore';
+import { readMyTasksSort, writeMyTasksSort } from './myTasksSortStore';
 import { filterAssignedToMe } from './assignedFilter';
 import { filterFollowing } from './followingFilter';
-import { setTaskDone, updateTask } from '../task/tasksApi';
 import { isDone } from '../task/taskMeta';
 import { overdueCount } from '../projects/taskCounts';
 import { todayISO } from '../task/today';
 import { useAuth } from '../auth/useAuth';
 import { useProjectsById } from '../projects/useProjectsById';
-import type { FocusBucket } from './groupByFocus';
+import type { ListSort } from '../board/listSort';
 
 /** My Tasks data: the owner's open tasks grouped by the chosen mode (due date,
  * priority, or focus), overdue + open-total counts, a complete toggle, a
  * persisted group-by switch, and a set-focus-bucket mutation. */
 export function useMyTasks() {
-  const qc = useQueryClient();
   const { email } = useAuth();
   const projectsById = useProjectsById();
   const query = useQuery({ queryKey: ['my-tasks'], queryFn: fetchMyTasks });
-  const [groupMode, setMode] = useState<GroupMode>(readGroupMode);
-  const [showCompleted, setShow] = useState<boolean>(readShowCompleted);
-  const [assignedOnly, setAssigned] = useState<boolean>(readAssignedOnly);
-  const [followingOnly, setFollowing] = useState<boolean>(readFollowingOnly);
-
-  const setGroupMode = (mode: GroupMode) => {
-    writeGroupMode(mode);
-    setMode(mode);
-  };
-
-  const setShowCompleted = (show: boolean) => {
-    writeShowCompleted(show);
-    setShow(show);
-  };
-
-  const setAssignedOnly = (on: boolean) => {
-    writeAssignedOnly(on);
-    setAssigned(on);
-  };
-
-  const setFollowingOnly = (on: boolean) => {
-    writeFollowingOnly(on);
-    setFollowing(on);
-  };
+  const [groupMode, setGroupMode] = usePersistedState<GroupMode>(readGroupMode, writeGroupMode);
+  const [showCompleted, setShowCompleted] = usePersistedState(
+    readShowCompleted,
+    writeShowCompleted,
+  );
+  const [assignedOnly, setAssignedOnly] = usePersistedState(readAssignedOnly, writeAssignedOnly);
+  const [followingOnly, setFollowingOnly] = usePersistedState(
+    readFollowingOnly,
+    writeFollowingOnly,
+  );
+  const [sort, setSort] = usePersistedState<ListSort>(readMyTasksSort, writeMyTasksSort);
 
   const { buckets, overdue, openTotal } = useMemo(() => {
     const today = todayISO();
     const assigned = filterAssignedToMe(query.data ?? [], email, assignedOnly);
     const data = filterFollowing(assigned, email, followingOnly);
-    const open = selectBuckets(groupMode, data, today, (id) => projectsById.get(id)?.name);
     return {
-      buckets: showCompleted ? [...open, ...completedBucket(data)] : open,
+      buckets: buildMyTasksBuckets({
+        tasks: data,
+        mode: groupMode,
+        today,
+        showCompleted,
+        sort,
+        projectName: (id) => projectsById.get(id)?.name,
+      }),
       overdue: overdueCount(data, today),
       openTotal: data.filter((t) => !isDone(t)).length,
     };
-  }, [query.data, groupMode, showCompleted, assignedOnly, followingOnly, email, projectsById]);
+  }, [
+    query.data,
+    groupMode,
+    showCompleted,
+    assignedOnly,
+    followingOnly,
+    sort,
+    email,
+    projectsById,
+  ]);
 
-  const invalidate = () => qc.invalidateQueries({ queryKey: ['my-tasks'] });
-
-  const toggleDone = useMutation({
-    mutationFn: (input: { id: string; done: boolean; now: string }) =>
-      setTaskDone(input.id, input.done, input.now),
-    onSuccess: invalidate,
-  });
-
-  const setBucket = useMutation({
-    mutationFn: (input: { id: string; myBucket: FocusBucket }) => updateTask(input),
-    onSuccess: invalidate,
-  });
+  const { toggleDone, setBucket } = useMyTasksMutations();
 
   return {
     query,
@@ -88,6 +79,8 @@ export function useMyTasks() {
     setAssignedOnly,
     followingOnly,
     setFollowingOnly,
+    sort,
+    setSort,
     toggleDone,
     setBucket,
   };

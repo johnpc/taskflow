@@ -19,6 +19,10 @@ const base = {
   setShowCompleted: vi.fn(),
   assignedOnly: false,
   setAssignedOnly: vi.fn(),
+  followingOnly: false,
+  setFollowingOnly: vi.fn(),
+  sort: { key: 'manual' as const, dir: 'asc' as const },
+  setSort: vi.fn(),
   toggleDone: { mutate: vi.fn() },
   setBucket: { mutate: vi.fn() },
 };
