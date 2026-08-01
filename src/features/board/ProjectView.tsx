@@ -11,6 +11,7 @@ import { useProjectActions } from './useProjectActions';
 import { projectLink } from './projectLink';
 import { useToggleFavorite } from '../projects/useProjects';
 import { ViewToggle } from './ViewToggle';
+import { CollapseAllButton } from './CollapseAllButton';
 import { FilterBar } from './FilterBar';
 import { SavedViewsRegion } from './SavedViewsRegion';
 import { ProjectHeader } from './ProjectHeader';
@@ -70,7 +71,10 @@ export function ProjectView() {
         <ProjectShareRegion projectId={id} members={memberList} />
         <StatusUpdatesRegion projectId={id} />
         <ProjectFieldsRegion projectId={id} />
-        <ViewToggle mode={mode} onChange={choose} />
+        <div className="board-toolbar">
+          <ViewToggle mode={mode} onChange={choose} />
+          <CollapseAllButton sectionIds={board.columns.map((c) => c.section.id)} />
+        </div>
         <FilterBar filter={filter} labels={board.labels} members={memberList} onChange={update} />
         <SavedViewsRegion projectId={id} filter={filter} onApply={replace} />
         <ProjectSelectionBar

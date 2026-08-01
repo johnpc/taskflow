@@ -29,7 +29,7 @@ iOS and Android.
 | **Progress**          | Each project card shows a completion bar and "X of Y done"                                                           | ✅     |
 | **Project status**    | Set a project On track / At risk / Off track with a note; a colored pill shows on card+header                        | ✅     |
 | **Sections**          | Add, rename, duplicate (with tasks), delete, and reorder a project's columns/sections                                | ✅     |
-| **Board**             | Kanban columns (To do / In progress / Done) with inline task creation; collapse a column to focus                    | ✅     |
+| **Board**             | Kanban columns (To do / In progress / Done) with inline task creation; collapse a column, or collapse/expand all     | ✅     |
 | **List view**         | Dense aligned table — group by None/Section/Assignee/Due/Priority & sort by any; overdue dates red, priority pills   | ✅     |
 | **Timeline**          | Gantt-style two-week view — dated tasks as bars; tap to open, drag a bar to reschedule                               | ✅     |
 | **Tasks**             | Title, notes, priority (Low→High), due dates with overdue/today/upcoming cues; project breadcrumb                    | ✅     |
