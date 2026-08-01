@@ -318,6 +318,29 @@
   color: var(--tf-priority-medium);
 }
 
+/* Undated + editable: a subtle "Due date" affordance, revealed clearly on hover. */
+.subtask__due--none {
+  color: var(--tf-text-muted);
+  opacity: 0.6;
+}
+
+/* Editable due: a transparent native date input overlaid on the chip so a click
+ * opens the picker while the friendly label stays visible. */
+.subtask__due-edit {
+  position: relative;
+  display: inline-flex;
+  cursor: pointer;
+}
+
+.subtask__due-input {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  opacity: 0;
+  border: none;
+  cursor: pointer;
+}
+
 .task-breadcrumb-row {
   display: flex;
   align-items: center;

@@ -95,4 +95,21 @@ describe('Subtasks', () => {
     );
     expect(screen.getByTestId('subtask-due')).toHaveClass('subtask__due--overdue');
   });
+
+  it('sets a subtask due date inline when onSetDue is given', () => {
+    const onSetDue = vi.fn();
+    render(
+      <Subtasks
+        subtasks={[sub({ id: 'a', dueDate: '2026-08-01' })]}
+        onAdd={vi.fn()}
+        onToggle={vi.fn()}
+        onOpen={vi.fn()}
+        onSetDue={onSetDue}
+      />,
+    );
+    fireEvent.change(screen.getByLabelText('Set subtask due date'), {
+      target: { value: '2026-08-09' },
+    });
+    expect(onSetDue).toHaveBeenCalledWith('a', '2026-08-09');
+  });
 });

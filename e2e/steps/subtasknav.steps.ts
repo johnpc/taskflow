@@ -19,6 +19,22 @@ Then('the subtask {string} shows an overdue due chip', async ({ page }, title: s
   });
 });
 
+When(
+  'the user sets the subtask {string} due date to {string}',
+  async ({ page }, title: string, date: string) => {
+    const row = page.getByTestId('subtasks').locator('.subtask').filter({ hasText: title }).first();
+    await row.getByLabel('Set subtask due date').fill(date);
+  },
+);
+
+Then(
+  'the subtask {string} due date is {string}',
+  async ({ page }, title: string, date: string) => {
+    const row = page.getByTestId('subtasks').locator('.subtask').filter({ hasText: title }).first();
+    await expect(row.getByLabel('Set subtask due date')).toHaveValue(date, { timeout: 15_000 });
+  },
+);
+
 Then('the subtask {string} shows an assignee avatar', async ({ page }, title: string) => {
   const row = page.getByTestId('subtasks').locator('.subtask').filter({ hasText: title }).first();
   await expect(row.getByTestId('task-assignee-avatar')).toBeVisible({ timeout: 15_000 });

@@ -83,6 +83,7 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
         }
         onToggle={(input) => toggleDone.mutate(input)}
         onOpen={openTask}
+        onSetDue={(id, dueDate) => patch.mutate({ id, dueDate })}
       />
       <TaskDetailExtras task={task} hook={hook} />
       <TaskActions

@@ -2,7 +2,8 @@ import { IonIcon } from '@ionic/react';
 import { ellipseOutline, checkmarkCircle } from 'ionicons/icons';
 import { AddCard } from '../board/AddCard';
 import { AssigneeAvatar } from './AssigneeAvatar';
-import { isDone, dueLabel, dueStatus } from './taskMeta';
+import { SubtaskDue } from './SubtaskDue';
+import { isDone } from './taskMeta';
 import { nowISO, todayISO } from './today';
 import type { TaskRecord } from '../../lib/dataClient';
 
@@ -13,11 +14,13 @@ export function Subtasks({
   onAdd,
   onToggle,
   onOpen,
+  onSetDue,
 }: {
   subtasks: TaskRecord[];
   onAdd: (title: string) => void;
   onToggle: (input: { taskId: string; done: boolean; now: string }) => void;
   onOpen: (id: string) => void;
+  onSetDue?: (id: string, dueDate: string | null) => void;
 }) {
   const doneCount = subtasks.filter(isDone).length;
   const today = todayISO();
@@ -54,14 +57,12 @@ export function Subtasks({
               >
                 {sub.title}
               </button>
-              {sub.dueDate && (
-                <span
-                  className={`subtask__due subtask__due--${dueStatus(sub.dueDate, today, done)}`}
-                  data-testid="subtask-due"
-                >
-                  {dueLabel(sub.dueDate, today)}
-                </span>
-              )}
+              <SubtaskDue
+                dueDate={sub.dueDate}
+                done={done}
+                today={today}
+                onSetDue={onSetDue && ((d) => onSetDue(sub.id, d))}
+              />
               <AssigneeAvatar email={sub.assigneeEmail} />
             </li>
           );
