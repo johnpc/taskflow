@@ -1,3 +1,12 @@
+/* Cap the Home dashboard to a comfortable reading width on wide desktops. */
+.home__greeting,
+.home__cards,
+.home__today,
+.home__upcoming,
+.home__projects {
+  max-width: var(--tf-list-max);
+}
+
 .home__greeting {
   font-size: 1.6rem;
   margin: 6px 0 18px;

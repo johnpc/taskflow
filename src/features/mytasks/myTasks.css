@@ -1,3 +1,15 @@
+/* Cap the vertical My Tasks surface to a comfortable reading width so rows
+   don't stretch edge-to-edge on wide desktops (full-width on narrow screens). */
+.mytasks__title,
+.mytasks__summary,
+.mytasks__quickadd,
+.mytasks__group,
+.mytasks__filters,
+.mytasks__sort,
+.mytasks__buckets {
+  max-width: var(--tf-list-max);
+}
+
 .mytasks__title {
   font-size: 1.5rem;
   margin: 6px 0 18px;
