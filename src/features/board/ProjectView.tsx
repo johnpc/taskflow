@@ -24,8 +24,8 @@ import { useDocumentTitle } from '../shell/useDocumentTitle';
 import type { ViewMode } from './viewMode';
 import './board.css';
 
-/** A project's board/list — its sections rendered per the chosen view. Guests
- * never reach here (RequireAuth). Renders only; data + mutations from useBoard. */
+/** A project's board/list, board-first: view toggle + filters + board are the
+ * hero, project overview/settings below. Guests can't reach here. Renders only. */
 export function ProjectView() {
   const { id } = useParams<{ id: string }>();
   const project = useProject(id);
@@ -58,13 +58,6 @@ export function ProjectView() {
         onDelete={actions.deleteAndLeave}
       />
       <IonContent className="ion-padding">
-        <ProjectHeaderRegion
-          id={id}
-          project={project.data ?? undefined}
-          members={memberList}
-          edit={edit}
-          onAddSection={(name) => board.addSection.mutate(name)}
-        />
         <div className="board-toolbar">
           <ViewToggle mode={mode} onChange={choose} />
           <CollapseAllButton sectionIds={board.columns.map((c) => c.section.id)} />
@@ -92,6 +85,13 @@ export function ProjectView() {
           onGroupBy={chooseGroup}
           sort={sort}
           onSort={toggleSort}
+        />
+        <ProjectHeaderRegion
+          id={id}
+          project={project.data ?? undefined}
+          members={memberList}
+          edit={edit}
+          onAddSection={(name) => board.addSection.mutate(name)}
         />
       </IonContent>
     </IonPage>

@@ -25,6 +25,9 @@ export function ProjectHeaderRegion({
 }) {
   return (
     <>
+      <h2 className="project-overview-head" data-testid="project-overview-head">
+        Project details
+      </h2>
       {project && (
         <ProjectHeader
           project={project}
