@@ -1,8 +1,8 @@
 import { IonIcon } from '@ionic/react';
 import { ellipseOutline, checkmarkCircle } from 'ionicons/icons';
 import { AddCard } from '../board/AddCard';
-import { isDone } from './taskMeta';
-import { nowISO } from './today';
+import { isDone, dueLabel, dueStatus } from './taskMeta';
+import { nowISO, todayISO } from './today';
 import type { TaskRecord } from '../../lib/dataClient';
 
 /** Subtask checklist on task detail: each child task with a complete toggle,
@@ -19,6 +19,7 @@ export function Subtasks({
   onOpen: (id: string) => void;
 }) {
   const doneCount = subtasks.filter(isDone).length;
+  const today = todayISO();
   return (
     <section className="subtasks" data-testid="subtasks">
       <h2 className="subtasks__head">
@@ -52,6 +53,14 @@ export function Subtasks({
               >
                 {sub.title}
               </button>
+              {sub.dueDate && (
+                <span
+                  className={`subtask__due subtask__due--${dueStatus(sub.dueDate, today, done)}`}
+                  data-testid="subtask-due"
+                >
+                  {dueLabel(sub.dueDate, today)}
+                </span>
+              )}
             </li>
           );
         })}

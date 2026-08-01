@@ -56,4 +56,25 @@ describe('Subtasks', () => {
     fireEvent.keyDown(input, { key: 'Enter' });
     expect(onAdd).toHaveBeenCalledWith('New sub');
   });
+
+  it('shows a due chip only when the subtask has a due date', () => {
+    const { rerender } = render(
+      <Subtasks
+        subtasks={[sub({ id: 'a' })]}
+        onAdd={vi.fn()}
+        onToggle={vi.fn()}
+        onOpen={vi.fn()}
+      />,
+    );
+    expect(screen.queryByTestId('subtask-due')).not.toBeInTheDocument();
+    rerender(
+      <Subtasks
+        subtasks={[sub({ id: 'a', dueDate: '2000-01-01' })]}
+        onAdd={vi.fn()}
+        onToggle={vi.fn()}
+        onOpen={vi.fn()}
+      />,
+    );
+    expect(screen.getByTestId('subtask-due')).toHaveClass('subtask__due--overdue');
+  });
 });

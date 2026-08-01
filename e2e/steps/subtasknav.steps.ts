@@ -12,6 +12,13 @@ When('the user opens the subtask {string}', async ({ page }, title: string) => {
   await page.waitForFunction((prev) => location.href !== prev, before, { timeout: 15_000 });
 });
 
+Then('the subtask {string} shows an overdue due chip', async ({ page }, title: string) => {
+  const row = page.getByTestId('subtasks').locator('.subtask').filter({ hasText: title }).first();
+  await expect(row.getByTestId('subtask-due')).toHaveClass(/subtask__due--overdue/, {
+    timeout: 15_000,
+  });
+});
+
 Then('the parent breadcrumb reads {string}', async ({ page }, title: string) => {
   await expect(page.getByTestId('task-parent-crumb').last()).toContainText(title, {
     timeout: 15_000,
