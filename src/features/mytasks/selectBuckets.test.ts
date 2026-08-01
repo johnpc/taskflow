@@ -30,4 +30,10 @@ describe('selectBuckets', () => {
     const tasks = [task({ projectId: 'p1' })];
     expect(selectBuckets('project', tasks, today, () => 'Alpha')[0].label).toBe('Alpha');
   });
+  it('groups by label via the registry', () => {
+    const tasks = [task({ labelIds: ['l1'] })];
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const labels = [{ id: 'l1', name: 'Bug' }] as any;
+    expect(selectBuckets('label', tasks, today, undefined, labels)[0].label).toBe('Bug');
+  });
 });

@@ -58,6 +58,16 @@ Feature: My Tasks
     Then the My Tasks sort direction toggle is visible
     And a task titled "Renew passport" is visible in My Tasks
 
+  # Grouping by label buckets tasks under their tags. "Quarterly planning" (in
+  # Personal, owned by the seed user) carries the "Roadmap" label, so a "Roadmap"
+  # bucket appears with it inside.
+  Scenario: My Tasks can group by label
+    Given a signed-in user
+    When the user opens My Tasks
+    And the user groups My Tasks by label
+    Then a due bucket "Roadmap" is visible
+    And a task titled "Quarterly planning" is visible in My Tasks
+
   # Collapsing a bucket hides its cards (per-browser localStorage state, so it
   # mutates nothing on the shared backend). "Renew passport" is overdue, so it
   # sits in the "Overdue" bucket by default (due-date grouping).

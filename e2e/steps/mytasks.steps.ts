@@ -18,6 +18,13 @@ When('the user groups My Tasks by project', async ({ page }) => {
   await page.getByTestId('groupby-project').click();
 });
 
+When('the user groups My Tasks by label', async ({ page }) => {
+  // The segment is horizontally scrollable (5 buttons); scroll the last one in.
+  const btn = page.getByTestId('groupby-label');
+  await btn.scrollIntoViewIfNeeded();
+  await btn.click();
+});
+
 When('the user filters My Tasks to assigned-to-me', async ({ page }) => {
   await page.getByTestId('mytasks-assigned-only').check();
 });
