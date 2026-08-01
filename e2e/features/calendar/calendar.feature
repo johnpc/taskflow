@@ -32,3 +32,13 @@ Feature: Calendar
     Then a calendar task "Plan Q3 goals" is not visible
     When the user returns the calendar to today
     Then a calendar task "Plan Q3 goals" is visible
+
+  # Switching to the month grid shows the same dated tasks laid out on a monthly
+  # calendar. "My assigned task" (+4d) always stays within the current month's
+  # window (the current window covers today + at least the next 4 days).
+  Scenario: Viewing tasks on the month grid
+    Given a signed-in user
+    When the user opens the calendar
+    And the user switches to the month calendar view
+    Then the calendar month grid is visible
+    And a calendar task "My assigned task" is visible

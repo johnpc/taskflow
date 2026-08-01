@@ -60,7 +60,7 @@ iOS and Android.
 | **Delete task**       | Delete a task (with confirm) from its detail; it leaves the board                                                    | ✅     |
 | **My Tasks**          | Open tasks across projects — quick-add, group, completed, filter to assigned-to-me or tasks you follow               | ✅     |
 | **Focus plan**        | File tasks into Today / Upcoming / Later in My Tasks — drag between buckets or pick                                  | ✅     |
-| **Calendar**          | Two-week forward view of upcoming dated tasks, grouped by day (project-tagged)                                       | ✅     |
+| **Calendar**          | Two-week list or full month grid of upcoming dated tasks, grouped by day (project-tagged)                            | ✅     |
 | **Search**            | Live search over title/notes/assignee — rows show project + due + assignee avatar; filter by priority/project/status | ✅     |
 | **Complete**          | One-tap complete on the board and in lists, with a strike-through state                                              | ✅     |
 | **Undo**              | An undo toast after completing a task — one tap to bring it back                                                     | ✅     |
