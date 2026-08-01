@@ -1,31 +1,30 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import { screen } from '@testing-library/react';
+import { screen, fireEvent } from '@testing-library/react';
 
-const { useCalendar } = vi.hoisted(() => ({ useCalendar: vi.fn() }));
-vi.mock('./useCalendar', () => ({ useCalendar }));
+vi.mock('./CalendarList', () => ({ CalendarList: () => <div data-testid="cal-list" /> }));
+vi.mock('./CalendarMonth', () => ({ CalendarMonth: () => <div data-testid="cal-month" /> }));
 
 import { renderWithProviders } from '../../test/renderWithProviders';
 import { Calendar } from './Calendar';
 
-beforeEach(() => useCalendar.mockReset());
-
 describe('Calendar', () => {
-  it('renders day groups with their tasks', () => {
-    useCalendar.mockReturnValue({
-      query: { isLoading: false, isError: false, refetch: vi.fn() },
-      days: [{ date: '2026-07-31', label: 'Tomorrow', tasks: [{ id: 't', title: 'Ship it' }] }],
-    });
+  beforeEach(() => localStorage.clear());
+
+  it('defaults to the two-week list view', () => {
     renderWithProviders(<Calendar />);
-    expect(screen.getByText('Tomorrow')).toBeInTheDocument();
-    expect(screen.getByText('Ship it')).toBeInTheDocument();
+    expect(screen.getByTestId('cal-list')).toBeInTheDocument();
+    expect(screen.queryByTestId('cal-month')).not.toBeInTheDocument();
+    expect(screen.getByTestId('calendar-view-list')).toHaveAttribute('aria-pressed', 'true');
   });
 
-  it('shows the empty state when nothing is scheduled', () => {
-    useCalendar.mockReturnValue({
-      query: { isLoading: false, isError: false, refetch: vi.fn() },
-      days: [],
-    });
+  it('switches to the month grid and persists the choice', () => {
+    const { unmount } = renderWithProviders(<Calendar />);
+    fireEvent.click(screen.getByTestId('calendar-view-month'));
+    expect(screen.getByTestId('cal-month')).toBeInTheDocument();
+    expect(screen.queryByTestId('cal-list')).not.toBeInTheDocument();
+
+    unmount();
     renderWithProviders(<Calendar />);
-    expect(screen.getByTestId('load-empty')).toBeInTheDocument();
+    expect(screen.getByTestId('cal-month')).toBeInTheDocument(); // restored from storage
   });
 });

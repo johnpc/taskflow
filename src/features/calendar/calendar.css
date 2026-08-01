@@ -3,6 +3,81 @@
   margin: 6px 0 18px;
 }
 
+.calendar__view-toggle {
+  margin-bottom: 16px;
+}
+
+/* Month grid: 7 columns, a weekday header row then week rows of day cells. */
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, minmax(0, 1fr));
+  gap: 6px;
+  padding-bottom: 96px;
+}
+
+.calendar-grid__dow {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--tf-text-muted);
+  text-align: center;
+  padding-bottom: 4px;
+}
+
+.calendar-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  min-height: 84px;
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius-sm);
+  padding: 5px 6px;
+}
+
+.calendar-cell--muted {
+  background: var(--tf-surface-2);
+  opacity: 0.6;
+}
+
+.calendar-cell--today {
+  border-color: var(--tf-accent);
+  box-shadow: inset 0 0 0 1px var(--tf-accent);
+}
+
+.calendar-cell__day {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--tf-text-muted);
+}
+
+.calendar-cell--today .calendar-cell__day {
+  color: var(--tf-accent-strong);
+}
+
+.calendar-cell__chip {
+  width: 100%;
+  text-align: left;
+  background: color-mix(in srgb, var(--tf-accent) 14%, transparent);
+  border: none;
+  border-radius: 5px;
+  padding: 3px 6px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--tf-text);
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.calendar-cell__more {
+  font-size: 0.68rem;
+  font-weight: 600;
+  color: var(--tf-text-muted);
+}
+
 /* Week navigation: title on the left, prev / Today / next on the right. */
 .calendar__nav {
   display: flex;

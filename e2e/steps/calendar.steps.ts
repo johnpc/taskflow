@@ -16,6 +16,14 @@ When('the user returns the calendar to today', async ({ page }) => {
   await page.getByTestId('calendar-today').click();
 });
 
+When('the user switches to the month calendar view', async ({ page }) => {
+  await page.getByTestId('calendar-view-month').click();
+});
+
+Then('the calendar month grid is visible', async ({ page }) => {
+  await expect(page.getByTestId('calendar-grid')).toBeVisible({ timeout: 15_000 });
+});
+
 Then('a calendar task {string} is visible', async ({ page }, title: string) => {
   await expect(page.getByTestId('calendar-task').filter({ hasText: title }).first()).toBeVisible({
     timeout: 15_000,
