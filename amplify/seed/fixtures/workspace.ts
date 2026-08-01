@@ -169,6 +169,9 @@ export const seedProjects: SeedProject[] = [
       { title: 'Like comment me', section: 'To do', priority: 'LOW' },
       // Dedicated approval target: only the approval area sets its outcome.
       { title: 'Approve me', section: 'To do', priority: 'LOW' },
+      // Dedicated follow target: only the follow area toggles following here
+      // (follow + unfollow ends unfollowed, so idempotent across CI retries).
+      { title: 'Follow me', section: 'To do', priority: 'LOW' },
     ],
   },
   {

@@ -122,6 +122,8 @@ jobs:
             paths: .features-gen/e2e/features/task/
           - name: approval
             paths: .features-gen/e2e/features/approval/
+          - name: follow
+            paths: .features-gen/e2e/features/follow/
           - name: mytasks
             paths: .features-gen/e2e/features/mytasks/
           - name: search
