@@ -11,6 +11,13 @@ Feature: Projects
     Then the projects screen shows the seeded projects
     And a project named "Product Launch" is visible
 
+  # Favorited projects group into a "Starred" section (Asana). "Product Launch"
+  # is seeded favorite, so it appears there.
+  Scenario: Favorited projects appear in the Starred section
+    Given a signed-in user
+    When the projects screen shows the seeded projects
+    Then the project "Product Launch" is in the Starred section
+
   Scenario: Creating a project adds it to the list
     Given a signed-in user
     When the user creates a project named "QA Sweep 8f3a"
