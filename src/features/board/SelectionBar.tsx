@@ -1,11 +1,13 @@
 import { IonIcon } from '@ionic/react';
 import { checkmarkDoneOutline, trashOutline, closeOutline } from 'ionicons/icons';
+import { BulkSelects } from './BulkSelects';
+import type { Priority } from '../task/taskMeta';
 import type { SectionRecord } from '../../lib/dataClient';
 import './board.css';
 
 /** The bulk-action bar shown when tasks are selected: complete all, move all to
- * a section, assign all to a member, delete all, or clear the selection.
- * Delegated up. */
+ * a section, assign all to a member, set their priority, delete all, or clear
+ * the selection. The dropdowns live in BulkSelects; delegated up. */
 export function SelectionBar({
   count,
   sections,
@@ -13,6 +15,7 @@ export function SelectionBar({
   onComplete,
   onMove,
   onAssign,
+  onPriority,
   onDelete,
   onClear,
 }: {
@@ -22,6 +25,7 @@ export function SelectionBar({
   onComplete: () => void;
   onMove: (sectionId: string) => void;
   onAssign?: (email: string | null) => void;
+  onPriority?: (priority: Priority) => void;
   onDelete: () => void;
   onClear: () => void;
 }) {
@@ -37,36 +41,13 @@ export function SelectionBar({
         <IonIcon icon={checkmarkDoneOutline} aria-hidden="true" />
         <span>Complete</span>
       </button>
-      <select
-        className="selection-bar__move"
-        data-testid="bulk-move"
-        aria-label="Move selected to section"
-        value=""
-        onChange={(e) => e.target.value && onMove(e.target.value)}
-      >
-        <option value="">Move to…</option>
-        {sections.map((s) => (
-          <option key={s.id} value={s.id}>
-            {s.name}
-          </option>
-        ))}
-      </select>
-      {onAssign && (
-        <select
-          className="selection-bar__move"
-          data-testid="bulk-assign"
-          aria-label="Assign selected to"
-          value=""
-          onChange={(e) => onAssign(e.target.value || null)}
-        >
-          <option value="">Assign to…</option>
-          {members.map((m) => (
-            <option key={m} value={m}>
-              {m}
-            </option>
-          ))}
-        </select>
-      )}
+      <BulkSelects
+        sections={sections}
+        members={members}
+        onMove={onMove}
+        onAssign={onAssign}
+        onPriority={onPriority}
+      />
       <button
         type="button"
         className="selection-bar__btn selection-bar__btn--danger"

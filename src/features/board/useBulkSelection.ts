@@ -1,5 +1,6 @@
 import { useSelection } from './useSelection';
 import { nowISO } from '../task/today';
+import type { Priority } from '../task/taskMeta';
 import type { useBoard } from './useBoard';
 
 /** Bundles multi-select state with the board's bulk mutations into ready
@@ -24,6 +25,17 @@ export function useBulkSelection(board: ReturnType<typeof useBoard>) {
     board.bulkAssign.mutate({ ids: [...selection.ids], assigneeEmail });
     selection.clear();
   };
+  const prioritizeSelected = (priority: Priority) => {
+    board.bulkPriority.mutate({ ids: [...selection.ids], priority });
+    selection.clear();
+  };
 
-  return { selection, completeSelected, deleteSelected, moveSelected, assignSelected };
+  return {
+    selection,
+    completeSelected,
+    deleteSelected,
+    moveSelected,
+    assignSelected,
+    prioritizeSelected,
+  };
 }

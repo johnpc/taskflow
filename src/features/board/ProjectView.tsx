@@ -17,7 +17,7 @@ import { ProjectHeader } from './ProjectHeader';
 import { ProjectShareRegion } from './ProjectShareRegion';
 import { ProjectFieldsRegion } from '../customfields/ProjectFieldsRegion';
 import { ProjectTopBar } from './ProjectTopBar';
-import { SelectionBar } from './SelectionBar';
+import { ProjectSelectionBar } from './ProjectSelectionBar';
 import { useBulkSelection } from './useBulkSelection';
 import { BoardRegion } from './BoardRegion';
 import { useDocumentTitle } from '../shell/useDocumentTitle';
@@ -71,18 +71,11 @@ export function ProjectView() {
         <ViewToggle mode={mode} onChange={choose} />
         <FilterBar filter={filter} labels={board.labels} members={memberList} onChange={update} />
         <SavedViewsRegion projectId={id} filter={filter} onApply={replace} />
-        {bulk.selection.active && (
-          <SelectionBar
-            count={bulk.selection.count}
-            sections={board.columns.map((c) => c.section)}
-            members={memberList}
-            onComplete={bulk.completeSelected}
-            onMove={bulk.moveSelected}
-            onAssign={bulk.assignSelected}
-            onDelete={bulk.deleteSelected}
-            onClear={bulk.selection.clear}
-          />
-        )}
+        <ProjectSelectionBar
+          bulk={bulk}
+          sections={board.columns.map((c) => c.section)}
+          members={memberList}
+        />
         <BoardRegion
           board={board}
           mode={mode}

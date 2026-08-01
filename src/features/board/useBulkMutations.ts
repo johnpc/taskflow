@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { setTaskDone, updateTask, deleteTask } from '../task/tasksApi';
+import type { Priority } from '../task/taskMeta';
 
 /** The board's bulk (multi-select) mutations — complete, move-to-section, and
  * delete a set of task ids — each invalidating the board on success. Split from
@@ -23,10 +24,16 @@ export function useBulkMutations(invalidate: () => void) {
     onSuccess: invalidate,
   });
 
+  const bulkPriority = useMutation({
+    mutationFn: (input: { ids: string[]; priority: Priority }) =>
+      Promise.all(input.ids.map((id) => updateTask({ id, priority: input.priority }))),
+    onSuccess: invalidate,
+  });
+
   const bulkDelete = useMutation({
     mutationFn: (ids: string[]) => Promise.all(ids.map((id) => deleteTask(id))),
     onSuccess: invalidate,
   });
 
-  return { bulkComplete, bulkMove, bulkAssign, bulkDelete };
+  return { bulkComplete, bulkMove, bulkAssign, bulkPriority, bulkDelete };
 }
