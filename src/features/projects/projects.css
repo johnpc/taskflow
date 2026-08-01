@@ -10,11 +10,29 @@
 
 .projects__list {
   list-style: none;
-  margin: 16px 0 96px;
+  margin: 8px 0 0;
   padding: 0;
   display: flex;
   flex-direction: column;
   gap: 10px;
+}
+
+/* Grouped project sections ("Starred" / "All projects"), Asana-style. */
+.projects__section {
+  margin-top: 20px;
+}
+
+.projects__section:last-of-type {
+  margin-bottom: 96px;
+}
+
+.projects__section-head {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--tf-text-muted);
+  margin: 0;
 }
 
 .project-card {

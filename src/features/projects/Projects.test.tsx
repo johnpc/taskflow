@@ -35,6 +35,22 @@ describe('Projects', () => {
     expect(screen.getByText('Website')).toBeInTheDocument();
   });
 
+  it('groups starred projects into their own section', () => {
+    useProjects.mockReturnValue({
+      data: [
+        { id: 'p1', name: 'Starry', color: 'indigo', favorite: true },
+        { id: 'p2', name: 'Plain', color: 'sky', favorite: false },
+      ],
+      isLoading: false,
+      isError: false,
+      refetch: vi.fn(),
+    });
+    renderWithProviders(<Projects />);
+    expect(screen.getByTestId('projects-starred')).toHaveTextContent('Starry');
+    expect(screen.getByTestId('projects-all')).toHaveTextContent('Plain');
+    expect(screen.getByTestId('projects-all')).toHaveTextContent('All projects');
+  });
+
   it('shows the empty state when there are no projects', () => {
     useProjects.mockReturnValue({ data: [], isLoading: false, isError: false, refetch: vi.fn() });
     renderWithProviders(<Projects />);

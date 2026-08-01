@@ -14,6 +14,12 @@ Then('a project named {string} is visible', async ({ page }, name: string) => {
   await expect(page.getByText(name, { exact: true }).first()).toBeVisible({ timeout: 15_000 });
 });
 
+Then('the project {string} is in the Starred section', async ({ page }, name: string) => {
+  await expect(
+    page.getByTestId('projects-starred').getByText(name, { exact: true }).first(),
+  ).toBeVisible({ timeout: 15_000 });
+});
+
 When('the user creates a project named {string}', async ({ page }, name: string) => {
   await page.goto('/projects');
   // Idempotent for reruns against a persisted sandbox: skip if it already exists.

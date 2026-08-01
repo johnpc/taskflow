@@ -5,7 +5,8 @@ import { useProjectCounts } from './useProjectCounts';
 import { useProjectProgress } from './useProjectProgress';
 import { ArchivedSection } from './ArchivedSection';
 import { useTemplates } from '../templates/useTemplates';
-import { ProjectCard } from './ProjectCard';
+import { ProjectSection } from './ProjectSection';
+import { splitFavorites } from './splitFavorites';
 import { NewProjectButton } from './NewProjectButton';
 import { TemplatePicker } from '../templates/TemplatePicker';
 import { LoadState } from '../shell/LoadState';
@@ -58,17 +59,30 @@ export function Projects() {
           emptyTitle="No projects yet"
           emptyMessage="Create your first project above to start organizing your work."
         >
-          <ul className="projects__list" aria-label="Projects">
-            {list.map((project: ProjectRecord) => (
-              <ProjectCard
-                key={project.id}
-                project={project}
-                count={counts.get(project.id) ?? 0}
-                progress={progress.get(project.id)}
-                onToggleFavorite={(p) => toggle.mutate({ id: p.id, favorite: !p.favorite })}
-              />
-            ))}
-          </ul>
+          {(() => {
+            const { starred, rest } = splitFavorites(list);
+            const onFav = (p: ProjectRecord) => toggle.mutate({ id: p.id, favorite: !p.favorite });
+            return (
+              <>
+                <ProjectSection
+                  label="Starred"
+                  testid="projects-starred"
+                  projects={starred}
+                  counts={counts}
+                  progress={progress}
+                  onToggleFavorite={onFav}
+                />
+                <ProjectSection
+                  label={starred.length > 0 ? 'All projects' : 'Projects'}
+                  testid="projects-all"
+                  projects={rest}
+                  counts={counts}
+                  progress={progress}
+                  onToggleFavorite={onFav}
+                />
+              </>
+            );
+          })()}
         </LoadState>
         <ArchivedSection />
         <TabBar active="Projects" />
