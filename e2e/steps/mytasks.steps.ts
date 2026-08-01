@@ -18,6 +18,10 @@ When('the user filters My Tasks to assigned-to-me', async ({ page }) => {
   await page.getByTestId('mytasks-assigned-only').check();
 });
 
+When('the user filters My Tasks to following', async ({ page }) => {
+  await page.getByTestId('mytasks-following-only').check();
+});
+
 Then('a due bucket {string} is visible', async ({ page }, label: string) => {
   await expect(page.getByRole('heading', { name: new RegExp(label) })).toBeVisible({
     timeout: 15_000,
