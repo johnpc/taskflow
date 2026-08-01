@@ -26,6 +26,14 @@ Then("the timeline marks today's column", async ({ page }) => {
   await expect(page.getByTestId('timeline-today')).toHaveText('Today', { timeout: 15_000 });
 });
 
+Then(
+  'the timeline bar for {string} is colored {word} priority',
+  async ({ page }, title: string, level: string) => {
+    const bar = page.getByTestId('timeline-bar').filter({ hasText: title }).first();
+    await expect(bar).toHaveClass(new RegExp(`timeline__bar--${level}`), { timeout: 15_000 });
+  },
+);
+
 When(
   'the user drags the {string} bar to {int} days out',
   async ({ page }, title: string, n: number) => {

@@ -11,6 +11,8 @@ Feature: Timeline view
     When the user switches to the timeline view
     Then a timeline bar for "Design hero banner" is visible
     And the timeline marks today's column
+    # "Design hero banner" is MEDIUM priority, so its bar reads amber.
+    And the timeline bar for "Design hero banner" is colored medium priority
 
   # "Reschedule me" is seeded in Timeline Lab due 2 days out; dragging its bar
   # onto the day 6 days out changes its due date to that day.
