@@ -21,3 +21,4 @@ Feature: Subtask navigation
     And the user opens the "Product Launch" project
     When the user opens the task titled "Chip parent"
     Then the subtask "Chip sub one" shows an overdue due chip
+    And the subtask "Chip sub one" shows an assignee avatar

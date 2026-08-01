@@ -1,5 +1,9 @@
 import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
+
+// AssigneeAvatar self-fetches (react-query) — stub it for these bare renders.
+vi.mock('./AssigneeAvatar', () => ({ AssigneeAvatar: () => null }));
+
 import { Subtasks } from './Subtasks';
 import type { TaskRecord } from '../../lib/dataClient';
 
@@ -55,6 +59,20 @@ describe('Subtasks', () => {
     fireEvent.change(input, { target: { value: 'New sub' } });
     fireEvent.keyDown(input, { key: 'Enter' });
     expect(onAdd).toHaveBeenCalledWith('New sub');
+  });
+
+  it('renders an assignee avatar slot per subtask', () => {
+    // AssigneeAvatar is mocked to null; assert Subtasks renders the row without
+    // crashing when a subtask carries an assignee (the avatar self-fetches live).
+    render(
+      <Subtasks
+        subtasks={[sub({ id: 'a', assigneeEmail: 'sam@x.co' })]}
+        onAdd={vi.fn()}
+        onToggle={vi.fn()}
+        onOpen={vi.fn()}
+      />,
+    );
+    expect(screen.getByTestId('subtask-open')).toHaveTextContent('Sub');
   });
 
   it('shows a due chip only when the subtask has a due date', () => {

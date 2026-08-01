@@ -10,8 +10,9 @@ export interface SeedTask {
   /** Start date as a day offset from today (positive = starts in the future). */
   startOffsetDays?: number;
   notes?: string;
-  /** Subtask titles, or {title, dueOffsetDays} for a subtask with a due date. */
-  subtasks?: (string | { title: string; dueOffsetDays?: number })[];
+  /** Subtask titles, or {title, dueOffsetDays, assigned} for a subtask with a
+   * due date and/or assigned to the seed user. */
+  subtasks?: (string | { title: string; dueOffsetDays?: number; assigned?: boolean })[];
   /** Names of labels (from seedLabels) to apply to this task. */
   labels?: string[];
   /** Titles of other tasks in the SAME project that must finish first. */
@@ -151,9 +152,9 @@ export const seedProjects: SeedProject[] = [
         title: 'Chip parent',
         section: 'To do',
         priority: 'LOW',
-        // "Chip sub one" is seeded overdue so the subtask-due chip is visible on
-        // load (no write needed); "Chip sub two" stays undated.
-        subtasks: [{ title: 'Chip sub one', dueOffsetDays: -2 }, 'Chip sub two'],
+        // "Chip sub one" is seeded overdue + assigned so the subtask due chip
+        // AND assignee avatar are visible on load; "Chip sub two" stays plain.
+        subtasks: [{ title: 'Chip sub one', dueOffsetDays: -2, assigned: true }, 'Chip sub two'],
       },
       // Read-only search-project-filter anchor: the unique token "Zephyr"
       // appears in exactly two projects (here + Website Redesign), so a search

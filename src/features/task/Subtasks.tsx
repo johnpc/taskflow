@@ -1,6 +1,7 @@
 import { IonIcon } from '@ionic/react';
 import { ellipseOutline, checkmarkCircle } from 'ionicons/icons';
 import { AddCard } from '../board/AddCard';
+import { AssigneeAvatar } from './AssigneeAvatar';
 import { isDone, dueLabel, dueStatus } from './taskMeta';
 import { nowISO, todayISO } from './today';
 import type { TaskRecord } from '../../lib/dataClient';
@@ -61,6 +62,7 @@ export function Subtasks({
                   {dueLabel(sub.dueDate, today)}
                 </span>
               )}
+              <AssigneeAvatar email={sub.assigneeEmail} />
             </li>
           );
         })}
