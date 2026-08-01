@@ -2,14 +2,23 @@ import type { TaskRecord } from '../../lib/dataClient';
 import { isDone, type Priority } from '../task/taskMeta';
 
 /** Case-insensitive substring match of a query against a task's title, notes,
- * and assignee email (so you can find "everything assigned to sam@…"). A
- * blank/whitespace query matches nothing (the search screen shows a prompt
- * instead of the whole table). Pure + total. */
-export function matchTasks(tasks: TaskRecord[], query: string): TaskRecord[] {
+ * assignee email (so you can find "everything assigned to sam@…"), and — when a
+ * label-name map is given — its label names (so a tag like "Backend" is
+ * findable). A blank/whitespace query matches nothing (the search screen shows a
+ * prompt instead of the whole table). Pure + total. */
+export function matchTasks(
+  tasks: TaskRecord[],
+  query: string,
+  labelNames?: Map<string, string>,
+): TaskRecord[] {
   const q = query.trim().toLowerCase();
   if (!q) return [];
   return tasks.filter((t) => {
-    const haystack = `${t.title ?? ''} ${t.notes ?? ''} ${t.assigneeEmail ?? ''}`.toLowerCase();
+    const labels = labelNames
+      ? (t.labelIds ?? []).map((id) => (id && labelNames.get(id)) || '').join(' ')
+      : '';
+    const haystack =
+      `${t.title ?? ''} ${t.notes ?? ''} ${t.assigneeEmail ?? ''} ${labels}`.toLowerCase();
     return haystack.includes(q);
   });
 }

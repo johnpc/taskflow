@@ -24,3 +24,10 @@ Feature: Search
     Given a signed-in user
     When the user searches for "teammate@example.com"
     Then a search result reading "Teammate task" is visible
+
+  # Search matches label names too — "Quarterly planning" carries the unique
+  # "Roadmap" label; "roadmap" appears in no task title/notes.
+  Scenario: Searching by label name finds the tagged task
+    Given a signed-in user
+    When the user searches for "roadmap"
+    Then a search result reading "Quarterly planning" is visible

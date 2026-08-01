@@ -42,6 +42,9 @@ export const seedLabels: { name: string; color: string }[] = [
   { name: 'Design', color: 'violet' },
   { name: 'Urgent', color: 'amber' },
   { name: 'Backend', color: 'sky' },
+  // Unique token used by the search-by-label acceptance: appears in NO task
+  // title/notes, so a search for "roadmap" matches only via the label name.
+  { name: 'Roadmap', color: 'emerald' },
 ];
 
 export interface SeedProject {
@@ -217,6 +220,10 @@ export const seedProjects: SeedProject[] = [
       // so the My Tasks "Following" filter surfaces it while "Assigned to me"
       // hides it — the two filters are independently testable.
       { title: 'Followed report', section: 'To do', priority: 'LOW', following: true },
+      // Search-by-label anchor: carries the unique "Roadmap" label (a token in no
+      // title/notes), so searching "roadmap" finds it only via its label name.
+      // Read-only — no other area touches it.
+      { title: 'Quarterly planning', section: 'To do', priority: 'LOW', labels: ['Roadmap'] },
     ],
   },
   // Dedicated throwaway projects for the archive + delete acceptance scenarios,

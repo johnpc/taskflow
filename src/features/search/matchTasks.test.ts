@@ -36,6 +36,20 @@ describe('matchTasks', () => {
   it('returns empty when nothing matches', () => {
     expect(matchTasks(tasks, 'zzz')).toEqual([]);
   });
+
+  it('matches a task by its label name when a label map is given', () => {
+    const labelled = [
+      task({ id: 'x', title: 'Fix login', labelIds: ['l1'] }),
+      task({ id: 'y', title: 'Write copy', labelIds: ['l2'] }),
+    ];
+    const names = new Map([
+      ['l1', 'Backend'],
+      ['l2', 'Marketing'],
+    ]);
+    expect(matchTasks(labelled, 'backend', names).map((t) => t.id)).toEqual(['x']);
+    // Without the map, the label name is not searchable.
+    expect(matchTasks(labelled, 'backend')).toEqual([]);
+  });
 });
 
 describe('filterResults', () => {
