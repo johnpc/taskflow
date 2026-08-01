@@ -2,7 +2,7 @@
  * localStorage. Pure read/write helpers so the toggle stays unit-testable and
  * the hook thin. Mirrors the board's viewMode pattern. */
 
-export type GroupMode = 'due' | 'priority' | 'focus';
+export type GroupMode = 'due' | 'priority' | 'focus' | 'project';
 
 const KEY = 'tf-mytasks-group';
 
@@ -10,7 +10,7 @@ const KEY = 'tf-mytasks-group';
 export function readGroupMode(): GroupMode {
   try {
     const raw = localStorage.getItem(KEY);
-    if (raw === 'due' || raw === 'priority' || raw === 'focus') return raw;
+    if (raw === 'due' || raw === 'priority' || raw === 'focus' || raw === 'project') return raw;
   } catch {
     /* storage unavailable — use the default */
   }

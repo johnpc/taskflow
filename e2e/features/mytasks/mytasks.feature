@@ -21,6 +21,15 @@ Feature: My Tasks
     Then a due bucket "High priority" is visible
     And a task titled "Renew passport" is visible in My Tasks
 
+  # Grouping by project buckets tasks under their project name — "Renew passport"
+  # lives in "Personal", so a "Personal" bucket appears with it inside.
+  Scenario: My Tasks can group by project
+    Given a signed-in user
+    When the user opens My Tasks
+    And the user groups My Tasks by project
+    Then a due bucket "Personal" is visible
+    And a task titled "Renew passport" is visible in My Tasks
+
   # "My assigned task" is the only task assigned to the seed user, so the
   # "Assigned to me" filter narrows to it and hides "Renew passport".
   Scenario: My Tasks can filter to tasks assigned to me

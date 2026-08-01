@@ -14,6 +14,10 @@ When('the user groups My Tasks by priority', async ({ page }) => {
   await page.getByTestId('groupby-priority').click();
 });
 
+When('the user groups My Tasks by project', async ({ page }) => {
+  await page.getByTestId('groupby-project').click();
+});
+
 When('the user filters My Tasks to assigned-to-me', async ({ page }) => {
   await page.getByTestId('mytasks-assigned-only').check();
 });

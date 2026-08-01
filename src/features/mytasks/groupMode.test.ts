@@ -11,6 +11,8 @@ describe('groupMode store', () => {
   it('round-trips a stored choice', () => {
     writeGroupMode('priority');
     expect(readGroupMode()).toBe('priority');
+    writeGroupMode('project');
+    expect(readGroupMode()).toBe('project');
   });
 
   it('ignores a garbage stored value', () => {

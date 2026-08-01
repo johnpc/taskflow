@@ -14,6 +14,7 @@ import { isDone } from '../task/taskMeta';
 import { overdueCount } from '../projects/taskCounts';
 import { todayISO } from '../task/today';
 import { useAuth } from '../auth/useAuth';
+import { useProjectsById } from '../projects/useProjectsById';
 import type { FocusBucket } from './groupByFocus';
 
 /** My Tasks data: the owner's open tasks grouped by the chosen mode (due date,
@@ -22,6 +23,7 @@ import type { FocusBucket } from './groupByFocus';
 export function useMyTasks() {
   const qc = useQueryClient();
   const { email } = useAuth();
+  const projectsById = useProjectsById();
   const query = useQuery({ queryKey: ['my-tasks'], queryFn: fetchMyTasks });
   const [groupMode, setMode] = useState<GroupMode>(readGroupMode);
   const [showCompleted, setShow] = useState<boolean>(readShowCompleted);
@@ -52,13 +54,13 @@ export function useMyTasks() {
     const today = todayISO();
     const assigned = filterAssignedToMe(query.data ?? [], email, assignedOnly);
     const data = filterFollowing(assigned, email, followingOnly);
-    const open = selectBuckets(groupMode, data, today);
+    const open = selectBuckets(groupMode, data, today, (id) => projectsById.get(id)?.name);
     return {
       buckets: showCompleted ? [...open, ...completedBucket(data)] : open,
       overdue: overdueCount(data, today),
       openTotal: data.filter((t) => !isDone(t)).length,
     };
-  }, [query.data, groupMode, showCompleted, assignedOnly, followingOnly, email]);
+  }, [query.data, groupMode, showCompleted, assignedOnly, followingOnly, email, projectsById]);
 
   const invalidate = () => qc.invalidateQueries({ queryKey: ['my-tasks'] });
 
