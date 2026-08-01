@@ -36,6 +36,20 @@ describe('CommentRow', () => {
     expect(screen.getByTestId('comment-time')).toHaveTextContent('2m ago');
   });
 
+  it('shows an "(edited)" marker only when updatedAt is after createdAt', () => {
+    renderRow({
+      comment: comment({
+        createdAt: '2026-07-29T11:58:00Z',
+        updatedAt: '2026-07-29T11:58:00.400Z',
+      }),
+    });
+    expect(screen.queryByTestId('comment-edited')).not.toBeInTheDocument();
+    renderRow({
+      comment: comment({ createdAt: '2026-07-29T11:58:00Z', updatedAt: '2026-07-29T12:10:00Z' }),
+    });
+    expect(screen.getByTestId('comment-edited')).toHaveTextContent('edited');
+  });
+
   it('edits and saves a changed body', () => {
     const onEdit = vi.fn();
     renderRow({ comment: comment({ id: 'c9' }), onEdit });
