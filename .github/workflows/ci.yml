@@ -242,6 +242,8 @@ jobs:
             paths: .features-gen/e2e/features/projectstatus/
           - name: statusupdates
             paths: .features-gen/e2e/features/statusupdates/
+          - name: keyresources
+            paths: .features-gen/e2e/features/keyresources/
           - name: duplicateproject
             paths: .features-gen/e2e/features/duplicateproject/
           - name: promote

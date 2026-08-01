@@ -293,6 +293,14 @@ export const seedProjects: SeedProject[] = [
       { title: 'CF filter bravo', section: 'To do', priority: 'LOW' },
     ],
   },
+  // Dedicated project for the key-resources overview: this area adds a link here,
+  // so an isolated project keeps the added resource out of a parallel run.
+  {
+    name: 'Resources Lab',
+    color: 'violet',
+    sections: ['To do'],
+    tasks: [{ title: 'Resources target', section: 'To do', priority: 'LOW' }],
+  },
   {
     name: 'Scratchpad',
     color: 'violet',

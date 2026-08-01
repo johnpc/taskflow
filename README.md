@@ -28,6 +28,7 @@ iOS and Android.
 | **Counts**            | Open-task count badge per project; overdue count on My Tasks                                                               | ✅     |
 | **Progress**          | Each project card shows a completion bar and "X of Y done"                                                                 | ✅     |
 | **Project status**    | Set a project On track / At risk / Off track with a note; a colored pill shows on card+header                              | ✅     |
+| **Key resources**     | Keep named links (spec, doc, design) on a project's overview; each opens in a new tab (XSS-guarded)                        | ✅     |
 | **Sections**          | Add, rename, duplicate (with tasks), delete, and reorder a project's columns/sections                                      | ✅     |
 | **Board**             | Kanban columns (To do / In progress / Done) with inline task creation; collapse a column, or collapse/expand all           | ✅     |
 | **List view**         | Dense aligned table — group by None/Section/Assignee/Due/Priority & sort by any; overdue dates red, priority pills         | ✅     |

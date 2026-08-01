@@ -1,0 +1,107 @@
+/* Project overview "Key resources": a collapsible panel of named links, styled
+ * to match the custom-fields manager. */
+.key-resources {
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius-sm);
+  background: var(--tf-surface);
+  margin-bottom: var(--tf-gap);
+}
+
+.key-resources__head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  width: 100%;
+  background: none;
+  border: none;
+  padding: 10px 14px;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--tf-text);
+  cursor: pointer;
+}
+
+.key-resources__count {
+  margin-left: auto;
+  min-width: 20px;
+  padding: 0 7px;
+  border-radius: 999px;
+  background: var(--tf-surface-2);
+  color: var(--tf-text-muted);
+  font-size: 0.75rem;
+  text-align: center;
+}
+
+.key-resources__body {
+  padding: 0 14px 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.key-resources__list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.key-resources__item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.key-resources__link {
+  color: var(--tf-accent-strong);
+  font-size: 0.9rem;
+  font-weight: 600;
+  text-decoration: none;
+}
+
+.key-resources__link:hover {
+  text-decoration: underline;
+}
+
+.key-resources__remove {
+  margin-left: auto;
+  background: none;
+  border: none;
+  color: var(--tf-text-muted);
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.key-resources__composer {
+  display: flex;
+  gap: 6px;
+}
+
+.key-resources__input {
+  flex: 1;
+  min-width: 0;
+  background: var(--tf-surface-2);
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius-sm);
+  padding: 6px 10px;
+  font-size: 0.85rem;
+  color: var(--tf-text);
+}
+
+.key-resources__add {
+  background: var(--tf-accent);
+  color: #fff;
+  border: none;
+  border-radius: var(--tf-radius-sm);
+  padding: 6px 14px;
+  font-weight: 600;
+  font-size: 0.85rem;
+  cursor: pointer;
+}
+
+.key-resources__add:disabled {
+  opacity: 0.5;
+  cursor: default;
+}

@@ -1,6 +1,7 @@
 import { ProjectHeader } from './ProjectHeader';
 import { ProjectShareRegion } from './ProjectShareRegion';
 import { StatusUpdatesRegion } from './StatusUpdatesRegion';
+import { ProjectResourcesRegion } from './ProjectResourcesRegion';
 import { ProjectFieldsRegion } from '../customfields/ProjectFieldsRegion';
 import type { useProjectEdit } from './useProjectEdit';
 import type { ProjectRecord } from '../../lib/dataClient';
@@ -35,6 +36,7 @@ export function ProjectHeaderRegion({
       )}
       <ProjectShareRegion projectId={id} members={members} />
       <StatusUpdatesRegion projectId={id} />
+      <ProjectResourcesRegion projectId={id} />
       <ProjectFieldsRegion projectId={id} />
     </>
   );
