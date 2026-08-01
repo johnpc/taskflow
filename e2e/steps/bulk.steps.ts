@@ -43,6 +43,14 @@ When('the user bulk-adds the label {string} to the selection', async ({ page }, 
   await page.getByTestId('bulk-label').selectOption({ label });
 });
 
+When(
+  'the user bulk-removes the label {string} from the selection',
+  async ({ page }, label: string) => {
+    await expect(page.getByTestId('selection-bar')).toBeVisible({ timeout: 15_000 });
+    await page.getByTestId('bulk-unlabel').selectOption({ label });
+  },
+);
+
 Then(
   'the board card {string} shows the {string} priority',
   async ({ page }, title: string, label: string) => {
@@ -58,6 +66,16 @@ Then(
   async ({ page }, title: string, label: string) => {
     const card = page.getByTestId('task-card').filter({ hasText: title }).first();
     await expect(card.getByTestId('label-chip').filter({ hasText: label })).toBeVisible({
+      timeout: 15_000,
+    });
+  },
+);
+
+Then(
+  'the board card {string} does not show the label {string}',
+  async ({ page }, title: string, label: string) => {
+    const card = page.getByTestId('task-card').filter({ hasText: title }).first();
+    await expect(card.getByTestId('label-chip').filter({ hasText: label })).toHaveCount(0, {
       timeout: 15_000,
     });
   },

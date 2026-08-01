@@ -420,6 +420,9 @@ export const seedProjects: SeedProject[] = [
       // Dedicated bulk-label targets (start unlabeled; the area adds a label).
       { title: 'Label bulk one', section: 'To do', priority: 'LOW' },
       { title: 'Label bulk two', section: 'To do', priority: 'LOW' },
+      // Dedicated bulk-UNLABEL targets (start WITH "Backend"; the area strips it).
+      { title: 'Unlabel bulk one', section: 'To do', priority: 'LOW', labels: ['Backend'] },
+      { title: 'Unlabel bulk two', section: 'To do', priority: 'LOW', labels: ['Backend'] },
     ],
   },
   // Dedicated project for bulk-ASSIGN: shared with a teammate so the selection

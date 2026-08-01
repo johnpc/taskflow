@@ -42,3 +42,13 @@ Feature: Board multi-select
     And the user bulk-adds the label "Backend" to the selection
     Then the board card "Label bulk one" shows the label "Backend"
     And the board card "Label bulk two" shows the label "Backend"
+
+  # Bulk-unlabel: select two cards that start WITH "Backend" and strip it via the
+  # bar; the label chip leaves both cards.
+  Scenario: Bulk-removing a label from selected cards
+    Given a signed-in user
+    And the user opens the "Board Bulk Lab" project
+    When the user selects the tasks "Unlabel bulk one" and "Unlabel bulk two"
+    And the user bulk-removes the label "Backend" from the selection
+    Then the board card "Unlabel bulk one" does not show the label "Backend"
+    And the board card "Unlabel bulk two" does not show the label "Backend"

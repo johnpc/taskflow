@@ -18,6 +18,7 @@ export function SelectionBar({
   onAssign,
   onPriority,
   onLabel,
+  onUnlabel,
   onDelete,
   onClear,
 }: {
@@ -30,6 +31,7 @@ export function SelectionBar({
   onAssign?: (email: string | null) => void;
   onPriority?: (priority: Priority) => void;
   onLabel?: (labelId: string) => void;
+  onUnlabel?: (labelId: string) => void;
   onDelete: () => void;
   onClear: () => void;
 }) {
@@ -53,6 +55,7 @@ export function SelectionBar({
         onAssign={onAssign}
         onPriority={onPriority}
         onLabel={onLabel}
+        onUnlabel={onUnlabel}
       />
       <button
         type="button"

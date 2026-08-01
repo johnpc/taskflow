@@ -45,4 +45,19 @@ describe('BulkSelects', () => {
     fireEvent.change(screen.getByTestId('bulk-label'), { target: { value: 'l1' } });
     expect(onLabel).toHaveBeenCalledWith('l1');
   });
+
+  it('shows the remove-label select only with labels + onUnlabel, and delegates', () => {
+    const onUnlabel = vi.fn();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const labels = [{ id: 'l1', name: 'Bug' }] as any;
+    const { rerender } = render(
+      <BulkSelects sections={sections} onMove={vi.fn()} onUnlabel={onUnlabel} />,
+    );
+    expect(screen.queryByTestId('bulk-unlabel')).not.toBeInTheDocument(); // no labels yet
+    rerender(
+      <BulkSelects sections={sections} labels={labels} onMove={vi.fn()} onUnlabel={onUnlabel} />,
+    );
+    fireEvent.change(screen.getByTestId('bulk-unlabel'), { target: { value: 'l1' } });
+    expect(onUnlabel).toHaveBeenCalledWith('l1');
+  });
 });

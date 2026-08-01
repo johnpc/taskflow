@@ -1,14 +1,17 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 
-const { setTaskDone, updateTask, deleteTask, addLabelToTasks } = vi.hoisted(() => ({
-  setTaskDone: vi.fn(),
-  updateTask: vi.fn(),
-  deleteTask: vi.fn(),
-  addLabelToTasks: vi.fn(),
-}));
+const { setTaskDone, updateTask, deleteTask, addLabelToTasks, removeLabelFromTasks } = vi.hoisted(
+  () => ({
+    setTaskDone: vi.fn(),
+    updateTask: vi.fn(),
+    deleteTask: vi.fn(),
+    addLabelToTasks: vi.fn(),
+    removeLabelFromTasks: vi.fn(),
+  }),
+);
 vi.mock('../task/tasksApi', () => ({ setTaskDone, updateTask, deleteTask }));
-vi.mock('../labels/bulkLabelApi', () => ({ addLabelToTasks }));
+vi.mock('../labels/bulkLabelApi', () => ({ addLabelToTasks, removeLabelFromTasks }));
 
 import { hookWrapper } from '../../test/hookWrapper';
 import { useBulkMutations } from './useBulkMutations';
@@ -18,6 +21,7 @@ beforeEach(() => {
   updateTask.mockReset().mockResolvedValue(undefined);
   deleteTask.mockReset().mockResolvedValue(undefined);
   addLabelToTasks.mockReset().mockResolvedValue(undefined);
+  removeLabelFromTasks.mockReset().mockResolvedValue(undefined);
 });
 
 describe('useBulkMutations', () => {
@@ -51,6 +55,11 @@ describe('useBulkMutations', () => {
       await result.current.bulkLabel.mutateAsync({ ids: ['a', 'b'], labelId: 'lbl' });
     });
     expect(addLabelToTasks).toHaveBeenCalledWith(['a', 'b'], 'lbl');
+
+    await act(async () => {
+      await result.current.bulkUnlabel.mutateAsync({ ids: ['a', 'b'], labelId: 'lbl' });
+    });
+    expect(removeLabelFromTasks).toHaveBeenCalledWith(['a', 'b'], 'lbl');
 
     await act(async () => {
       await result.current.bulkDelete.mutateAsync(['c']);
