@@ -174,6 +174,9 @@ export const seedProjects: SeedProject[] = [
       // Dedicated follow target: only the follow area toggles following here
       // (follow + unfollow ends unfollowed, so idempotent across CI retries).
       { title: 'Follow me', section: 'To do', priority: 'LOW' },
+      // Dedicated auto-follow target: the follow area posts a comment here and
+      // asserts commenting made the author a follower (Asana auto-follow).
+      { title: 'Auto follow me', section: 'To do', priority: 'LOW' },
     ],
   },
   {

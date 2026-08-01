@@ -1,7 +1,8 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-const { get, listSub, listComments, createComment, fetchAttachments } = vi.hoisted(() => ({
+const { get, update, listSub, listComments, createComment, fetchAttachments } = vi.hoisted(() => ({
   get: vi.fn(),
+  update: vi.fn(),
   listSub: vi.fn(),
   listComments: vi.fn(),
   createComment: vi.fn(),
@@ -10,7 +11,7 @@ const { get, listSub, listComments, createComment, fetchAttachments } = vi.hoist
 vi.mock('../../lib/dataClient', () => ({
   dataClient: {
     models: {
-      Task: { get, listTaskByParentTaskId: listSub },
+      Task: { get, update, listTaskByParentTaskId: listSub },
       Comment: { listCommentByTaskId: listComments, create: createComment },
     },
   },
@@ -21,11 +22,14 @@ import { fetchTaskDetail, addComment } from './taskDetailApi';
 
 beforeEach(() => {
   get.mockReset();
+  update.mockReset();
   listSub.mockReset();
   listComments.mockReset();
   createComment.mockReset();
   fetchAttachments.mockReset();
   fetchAttachments.mockResolvedValue([]);
+  get.mockResolvedValue({ data: null });
+  update.mockResolvedValue({ errors: null });
 });
 
 describe('fetchTaskDetail', () => {
@@ -71,5 +75,19 @@ describe('addComment', () => {
   it('throws on error', async () => {
     createComment.mockResolvedValue({ data: null, errors: [{}] });
     await expect(addComment({ taskId: 't', body: 'x', authorEmail: null })).rejects.toThrow();
+  });
+
+  it('auto-follows the task for the comment author when not already following', async () => {
+    createComment.mockResolvedValue({ data: { id: 'c' }, errors: null });
+    get.mockResolvedValue({ data: { id: 't', followers: ['other@x.co'] } });
+    await addComment({ taskId: 't', body: 'hi', authorEmail: 'a@b.co' });
+    expect(update).toHaveBeenCalledWith({ id: 't', followers: ['other@x.co', 'a@b.co'] });
+  });
+
+  it('does not re-add an author who already follows', async () => {
+    createComment.mockResolvedValue({ data: { id: 'c' }, errors: null });
+    get.mockResolvedValue({ data: { id: 't', followers: ['a@b.co'] } });
+    await addComment({ taskId: 't', body: 'hi', authorEmail: 'a@b.co' });
+    expect(update).not.toHaveBeenCalled();
   });
 });
