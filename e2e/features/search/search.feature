@@ -17,3 +17,10 @@ Feature: Search
     Given a signed-in user
     When the user searches for "My assigned task"
     Then the search result "My assigned task" shows an assignee avatar
+
+  # Search matches the assignee email too — "Teammate task" is assigned to
+  # teammate@example.com, a token that appears in no task title/notes.
+  Scenario: Searching by assignee email finds their task
+    Given a signed-in user
+    When the user searches for "teammate@example.com"
+    Then a search result reading "Teammate task" is visible

@@ -9,7 +9,7 @@ describe('matchTasks', () => {
   const tasks = [
     task({ id: 'a', title: 'Ship the release notes' }),
     task({ id: 'b', title: 'Design review', notes: 'discuss the RELEASE plan' }),
-    task({ id: 'c', title: 'Standup' }),
+    task({ id: 'c', title: 'Standup', assigneeEmail: 'sam@example.com' }),
   ];
 
   it('returns nothing for a blank query', () => {
@@ -27,6 +27,10 @@ describe('matchTasks', () => {
         .map((t) => t.id)
         .sort(),
     ).toEqual(['a', 'b']);
+  });
+
+  it('matches the assignee email', () => {
+    expect(matchTasks(tasks, 'sam@example').map((t) => t.id)).toEqual(['c']);
   });
 
   it('returns empty when nothing matches', () => {
