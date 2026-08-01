@@ -1,13 +1,20 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, waitFor, act } from '@testing-library/react';
 
-const { fetchMyTasks } = vi.hoisted(() => ({ fetchMyTasks: vi.fn() }));
+const { fetchMyTasks, fetchLabels } = vi.hoisted(() => ({
+  fetchMyTasks: vi.fn(),
+  fetchLabels: vi.fn(),
+}));
 vi.mock('../mytasks/myTasksApi', () => ({ fetchMyTasks }));
+vi.mock('../labels/labelsApi', () => ({ fetchLabels }));
 
 import { hookWrapper } from '../../test/hookWrapper';
 import { useSearch } from './useSearch';
 
-beforeEach(() => fetchMyTasks.mockReset());
+beforeEach(() => {
+  fetchMyTasks.mockReset();
+  fetchLabels.mockReset().mockResolvedValue([]);
+});
 
 describe('useSearch', () => {
   it('filters tasks by the live query', async () => {
@@ -33,6 +40,21 @@ describe('useSearch', () => {
     act(() => result.current.setQuery('ship'));
     await waitFor(() => expect(result.current.results).toHaveLength(3));
     act(() => result.current.setFilters({ priority: 'HIGH', projectId: '', hideDone: true }));
+    await waitFor(() => expect(result.current.results.map((t) => t.id)).toEqual(['a']));
+  });
+
+  it('matches a task by its label name', async () => {
+    fetchMyTasks.mockResolvedValue([
+      { id: 'a', title: 'Fix login', notes: null, labelIds: ['l1'] },
+      { id: 'b', title: 'Write copy', notes: null, labelIds: ['l2'] },
+    ]);
+    fetchLabels.mockResolvedValue([
+      { id: 'l1', name: 'Backend' },
+      { id: 'l2', name: 'Marketing' },
+    ]);
+    const { result } = renderHook(() => useSearch(), { wrapper: hookWrapper() });
+    await waitFor(() => expect(result.current.tasksQuery.data).toHaveLength(2));
+    act(() => result.current.setQuery('backend'));
     await waitFor(() => expect(result.current.results.map((t) => t.id)).toEqual(['a']));
   });
 });
