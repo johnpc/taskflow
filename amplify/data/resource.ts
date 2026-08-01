@@ -235,6 +235,21 @@ const schema = a.schema({
     })
     .secondaryIndexes((index) => [index('taskId')])
     .authorization((allow) => [allow.ownersDefinedIn('members').identityClaim('email')]),
+
+  // A dated project status update (Asana status history): the health at the time
+  // + a note, by an author. Posting one also sets the project's current
+  // status/statusNote (the header pill). Member-scoped; read newest-first by
+  // createdAt on the bounded per-project page.
+  StatusUpdate: a
+    .model({
+      projectId: a.id().required(),
+      status: a.enum(['ON_TRACK', 'AT_RISK', 'OFF_TRACK']),
+      note: a.string(),
+      authorEmail: a.string(),
+      members: a.string().array(),
+    })
+    .secondaryIndexes((index) => [index('projectId')])
+    .authorization((allow) => [allow.ownersDefinedIn('members').identityClaim('email')]),
 });
 
 export type Schema = ClientSchema<typeof schema>;

@@ -240,6 +240,8 @@ jobs:
             paths: .features-gen/e2e/features/timeline/
           - name: projectstatus
             paths: .features-gen/e2e/features/projectstatus/
+          - name: statusupdates
+            paths: .features-gen/e2e/features/statusupdates/
           - name: duplicateproject
             paths: .features-gen/e2e/features/duplicateproject/
           - name: promote
