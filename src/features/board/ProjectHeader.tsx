@@ -10,7 +10,7 @@ import type { ProjectRecord } from '../../lib/dataClient';
 import './board.css';
 
 /** Project overview header: a health status pill + picker, a color picker, an
- * editable one-line description, and an inline "add section" composer.
+ * editable multi-line description, and an inline "add section" composer.
  * Presentational + local draft state; edits commit on blur/Enter, delegated up. */
 export function ProjectHeader({
   project,
@@ -45,10 +45,11 @@ export function ProjectHeader({
           {project.statusNote}
         </p>
       )}
-      <input
+      <textarea
         className="project-header__desc"
         data-testid="project-description"
         placeholder="Add a project description…"
+        rows={2}
         defaultValue={project.description ?? ''}
         onBlur={(e) => e.target.value !== (project.description ?? '') && onDescribe(e.target.value)}
       />

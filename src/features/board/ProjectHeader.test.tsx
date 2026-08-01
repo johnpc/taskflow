@@ -36,6 +36,16 @@ describe('ProjectHeader', () => {
     expect(onDescribe).not.toHaveBeenCalled();
   });
 
+  it('accepts a multi-line description (textarea)', () => {
+    const onDescribe = vi.fn();
+    render({}, { onDescribe });
+    const input = screen.getByTestId('project-description');
+    expect(input.tagName).toBe('TEXTAREA');
+    fireEvent.change(input, { target: { value: 'Line one\nLine two' } });
+    fireEvent.blur(input);
+    expect(onDescribe).toHaveBeenCalledWith('Line one\nLine two');
+  });
+
   it('adds a section on Enter', () => {
     const onAddSection = vi.fn();
     render({}, { onAddSection });

@@ -491,13 +491,19 @@ li.list-row.task-card--done .task-card__title {
 }
 
 .project-header__desc {
+  display: block;
+  width: 100%;
+  box-sizing: border-box;
   background: transparent;
   border: none;
   border-bottom: 1px solid transparent;
   color: var(--tf-text-muted);
+  font: inherit;
   font-size: 0.98rem;
+  line-height: 1.4;
   padding: 4px 0;
   outline: none;
+  resize: vertical;
 }
 
 .project-header__desc:focus {
