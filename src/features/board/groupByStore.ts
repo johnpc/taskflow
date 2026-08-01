@@ -5,7 +5,7 @@ import type { GroupBy } from './listGrouping';
  * the hook stays thin and testable. */
 const key = (projectId: string) => `tf-groupby-${projectId}`;
 
-const VALID: GroupBy[] = ['NONE', 'SECTION', 'ASSIGNEE', 'DUE', 'PRIORITY'];
+const VALID: GroupBy[] = ['NONE', 'SECTION', 'ASSIGNEE', 'DUE', 'PRIORITY', 'LABEL'];
 
 /** Read the stored group-by for a project, defaulting to SECTION. */
 export function readGroupBy(projectId: string): GroupBy {

@@ -1,11 +1,12 @@
 import type { Column } from './taskGrouping';
-import type { TaskRecord } from '../../lib/dataClient';
+import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 import { dueStatus, type Priority } from '../task/taskMeta';
+import { bucketBy, bucketByLabel, flatten, PRIORITY_ORDER, DUE_ORDER } from './listBuckets';
 
 /** How the List view buckets its rows. NONE is a single flat list; SECTION is
  * the model's own columns; the rest dynamically re-bucket the flattened tasks
  * (Asana-style group-by). */
-export type GroupBy = 'NONE' | 'SECTION' | 'ASSIGNEE' | 'DUE' | 'PRIORITY';
+export type GroupBy = 'NONE' | 'SECTION' | 'ASSIGNEE' | 'DUE' | 'PRIORITY' | 'LABEL';
 
 export const GROUP_BY_LABELS: Record<GroupBy, string> = {
   NONE: 'None',
@@ -13,6 +14,7 @@ export const GROUP_BY_LABELS: Record<GroupBy, string> = {
   ASSIGNEE: 'Assignee',
   DUE: 'Due date',
   PRIORITY: 'Priority',
+  LABEL: 'Label',
 };
 
 /** A named, id-keyed group of tasks rendered as one collapsible List section.
@@ -23,51 +25,24 @@ export interface ListGroup {
   tasks: TaskRecord[];
 }
 
-const PRIORITY_ORDER: { key: Priority; name: string }[] = [
-  { key: 'HIGH', name: 'High priority' },
-  { key: 'MEDIUM', name: 'Medium priority' },
-  { key: 'LOW', name: 'Low priority' },
-  { key: 'NONE', name: 'No priority' },
-];
-
-const DUE_ORDER = [
-  { key: 'overdue', name: 'Overdue' },
-  { key: 'today', name: 'Today' },
-  { key: 'upcoming', name: 'Upcoming' },
-  { key: 'noDate', name: 'No due date' },
-];
-
-/** Flatten a project's section columns back into a single task list. */
-function flatten(columns: Column[]): TaskRecord[] {
-  return columns.flatMap((c) => c.tasks);
-}
-
-/** Bucket tasks by a keying function into the given ordered buckets, dropping
- * empties. Buckets not in `order` (e.g. unknown assignee) append after. */
-function bucketBy(
-  tasks: TaskRecord[],
-  keyOf: (t: TaskRecord) => { id: string; name: string },
-  order: { key: string; name: string }[],
-): ListGroup[] {
-  const groups = new Map<string, ListGroup>();
-  for (const o of order) groups.set(o.key, { id: o.key, name: o.name, tasks: [] });
-  for (const task of tasks) {
-    const { id, name } = keyOf(task);
-    if (!groups.has(id)) groups.set(id, { id, name, tasks: [] });
-    groups.get(id)!.tasks.push(task);
-  }
-  return [...groups.values()].filter((g) => g.tasks.length > 0);
-}
-
 /** Regroup the section columns by the chosen field. SECTION returns the columns
- * as-is (id = section id). Pure; `today` is injected for the DUE buckets. */
-export function groupListBy(columns: Column[], by: GroupBy, today: string): ListGroup[] {
+ * as-is (id = section id). Pure; `today` is injected for the DUE buckets and
+ * `labels` names the LABEL groups. */
+export function groupListBy(
+  columns: Column[],
+  by: GroupBy,
+  today: string,
+  labels: LabelRecord[] = [],
+): ListGroup[] {
   if (by === 'SECTION') {
     return columns.map((c) => ({ id: c.section.id, name: c.section.name, tasks: c.tasks }));
   }
   const tasks = flatten(columns);
   if (by === 'NONE') {
     return [{ id: '_all', name: 'All tasks', tasks }];
+  }
+  if (by === 'LABEL') {
+    return bucketByLabel(tasks, labels);
   }
   if (by === 'PRIORITY') {
     return bucketBy(

@@ -31,7 +31,7 @@ iOS and Android.
 | **Key resources**     | Keep named links (spec, doc, design) on a project's overview; each opens in a new tab (XSS-guarded)                        | ✅     |
 | **Sections**          | Add, rename, duplicate (with tasks), delete, and reorder a project's columns/sections                                      | ✅     |
 | **Board**             | Kanban columns (To do / In progress / Done) with inline task creation; collapse a column, or collapse/expand all           | ✅     |
-| **List view**         | Dense aligned table — group by None/Section/Assignee/Due/Priority & sort by any; overdue dates red, priority pills         | ✅     |
+| **List view**         | Dense aligned table — group by None/Section/Assignee/Due/Priority/Label & sort by any; overdue dates red, priority pills   | ✅     |
 | **Timeline**          | Gantt-style two-week view — dated tasks as bars; tap to open, drag a bar to reschedule                                     | ✅     |
 | **Tasks**             | Title, notes, priority (Low→High), due dates with overdue/today/upcoming cues; project breadcrumb                          | ✅     |
 | **Start date**        | Give a task a start date; not-yet-started tasks show a "Starts Mon D" chip                                                 | ✅     |
