@@ -1,12 +1,13 @@
 import { PRIORITY_META, type Priority } from '../task/taskMeta';
+import { LabelPickSelect } from './LabelPickSelect';
 import type { LabelRecord, SectionRecord } from '../../lib/dataClient';
 
 const PRIORITIES: Priority[] = ['NONE', 'LOW', 'MEDIUM', 'HIGH'];
 
 /** The bulk dropdowns in the selection bar: move-to-section, assign-to-member,
- * set-priority, and add-label. Each fires its handler on change; assign /
- * priority / label render only when their handler (+ options) is given. Split
- * from SelectionBar for the line limit. */
+ * set-priority, add-label, remove-label. Each fires its handler on change;
+ * assign / priority / label render only when their handler (+ options) is
+ * given. Split from SelectionBar for the line limit. */
 export function BulkSelects({
   sections,
   members = [],
@@ -15,6 +16,7 @@ export function BulkSelects({
   onAssign,
   onPriority,
   onLabel,
+  onUnlabel,
 }: {
   sections: SectionRecord[];
   members?: string[];
@@ -23,6 +25,7 @@ export function BulkSelects({
   onAssign?: (email: string | null) => void;
   onPriority?: (priority: Priority) => void;
   onLabel?: (labelId: string) => void;
+  onUnlabel?: (labelId: string) => void;
 }) {
   return (
     <>
@@ -72,21 +75,21 @@ export function BulkSelects({
           ))}
         </select>
       )}
-      {onLabel && labels.length > 0 && (
-        <select
-          className="selection-bar__move"
-          data-testid="bulk-label"
-          aria-label="Add label to selected"
-          value=""
-          onChange={(e) => e.target.value && onLabel(e.target.value)}
-        >
-          <option value="">Add label…</option>
-          {labels.map((l) => (
-            <option key={l.id} value={l.id}>
-              {l.name}
-            </option>
-          ))}
-        </select>
+      {onLabel && (
+        <LabelPickSelect
+          labels={labels}
+          placeholder="Add label…"
+          testid="bulk-label"
+          onPick={onLabel}
+        />
+      )}
+      {onUnlabel && (
+        <LabelPickSelect
+          labels={labels}
+          placeholder="Remove label…"
+          testid="bulk-unlabel"
+          onPick={onUnlabel}
+        />
       )}
     </>
   );

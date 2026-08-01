@@ -33,6 +33,10 @@ export function useBulkSelection(board: ReturnType<typeof useBoard>) {
     board.bulkLabel.mutate({ ids: [...selection.ids], labelId });
     selection.clear();
   };
+  const unlabelSelected = (labelId: string) => {
+    board.bulkUnlabel.mutate({ ids: [...selection.ids], labelId });
+    selection.clear();
+  };
 
   return {
     selection,
@@ -42,5 +46,6 @@ export function useBulkSelection(board: ReturnType<typeof useBoard>) {
     assignSelected,
     prioritizeSelected,
     labelSelected,
+    unlabelSelected,
   };
 }

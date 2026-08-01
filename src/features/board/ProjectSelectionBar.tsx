@@ -28,6 +28,7 @@ export function ProjectSelectionBar({
       onAssign={bulk.assignSelected}
       onPriority={bulk.prioritizeSelected}
       onLabel={bulk.labelSelected}
+      onUnlabel={bulk.unlabelSelected}
       onDelete={bulk.deleteSelected}
       onClear={bulk.selection.clear}
     />

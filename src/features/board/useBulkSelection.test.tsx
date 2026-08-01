@@ -10,6 +10,7 @@ function fakeBoard() {
     bulkAssign: { mutate: vi.fn() },
     bulkPriority: { mutate: vi.fn() },
     bulkLabel: { mutate: vi.fn() },
+    bulkUnlabel: { mutate: vi.fn() },
     bulkDelete: { mutate: vi.fn() },
   } as unknown as ReturnType<typeof useBoard>;
 }
@@ -66,6 +67,15 @@ describe('useBulkSelection', () => {
     act(() => result.current.selection.toggle('r'));
     act(() => result.current.labelSelected('lbl'));
     expect(board.bulkLabel.mutate).toHaveBeenCalledWith({ ids: ['r'], labelId: 'lbl' });
+    expect(result.current.selection.count).toBe(0);
+  });
+
+  it('removes a label from the selected ids then clears', () => {
+    const board = fakeBoard();
+    const { result } = renderHook(() => useBulkSelection(board));
+    act(() => result.current.selection.toggle('u'));
+    act(() => result.current.unlabelSelected('lbl'));
+    expect(board.bulkUnlabel.mutate).toHaveBeenCalledWith({ ids: ['u'], labelId: 'lbl' });
     expect(result.current.selection.count).toBe(0);
   });
 });

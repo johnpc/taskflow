@@ -79,4 +79,24 @@ describe('SelectionBar', () => {
     );
     expect(screen.queryByTestId('bulk-assign')).not.toBeInTheDocument();
   });
+
+  it('removes a label from the selection when onUnlabel + labels are given', () => {
+    const onUnlabel = vi.fn();
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const labels = [{ id: 'l1', name: 'Bug' }] as any;
+    render(
+      <SelectionBar
+        count={2}
+        sections={sections}
+        labels={labels}
+        onComplete={vi.fn()}
+        onMove={vi.fn()}
+        onUnlabel={onUnlabel}
+        onDelete={vi.fn()}
+        onClear={vi.fn()}
+      />,
+    );
+    fireEvent.change(screen.getByTestId('bulk-unlabel'), { target: { value: 'l1' } });
+    expect(onUnlabel).toHaveBeenCalledWith('l1');
+  });
 });

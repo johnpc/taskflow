@@ -14,6 +14,7 @@ const bulk = (active: boolean) =>
     assignSelected: vi.fn(),
     prioritizeSelected: vi.fn(),
     labelSelected: vi.fn(),
+    unlabelSelected: vi.fn(),
     deleteSelected: vi.fn(),
   }) as unknown as ReturnType<typeof useBulkSelection>;
 
