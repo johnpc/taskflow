@@ -22,3 +22,12 @@ Feature: Subtask navigation
     When the user opens the task titled "Chip parent"
     Then the subtask "Chip sub one" shows an overdue due chip
     And the subtask "Chip sub one" shows an assignee avatar
+
+  # A subtask's due date is editable inline from the checklist (Asana). "Chip sub
+  # two" starts undated; setting it to a fixed date round-trips. Idempotent.
+  Scenario: Setting a subtask due date inline from the checklist
+    Given a signed-in user
+    And the user opens the "Product Launch" project
+    When the user opens the task titled "Chip parent"
+    And the user sets the subtask "Chip sub two" due date to "2026-12-15"
+    Then the subtask "Chip sub two" due date is "2026-12-15"
