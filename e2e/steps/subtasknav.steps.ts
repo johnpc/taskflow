@@ -19,6 +19,11 @@ Then('the subtask {string} shows an overdue due chip', async ({ page }, title: s
   });
 });
 
+Then('the subtask {string} shows an assignee avatar', async ({ page }, title: string) => {
+  const row = page.getByTestId('subtasks').locator('.subtask').filter({ hasText: title }).first();
+  await expect(row.getByTestId('task-assignee-avatar')).toBeVisible({ timeout: 15_000 });
+});
+
 Then('the parent breadcrumb reads {string}', async ({ page }, title: string) => {
   await expect(page.getByTestId('task-parent-crumb').last()).toContainText(title, {
     timeout: 15_000,
