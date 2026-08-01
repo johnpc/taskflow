@@ -1,4 +1,4 @@
-import type { TaskRecord } from '../../lib/dataClient';
+import type { LabelRecord, TaskRecord } from '../../lib/dataClient';
 import { selectBuckets } from './selectBuckets';
 import { completedBucket } from './completedBucket';
 import { sortListRows, type ListSort } from '../board/listSort';
@@ -12,6 +12,7 @@ export interface MyTasksViewInput {
   showCompleted: boolean;
   sort: ListSort;
   projectName?: (id: string) => string | undefined;
+  labels?: LabelRecord[];
 }
 
 /** Build the My Tasks buckets: group by the chosen mode, optionally append a
@@ -19,8 +20,8 @@ export interface MyTasksViewInput {
  * (manual keeps each grouping's own order). Pure so the hook stays thin and the
  * whole pipeline is unit-testable in one place. */
 export function buildMyTasksBuckets(input: MyTasksViewInput): TaskBucket[] {
-  const { tasks, mode, today, showCompleted, sort, projectName } = input;
-  const open = selectBuckets(mode, tasks, today, projectName);
+  const { tasks, mode, today, showCompleted, sort, projectName, labels } = input;
+  const open = selectBuckets(mode, tasks, today, projectName, labels);
   const all = showCompleted ? [...open, ...completedBucket(tasks)] : open;
   return all.map((b) => ({ ...b, tasks: sortListRows(b.tasks, sort) }));
 }

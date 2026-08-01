@@ -2,7 +2,8 @@ import { IonSegment, IonSegmentButton, IonLabel } from '@ionic/react';
 import type { GroupMode } from './groupMode';
 
 /** Segmented "Group by" switch for My Tasks (due date / priority / focus /
- * project). Renders only; the chosen mode is owned + persisted by useMyTasks. */
+ * project / label). Renders only; the chosen mode is owned + persisted by
+ * useMyTasks. */
 export function GroupBySegment({
   mode,
   onChange,
@@ -13,6 +14,7 @@ export function GroupBySegment({
   return (
     <IonSegment
       className="mytasks__group"
+      scrollable
       value={mode}
       data-testid="mytasks-groupby"
       onIonChange={(e) => onChange(e.detail.value as GroupMode)}
@@ -28,6 +30,9 @@ export function GroupBySegment({
       </IonSegmentButton>
       <IonSegmentButton value="project" data-testid="groupby-project">
         <IonLabel>Project</IonLabel>
+      </IonSegmentButton>
+      <IonSegmentButton value="label" data-testid="groupby-label">
+        <IonLabel>Label</IonLabel>
       </IonSegmentButton>
     </IonSegment>
   );

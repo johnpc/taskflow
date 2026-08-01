@@ -18,6 +18,12 @@ beforeEach(() => {
   }
 });
 
+// jsdom doesn't implement Element.scrollTo; a scrollable IonSegment calls it on
+// mount, which otherwise throws an uncaught error and fails the run.
+if (!Element.prototype.scrollTo) {
+  Element.prototype.scrollTo = function () {};
+}
+
 // Mock matchMedia (jsdom doesn't implement it; Ionic + theme code call it).
 window.matchMedia =
   window.matchMedia ||

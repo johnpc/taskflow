@@ -16,6 +16,7 @@ import { overdueCount } from '../projects/taskCounts';
 import { todayISO } from '../task/today';
 import { useAuth } from '../auth/useAuth';
 import { useProjectsById } from '../projects/useProjectsById';
+import { useLabels } from '../labels/useLabels';
 import type { ListSort } from '../board/listSort';
 
 /** My Tasks data: the owner's open tasks grouped by the chosen mode (due date,
@@ -24,6 +25,7 @@ import type { ListSort } from '../board/listSort';
 export function useMyTasks() {
   const { email } = useAuth();
   const projectsById = useProjectsById();
+  const labels = useLabels().query.data ?? [];
   const query = useQuery({ queryKey: ['my-tasks'], queryFn: fetchMyTasks });
   const [groupMode, setGroupMode] = usePersistedState<GroupMode>(readGroupMode, writeGroupMode);
   const [showCompleted, setShowCompleted] = usePersistedState(
@@ -49,6 +51,7 @@ export function useMyTasks() {
         showCompleted,
         sort,
         projectName: (id) => projectsById.get(id)?.name,
+        labels,
       }),
       overdue: overdueCount(data, today),
       openTotal: data.filter((t) => !isDone(t)).length,
@@ -62,6 +65,7 @@ export function useMyTasks() {
     sort,
     email,
     projectsById,
+    labels,
   ]);
 
   const { toggleDone, setBucket } = useMyTasksMutations();
