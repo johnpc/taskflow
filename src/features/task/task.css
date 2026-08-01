@@ -220,6 +220,24 @@
   color: var(--tf-accent-strong);
 }
 
+/* Calm cards: on hover-capable (desktop) pointers, the secondary controls
+   (quick-edit due/priority + reorder chevrons) stay hidden until the card is
+   hovered or focused, so a resting card shows just its title + chips. Touch
+   devices (no hover) keep them always visible — there's no hover to reveal. */
+@media (hover: hover) and (pointer: fine) {
+  .task-card .quick-edit,
+  .task-card .reorder {
+    opacity: 0;
+    transition: opacity 0.12s ease;
+  }
+  .task-card:hover .quick-edit,
+  .task-card:focus-within .quick-edit,
+  .task-card:hover .reorder,
+  .task-card:focus-within .reorder {
+    opacity: 1;
+  }
+}
+
 /* Per-card quick-edit (due date + priority cycle) */
 .quick-edit {
   display: flex;
