@@ -1,15 +1,17 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 
-const { create, update, del, spawn } = vi.hoisted(() => ({
+const { create, update, del, spawn, ensureFollower } = vi.hoisted(() => ({
   create: vi.fn(),
   update: vi.fn(),
   del: vi.fn(),
   spawn: vi.fn(),
+  ensureFollower: vi.fn(),
 }));
 vi.mock('../../lib/dataClient', () => ({
   dataClient: { models: { Task: { create, update, delete: del } } },
 }));
 vi.mock('./spawnRecurrence', () => ({ spawnNextOccurrence: spawn }));
+vi.mock('./ensureFollower', () => ({ ensureFollower }));
 // Activity logging is best-effort + tested separately — stub it here.
 vi.mock('./taskEventsApi', () => ({ logTaskEvent: vi.fn().mockResolvedValue(undefined) }));
 
@@ -21,6 +23,8 @@ beforeEach(() => {
   del.mockReset();
   spawn.mockReset();
   spawn.mockResolvedValue(undefined);
+  ensureFollower.mockReset();
+  ensureFollower.mockResolvedValue(undefined);
 });
 
 describe('createTask', () => {
@@ -87,10 +91,16 @@ describe('updateTask', () => {
     update.mockResolvedValue({ errors: null });
     await updateTask({ id: 't', title: 'New' });
     expect(update).toHaveBeenCalledWith({ id: 't', title: 'New' });
+    expect(ensureFollower).not.toHaveBeenCalled();
   });
   it('throws on error', async () => {
     update.mockResolvedValue({ errors: [{}] });
     await expect(updateTask({ id: 't' })).rejects.toThrow();
+  });
+  it('auto-follows the assignee when the patch sets one', async () => {
+    update.mockResolvedValue({ errors: null });
+    await updateTask({ id: 't', assigneeEmail: 'sam@x.co' });
+    expect(ensureFollower).toHaveBeenCalledWith('t', 'sam@x.co');
   });
 });
 

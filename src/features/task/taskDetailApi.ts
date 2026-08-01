@@ -5,7 +5,7 @@
 import { dataClient, type TaskRecord, type CommentRecord } from '../../lib/dataClient';
 import { fetchAttachments } from './attachmentsApi';
 import { membersForTask } from '../auth/members';
-import { isFollowing } from './followState';
+import { ensureFollower } from './ensureFollower';
 import type { AttachmentRecord } from '../../lib/dataClient';
 
 export interface TaskDetailData {
@@ -50,15 +50,6 @@ export async function addComment(input: {
   if (input.authorEmail)
     await ensureFollower(input.taskId, input.authorEmail).catch(() => undefined);
   return data;
-}
-
-/** Add `email` to a task's followers if not already following (read-modify-write
- * on the small followers array). No-op when already a follower. */
-export async function ensureFollower(taskId: string, email: string): Promise<void> {
-  const { data: task } = await dataClient.models.Task.get({ id: taskId });
-  if (!task || isFollowing(task.followers, email)) return;
-  const followers = [...(task.followers ?? []).filter((f): f is string => !!f), email];
-  await dataClient.models.Task.update({ id: taskId, followers });
 }
 
 /** Delete a comment by id. */
