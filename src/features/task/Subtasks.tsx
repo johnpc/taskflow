@@ -1,8 +1,8 @@
 import { IonIcon } from '@ionic/react';
 import { ellipseOutline, checkmarkCircle } from 'ionicons/icons';
 import { AddCard } from '../board/AddCard';
-import { AssigneeAvatar } from './AssigneeAvatar';
 import { SubtaskDue } from './SubtaskDue';
+import { SubtaskAssignee } from './SubtaskAssignee';
 import { isDone } from './taskMeta';
 import { nowISO, todayISO } from './today';
 import type { TaskRecord } from '../../lib/dataClient';
@@ -11,16 +11,20 @@ import type { TaskRecord } from '../../lib/dataClient';
  * plus an inline add. Delegates all mutations to the parent hook. */
 export function Subtasks({
   subtasks,
+  members,
   onAdd,
   onToggle,
   onOpen,
   onSetDue,
+  onAssign,
 }: {
   subtasks: TaskRecord[];
+  members?: string[];
   onAdd: (title: string) => void;
   onToggle: (input: { taskId: string; done: boolean; now: string }) => void;
   onOpen: (id: string) => void;
   onSetDue?: (id: string, dueDate: string | null) => void;
+  onAssign?: (id: string, email: string | null) => void;
 }) {
   const doneCount = subtasks.filter(isDone).length;
   const today = todayISO();
@@ -63,7 +67,11 @@ export function Subtasks({
                 today={today}
                 onSetDue={onSetDue && ((d) => onSetDue(sub.id, d))}
               />
-              <AssigneeAvatar email={sub.assigneeEmail} />
+              <SubtaskAssignee
+                assigneeEmail={sub.assigneeEmail}
+                members={members}
+                onAssign={onAssign && ((email) => onAssign(sub.id, email))}
+              />
             </li>
           );
         })}

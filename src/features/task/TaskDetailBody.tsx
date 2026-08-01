@@ -7,10 +7,9 @@ import { TaskFields } from './TaskFields';
 import { TaskSettings } from './TaskSettings';
 import { TaskLabels } from './TaskLabels';
 import { TaskDependencies } from './TaskDependencies';
-import { Subtasks } from './Subtasks';
+import { TaskSubtasks } from './TaskSubtasks';
 import { TaskDetailExtras } from './TaskDetailExtras';
 import { TaskActions } from './TaskActions';
-import { nextSubtaskOrder } from './nextSubtaskOrder';
 import { nowISO } from './today';
 import { completeWarning } from './completeWarning';
 import { useTaskBlocked } from './useTaskBlocked';
@@ -24,7 +23,7 @@ import type { TaskRecord } from '../../lib/dataClient';
  * labels, subtasks, comments. Split out of TaskDetail so the screen stays a
  * thin load-gate shell. All mutations come from the useTaskDetail hook. */
 export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDetailHook }) {
-  const { query, patch, toggleDone, addSubtask, labels } = hook;
+  const { query, patch, toggleDone, labels } = hook;
   const { projects, move, duplicate, promote } = hook;
   const sections = useTaskSections(task.projectId);
   const blocked = useTaskBlocked(task);
@@ -76,15 +75,7 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
         task={task}
         onPatch={(blockedByIds) => patch.mutate({ id: task.id, blockedByIds })}
       />
-      <Subtasks
-        subtasks={subtasks}
-        onAdd={(title) =>
-          addSubtask.mutate({ projectId: task.projectId, title, order: nextSubtaskOrder(subtasks) })
-        }
-        onToggle={(input) => toggleDone.mutate(input)}
-        onOpen={openTask}
-        onSetDue={(id, dueDate) => patch.mutate({ id, dueDate })}
-      />
+      <TaskSubtasks task={task} hook={hook} currentEmail={email} onOpen={openTask} />
       <TaskDetailExtras task={task} hook={hook} />
       <TaskActions
         taskId={task.id}

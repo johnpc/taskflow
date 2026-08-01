@@ -37,6 +37,14 @@ Then('the subtask {string} shows an assignee avatar', async ({ page }, title: st
   await expect(row.getByTestId('task-assignee-avatar')).toBeVisible({ timeout: 15_000 });
 });
 
+When('the user assigns the subtask {string} to themselves', async ({ page }, title: string) => {
+  const row = page.getByTestId('subtasks').locator('.subtask').filter({ hasText: title }).first();
+  // Pick the first real member option (index 1; index 0 is "Unassigned").
+  const select = row.getByLabel('Assign subtask');
+  const value = await select.locator('option').nth(1).getAttribute('value');
+  await select.selectOption(value!);
+});
+
 Then('the parent breadcrumb reads {string}', async ({ page }, title: string) => {
   await expect(page.getByTestId('task-parent-crumb').last()).toContainText(title, {
     timeout: 15_000,
