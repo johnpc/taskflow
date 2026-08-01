@@ -43,6 +43,9 @@
   --tf-radius: 14px;
   --tf-radius-sm: 9px;
   --tf-gap: 16px;
+  /* Comfortable reading width for vertical list surfaces (My Tasks, Home) so
+     rows don't stretch edge-to-edge on desktop; full-width on narrow screens. */
+  --tf-list-max: 720px;
   /* Keyboard focus ring — a visible, high-contrast outline for :focus-visible. */
   --tf-focus-ring: 3px solid var(--tf-accent-strong);
   --tf-focus-offset: 2px;
