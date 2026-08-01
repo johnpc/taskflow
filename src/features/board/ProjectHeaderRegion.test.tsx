@@ -4,6 +4,7 @@ import { screen } from '@testing-library/react';
 // The share / status / fields regions self-fetch + use auth; stub them (own tests cover them).
 vi.mock('./ProjectShareRegion', () => ({ ProjectShareRegion: () => null }));
 vi.mock('./StatusUpdatesRegion', () => ({ StatusUpdatesRegion: () => null }));
+vi.mock('./ProjectResourcesRegion', () => ({ ProjectResourcesRegion: () => null }));
 vi.mock('../customfields/ProjectFieldsRegion', () => ({ ProjectFieldsRegion: () => null }));
 
 import { renderWithProviders } from '../../test/renderWithProviders';

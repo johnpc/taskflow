@@ -250,6 +250,19 @@ const schema = a.schema({
     })
     .secondaryIndexes((index) => [index('projectId')])
     .authorization((allow) => [allow.ownersDefinedIn('members').identityClaim('email')]),
+
+  // A project "key resource": a named link (spec, doc, design) shown on the
+  // project overview — Asana's Overview key-resources list. The url is
+  // safeHref-guarded before render. Member-scoped like the rest of the project.
+  ProjectResource: a
+    .model({
+      projectId: a.id().required(),
+      title: a.string().required(),
+      url: a.string().required(),
+      members: a.string().array(),
+    })
+    .secondaryIndexes((index) => [index('projectId')])
+    .authorization((allow) => [allow.ownersDefinedIn('members').identityClaim('email')]),
 });
 
 export type Schema = ClientSchema<typeof schema>;
