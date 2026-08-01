@@ -5,6 +5,7 @@
 import { dataClient, type TaskRecord } from '../../lib/dataClient';
 import { spawnNextOccurrence } from './spawnRecurrence';
 import { logTaskEvent } from './taskEventsApi';
+import { ensureFollower } from './ensureFollower';
 import { membersForProject } from '../auth/members';
 
 export type { TaskRecord } from '../../lib/dataClient';
@@ -83,6 +84,10 @@ export async function updateTask(
 ): Promise<void> {
   const { errors } = await dataClient.models.Task.update(input);
   if (errors) throw new Error(`Update task failed: ${JSON.stringify(errors)}`);
+  // Assigning a task auto-follows the assignee (Asana) — best-effort so it never
+  // fails the update. Only when this patch actually set an assignee.
+  if (input.assigneeEmail)
+    await ensureFollower(input.id, input.assigneeEmail).catch(() => undefined);
 }
 
 /** Delete a task. */
