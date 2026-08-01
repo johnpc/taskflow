@@ -27,13 +27,10 @@ When(
   },
 );
 
-Then(
-  'the subtask {string} due date is {string}',
-  async ({ page }, title: string, date: string) => {
-    const row = page.getByTestId('subtasks').locator('.subtask').filter({ hasText: title }).first();
-    await expect(row.getByLabel('Set subtask due date')).toHaveValue(date, { timeout: 15_000 });
-  },
-);
+Then('the subtask {string} due date is {string}', async ({ page }, title: string, date: string) => {
+  const row = page.getByTestId('subtasks').locator('.subtask').filter({ hasText: title }).first();
+  await expect(row.getByLabel('Set subtask due date')).toHaveValue(date, { timeout: 15_000 });
+});
 
 Then('the subtask {string} shows an assignee avatar', async ({ page }, title: string) => {
   const row = page.getByTestId('subtasks').locator('.subtask').filter({ hasText: title }).first();
