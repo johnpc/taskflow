@@ -94,7 +94,9 @@
 
 .mytasks__group {
   margin: 0 0 18px;
-  max-width: 360px;
+  /* Scrollable segment (5 tabs); cap on wide screens but let each tab label
+     show in full — a 360px cap truncated "Project" to "PROJE". */
+  max-width: 560px;
 }
 
 .mytasks__show-done {
