@@ -31,3 +31,12 @@ Feature: Subtask navigation
     When the user opens the task titled "Chip parent"
     And the user sets the subtask "Chip sub two" due date to "2026-12-15"
     Then the subtask "Chip sub two" due date is "2026-12-15"
+
+  # A subtask's assignee is editable inline too (Asana). Assigning "Chip sub two"
+  # to the seed user surfaces its avatar. Idempotent.
+  Scenario: Assigning a subtask inline from the checklist
+    Given a signed-in user
+    And the user opens the "Product Launch" project
+    When the user opens the task titled "Chip parent"
+    And the user assigns the subtask "Chip sub two" to themselves
+    Then the subtask "Chip sub two" shows an assignee avatar

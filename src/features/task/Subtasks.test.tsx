@@ -112,4 +112,20 @@ describe('Subtasks', () => {
     });
     expect(onSetDue).toHaveBeenCalledWith('a', '2026-08-09');
   });
+
+  it('assigns a subtask inline when onAssign + members are given', () => {
+    const onAssign = vi.fn();
+    render(
+      <Subtasks
+        subtasks={[sub({ id: 'a' })]}
+        members={['me@x.co']}
+        onAdd={vi.fn()}
+        onToggle={vi.fn()}
+        onOpen={vi.fn()}
+        onAssign={onAssign}
+      />,
+    );
+    fireEvent.change(screen.getByLabelText('Assign subtask'), { target: { value: 'me@x.co' } });
+    expect(onAssign).toHaveBeenCalledWith('a', 'me@x.co');
+  });
 });

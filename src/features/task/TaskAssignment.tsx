@@ -1,4 +1,5 @@
 import { AssigneePicker } from './AssigneePicker';
+import { assigneeOptions } from './assigneeOptions';
 import type { SectionRecord, TaskRecord } from '../../lib/dataClient';
 import './taskDetail.css';
 
@@ -19,11 +20,7 @@ export function TaskAssignment({
   onMove: (sectionId: string) => void;
   onAssign: (email: string | null) => void;
 }) {
-  const taskMembers = (task.members ?? []).filter((m): m is string => !!m);
-  const members =
-    currentEmail && !taskMembers.includes(currentEmail)
-      ? [...taskMembers, currentEmail]
-      : taskMembers;
+  const members = assigneeOptions(task.members, currentEmail);
   return (
     <div className="task-assign">
       <label className="task-fields__row">
