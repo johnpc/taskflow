@@ -4,6 +4,7 @@ import { todayISO } from '../task/today';
 import { timelineLayout } from './timelineLayout';
 import { useTimelineDrag } from './useTimelineDrag';
 import { TimelineHead } from './TimelineHead';
+import { prioClass } from './timelineBarClass';
 import type { Column } from '../board/taskGrouping';
 import './timeline.css';
 
@@ -46,7 +47,7 @@ export function TimelineView({
             <div key={b.task.id} className="timeline__row" style={cols}>
               <button
                 type="button"
-                className="timeline__bar"
+                className={`timeline__bar${prioClass(b.task.priority)}`}
                 data-testid="timeline-bar"
                 draggable={!!onReschedule}
                 style={{ gridColumn: `${b.offset + 1} / span ${b.span}` }}

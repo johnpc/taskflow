@@ -52,6 +52,18 @@
   cursor: pointer;
 }
 
+/* Priority-colored bars (Asana): High reads red, Medium amber; Low/None keep
+ * the default accent. The soft tint + solid text mirror the card priority chips. */
+.timeline__bar--high {
+  background: color-mix(in srgb, var(--tf-priority-high, var(--tf-overdue)) 15%, transparent);
+  color: var(--tf-priority-high, var(--tf-overdue));
+}
+
+.timeline__bar--medium {
+  background: color-mix(in srgb, var(--tf-priority-medium) 18%, transparent);
+  color: var(--tf-priority-medium);
+}
+
 .timeline__empty {
   color: var(--tf-text-muted);
   font-size: 0.9rem;
