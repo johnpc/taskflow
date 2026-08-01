@@ -48,6 +48,16 @@ Feature: My Tasks
     Then a task titled "Followed report" is visible in My Tasks
     And a task titled "Renew passport" is not visible
 
+  # Sorting within buckets: choosing a sort column reveals the direction toggle
+  # and the tasks stay visible (the sort reorders rows inside each bucket). A
+  # deterministic UI-state check — no dependency on mutable row order.
+  Scenario: My Tasks can sort tasks within a bucket
+    Given a signed-in user
+    When the user opens My Tasks
+    And the user sorts My Tasks by "Title"
+    Then the My Tasks sort direction toggle is visible
+    And a task titled "Renew passport" is visible in My Tasks
+
   # Quick-add captures a task into a chosen project without opening it; the new
   # open task then appears in My Tasks. Uses a unique title + dedicated project.
   Scenario: Quick-adding a task from My Tasks

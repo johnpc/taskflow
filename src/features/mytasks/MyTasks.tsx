@@ -4,6 +4,7 @@ import { GroupBySegment } from './GroupBySegment';
 import { MyTasksBucket } from './MyTasksBucket';
 import { MyTasksQuickAdd } from './MyTasksQuickAdd';
 import { MyTasksFilters } from './MyTasksFilters';
+import { MyTasksSort } from './MyTasksSort';
 import { useQuickAdd } from './useQuickAdd';
 import { useProjects } from '../projects/useProjects';
 import { useProjectsById } from '../projects/useProjectsById';
@@ -30,6 +31,8 @@ export function MyTasks() {
     setAssignedOnly,
     followingOnly,
     setFollowingOnly,
+    sort,
+    setSort,
     toggleDone,
     setBucket,
   } = useMyTasks();
@@ -64,6 +67,7 @@ export function MyTasks() {
           followingOnly={followingOnly}
           onFollowingOnly={setFollowingOnly}
         />
+        <MyTasksSort sort={sort} onChange={setSort} />
         <LoadState
           isLoading={query.isLoading}
           isError={query.isError}
