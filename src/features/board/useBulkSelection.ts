@@ -29,6 +29,10 @@ export function useBulkSelection(board: ReturnType<typeof useBoard>) {
     board.bulkPriority.mutate({ ids: [...selection.ids], priority });
     selection.clear();
   };
+  const labelSelected = (labelId: string) => {
+    board.bulkLabel.mutate({ ids: [...selection.ids], labelId });
+    selection.clear();
+  };
 
   return {
     selection,
@@ -37,5 +41,6 @@ export function useBulkSelection(board: ReturnType<typeof useBoard>) {
     moveSelected,
     assignSelected,
     prioritizeSelected,
+    labelSelected,
   };
 }

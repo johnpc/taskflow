@@ -1,5 +1,6 @@
 import { useMutation } from '@tanstack/react-query';
 import { setTaskDone, updateTask, deleteTask } from '../task/tasksApi';
+import { addLabelToTasks } from '../labels/bulkLabelApi';
 import type { Priority } from '../task/taskMeta';
 
 /** The board's bulk (multi-select) mutations — complete, move-to-section, and
@@ -30,10 +31,16 @@ export function useBulkMutations(invalidate: () => void) {
     onSuccess: invalidate,
   });
 
+  const bulkLabel = useMutation({
+    mutationFn: (input: { ids: string[]; labelId: string }) =>
+      addLabelToTasks(input.ids, input.labelId),
+    onSuccess: invalidate,
+  });
+
   const bulkDelete = useMutation({
     mutationFn: (ids: string[]) => Promise.all(ids.map((id) => deleteTask(id))),
     onSuccess: invalidate,
   });
 
-  return { bulkComplete, bulkMove, bulkAssign, bulkPriority, bulkDelete };
+  return { bulkComplete, bulkMove, bulkAssign, bulkPriority, bulkLabel, bulkDelete };
 }

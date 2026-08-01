@@ -33,3 +33,12 @@ Feature: Board multi-select
     And the user bulk-sets the selection priority to "HIGH"
     Then the board card "Prio bulk one" shows the "High" priority
     And the board card "Prio bulk two" shows the "High" priority
+
+  # Bulk-label: select two cards and add a label to both via the bar.
+  Scenario: Bulk-adding a label to selected cards
+    Given a signed-in user
+    And the user opens the "Board Bulk Lab" project
+    When the user selects the tasks "Label bulk one" and "Label bulk two"
+    And the user bulk-adds the label "Backend" to the selection
+    Then the board card "Label bulk one" shows the label "Backend"
+    And the board card "Label bulk two" shows the label "Backend"

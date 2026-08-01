@@ -13,17 +13,18 @@ const bulk = (active: boolean) =>
     moveSelected: vi.fn(),
     assignSelected: vi.fn(),
     prioritizeSelected: vi.fn(),
+    labelSelected: vi.fn(),
     deleteSelected: vi.fn(),
   }) as unknown as ReturnType<typeof useBulkSelection>;
 
 describe('ProjectSelectionBar', () => {
   it('renders nothing when no selection is active', () => {
-    render(<ProjectSelectionBar bulk={bulk(false)} sections={sections} members={[]} />);
+    render(<ProjectSelectionBar bulk={bulk(false)} sections={sections} members={[]} labels={[]} />);
     expect(screen.queryByTestId('selection-bar')).not.toBeInTheDocument();
   });
 
   it('renders the bar with the count when a selection is active', () => {
-    render(<ProjectSelectionBar bulk={bulk(true)} sections={sections} members={[]} />);
+    render(<ProjectSelectionBar bulk={bulk(true)} sections={sections} members={[]} labels={[]} />);
     expect(screen.getByTestId('selection-bar')).toHaveTextContent('2 selected');
   });
 });

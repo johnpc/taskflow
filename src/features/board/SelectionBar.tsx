@@ -2,7 +2,7 @@ import { IonIcon } from '@ionic/react';
 import { checkmarkDoneOutline, trashOutline, closeOutline } from 'ionicons/icons';
 import { BulkSelects } from './BulkSelects';
 import type { Priority } from '../task/taskMeta';
-import type { SectionRecord } from '../../lib/dataClient';
+import type { LabelRecord, SectionRecord } from '../../lib/dataClient';
 import './board.css';
 
 /** The bulk-action bar shown when tasks are selected: complete all, move all to
@@ -12,20 +12,24 @@ export function SelectionBar({
   count,
   sections,
   members = [],
+  labels = [],
   onComplete,
   onMove,
   onAssign,
   onPriority,
+  onLabel,
   onDelete,
   onClear,
 }: {
   count: number;
   sections: SectionRecord[];
   members?: string[];
+  labels?: LabelRecord[];
   onComplete: () => void;
   onMove: (sectionId: string) => void;
   onAssign?: (email: string | null) => void;
   onPriority?: (priority: Priority) => void;
+  onLabel?: (labelId: string) => void;
   onDelete: () => void;
   onClear: () => void;
 }) {
@@ -44,9 +48,11 @@ export function SelectionBar({
       <BulkSelects
         sections={sections}
         members={members}
+        labels={labels}
         onMove={onMove}
         onAssign={onAssign}
         onPriority={onPriority}
+        onLabel={onLabel}
       />
       <button
         type="button"
