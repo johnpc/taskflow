@@ -283,6 +283,7 @@
 }
 
 .subtask__title {
+  flex: 1;
   background: none;
   border: none;
   padding: 0;
@@ -299,6 +300,22 @@
 .subtask--done .subtask__title {
   text-decoration: line-through;
   color: var(--tf-text-muted);
+}
+
+/* Due chip on a subtask row — overdue/today read red/amber, matching cards. */
+.subtask__due {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: var(--tf-text-muted);
+  white-space: nowrap;
+}
+
+.subtask__due--overdue {
+  color: var(--tf-overdue);
+}
+
+.subtask__due--today {
+  color: var(--tf-priority-medium);
 }
 
 .task-breadcrumb-row {
