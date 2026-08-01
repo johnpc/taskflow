@@ -6,6 +6,8 @@ vi.mock('./useBoard', () => ({ useBoard }));
 vi.mock('./useProject', () => ({ useProject }));
 // BoardRegion (rendered by ProjectView) uses the toast; stub it here.
 vi.mock('../shell/useToast', () => ({ useToast: () => ({ showUndo: vi.fn() }) }));
+// The status-updates region self-fetches + uses auth; stub it (its own tests cover it).
+vi.mock('./StatusUpdatesRegion', () => ({ StatusUpdatesRegion: () => null }));
 
 import { renderWithProviders } from '../../test/renderWithProviders';
 import { ProjectView } from './ProjectView';

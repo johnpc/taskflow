@@ -18,3 +18,4 @@ export type CommentRecord = Schema['Comment']['type'];
 export type AttachmentRecord = Schema['Attachment']['type'];
 export type LabelRecord = Schema['Label']['type'];
 export type CustomFieldRecord = Schema['CustomField']['type'];
+export type StatusUpdateRecord = Schema['StatusUpdate']['type'];

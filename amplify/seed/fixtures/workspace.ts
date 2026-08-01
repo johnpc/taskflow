@@ -289,6 +289,14 @@ export const seedProjects: SeedProject[] = [
     sections: ['To do'],
     tasks: [{ title: 'Status target', section: 'To do', priority: 'NONE' }],
   },
+  // Dedicated project for the status-UPDATE history: this area posts a dated
+  // update here (which also flips the current pill), isolated from Status Lab.
+  {
+    name: 'Status Updates Lab',
+    color: 'sky',
+    sections: ['To do'],
+    tasks: [{ title: 'Status updates target', section: 'To do', priority: 'NONE' }],
+  },
   // Dedicated project for promoting a subtask: this area lifts the subtask out
   // of its parent, so an isolated parent+subtask keeps a parallel run safe.
   {
