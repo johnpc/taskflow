@@ -69,6 +69,7 @@ export async function updateTask(
       | 'labelIds'
       | 'blockedByIds'
       | 'likedBy'
+      | 'followers'
       | 'repeat'
       | 'myBucket'
       | 'approval'

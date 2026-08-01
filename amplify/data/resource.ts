@@ -119,6 +119,9 @@ const schema = a.schema({
       // toggle on the detail adds/removes the current user; the count is the
       // array length. Any member can update (project-scoped auth).
       likedBy: a.string().array(),
+      // Followers (Asana): emails of members following this task for updates. A
+      // Follow toggle adds/removes the current user; shown as an avatar stack.
+      followers: a.string().array(),
       // Subtasks: a task can have a parent task (self-relation).
       parentTaskId: a.id(),
       parent: a.belongsTo('Task', 'parentTaskId'),

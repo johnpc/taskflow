@@ -1,8 +1,7 @@
 import { ParentBreadcrumb } from './ParentBreadcrumb';
 import { ProjectCrumb } from './ProjectCrumb';
 import { TaskHeader } from './TaskHeader';
-import { LikeButton } from './LikeButton';
-import { toggleLike } from './taskLikes';
+import { TaskSocial } from './TaskSocial';
 import { TaskActivity } from './TaskActivity';
 import { TaskFields } from './TaskFields';
 import { TaskSettings } from './TaskSettings';
@@ -52,12 +51,10 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
         onToggleDone={(done) => toggleDone.mutate({ taskId: task.id, done, now: nowISO() })}
         onRename={(title) => patch.mutate({ id: task.id, title })}
       />
-      <LikeButton
-        likedBy={task.likedBy}
+      <TaskSocial
+        task={task}
         currentEmail={email}
-        onToggle={() =>
-          email && patch.mutate({ id: task.id, likedBy: toggleLike(task.likedBy, email) })
-        }
+        onPatch={(p) => patch.mutate({ id: task.id, ...p })}
       />
       <TaskActivity task={task} nowMs={Date.now()} />
       <TaskFields task={task} onPatch={(p) => patch.mutate({ id: task.id, ...p })} />
