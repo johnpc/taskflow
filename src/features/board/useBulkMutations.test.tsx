@@ -1,12 +1,14 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 
-const { setTaskDone, updateTask, deleteTask } = vi.hoisted(() => ({
+const { setTaskDone, updateTask, deleteTask, addLabelToTasks } = vi.hoisted(() => ({
   setTaskDone: vi.fn(),
   updateTask: vi.fn(),
   deleteTask: vi.fn(),
+  addLabelToTasks: vi.fn(),
 }));
 vi.mock('../task/tasksApi', () => ({ setTaskDone, updateTask, deleteTask }));
+vi.mock('../labels/bulkLabelApi', () => ({ addLabelToTasks }));
 
 import { hookWrapper } from '../../test/hookWrapper';
 import { useBulkMutations } from './useBulkMutations';
@@ -15,6 +17,7 @@ beforeEach(() => {
   setTaskDone.mockReset().mockResolvedValue(undefined);
   updateTask.mockReset().mockResolvedValue(undefined);
   deleteTask.mockReset().mockResolvedValue(undefined);
+  addLabelToTasks.mockReset().mockResolvedValue(undefined);
 });
 
 describe('useBulkMutations', () => {
@@ -43,6 +46,11 @@ describe('useBulkMutations', () => {
       await result.current.bulkPriority.mutateAsync({ ids: ['a'], priority: 'HIGH' });
     });
     expect(updateTask).toHaveBeenCalledWith({ id: 'a', priority: 'HIGH' });
+
+    await act(async () => {
+      await result.current.bulkLabel.mutateAsync({ ids: ['a', 'b'], labelId: 'lbl' });
+    });
+    expect(addLabelToTasks).toHaveBeenCalledWith(['a', 'b'], 'lbl');
 
     await act(async () => {
       await result.current.bulkDelete.mutateAsync(['c']);

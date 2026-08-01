@@ -75,6 +75,7 @@ export function ProjectView() {
           bulk={bulk}
           sections={board.columns.map((c) => c.section)}
           members={memberList}
+          labels={board.labels}
         />
         <BoardRegion
           board={board}

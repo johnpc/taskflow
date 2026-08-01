@@ -38,11 +38,26 @@ When(
   },
 );
 
+When('the user bulk-adds the label {string} to the selection', async ({ page }, label: string) => {
+  await expect(page.getByTestId('selection-bar')).toBeVisible({ timeout: 15_000 });
+  await page.getByTestId('bulk-label').selectOption({ label });
+});
+
 Then(
   'the board card {string} shows the {string} priority',
   async ({ page }, title: string, label: string) => {
     const card = page.getByTestId('task-card').filter({ hasText: title }).first();
     await expect(card.locator('[class*="task-card__prio"]').first()).toHaveText(label, {
+      timeout: 15_000,
+    });
+  },
+);
+
+Then(
+  'the board card {string} shows the label {string}',
+  async ({ page }, title: string, label: string) => {
+    const card = page.getByTestId('task-card').filter({ hasText: title }).first();
+    await expect(card.getByTestId('label-chip').filter({ hasText: label })).toBeVisible({
       timeout: 15_000,
     });
   },
