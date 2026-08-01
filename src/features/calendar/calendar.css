@@ -3,6 +3,36 @@
   margin: 6px 0 18px;
 }
 
+/* Week navigation: title on the left, prev / Today / next on the right. */
+.calendar__nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.calendar__nav-controls {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.calendar__nav-btn {
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--tf-text);
+  cursor: pointer;
+}
+
+.calendar__nav-btn[disabled] {
+  opacity: 0.4;
+  cursor: default;
+}
+
 .calendar__days {
   display: flex;
   flex-direction: column;

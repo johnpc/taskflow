@@ -10,3 +10,9 @@ export function horizonDates(start: string, count: number): string[] {
   }
   return out;
 }
+
+/** Shift a YYYY-MM-DD date by `days` (can be negative). Pure + month-safe. */
+export function shiftDate(date: string, days: number): string {
+  const [y, m, d] = date.split('-').map(Number);
+  return new Date(Date.UTC(y, m - 1, d + days)).toISOString().slice(0, 10);
+}
