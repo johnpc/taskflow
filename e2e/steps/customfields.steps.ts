@@ -94,6 +94,14 @@ Then(
   },
 );
 
+When(
+  'the user filters the board by custom field {string} being {string}',
+  async ({ page }, field: string, value: string) => {
+    await page.getByTestId('filter-cf-field').selectOption({ label: field });
+    await page.getByTestId('filter-cf-value').selectOption(value);
+  },
+);
+
 When('the user opens the custom-fields manager', async ({ page }) => {
   // Expand only if collapsed (idempotent for CI retries).
   const toggle = page.getByTestId('project-fields-toggle');

@@ -1,21 +1,24 @@
 import { FilterFacets } from './FilterFacets';
+import { CustomFieldFacet } from './CustomFieldFacet';
 import { activeFilterCount, clearedFilter } from './taskFilter';
 import type { BoardFilter, SortKey } from './taskFilter';
-import type { LabelRecord } from '../../lib/dataClient';
+import type { CustomFieldRecord, LabelRecord } from '../../lib/dataClient';
 import './board.css';
 
-/** Board controls: show/hide completed, filter by label / priority / due window,
- * and sort. Presentational — reports partial filter updates to the parent
- * (useBoardFilter). Shared by the board and the list view. */
+/** Board controls: show/hide completed, filter by label / priority / due window
+ * / assignee / custom field, and sort. Presentational — reports partial filter
+ * updates to the parent (useBoardFilter). Shared by the board and the list view. */
 export function FilterBar({
   filter,
   labels,
   members = [],
+  customFields = [],
   onChange,
 }: {
   filter: BoardFilter;
   labels: LabelRecord[];
   members?: string[];
+  customFields?: CustomFieldRecord[];
   onChange: (patch: Partial<BoardFilter>) => void;
 }) {
   const active = activeFilterCount(filter);
@@ -44,6 +47,7 @@ export function FilterBar({
         ))}
       </select>
       <FilterFacets filter={filter} members={members} onChange={onChange} />
+      <CustomFieldFacet fields={customFields} filter={filter} onChange={onChange} />
       <select
         className="filter-bar__select"
         data-testid="filter-sort"

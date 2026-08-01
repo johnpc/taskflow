@@ -102,6 +102,26 @@ describe('applyFilter', () => {
       'none',
     ]);
   });
+
+  it('filters by a custom-field value', () => {
+    const tasks = [
+      task({ id: 'a', customValues: JSON.stringify({ f1: 'Doing' }) }),
+      task({ id: 'b', customValues: JSON.stringify({ f1: 'Done' }) }),
+      task({ id: 'c', customValues: null }),
+    ];
+    const out = applyFilter(tasks, {
+      ...DEFAULT_FILTER,
+      customFieldId: 'f1',
+      customValue: 'Doing',
+    });
+    expect(out.map((t) => t.id)).toEqual(['a']);
+  });
+
+  it('ignores the custom-field filter when no value is chosen', () => {
+    const tasks = [task({ id: 'a', customValues: JSON.stringify({ f1: 'Doing' }) })];
+    const out = applyFilter(tasks, { ...DEFAULT_FILTER, customFieldId: 'f1', customValue: '' });
+    expect(out.map((t) => t.id)).toEqual(['a']);
+  });
 });
 
 describe('activeFilterCount', () => {
@@ -109,26 +129,29 @@ describe('activeFilterCount', () => {
     expect(activeFilterCount(DEFAULT_FILTER)).toBe(0);
     expect(activeFilterCount({ ...DEFAULT_FILTER, hideDone: false, sort: 'due' })).toBe(0);
     expect(activeFilterCount({ ...DEFAULT_FILTER, priority: 'HIGH', assignee: 'a@x.co' })).toBe(2);
+    expect(
+      activeFilterCount({ ...DEFAULT_FILTER, customFieldId: 'f1', customValue: 'Doing' }),
+    ).toBe(1);
   });
 });
 
 describe('clearedFilter', () => {
   it('resets facets but preserves hideDone + sort', () => {
     const cleared = clearedFilter({
+      ...DEFAULT_FILTER,
       hideDone: false,
       sort: 'due',
       labelId: 'l',
       priority: 'HIGH',
       dueWindow: 'today',
       assignee: 'a@x.co',
+      customFieldId: 'f1',
+      customValue: 'Doing',
     });
     expect(cleared).toEqual({
+      ...DEFAULT_FILTER,
       hideDone: false,
       sort: 'due',
-      labelId: '',
-      priority: '',
-      dueWindow: '',
-      assignee: '',
     });
   });
 });

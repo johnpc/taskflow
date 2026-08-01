@@ -14,10 +14,8 @@ import { ViewToggle } from './ViewToggle';
 import { CollapseAllButton } from './CollapseAllButton';
 import { FilterBar } from './FilterBar';
 import { SavedViewsRegion } from './SavedViewsRegion';
-import { ProjectHeader } from './ProjectHeader';
-import { ProjectShareRegion } from './ProjectShareRegion';
-import { StatusUpdatesRegion } from './StatusUpdatesRegion';
-import { ProjectFieldsRegion } from '../customfields/ProjectFieldsRegion';
+import { ProjectHeaderRegion } from './ProjectHeaderRegion';
+import { useCustomFields } from '../customfields/useCustomFields';
 import { ProjectTopBar } from './ProjectTopBar';
 import { ProjectSelectionBar } from './ProjectSelectionBar';
 import { useBulkSelection } from './useBulkSelection';
@@ -40,6 +38,7 @@ export function ProjectView() {
   const actions = useProjectActions(id);
   const favorite = useToggleFavorite();
   const bulk = useBulkSelection(board);
+  const { fields: customFields } = useCustomFields(id);
   const memberList = (project.data?.members ?? []).filter((m): m is string => !!m);
   useDocumentTitle(project.data?.name ?? 'Project');
 
@@ -59,23 +58,24 @@ export function ProjectView() {
         onDelete={actions.deleteAndLeave}
       />
       <IonContent className="ion-padding">
-        {project.data && (
-          <ProjectHeader
-            project={project.data}
-            onDescribe={(description) => edit.mutate({ id, description })}
-            onSetStatus={(next) => edit.mutate({ id, ...next })}
-            onSetColor={(color) => edit.mutate({ id, color })}
-            onAddSection={(name) => board.addSection.mutate(name)}
-          />
-        )}
-        <ProjectShareRegion projectId={id} members={memberList} />
-        <StatusUpdatesRegion projectId={id} />
-        <ProjectFieldsRegion projectId={id} />
+        <ProjectHeaderRegion
+          id={id}
+          project={project.data ?? undefined}
+          members={memberList}
+          edit={edit}
+          onAddSection={(name) => board.addSection.mutate(name)}
+        />
         <div className="board-toolbar">
           <ViewToggle mode={mode} onChange={choose} />
           <CollapseAllButton sectionIds={board.columns.map((c) => c.section.id)} />
         </div>
-        <FilterBar filter={filter} labels={board.labels} members={memberList} onChange={update} />
+        <FilterBar
+          filter={filter}
+          labels={board.labels}
+          members={memberList}
+          customFields={customFields}
+          onChange={update}
+        />
         <SavedViewsRegion projectId={id} filter={filter} onApply={replace} />
         <ProjectSelectionBar
           bulk={bulk}

@@ -2,7 +2,7 @@ import { describe, it, expect, vi } from 'vitest';
 import { render, screen, fireEvent } from '@testing-library/react';
 import { FilterBar } from './FilterBar';
 import { DEFAULT_FILTER } from './taskFilter';
-import type { LabelRecord } from '../../lib/dataClient';
+import type { CustomFieldRecord, LabelRecord } from '../../lib/dataClient';
 
 const labels: LabelRecord[] = [{ id: 'x', name: 'Urgent' } as LabelRecord];
 
@@ -42,6 +42,21 @@ describe('FilterBar', () => {
   it('hides the clear-filters chip when no facets are active', () => {
     render(<FilterBar filter={DEFAULT_FILTER} labels={labels} onChange={vi.fn()} />);
     expect(screen.queryByTestId('filter-clear')).toBeNull();
+  });
+
+  it('renders a custom-field facet for a SELECT field', () => {
+    const customFields = [
+      { id: 'st', name: 'Stage', fieldType: 'SELECT', options: ['Todo'] } as CustomFieldRecord,
+    ];
+    render(
+      <FilterBar
+        filter={DEFAULT_FILTER}
+        labels={labels}
+        customFields={customFields}
+        onChange={vi.fn()}
+      />,
+    );
+    expect(screen.getByTestId('filter-cf-field')).toBeInTheDocument();
   });
 
   it('shows a count and clears facets (keeping hideDone + sort)', () => {
