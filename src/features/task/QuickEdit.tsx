@@ -1,11 +1,13 @@
 import { IonIcon } from '@ionic/react';
 import { flagOutline } from 'ionicons/icons';
 import { cyclePriority } from './cyclePriority';
-import type { Priority } from './taskMeta';
+import { dueStatus, isDone, type Priority } from './taskMeta';
+import { todayISO } from './today';
 import type { TaskRecord } from '../../lib/dataClient';
 
 /** Compact per-card quick-edit: set a due date and cycle priority without opening
- * the task. Both changes are delegated up as a task patch. Presentational. */
+ * the task. Both changes are delegated up as a task patch. The date reads
+ * red/amber when overdue/due-today, matching the card + list + detail. */
 export function QuickEdit({
   task,
   onEdit,
@@ -13,11 +15,14 @@ export function QuickEdit({
   task: TaskRecord;
   onEdit: (patch: { dueDate?: string | null; priority?: Priority }) => void;
 }) {
+  const dueKind = dueStatus(task.dueDate, todayISO(), isDone(task));
+  const dueClass =
+    dueKind === 'overdue' || dueKind === 'today' ? ` quick-edit__date--${dueKind}` : '';
   return (
     <span className="quick-edit" data-testid="quick-edit">
       <input
         type="date"
-        className="quick-edit__date"
+        className={`quick-edit__date${dueClass}`}
         data-testid="quick-edit-date"
         aria-label="Set due date"
         value={task.dueDate ?? ''}

@@ -20,4 +20,13 @@ describe('QuickEdit', () => {
     fireEvent.click(screen.getByTestId('quick-edit-priority'));
     expect(onEdit).toHaveBeenCalledWith({ priority: 'MEDIUM' });
   });
+
+  it('flags an overdue due date, not a far-future one', () => {
+    const { rerender } = render(
+      <QuickEdit task={task({ dueDate: '2000-01-01' })} onEdit={vi.fn()} />,
+    );
+    expect(screen.getByTestId('quick-edit-date')).toHaveClass('quick-edit__date--overdue');
+    rerender(<QuickEdit task={task({ dueDate: '2999-01-01' })} onEdit={vi.fn()} />);
+    expect(screen.getByTestId('quick-edit-date')).not.toHaveClass('quick-edit__date--overdue');
+  });
 });
