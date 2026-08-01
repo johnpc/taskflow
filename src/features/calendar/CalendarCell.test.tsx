@@ -1,5 +1,5 @@
-import { describe, it, expect } from 'vitest';
-import { screen } from '@testing-library/react';
+import { describe, it, expect, vi } from 'vitest';
+import { screen, fireEvent } from '@testing-library/react';
 import { renderWithProviders } from '../../test/renderWithProviders';
 import { CalendarCell } from './CalendarCell';
 import type { MonthCell } from './monthGrid';
@@ -35,5 +35,14 @@ describe('CalendarCell', () => {
     expect(screen.getByTestId('cell-2026-08-15')).toHaveClass('calendar-cell--today');
     rerender(<CalendarCell cell={cell({ inMonth: false })} />);
     expect(screen.getByTestId('cell-2026-08-15')).toHaveClass('calendar-cell--muted');
+  });
+
+  it('starts a drag from a chip and drops onto the day when drag is given', () => {
+    const drag = { onStart: vi.fn(), onEnd: vi.fn(), onDropOnDay: vi.fn() };
+    renderWithProviders(<CalendarCell cell={cell({ tasks: [t('a', 'Alpha')] })} drag={drag} />);
+    fireEvent.dragStart(screen.getByTestId('calendar-task'));
+    expect(drag.onStart).toHaveBeenCalledWith('a', '2026-08-15');
+    fireEvent.drop(screen.getByTestId('cell-2026-08-15'));
+    expect(drag.onDropOnDay).toHaveBeenCalledWith('2026-08-15');
   });
 });
