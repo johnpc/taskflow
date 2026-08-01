@@ -20,3 +20,9 @@ Then('a home upcoming task {string} is visible', async ({ page }, title: string)
     page.getByTestId('home-upcoming-item').filter({ hasText: title }).first(),
   ).toBeVisible({ timeout: 15_000 });
 });
+
+Then('a home today task {string} is visible', async ({ page }, title: string) => {
+  await expect(page.getByTestId('home-today-item').filter({ hasText: title }).first()).toBeVisible({
+    timeout: 15_000,
+  });
+});

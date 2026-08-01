@@ -18,3 +18,9 @@ Feature: Home dashboard
   Scenario: The home dashboard lists upcoming tasks
     Given a signed-in user
     Then a home upcoming task "Home upcoming anchor" is visible
+
+  # "Home today anchor" (Home Lab) is seeded due today, so it appears in the
+  # Home "Due today" list. Read-only anchor, so it stays there.
+  Scenario: The home dashboard lists tasks due today
+    Given a signed-in user
+    Then a home today task "Home today anchor" is visible

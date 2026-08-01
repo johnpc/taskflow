@@ -396,7 +396,12 @@ export const seedProjects: SeedProject[] = [
     name: 'Home Lab',
     color: 'sky',
     sections: ['To do'],
-    tasks: [{ title: 'Home upcoming anchor', section: 'To do', priority: 'LOW', dueOffsetDays: 1 }],
+    tasks: [
+      { title: 'Home upcoming anchor', section: 'To do', priority: 'LOW', dueOffsetDays: 1 },
+      // Due TODAY (offset 0) — the Home "Due today" list anchor. Read-only; no
+      // other area completes it, so it stays in today's list on the shared sandbox.
+      { title: 'Home today anchor', section: 'To do', priority: 'LOW', dueOffsetDays: 0 },
+    ],
   },
   // Dedicated project for the task cover-image flow: this area uploads a cover,
   // so an isolated task keeps the image off a parallel run's anchors.
