@@ -59,7 +59,7 @@ iOS and Android.
 | **Duplicate**         | Copy a task — its subtasks, custom-field values, and link attachments included — into the same section                     | ✅     |
 | **Copy link**         | Copy a task's deep link (with "Copied!" feedback) or a project's link from its board menu                                  | ✅     |
 | **Delete task**       | Delete a task (with confirm) from its detail; it leaves the board                                                          | ✅     |
-| **My Tasks**          | Open tasks across projects — quick-add, group, sort within buckets, completed, filter to assigned-to-me or followed        | ✅     |
+| **My Tasks**          | Open tasks across projects — quick-add, group, sort + collapse buckets, completed, filter to assigned-to-me or followed    | ✅     |
 | **Focus plan**        | File tasks into Today / Upcoming / Later in My Tasks — drag between buckets or pick                                        | ✅     |
 | **Calendar**          | Two-week list or full month grid of dated tasks; drag a task to another day to reschedule (project-tagged)                 | ✅     |
 | **Search**            | Live search over title/notes/assignee/label — rows show project + due + assignee avatar; filter by priority/project/status | ✅     |

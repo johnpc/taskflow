@@ -58,6 +58,15 @@ Feature: My Tasks
     Then the My Tasks sort direction toggle is visible
     And a task titled "Renew passport" is visible in My Tasks
 
+  # Collapsing a bucket hides its cards (per-browser localStorage state, so it
+  # mutates nothing on the shared backend). "Renew passport" is overdue, so it
+  # sits in the "Overdue" bucket by default (due-date grouping).
+  Scenario: Collapsing a My Tasks bucket hides its cards
+    Given a signed-in user
+    When the user opens My Tasks
+    And the user collapses the "Overdue" bucket
+    Then a task titled "Renew passport" is not visible
+
   # Quick-add captures a task into a chosen project without opening it; the new
   # open task then appears in My Tasks. Uses a unique title + dedicated project.
   Scenario: Quick-adding a task from My Tasks
