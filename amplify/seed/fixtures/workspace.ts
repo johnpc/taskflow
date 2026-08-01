@@ -404,6 +404,18 @@ export const seedProjects: SeedProject[] = [
       { title: 'Board bulk two', section: 'To do', priority: 'LOW' },
     ],
   },
+  // Dedicated project for bulk-ASSIGN: shared with a teammate so the selection
+  // bar's "Assign to…" has a member to pick; two cards only this area assigns.
+  {
+    name: 'Bulk Assign Lab',
+    color: 'violet',
+    extraMembers: [SEED_TEAMMATE],
+    sections: ['To do'],
+    tasks: [
+      { title: 'Assign bulk one', section: 'To do', priority: 'LOW' },
+      { title: 'Assign bulk two', section: 'To do', priority: 'LOW' },
+    ],
+  },
   // Dedicated project for drag-to-reorder: two ordered cards only this area
   // touches, so reordering them can't disturb a parallel run.
   {

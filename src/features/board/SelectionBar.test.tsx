@@ -47,4 +47,36 @@ describe('SelectionBar', () => {
     fireEvent.change(screen.getByTestId('bulk-move'), { target: { value: 's2' } });
     expect(onMove).toHaveBeenCalledWith('s2');
   });
+
+  it('assigns the selection to a chosen member when onAssign is given', () => {
+    const onAssign = vi.fn();
+    render(
+      <SelectionBar
+        count={2}
+        sections={sections}
+        members={['sam@x.co']}
+        onComplete={vi.fn()}
+        onMove={vi.fn()}
+        onAssign={onAssign}
+        onDelete={vi.fn()}
+        onClear={vi.fn()}
+      />,
+    );
+    fireEvent.change(screen.getByTestId('bulk-assign'), { target: { value: 'sam@x.co' } });
+    expect(onAssign).toHaveBeenCalledWith('sam@x.co');
+  });
+
+  it('omits the assign select without onAssign', () => {
+    render(
+      <SelectionBar
+        count={1}
+        sections={sections}
+        onComplete={vi.fn()}
+        onMove={vi.fn()}
+        onDelete={vi.fn()}
+        onClear={vi.fn()}
+      />,
+    );
+    expect(screen.queryByTestId('bulk-assign')).not.toBeInTheDocument();
+  });
 });

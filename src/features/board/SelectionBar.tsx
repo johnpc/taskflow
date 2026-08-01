@@ -3,20 +3,25 @@ import { checkmarkDoneOutline, trashOutline, closeOutline } from 'ionicons/icons
 import type { SectionRecord } from '../../lib/dataClient';
 import './board.css';
 
-/** The bulk-action bar shown when tasks are selected (list view): complete all,
- * move all to a section, delete all, or clear the selection. Delegated up. */
+/** The bulk-action bar shown when tasks are selected: complete all, move all to
+ * a section, assign all to a member, delete all, or clear the selection.
+ * Delegated up. */
 export function SelectionBar({
   count,
   sections,
+  members = [],
   onComplete,
   onMove,
+  onAssign,
   onDelete,
   onClear,
 }: {
   count: number;
   sections: SectionRecord[];
+  members?: string[];
   onComplete: () => void;
   onMove: (sectionId: string) => void;
+  onAssign?: (email: string | null) => void;
   onDelete: () => void;
   onClear: () => void;
 }) {
@@ -46,6 +51,22 @@ export function SelectionBar({
           </option>
         ))}
       </select>
+      {onAssign && (
+        <select
+          className="selection-bar__move"
+          data-testid="bulk-assign"
+          aria-label="Assign selected to"
+          value=""
+          onChange={(e) => onAssign(e.target.value || null)}
+        >
+          <option value="">Assign to…</option>
+          {members.map((m) => (
+            <option key={m} value={m}>
+              {m}
+            </option>
+          ))}
+        </select>
+      )}
       <button
         type="button"
         className="selection-bar__btn selection-bar__btn--danger"

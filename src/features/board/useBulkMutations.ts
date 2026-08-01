@@ -17,10 +17,16 @@ export function useBulkMutations(invalidate: () => void) {
     onSuccess: invalidate,
   });
 
+  const bulkAssign = useMutation({
+    mutationFn: (input: { ids: string[]; assigneeEmail: string | null }) =>
+      Promise.all(input.ids.map((id) => updateTask({ id, assigneeEmail: input.assigneeEmail }))),
+    onSuccess: invalidate,
+  });
+
   const bulkDelete = useMutation({
     mutationFn: (ids: string[]) => Promise.all(ids.map((id) => deleteTask(id))),
     onSuccess: invalidate,
   });
 
-  return { bulkComplete, bulkMove, bulkDelete };
+  return { bulkComplete, bulkMove, bulkAssign, bulkDelete };
 }

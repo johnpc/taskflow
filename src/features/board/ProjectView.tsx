@@ -75,8 +75,10 @@ export function ProjectView() {
           <SelectionBar
             count={bulk.selection.count}
             sections={board.columns.map((c) => c.section)}
+            members={memberList}
             onComplete={bulk.completeSelected}
             onMove={bulk.moveSelected}
+            onAssign={bulk.assignSelected}
             onDelete={bulk.deleteSelected}
             onClear={bulk.selection.clear}
           />

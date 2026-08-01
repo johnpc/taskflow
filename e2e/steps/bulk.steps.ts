@@ -21,3 +21,11 @@ When('the user bulk-completes the selection', async ({ page }) => {
   await expect(page.getByTestId('selection-bar')).toBeVisible({ timeout: 15_000 });
   await page.getByTestId('bulk-complete').click();
 });
+
+When('the user bulk-assigns the selection to a member', async ({ page }) => {
+  await expect(page.getByTestId('selection-bar')).toBeVisible({ timeout: 15_000 });
+  // Pick the first real member option (index 1; index 0 is the "Assign to…" placeholder).
+  const select = page.getByTestId('bulk-assign');
+  const value = await select.locator('option').nth(1).getAttribute('value');
+  await select.selectOption(value!);
+});
