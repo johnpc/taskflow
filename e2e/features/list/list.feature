@@ -44,6 +44,17 @@ Feature: List view
     Then a list section named "Medium priority" is visible
     And a task titled "Design hero banner" is visible on the board
 
+  # Group by label: a task appears under each label it carries. "Finalize press
+  # list" is seeded with the "Marketing" label, so a "Marketing" group appears
+  # and contains it.
+  Scenario: Grouping the list by label buckets tasks under their tags
+    Given a signed-in user
+    And the user opens the "Product Launch" project
+    When the user switches to the list view
+    And the user groups the list by "LABEL"
+    Then a list section named "Marketing" is visible
+    And a task titled "Finalize press list" is visible on the board
+
   # You can add a task no matter how the list is grouped: switch List Add Lab to
   # group-by Priority (no single section target) and the top-level composer still
   # files a new task into the project.

@@ -45,7 +45,7 @@ export function ListView({
   selectedIds?: Set<string>;
   onSelect?: (id: string) => void;
 }) {
-  const groups = groupListBy(columns, groupBy, todayISO());
+  const groups = groupListBy(columns, groupBy, todayISO(), labels);
   // When not grouped by section, a new task has no unambiguous target group, so
   // file it into the first section (its next sort order) via one shared composer.
   const firstSection = columns[0]?.section;
