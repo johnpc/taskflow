@@ -282,6 +282,17 @@ export const seedProjects: SeedProject[] = [
     sections: ['To do'],
     tasks: [{ title: 'Chip field target', section: 'To do', priority: 'LOW' }],
   },
+  // Dedicated project for filtering the board by a custom-field value: two cards
+  // this area tags with different SELECT-field values, then filters to one.
+  {
+    name: 'Field Filter Lab',
+    color: 'sky',
+    sections: ['To do'],
+    tasks: [
+      { title: 'CF filter alpha', section: 'To do', priority: 'LOW' },
+      { title: 'CF filter bravo', section: 'To do', priority: 'LOW' },
+    ],
+  },
   {
     name: 'Scratchpad',
     color: 'violet',

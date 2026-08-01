@@ -47,6 +47,24 @@ Feature: Custom fields
     When the user reloads the task
     Then the custom field "Estimate" has the value "13"
 
+  # Filter the board by a SELECT custom-field value: tag two cards with different
+  # options, then narrow the board to one and the other card disappears. Own
+  # project ("Field Filter Lab") for parallel isolation.
+  Scenario: Filtering the board by a custom-field value
+    Given a signed-in user
+    And the user opens the "Field Filter Lab" project
+    When the user opens the custom-fields manager
+    And the user adds the select field "Stage" with options "Alpha, Bravo"
+    And the user opens the task titled "CF filter alpha"
+    And the user sets the custom field "Stage" to "Alpha"
+    And the user goes back to the board
+    And the user opens the task titled "CF filter bravo"
+    And the user sets the custom field "Stage" to "Bravo"
+    And the user goes back to the board
+    And the user filters the board by custom field "Stage" being "Alpha"
+    Then a task titled "CF filter alpha" is visible on the board
+    And a task titled "CF filter bravo" is not visible
+
   # A set custom-field value shows as a chip on the task's board card. Own
   # project ("Chips Lab") for parallel isolation.
   Scenario: A set custom-field value shows as a card chip

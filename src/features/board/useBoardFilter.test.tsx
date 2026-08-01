@@ -1,6 +1,7 @@
 import { describe, it, expect } from 'vitest';
 import { renderHook, act } from '@testing-library/react';
 import { useBoardFilter } from './useBoardFilter';
+import { DEFAULT_FILTER } from './taskFilter';
 
 describe('useBoardFilter', () => {
   it('starts with the default filter', () => {
@@ -22,16 +23,7 @@ describe('useBoardFilter', () => {
   it('replaces the whole filter (applying a saved view)', () => {
     const { result } = renderHook(() => useBoardFilter());
     act(() => result.current.update({ hideDone: false }));
-    act(() =>
-      result.current.replace({
-        hideDone: true,
-        labelId: '',
-        priority: 'HIGH',
-        dueWindow: '',
-        assignee: '',
-        sort: 'due',
-      }),
-    );
+    act(() => result.current.replace({ ...DEFAULT_FILTER, priority: 'HIGH', sort: 'due' }));
     expect(result.current.filter.priority).toBe('HIGH');
     expect(result.current.filter.sort).toBe('due');
     expect(result.current.filter.hideDone).toBe(true);
