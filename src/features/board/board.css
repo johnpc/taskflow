@@ -516,15 +516,25 @@ li.list-row.task-card--done .task-card__title {
   width: 100%;
   background: none;
   border: none;
-  padding: 6px 2px;
+  border-radius: var(--tf-radius-sm);
+  padding: 6px 8px;
   cursor: pointer;
   color: var(--tf-text);
   font-weight: 700;
   font-size: 0.95rem;
+  transition: background 0.1s ease;
 }
 
+/* The header is a clickable collapse toggle — give it a hover tint so it reads
+   as interactive (Asana-style), matching the row-hover treatment. */
+.list-section__head:hover {
+  background: var(--tf-surface-2);
+}
+
+/* Keep the count right beside the section name (not pushed to the far edge),
+   so the two read as one label. A trailing spacer would just re-create the gap,
+   so the name is content-width and the count sits immediately after it. */
 .list-section__name {
-  flex: 1;
   text-align: left;
 }
 
