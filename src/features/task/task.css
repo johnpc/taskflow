@@ -266,6 +266,22 @@
   cursor: pointer;
 }
 
+/* The 1.4rem-wide date input is a compact affordance that works on desktop
+   because it only appears on hover. On touch it's always visible, and the
+   narrow width clips the native value to a broken-looking fragment ("07/").
+   On phones, show just the calendar-picker icon instead — a clean "set a date"
+   affordance rather than a truncated date. (An actual due date still reads on
+   the card via the .task-card__due chip; this is the quick-EDIT control.) */
+@media (max-width: 600px) {
+  .task-card .quick-edit__date {
+    width: 1.1rem;
+    color: transparent;
+  }
+  .task-card .quick-edit__date::-webkit-calendar-picker-indicator {
+    opacity: 0.55;
+  }
+}
+
 /* Overdue/due-today quick-edit date reads red/amber, matching the card chip. */
 .quick-edit__date--overdue {
   color: var(--tf-overdue);
