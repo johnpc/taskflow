@@ -126,6 +126,31 @@ Features live under `src/features/<feature>/`; tests are colocated. File convent
 - **Safe-area insets** are hardened in `variables.css` (`viewport-fit=cover` in index.html) so the
   toolbar clears the notch and the tab bar clears the home bar.
 
+### LLM feedback panel (`npm run panel`)
+
+A panel of **different vendors' vision LLMs** (Anthropic Claude, Amazon Nova, Meta Llama 4, Mistral
+Pixtral — all via **Bedrock Converse**, `AWS_PROFILE=personal`, us-west-2) each drive a **real
+Playwright browser** (screenshot → choose one action → execute, agentic loop) to organize a project
+for a scenario, then answer a structured feedback questionnaire. The output is a synthesized
+`report.md` (delight/clarity scores + improvement themes ranked by how many panelists raised them) —
+a cheap, reproducible way to get outside-eyes UX feedback to act on. Lives in `scripts/llm-panel/`
+(exempt from the line/CRAP gate — it's a `scripts/` harness, not `src`/`amplify`).
+
+```bash
+npm run dev -- --port 5173                 # (or point at a deployed URL)
+AWS_PROFILE=personal npm run panel         # default: wedding scenario, all 4 panelists
+PANEL_SCENARIO=trip PANEL_ONLY=claude,nova npm run panel   # subset + other scenario
+PANEL_BASE=https://taskflow.example npm run panel          # target a live deployment
+```
+
+Env: `TEST_USERNAME`/`TEST_PASSWORD` (from `.env.local`) to sign in; `AWS_PROFILE=personal` for
+Bedrock. Scenarios (`wedding` default, `launch`, `trip`) + the panel roster live in
+`scripts/llm-panel/scenarios.mjs`. Output (transcripts, per-step screenshots, `report.md`) →
+`/tmp/tf-panel/<PANEL_RUN_ID>/`. Models that need an inference profile use the region/`global.`-prefixed
+id (e.g. `us.meta.llama4-…`, `global.anthropic.claude-haiku-…`) — on-demand model ids throw
+`ValidationException`. **Treat low-delight findings as a backlog: the panel is the "measure vs Asana"
+loop automated.**
+
 ## Quality gates (non-negotiable — CI + husky pre-commit enforce them)
 
 Run `npm run quality` for the full set. **Enforce them yourself; when one fails, fix the code, never

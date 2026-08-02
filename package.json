@@ -11,6 +11,7 @@
     "prod-config": "node scripts/prod-config.mjs",
     "e2e-config": "node scripts/e2e-config.mjs",
     "gen:icons": "node scripts/gen-app-icons.mjs",
+    "panel": "node scripts/llm-panel/run.mjs",
     "seed": "tsx amplify/seed/seed.ts",
     "test": "vitest run",
     "test:watch": "vitest",
