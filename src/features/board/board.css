@@ -108,11 +108,13 @@
   text-align: left;
 }
 
-/* When a column has no cards, the lone muted "Add task" link reads as a dead
-   end. Turn it into a full-width dashed drop-zone CTA that fills the empty
-   column and clearly invites the first task — the key first-run moment right
-   after creating a project. (`:empty` list = no task <li>s rendered.) */
-.board-col__list:empty + .add-card:not(.add-card--open) {
+/* When a column/section has no cards, the lone muted "Add task" link reads as a
+   dead end. Turn it into a full-width dashed drop-zone CTA that fills the empty
+   space and clearly invites the first task — the key first-run moment right
+   after creating a project. Covers both the board column (`.board-col__list`)
+   and the list-view section (`.list-section__rows`); `:empty` = no task <li>s. */
+.board-col__list:empty + .add-card:not(.add-card--open),
+.list-section__rows:empty + .add-card:not(.add-card--open) {
   display: flex;
   justify-content: center;
   width: 100%;
@@ -126,7 +128,8 @@
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .board-col__list:empty + .add-card:not(.add-card--open):hover {
+  .board-col__list:empty + .add-card:not(.add-card--open):hover,
+  .list-section__rows:empty + .add-card:not(.add-card--open):hover {
     border-color: var(--tf-accent);
     background: var(--tf-accent-soft);
   }
