@@ -1,10 +1,13 @@
 .completed__list {
   list-style: none;
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
   display: flex;
   flex-direction: column;
   gap: 8px;
+  /* Centered reading column on wide desktops, consistent with My Tasks / Home /
+     Calendar / Search; full-width on narrow screens. */
+  max-width: var(--tf-list-max);
 }
 
 .completed__row {
