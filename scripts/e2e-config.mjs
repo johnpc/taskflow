@@ -7,20 +7,25 @@
  * "File written: amplify_outputs.json", then sometimes CRASHES on shutdown with
  * exit code 13 — "Detected unsettled top-level await" in its OpenTelemetry
  * tracer (an ampx + Node 24 teardown bug). The file is already correct; the
- * non-zero exit is a spurious post-write crash. Because this step runs on EVERY
- * acceptance job (~60), that crash intermittently red-fails an otherwise-green
- * area. So: run the command, then decide success on whether a VALID
- * amplify_outputs.json exists — not on the exit code.
+ * non-zero exit is a spurious post-write crash. So: decide success on whether a
+ * VALID amplify_outputs.json exists — not on the exit code.
+ *
+ * Separately, the network call to AppSync intermittently dies with
+ * `connect ETIMEDOUT …:443` (a GitHub-runner → AWS blip) and writes NO file — a
+ * genuine transient failure that red-fails a random acceptance job (~20-min hang
+ * each). So we also RETRY the generate a few times before giving up.
  */
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { readFile } from 'node:fs/promises';
+import { setTimeout as sleep } from 'node:timers/promises';
 
 const run = promisify(execFile);
 
 const STACK = 'amplify-taskflow-xss-sandbox-86303460ee';
 const PROFILE = 'personal';
 const OUTPUTS = 'amplify_outputs.json';
+const ATTEMPTS = 3;
 
 const GENERATE_ARGS = ['ampx', 'generate', 'outputs', '--stack', STACK, '--profile', PROFILE];
 
@@ -35,24 +40,23 @@ async function outputsAreValid() {
   }
 }
 
-try {
-  const { stdout } = await run('npx', GENERATE_ARGS, { encoding: 'utf8' });
-  process.stdout.write(stdout);
-} catch (err) {
-  const out = `${err.stdout ?? ''}${err.stderr ?? ''}`;
-  process.stdout.write(out);
-  // The CLI exited non-zero. If it still wrote a valid outputs file, this is the
-  // known post-write shutdown crash — swallow it. Otherwise the pull really failed.
-  if (!(await outputsAreValid())) {
-    console.error('ampx generate outputs failed and no valid amplify_outputs.json was written.');
-    process.exit(1);
+/** Run the generate once; a valid outputs file = success (the CLI may exit
+ * non-zero on the post-write crash yet still have written the file). */
+async function tryGenerate() {
+  try {
+    const { stdout } = await run('npx', GENERATE_ARGS, { encoding: 'utf8' });
+    process.stdout.write(stdout);
+  } catch (err) {
+    process.stdout.write(`${err.stdout ?? ''}${err.stderr ?? ''}`);
   }
-  console.log(
-    'ampx exited non-zero but a valid amplify_outputs.json was written — treating as success.',
-  );
+  return outputsAreValid();
 }
 
-if (!(await outputsAreValid())) {
-  console.error(`No valid ${OUTPUTS} after generate — cannot continue.`);
-  process.exit(1);
+for (let attempt = 1; attempt <= ATTEMPTS; attempt++) {
+  if (await tryGenerate()) process.exit(0);
+  console.error(`ampx generate outputs attempt ${attempt}/${ATTEMPTS} produced no valid file.`);
+  if (attempt < ATTEMPTS) await sleep(5000);
 }
+
+console.error(`No valid ${OUTPUTS} after ${ATTEMPTS} attempts — cannot continue.`);
+process.exit(1);
