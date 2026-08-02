@@ -725,10 +725,17 @@
   font-size: 0.9rem;
 }
 
+/* The blocker candidates are every open task in the project, so on a busy board
+   this list can be long. Cap it to a few rows and let it scroll, so the
+   dependencies picker stays a compact control instead of a wall of chips that
+   dwarfs the rest of the task. */
 .deps__options {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  max-height: 132px;
+  overflow-y: auto;
+  padding: 2px;
 }
 
 .deps-opt {
