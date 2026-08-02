@@ -98,6 +98,22 @@
   color: var(--tf-text-muted);
 }
 
+/* On a phone the month grid squeezes 7 columns into ~390px, so each day cell is
+   only ~50px wide and the task chips truncated to a single useless letter.
+   Trim the cell + chip padding and nudge the font down so 3-4 characters show
+   — enough to recognize a task at a glance. Desktop keeps the roomier spacing. */
+@media (max-width: 600px) {
+  .calendar-cell {
+    padding: 4px 3px;
+    gap: 2px;
+  }
+  .calendar-cell__chip {
+    padding: 2px 4px;
+    font-size: 0.68rem;
+    border-radius: 4px;
+  }
+}
+
 /* Week navigation: title on the left, prev / Today / next on the right. */
 .calendar__nav {
   display: flex;
