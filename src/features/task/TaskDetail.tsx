@@ -4,6 +4,7 @@ import {
   IonContent,
   IonHeader,
   IonPage,
+  IonTitle,
   IonToolbar,
 } from '@ionic/react';
 import { useParams } from 'react-router-dom';
@@ -28,6 +29,11 @@ export function TaskDetail() {
           <IonButtons slot="start">
             <IonBackButton defaultHref="/projects" data-testid="task-back" />
           </IonButtons>
+          {task && (
+            <IonTitle className="task-detail__crumb" data-testid="task-detail-toolbar-title">
+              {task.title}
+            </IonTitle>
+          )}
         </IonToolbar>
       </IonHeader>
       <IonContent className="ion-padding">

@@ -26,6 +26,8 @@ describe('TaskDetail', () => {
     });
     renderWithProviders(<TaskDetail />, '/tasks/t');
     expect(screen.getByTestId('task-detail')).toBeInTheDocument();
+    // The task title is echoed in the toolbar so it stays in view on scroll.
+    expect(screen.getByTestId('task-detail-toolbar-title')).toHaveTextContent('Write spec');
   });
 
   it('shows the not-found empty state', () => {
