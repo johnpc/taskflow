@@ -538,6 +538,20 @@ li.list-row.task-card--done .task-card__title {
   color: var(--tf-text-muted);
 }
 
+/* A completed row should recede as a whole, not just its title — otherwise the
+   meta columns (assignee / due / colored priority pill) still read as active and
+   compete with open tasks. Dim the whole row so done tasks sit quietly (the
+   green complete-ring stays clearly readable even dimmed); restore full opacity
+   on hover so it's easy to edit or un-complete. */
+li.list-row.task-card--done {
+  opacity: 0.6;
+}
+@media (hover: hover) and (pointer: fine) {
+  li.list-row.task-card--done:hover {
+    opacity: 1;
+  }
+}
+
 .list-section__head {
   display: flex;
   align-items: center;
