@@ -55,3 +55,12 @@ export function parseNotes(notes: string | null | undefined): NoteLine[] {
     return { kind: 'text', content: parseInline(raw) };
   });
 }
+
+/** True only when notes contain rich formatting worth previewing — a checklist
+ * item, a **bold** span, or a safe [link]. Plain prose returns false, so the
+ * read-only preview can be hidden (it would just duplicate the textarea). Pure. */
+export function hasRichNotes(notes: string | null | undefined): boolean {
+  return parseNotes(notes).some(
+    (line) => line.kind === 'check' || line.content.some((s) => s.kind !== 'text'),
+  );
+}
