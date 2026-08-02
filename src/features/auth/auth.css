@@ -1,7 +1,25 @@
+/* Vertically center the auth form (like the Welcome screen) so it doesn't float
+   at the top of a mostly-empty page on wide/tall viewports. Centering lives on
+   the IonContent scroll part so no extra wrapper element is needed. */
+.auth::part(scroll) {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 24px 20px calc(24px + env(safe-area-inset-bottom));
+}
+
+/* The form sits in a centered card so it reads as an intentional panel rather
+   than controls floating on the page background. */
 .auth__body {
-  max-width: 420px;
-  margin: 0 auto;
-  padding: 24px 20px;
+  width: 100%;
+  max-width: 400px;
+  box-sizing: border-box;
+  background: var(--tf-surface);
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius);
+  box-shadow: var(--tf-shadow);
+  padding: 28px 24px;
   display: flex;
   flex-direction: column;
   gap: 14px;
@@ -29,7 +47,7 @@
 }
 
 .auth__input {
-  background: var(--tf-surface);
+  background: var(--tf-surface-2);
   border: 1px solid var(--tf-border);
   border-radius: 10px;
   padding: 12px;
