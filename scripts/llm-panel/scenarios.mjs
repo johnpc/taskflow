@@ -8,7 +8,7 @@ export const PANEL = [
     label: 'Claude Haiku 4.5',
     modelId: 'global.anthropic.claude-haiku-4-5-20251001-v1:0',
   },
-  { key: 'nova', label: 'Amazon Nova Pro', modelId: 'amazon.nova-pro-v1:0' },
+  { key: 'nova', label: 'Amazon Nova Pro', modelId: 'us.amazon.nova-pro-v1:0' },
   {
     key: 'llama',
     label: 'Meta Llama 4 Maverick',
