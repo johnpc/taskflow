@@ -44,6 +44,18 @@
   border-radius: var(--tf-radius);
   box-shadow: var(--tf-shadow);
   overflow: hidden;
+  transition:
+    box-shadow 0.12s ease,
+    border-color 0.12s ease;
+}
+
+/* A project row is a link into the project — respond to the pointer with a lift
+   so the list feels alive (matches the template cards). Touch unaffected. */
+@media (hover: hover) and (pointer: fine) {
+  .project-card:hover {
+    box-shadow: var(--tf-shadow-hover);
+    border-color: var(--tf-accent);
+  }
 }
 
 .project-card__progress {
