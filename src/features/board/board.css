@@ -376,6 +376,39 @@
   color: var(--tf-text);
 }
 
+/* Quiet-at-rest inline controls (desktop): the Assignee / Due / neutral-Priority
+   cells are editable <select>/<input>s, but showing 60+ bordered boxes at once
+   made the list read as a data-entry grid. On hover-capable pointers, drop their
+   border + fill so a resting row reads as calm plain values; the control chrome
+   (border + surface) returns when the row is hovered or the control is focused.
+   Priority pills that carry a color (high/medium) keep their tint — color is
+   meaning. Touch devices keep the chrome (no hover to reveal it). */
+@media (hover: hover) and (pointer: fine) {
+  .list-row__due-input,
+  .list-row__prio-select,
+  .list-row__assignee .task-assign__select {
+    background: transparent;
+    border-color: transparent;
+    transition:
+      background 0.1s ease,
+      border-color 0.1s ease;
+  }
+  li.list-row:hover .list-row__due-input,
+  li.list-row:hover .list-row__prio-select,
+  li.list-row:hover .task-assign__select,
+  .list-row__due-input:focus,
+  .list-row__prio-select:focus,
+  .list-row__assignee .task-assign__select:focus {
+    background: var(--tf-surface);
+    border-color: var(--tf-border);
+  }
+  /* Colored priority pills keep their tinted fill + border even at rest. */
+  li.list-row .list-row__prio-select.list-row__prio--high,
+  li.list-row .list-row__prio-select.list-row__prio--medium {
+    border-color: currentColor;
+  }
+}
+
 li.list-row {
   /* A List row reads as a dense TABLE row, not a floating card: flush rows with
    * a hairline divider + hover highlight (Asana-style), NOT the board card's
