@@ -152,6 +152,15 @@
   gap: 10px;
 }
 
+/* Persistent "+" in the open composer so it clearly reads as CREATE (not a
+   search field) — feedback from the LLM panel: testers couldn't tell whether
+   the field created or searched. */
+.project-new__icon {
+  flex: none;
+  font-size: 1.15rem;
+  color: var(--tf-accent-strong);
+}
+
 .project-new__input {
   flex: 1;
   border: none;

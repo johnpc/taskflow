@@ -39,10 +39,11 @@ export function NewProjectButton({
 
   return (
     <div className="project-new project-new--open">
+      <IonIcon icon={addOutline} className="project-new__icon" aria-hidden="true" />
       <input
         className="project-new__input"
         data-testid="new-project-input"
-        placeholder="Project name"
+        placeholder="Name your new project"
         value={name}
         autoFocus
         disabled={busy}
