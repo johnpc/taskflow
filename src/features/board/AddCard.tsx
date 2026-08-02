@@ -32,10 +32,11 @@ export function AddCard({ onAdd, busy }: { onAdd: (title: string) => void; busy:
 
   return (
     <div className="add-card add-card--open">
+      <IonIcon icon={addOutline} className="add-card__icon" aria-hidden="true" />
       <input
         className="add-card__input"
         data-testid="add-card-input"
-        placeholder="Task title"
+        placeholder="Name the task"
         value={title}
         autoFocus
         disabled={busy}
@@ -46,6 +47,16 @@ export function AddCard({ onAdd, busy }: { onAdd: (title: string) => void; busy:
           if (e.key === 'Escape') setOpen(false);
         }}
       />
+      <button
+        type="button"
+        className="add-card__add"
+        data-testid="add-card-submit"
+        disabled={busy || !title.trim()}
+        onMouseDown={(e) => e.preventDefault()}
+        onClick={submit}
+      >
+        Add
+      </button>
     </div>
   );
 }
