@@ -108,6 +108,30 @@
   text-align: left;
 }
 
+/* When a column has no cards, the lone muted "Add task" link reads as a dead
+   end. Turn it into a full-width dashed drop-zone CTA that fills the empty
+   column and clearly invites the first task — the key first-run moment right
+   after creating a project. (`:empty` list = no task <li>s rendered.) */
+.board-col__list:empty + .add-card:not(.add-card--open) {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  border: 1px dashed var(--tf-border);
+  border-radius: var(--tf-radius-sm);
+  padding: 14px;
+  color: var(--tf-accent-strong);
+  transition:
+    border-color 0.12s ease,
+    background 0.12s ease;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .board-col__list:empty + .add-card:not(.add-card--open):hover {
+    border-color: var(--tf-accent);
+    background: var(--tf-accent-soft);
+  }
+}
+
 .add-card--open {
   display: flex;
   align-items: center;
