@@ -3,6 +3,7 @@ import { PRIORITY_META, dueStatus, isDone, type Priority } from './taskMeta';
 import { todayISO } from './today';
 import { DuePresetButtons } from './DuePresetButtons';
 import { NotesPreview } from './NotesPreview';
+import { hasRichNotes } from './parseNotes';
 import './taskDetail.css';
 
 const PRIORITIES: Priority[] = ['NONE', 'LOW', 'MEDIUM', 'HIGH'];
@@ -91,7 +92,7 @@ export function TaskFields({
           defaultValue={task.notes ?? ''}
           onBlur={(e) => onPatch({ notes: e.target.value })}
         />
-        <NotesPreview notes={task.notes} />
+        {hasRichNotes(task.notes) && <NotesPreview notes={task.notes} />}
       </label>
     </div>
   );
