@@ -3,6 +3,17 @@
   margin: 6px 0 18px;
 }
 
+/* Cap + center the calendar surface on wide desktops (view toggle, nav, the
+   two-week day list, and the month grid) so it's a balanced column like My
+   Tasks / Home rather than edge-to-edge; full-width on narrow screens. */
+.calendar__view-toggle,
+.calendar__nav,
+.calendar__days,
+.calendar-grid {
+  max-width: var(--tf-list-max);
+  margin-inline: auto;
+}
+
 .calendar__view-toggle {
   margin-bottom: 16px;
 }
