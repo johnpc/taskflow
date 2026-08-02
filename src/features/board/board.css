@@ -403,6 +403,13 @@
   color: var(--tf-text);
 }
 
+/* An unassigned row shows a muted "Unassigned" so the boilerplate default reads
+   as secondary info and a real assignee's name stands out — same quiet-default
+   treatment as empty due dates. */
+.list-row__assignee .task-assign__select--empty {
+  color: var(--tf-text-muted);
+}
+
 /* Quiet-at-rest inline controls (desktop): the Assignee / Due / neutral-Priority
    cells are editable <select>/<input>s, but showing 60+ bordered boxes at once
    made the list read as a data-entry grid. On hover-capable pointers, drop their
