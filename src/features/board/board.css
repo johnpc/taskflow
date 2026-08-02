@@ -403,6 +403,36 @@ li.list-row:hover {
   background: var(--tf-surface-2);
 }
 
+/* A 5-column table can't fit a phone: the "TASK" header collapsed to one letter
+   per line and the Assignee/Due/Priority columns ran off-screen. On mobile, drop
+   the table grid + header and stack each row — lead + title on top, the quick-edit
+   controls wrapping below. Desktop keeps the aligned columnar table. */
+@media (max-width: 600px) {
+  .list-row--head {
+    display: none;
+  }
+  li.list-row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    column-gap: 10px;
+    row-gap: 8px;
+    padding: 12px 14px;
+  }
+  li.list-row .list-row__task {
+    flex: 1 1 60%;
+    min-width: 0;
+  }
+  /* The quick-edit controls share the second line, each sized to its content. */
+  li.list-row .list-row__assignee,
+  li.list-row .list-row__due,
+  li.list-row .list-row__due-input,
+  li.list-row .list-row__prio,
+  li.list-row .list-row__prio-select {
+    flex: 0 1 auto;
+  }
+}
+
 li.list-row.task-card--done .task-card__title {
   text-decoration: line-through;
   color: var(--tf-text-muted);
