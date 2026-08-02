@@ -3,11 +3,17 @@
  * stays small (and these stay easy to reason about). */
 import { type SeedTask } from './fixtures/workspace';
 
-/** Resolve a day offset (from today) to a YYYY-MM-DD date string. */
+/** Resolve a day offset (from today) to a YYYY-MM-DD date string in LOCAL time,
+ * matching todayISO() (src/features/task/today.ts). Using toISOString() here
+ * would format in UTC, so in the evening (UTC already tomorrow) a +0 offset
+ * seeded a date the app reads as "tomorrow" — breaking due-today anchors. */
 export function offsetDate(days: number): string {
   const d = new Date();
   d.setDate(d.getDate() + days);
-  return d.toISOString().slice(0, 10);
+  const y = d.getFullYear();
+  const m = String(d.getMonth() + 1).padStart(2, '0');
+  const day = String(d.getDate()).padStart(2, '0');
+  return `${y}-${m}-${day}`;
 }
 
 /** A subtask fixture (title, or {title, dueOffsetDays, assigned}) → its create
