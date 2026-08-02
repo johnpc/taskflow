@@ -400,3 +400,17 @@
   border-color: var(--tf-text);
   box-shadow: 0 0 0 2px var(--tf-surface) inset;
 }
+
+/* Cap + center the Projects surface on wide desktops (heading, new-project
+   button, template picker, and the project sections) so rows aren't sparse
+   edge-to-edge bars — consistent with My Tasks / Home / Calendar / Search /
+   Completed. Declared last so it wins over per-block margin shorthands.
+   Full-width on narrow screens. */
+.projects__title,
+.projects__subtitle,
+.project-new,
+.template-picker,
+.projects__section {
+  max-width: var(--tf-list-max);
+  margin-inline: auto;
+}
