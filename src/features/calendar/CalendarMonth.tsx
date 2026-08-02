@@ -2,6 +2,7 @@ import { useCalendarMonth } from './useCalendarMonth';
 import { useCalendarDrag } from './useCalendarDrag';
 import { useCalendarReschedule } from './useCalendarReschedule';
 import { CalendarCell } from './CalendarCell';
+import { MonthGridSkeleton } from './MonthGridSkeleton';
 import { LoadState } from '../shell/LoadState';
 
 const WEEKDAYS = 'Sun Mon Tue Wed Thu Fri Sat'.split(' ');
@@ -53,6 +54,7 @@ export function CalendarMonth() {
         isError={query.isError}
         isEmpty={false}
         onRetry={query.refetch}
+        skeleton={<MonthGridSkeleton />}
       >
         <div className="calendar-grid" data-testid="calendar-grid">
           {WEEKDAYS.map((d) => (
