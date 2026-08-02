@@ -657,12 +657,26 @@ li.list-row.task-card--done {
   font-weight: 600;
   color: var(--tf-text-muted);
   cursor: pointer;
+  transition:
+    border-color 0.12s ease,
+    color 0.12s ease;
 }
 
 .filter-bar__chip--on {
   background: var(--tf-accent-soft);
   border-color: var(--tf-accent);
   color: var(--tf-accent-strong);
+}
+
+/* Filter controls respond to the pointer (border → accent) so the board chrome
+   feels interactive, consistent with the card hover language. Hover-capable
+   pointers only; touch is unaffected. An active chip keeps its filled state. */
+@media (hover: hover) and (pointer: fine) {
+  .filter-bar__chip:not(.filter-bar__chip--on):hover,
+  .filter-bar__select:hover {
+    border-color: var(--tf-accent);
+    color: var(--tf-text);
+  }
 }
 
 /* "Clear filters (N)" — shown only when narrowing facets are active. */
@@ -686,6 +700,7 @@ li.list-row.task-card--done {
   color: var(--tf-text);
   font-family: var(--tf-font-sans);
   cursor: pointer;
+  transition: border-color 0.12s ease;
 }
 
 /* Project overview header */
