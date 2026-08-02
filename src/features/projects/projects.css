@@ -293,10 +293,6 @@
 }
 
 /* Project status-update history (Asana): a composer over a dated feed. */
-.status-updates {
-  margin-bottom: 16px;
-}
-
 .status-updates__head {
   font-size: 0.8rem;
   font-weight: 700;

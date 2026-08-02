@@ -582,11 +582,24 @@ li.list-row.task-card--done .task-card__title {
 }
 
 /* Project overview header */
+/* The project-overview sections (details / members / status updates) share the
+   same card shell as the collapsible Key resources + Custom fields panels below
+   them, so the whole overview stack reads as one consistent set of cards rather
+   than a flat run of controls floating on the page. */
+.project-header,
+.project-members,
+.status-updates {
+  border: 1px solid var(--tf-border);
+  border-radius: var(--tf-radius-sm);
+  background: var(--tf-surface);
+  padding: 14px;
+  margin-bottom: var(--tf-gap);
+}
+
 .project-header {
   display: flex;
   flex-direction: column;
   gap: 10px;
-  margin-bottom: 16px;
 }
 
 .project-header__desc {
@@ -735,10 +748,6 @@ li.list-row.task-card--done .task-card__title {
 }
 
 /* Project sharing (members) */
-.project-members {
-  margin-bottom: 16px;
-}
-
 .project-members__head {
   font-size: 0.8rem;
   font-weight: 700;
