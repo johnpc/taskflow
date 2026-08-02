@@ -113,6 +113,15 @@
   max-width: 560px;
 }
 
+/* Calm, sentence-case group-by tabs. Ionic's segment button defaults to
+   ALL-CAPS + wide letter-spacing, which reads shouty/dated next to the app's
+   sentence-case UI. Restore normal casing + a lighter weight (Asana-like). */
+.mytasks__group ion-segment-button {
+  text-transform: none;
+  letter-spacing: normal;
+  font-weight: 600;
+}
+
 .mytasks__show-done {
   display: flex;
   align-items: center;
