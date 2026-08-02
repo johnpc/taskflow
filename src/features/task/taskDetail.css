@@ -502,8 +502,25 @@
 
 .comment__meta {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   gap: 8px;
+}
+
+/* Small round initials avatar leading each comment, so the thread reads as a
+   conversation rather than repeated raw emails. Mirrors the card avatar chip. */
+.comment__avatar {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--tf-accent-soft);
+  color: var(--tf-accent-strong);
+  font-size: 0.62rem;
+  font-weight: 700;
+  letter-spacing: 0.02em;
 }
 
 .comment__author {
