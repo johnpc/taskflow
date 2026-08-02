@@ -17,13 +17,12 @@ describe('HomeSummaryCards', () => {
     expect(screen.getByTestId('home-overdue')).toHaveTextContent('3');
   });
 
-  it('renders the upcoming list', () => {
-    renderWithProviders(
-      <HomeSummaryCards
-        summary={summary({ upcoming: [{ id: 't', title: 'Ship it' } as TaskRecord] })}
-      />,
+  it('flags overdue as an alert only when there are overdue tasks', () => {
+    const { rerender } = renderWithProviders(
+      <HomeSummaryCards summary={summary({ overdue: 2 })} />,
     );
-    expect(screen.getByTestId('home-upcoming')).toBeInTheDocument();
-    expect(screen.getByText('Ship it')).toBeInTheDocument();
+    expect(screen.getByTestId('home-overdue').className).toContain('home__stat--alert');
+    rerender(<HomeSummaryCards summary={summary({ overdue: 0 })} />);
+    expect(screen.getByTestId('home-overdue').className).not.toContain('home__stat--alert');
   });
 });

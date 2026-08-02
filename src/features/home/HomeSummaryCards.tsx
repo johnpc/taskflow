@@ -2,8 +2,9 @@ import { useHistory } from 'react-router-dom';
 import type { HomeSummary } from './homeSummary';
 import './home.css';
 
-/** The three headline stats on the home dashboard: today's count, overdue, and
- * the upcoming list. Tapping today/overdue jumps to My Tasks; a task opens it. */
+/** The two headline stats on the home dashboard: today's count and overdue.
+ * Tapping either jumps to My Tasks. (The "Coming up" list is rendered
+ * separately by UpcomingTasks.) */
 export function HomeSummaryCards({ summary }: { summary: HomeSummary }) {
   const history = useHistory();
   return (
@@ -28,25 +29,6 @@ export function HomeSummaryCards({ summary }: { summary: HomeSummary }) {
           <span className="home__stat-label">Overdue</span>
         </button>
       </div>
-      {summary.upcoming.length > 0 && (
-        <section className="home__upcoming" data-testid="home-upcoming">
-          <h2 className="home__section-head">Coming up</h2>
-          <ul className="home__list">
-            {summary.upcoming.map((task) => (
-              <li key={task.id}>
-                <button
-                  type="button"
-                  className="home__task"
-                  data-testid="home-task"
-                  onClick={() => history.push(`/tasks/${task.id}`)}
-                >
-                  {task.title}
-                </button>
-              </li>
-            ))}
-          </ul>
-        </section>
-      )}
     </div>
   );
 }
