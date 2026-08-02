@@ -8,6 +8,11 @@
  */
 
 :root {
+  /* Tell the browser this is a light UI so native controls (select popups,
+     date/time pickers, spinner arrows, scrollbars) render light chrome that
+     matches the token palette. Overridden to `dark` in the dark blocks below. */
+  color-scheme: light;
+
   --tf-font-sans: 'Inter', system-ui, sans-serif;
   --tf-font-serif: 'Newsreader', Georgia, serif;
 
@@ -73,6 +78,9 @@
  * reusable custom-property block, applied by both selectors below. */
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme='light']) {
+    /* Match native controls (select popups, date/time pickers, scrollbars) to
+       the dark palette instead of light-mode chrome. */
+    color-scheme: dark;
     --tf-accent-soft: #1e1b4b;
     --tf-bg: #0f1117;
     --tf-surface: #181b22;
@@ -89,6 +97,7 @@
 
 /* Explicit dark override (Settings → Dark), regardless of OS preference. */
 html[data-theme='dark'] {
+  color-scheme: dark;
   --tf-accent-soft: #1e1b4b;
   --tf-bg: #0f1117;
   --tf-surface: #181b22;
