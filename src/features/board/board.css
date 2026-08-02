@@ -236,6 +236,26 @@
   border-bottom: 1px solid var(--tf-border);
 }
 
+/* Header cells reuse the body-cell classes (list-row__prio / __due / __assignee)
+   only to line up with the grid columns — but those classes also carry visual
+   styling (e.g. the Priority pill's fill/border/radius). Strip that here so all
+   four column headers read as consistent plain uppercase labels, not a lone
+   "Priority" chip. */
+.list-row--head .list-row__task,
+.list-row--head .list-row__assignee,
+.list-row--head .list-row__due,
+.list-row--head .list-row__prio {
+  display: inline;
+  background: none;
+  border: none;
+  border-radius: 0;
+  padding: 0;
+  font: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+  color: inherit;
+}
+
 .list-head__sort {
   background: none;
   border: none;
