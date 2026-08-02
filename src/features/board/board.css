@@ -629,6 +629,21 @@ li.list-row.task-card--done .task-card__title {
   gap: 4px;
 }
 
+/* Column header actions (rename / duplicate / delete / move) were always shown
+   next to every column title — visual clutter. On desktop, reveal them only
+   when the column header is hovered or focused (Asana-style); touch keeps them
+   visible (no hover). The rename input (focus-within) always stays put. */
+@media (hover: hover) and (pointer: fine) {
+  .board-col__head .section-actions {
+    opacity: 0;
+    transition: opacity 0.12s ease;
+  }
+  .board-col__head:hover .section-actions,
+  .board-col__head:focus-within .section-actions {
+    opacity: 1;
+  }
+}
+
 .section-actions__btn,
 .section-actions button {
   background: none;
