@@ -43,6 +43,9 @@ export function Completed() {
           emptyTitle="Nothing completed yet"
           emptyMessage="Tasks you complete in this project show up here."
         >
+          <p className="completed__summary" data-testid="completed-summary">
+            {done.length} completed
+          </p>
           <ul className="completed__list" aria-label="Completed tasks">
             {done.map((task) => (
               <li key={task.id} className="completed__row" data-testid="completed-task">

@@ -1,3 +1,16 @@
+/* Count summary above the archive, so the page has context/a heading like every
+   other list surface (My Tasks "N open", section counts) instead of jumping
+   straight into rows. Centered to the same reading column as the list. */
+.completed__summary {
+  max-width: var(--tf-list-max);
+  margin: 0 auto 12px;
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--tf-text-muted);
+}
+
 .completed__list {
   list-style: none;
   margin: 0 auto;
