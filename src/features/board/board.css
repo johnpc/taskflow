@@ -177,7 +177,6 @@
   flex-direction: column;
   gap: 18px;
   padding-bottom: 96px;
-  max-width: 860px;
 }
 
 .list-group-by {
