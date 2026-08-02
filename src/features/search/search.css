@@ -102,3 +102,14 @@
   color: var(--tf-priority-medium);
   background: color-mix(in srgb, var(--tf-priority-medium) 18%, transparent);
 }
+
+/* Cap + center the search surface on wide desktops so results read as a
+   comfortable column instead of edge-to-edge rows — consistent with My Tasks /
+   Home / Calendar. Full-width on narrow screens. Declared last so it wins over
+   the per-block margin shorthands above. */
+.search__bar,
+.search__filters,
+.search__results {
+  max-width: var(--tf-list-max);
+  margin-inline: auto;
+}

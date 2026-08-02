@@ -30,6 +30,7 @@ export function Search() {
       </IonHeader>
       <IonContent className="ion-padding">
         <IonSearchbar
+          className="search__bar"
           data-testid="search-input"
           value={query}
           debounce={150}
