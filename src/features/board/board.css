@@ -287,7 +287,11 @@
   border-radius: var(--tf-radius-sm);
   padding: 4px 6px;
   font-size: 0.8rem;
-  color: var(--tf-text);
+  /* Quiet by default (matches the read-only .list-row__due variant + Asana):
+     empty "mm/dd/yyyy" placeholders and ordinary upcoming dates read as muted
+     secondary info, so only overdue/today dates (their own color rules below)
+     draw the eye. */
+  color: var(--tf-text-muted);
 }
 
 .list-row__due {
@@ -409,6 +413,17 @@
   li.list-row .list-row__prio-select.list-row__prio--high,
   li.list-row .list-row__prio-select.list-row__prio--medium {
     border-color: currentColor;
+  }
+  /* The date input's calendar-picker icon is a bit of chrome on every row; hide
+     it at rest so the column reads as plain dates, and reveal it (like the rest
+     of the control chrome) on row-hover or focus. */
+  .list-row__due-input::-webkit-calendar-picker-indicator {
+    opacity: 0;
+    transition: opacity 0.1s ease;
+  }
+  li.list-row:hover .list-row__due-input::-webkit-calendar-picker-indicator,
+  .list-row__due-input:focus::-webkit-calendar-picker-indicator {
+    opacity: 0.6;
   }
 }
 
