@@ -455,6 +455,26 @@ li.list-row.task-card--done .task-card__title {
   margin-bottom: 16px;
 }
 
+/* On phones the filter controls wrapped to ~3 rows, pushing the board far down.
+   Lay them out in a single horizontally-scrollable row instead so tasks stay
+   near the top; desktop keeps the wrapping multi-row bar. */
+@media (max-width: 600px) {
+  .filter-bar {
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    scrollbar-width: none;
+    padding-bottom: 2px;
+    margin: 0 calc(-1 * var(--tf-gap)) 12px;
+    padding-inline: var(--tf-gap);
+  }
+  .filter-bar::-webkit-scrollbar {
+    display: none;
+  }
+  .filter-bar > * {
+    flex: none;
+  }
+}
+
 .filter-bar__chip {
   background: var(--tf-surface);
   border: 1px solid var(--tf-border);
