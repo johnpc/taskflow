@@ -1,5 +1,7 @@
-/* Cap the vertical My Tasks surface to a comfortable reading width so rows
-   don't stretch edge-to-edge on wide desktops (full-width on narrow screens). */
+/* Cap the vertical My Tasks surface to a comfortable reading width and CENTER
+   it, so on wide desktops the column is balanced (not pinned to the left);
+   full-width on narrow screens. `margin-inline: auto` is declared last (below
+   the per-block margin shorthands) so it wins over their implicit left/right:0. */
 .mytasks__title,
 .mytasks__summary,
 .mytasks__quickadd,
@@ -163,4 +165,16 @@
 .mytasks__quickadd-btn:disabled {
   opacity: 0.5;
   cursor: default;
+}
+
+/* Center the capped column (declared last so it beats per-block margin
+   shorthands that would otherwise pin the column to the left). */
+.mytasks__title,
+.mytasks__summary,
+.mytasks__quickadd,
+.mytasks__group,
+.mytasks__filters,
+.mytasks__sort,
+.mytasks__buckets {
+  margin-inline: auto;
 }

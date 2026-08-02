@@ -23,12 +23,12 @@
   }
 }
 
-/* A vertical stack of card rows standing in for a list while it loads. Left-
-   aligned at the same reading width as the loaded lists (My Tasks / Home) so
-   content doesn't jump sideways when the data arrives. */
+/* A vertical stack of card rows standing in for a list while it loads. Centered
+   at the same reading width as the loaded lists (My Tasks / Home) so content
+   doesn't jump when the data arrives. */
 .tf-skeleton-rows {
   list-style: none;
-  margin: 0;
+  margin: 0 auto;
   padding: 0;
   display: flex;
   flex-direction: column;
