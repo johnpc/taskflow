@@ -7,6 +7,14 @@
   gap: 24px;
 }
 
+/* The task title echoed in the top toolbar so it stays in view while the form
+   scrolls (the big editable title lives in the body). Kept to a calm, single
+   line so it doesn't compete with the in-body header. */
+.task-detail__crumb {
+  font-size: 1rem;
+  font-weight: 600;
+}
+
 .task-header {
   display: flex;
   align-items: center;
