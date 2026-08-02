@@ -67,6 +67,15 @@
   color: var(--tf-accent-strong);
 }
 
+/* Month-grid loading skeleton: empty cells with a faint day-number block, so
+   the loading state matches the grid shape rather than card rows. */
+.calendar-cell__skeleton-day {
+  display: block;
+  width: 1rem;
+  height: 0.75rem;
+  border-radius: 4px;
+}
+
 .calendar-cell__chip {
   width: 100%;
   text-align: left;
