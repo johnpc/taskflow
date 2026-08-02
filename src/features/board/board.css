@@ -360,7 +360,11 @@
   color: var(--tf-priority-medium, var(--tf-accent-strong));
 }
 
-/* Inline dropdowns for the Priority + Assignee cells (quick-edit list rows). */
+/* Inline dropdowns for the Priority + Assignee cells (quick-edit list rows).
+   The base (No priority / Low) reads MUTED so it recedes like the other quiet
+   defaults (empty date, Unassigned); the colored High/Medium modifiers below
+   re-assert their tint at higher specificity, so only meaningful priorities
+   draw the eye. */
 .list-row__prio-select {
   background: var(--tf-surface-2);
   border: 1px solid var(--tf-border);
@@ -368,7 +372,7 @@
   padding: 3px 8px;
   font-size: 0.78rem;
   font-weight: 600;
-  color: inherit;
+  color: var(--tf-text-muted);
   cursor: pointer;
   max-width: 100%;
 }
