@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { relativeTime } from './relativeTime';
+import { CommentAuthor } from './CommentAuthor';
 import { CommentBody } from './CommentBody';
 import { CommentEditor } from './CommentEditor';
 import { hasLiked, likeCount } from './taskLikes';
@@ -34,7 +35,7 @@ export function CommentRow({
   return (
     <li className="comment" data-testid="comment">
       <span className="comment__meta">
-        <span className="comment__author">{comment.authorEmail ?? 'You'}</span>
+        <CommentAuthor email={comment.authorEmail} />
         {when && (
           <span className="comment__time" data-testid="comment-time">
             {when}
