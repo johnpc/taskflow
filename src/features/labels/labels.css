@@ -1,7 +1,9 @@
+/* `display: contents` dissolves this wrapper so the chips join the parent card
+   meta's single wrap flow — otherwise the wrapper is one flex item that drops to
+   its own line on a narrow card, stacking labels awkwardly. In a standalone row
+   (task detail) it still lays the chips out via the parent flex. */
 .label-chips {
-  display: inline-flex;
-  flex-wrap: wrap;
-  gap: 6px;
+  display: contents;
 }
 
 .label-chip {
