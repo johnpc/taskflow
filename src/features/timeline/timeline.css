@@ -4,6 +4,17 @@
   overflow-x: auto;
 }
 
+/* A 14-day Gantt can't compress into a phone: the day headers squished to one
+   digit and bars became unreadable "D..". On mobile give the grid a real
+   min-width (~52px/day) so the whole timeline scrolls horizontally with legible
+   columns + bars, instead of cramming into the viewport. */
+@media (max-width: 600px) {
+  .timeline__head,
+  .timeline__row {
+    min-width: 720px;
+  }
+}
+
 .timeline__head {
   display: grid;
   gap: 2px;
