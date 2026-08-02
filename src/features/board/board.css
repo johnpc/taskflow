@@ -519,6 +519,18 @@ li.list-row:hover {
   li.list-row .list-row__prio-select {
     flex: 0 1 auto;
   }
+  /* Touch has no hover, so the multi-select checkbox is always in the lead —
+     two look-alike circles (square select + round complete ring) competing for
+     "which one completes this?". De-emphasize the SECONDARY multi-select at rest
+     so the primary complete ring leads; it snaps back to full strength once a
+     selection is active. Opacity only — the tap target is unchanged, so bulk
+     select (the only touch entry point) stays reachable. */
+  li.list-row .task-card__select {
+    opacity: 0.35;
+  }
+  li.list-row[data-selected='true'] .task-card__select {
+    opacity: 1;
+  }
 }
 
 li.list-row.task-card--done .task-card__title {
