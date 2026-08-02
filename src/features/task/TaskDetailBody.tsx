@@ -50,12 +50,8 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
         onToggleDone={(done) => toggleDone.mutate({ taskId: task.id, done, now: nowISO() })}
         onRename={(title) => patch.mutate({ id: task.id, title })}
       />
-      <TaskSocial
-        task={task}
-        currentEmail={email}
-        onPatch={(p) => patch.mutate({ id: task.id, ...p })}
-      />
-      <TaskActivity task={task} nowMs={Date.now()} />
+      {/* Primary, actionable fields first (dates, priority, notes, section,
+          labels, deps, subtasks); the secondary social + activity meta below. */}
       <TaskFields task={task} onPatch={(p) => patch.mutate({ id: task.id, ...p })} />
       <TaskSettings
         task={task}
@@ -77,6 +73,12 @@ export function TaskDetailBody({ task, hook }: { task: TaskRecord; hook: TaskDet
       />
       <TaskSubtasks task={task} hook={hook} currentEmail={email} onOpen={openTask} />
       <TaskDetailExtras task={task} hook={hook} />
+      <TaskSocial
+        task={task}
+        currentEmail={email}
+        onPatch={(p) => patch.mutate({ id: task.id, ...p })}
+      />
+      <TaskActivity task={task} nowMs={Date.now()} />
       <TaskActions
         taskId={task.id}
         duplicating={duplicate.isPending}
