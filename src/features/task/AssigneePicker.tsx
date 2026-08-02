@@ -16,7 +16,7 @@ export function AssigneePicker({
   const options = value && !members.includes(value) ? [value, ...members] : members;
   return (
     <select
-      className="task-assign__select"
+      className={value ? 'task-assign__select' : 'task-assign__select task-assign__select--empty'}
       data-testid="task-assignee-select"
       aria-label="Assignee"
       value={value}
