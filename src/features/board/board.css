@@ -74,6 +74,25 @@
   gap: 8px;
 }
 
+/* Board cards are clickable (open the task) — give them the same hover lift as
+   the Projects + template cards so the "this card is interactive" language is
+   consistent app-wide. Scoped to .board-col__list so it never touches the flat
+   list-view rows (which share .task-card but are a ruled table, not cards).
+   Hover-capable pointers only; touch is unaffected. */
+@media (hover: hover) and (pointer: fine) {
+  .board-col__list .task-card {
+    transition:
+      box-shadow 0.12s ease,
+      border-color 0.12s ease,
+      transform 0.12s ease;
+  }
+  .board-col__list .task-card:hover {
+    box-shadow: var(--tf-shadow-hover);
+    border-color: var(--tf-accent);
+    transform: translateY(-1px);
+  }
+}
+
 .add-card {
   display: inline-flex;
   align-items: center;
