@@ -4,7 +4,10 @@
   display: flex;
   gap: 14px;
   overflow-x: auto;
-  padding-bottom: 96px;
+  /* Small bottom gap only: the project-overview region sits directly below the
+     board (board-first), and its heading carries its own top divider + spacing,
+     so a large clearance here just leaves a dead gap before the overview. */
+  padding-bottom: var(--tf-gap);
   scroll-snap-type: x proximity;
   -webkit-overflow-scrolling: touch;
 }
@@ -176,7 +179,8 @@
   display: flex;
   flex-direction: column;
   gap: 18px;
-  padding-bottom: 96px;
+  /* Matches .board: the overview region follows directly, so only a small gap. */
+  padding-bottom: var(--tf-gap);
 }
 
 .list-group-by {
