@@ -227,6 +227,7 @@
 @media (hover: hover) and (pointer: fine) {
   .task-card .quick-edit,
   .task-card .reorder,
+  .task-card .task-card__rename,
   .task-card .task-card__select {
     opacity: 0;
     transition: opacity 0.12s ease;
@@ -235,6 +236,8 @@
   .task-card:focus-within .quick-edit,
   .task-card:hover .reorder,
   .task-card:focus-within .reorder,
+  .task-card:hover .task-card__rename,
+  .task-card:focus-within .task-card__rename,
   .task-card:hover .task-card__select,
   .task-card:focus-within .task-card__select {
     opacity: 1;
