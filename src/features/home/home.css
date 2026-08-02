@@ -148,3 +148,13 @@
   padding: 2px 8px;
   white-space: nowrap;
 }
+
+/* Center the capped Home column on wide desktops (declared last so it beats the
+   per-block margin shorthands). */
+.home__greeting,
+.home__cards,
+.home__today,
+.home__upcoming,
+.home__projects {
+  margin-inline: auto;
+}
