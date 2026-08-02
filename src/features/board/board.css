@@ -501,8 +501,11 @@ li.list-row:hover {
     flex-wrap: wrap;
     align-items: center;
     column-gap: 10px;
-    row-gap: 8px;
-    padding: 12px 14px;
+    /* Tighter stacked rows so more tasks fit on a phone: the title/chips,
+       assignee+due, and priority lines sit closer and the row padding is
+       trimmed, without shrinking the touch targets themselves. */
+    row-gap: 6px;
+    padding: 9px 14px;
   }
   li.list-row .list-row__task {
     flex: 1 1 60%;
