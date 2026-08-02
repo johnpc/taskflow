@@ -468,7 +468,10 @@ li.list-row {
   border-bottom: 1px solid var(--tf-border);
   border-radius: 0;
   box-shadow: none;
-  padding: 8px 14px;
+  /* Tighter vertical rhythm so more tasks are scannable at once (Asana-dense).
+     Chip-carrying rows still grow with their content; only the airy single-line
+     rows tighten up. */
+  padding: 6px 14px;
   /* A list row also carries `.task-card` (for shared card styling + testids),
    * whose `display:flex` has equal specificity to `.list-row`'s `display:grid`
    * and was winning by source order — collapsing the grid so cells no longer
