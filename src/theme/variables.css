@@ -152,6 +152,18 @@ ion-header ion-toolbar:first-of-type {
   padding-top: max(var(--ion-safe-area-top, 0px), env(safe-area-inset-top, 0px));
 }
 
+/* Destructive action-sheet buttons (e.g. "Delete project") read danger-red on
+ * iOS mode but Ionic's md (desktop) mode leaves them the default text color, so
+ * the delete action lost its red warning on wide screens. Ionic sets the button
+ * text via `color: var(--button-color)`, so override that custom property (not
+ * `color`, which loses to Ionic's own rule) to the app danger token in both
+ * modes — matching every other delete affordance (task delete, bulk delete). */
+.action-sheet-destructive {
+  --button-color: var(--tf-danger);
+  --button-color-hover: var(--tf-danger);
+  --button-color-focused: var(--tf-danger);
+}
+
 /* Role classes */
 .tf-heading {
   font-family: var(--tf-font-sans);
