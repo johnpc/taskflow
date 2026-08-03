@@ -164,6 +164,16 @@ ion-header ion-toolbar:first-of-type {
   --button-color-focused: var(--tf-danger);
 }
 
+/* Same gap on the confirm IonAlert: a destructive "Delete" button reads red on
+ * iOS mode but Ionic's md (desktop) mode colors it the default primary blue —
+ * identical to "Cancel" — so the final confirm step loses its danger signal.
+ * Ionic sets `.alert-button { color: var(--ion-color-primary) }`, so recolor the
+ * destructive-role button (compound selector to beat that single-class rule) to
+ * the app danger token, matching the red "Delete task" control that opened it. */
+.alert-button.alert-button-role-destructive {
+  color: var(--tf-danger);
+}
+
 /* Role classes */
 .tf-heading {
   font-family: var(--tf-font-sans);
