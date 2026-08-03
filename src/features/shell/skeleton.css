@@ -47,6 +47,22 @@
   background: var(--tf-surface);
 }
 
+/* Dense-list variant: mirror the ruled-row content it stands in for (My Tasks
+   #220 / Completed #225 / Calendar agenda #221) — hairline divider, no card
+   border/radius/surface, tighter padding, zero inter-row gap — so the skeleton
+   previews the real shape instead of promising floating cards. */
+.tf-skeleton-rows--flat {
+  gap: 0;
+}
+
+.tf-skeleton-rows--flat .tf-skeleton-row {
+  padding: 12px 6px;
+  border: none;
+  border-bottom: 1px solid var(--tf-border);
+  border-radius: 0;
+  background: transparent;
+}
+
 /* Respect reduced-motion: hold a static placeholder instead of sweeping. */
 @media (prefers-reduced-motion: reduce) {
   .tf-skeleton {
