@@ -286,6 +286,9 @@
 }
 
 .status-picker__btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   border: 1px solid var(--tf-border);
   background: var(--tf-surface);
   color: var(--tf-text-muted);
@@ -294,6 +297,19 @@
   font-size: 0.74rem;
   font-weight: 600;
   cursor: pointer;
+}
+
+/* A leading dot in each button's own health color (green / amber / red via the
+   --pill var set inline) so On track / At risk / Off track are distinguishable
+   at rest — the picker previews the status color language instead of three
+   identical grey pills, matching the StatusPill shown when one is selected. */
+.status-picker__btn::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--pill);
+  flex: none;
 }
 
 .status-picker__btn[aria-pressed='true'] {
