@@ -66,7 +66,13 @@ export function CustomFieldAdd({ onAdd }: { onAdd: (field: NewField) => void }) 
           onKeyDown={(e) => e.key === 'Enter' && commit()}
         />
       )}
-      <button type="button" data-testid="custom-field-add" onClick={commit}>
+      <button
+        type="button"
+        className="custom-fields__add-btn"
+        data-testid="custom-field-add"
+        disabled={!name.trim()}
+        onClick={commit}
+      >
         Add
       </button>
     </div>
