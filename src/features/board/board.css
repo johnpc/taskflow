@@ -850,6 +850,21 @@ li.list-row.task-card--done {
   display: flex;
 }
 
+/* On touch the column-header actions are always visible (no hover to reveal
+   them), so the 5-icon cluster (move ‹ ›, rename, duplicate, delete) reads as a
+   cramped strip. Give the buttons roomier tap spacing so they're distinct,
+   comfortable targets rather than a jammed row. Desktop keeps the compact
+   hover-revealed cluster. */
+@media (max-width: 600px) {
+  .board-col__head .section-actions {
+    gap: 10px;
+  }
+  .board-col__head .section-actions__btn,
+  .board-col__head .section-actions button {
+    padding: 4px;
+  }
+}
+
 .section-actions__input {
   background: var(--tf-surface);
   border: 1px solid var(--tf-accent);
