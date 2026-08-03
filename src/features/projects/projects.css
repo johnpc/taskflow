@@ -133,7 +133,10 @@
 }
 
 .project-new {
-  display: inline-flex;
+  /* Block-level (not inline-flex) so `margin-inline: auto` centers it to the
+     same capped column as the heading + project cards — an inline-level box
+     ignores auto margins and jams flush-left, misaligning the primary CTA. */
+  display: flex;
   align-items: center;
   gap: 8px;
   background: var(--tf-accent-soft);

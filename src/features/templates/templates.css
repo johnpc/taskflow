@@ -1,5 +1,9 @@
 .template-picker {
-  margin: 16px 0 8px;
+  /* Only set the block (top/bottom) margin — the inline margin is owned by the
+     Projects centering rule (`margin-inline: auto`). A `margin: … 0 …` shorthand
+     here would reset margin-inline to 0 and jam the picker flush-left, out of
+     line with the heading + project cards. */
+  margin-block: 16px 8px;
 }
 
 .template-picker__kicker {
