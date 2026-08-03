@@ -56,30 +56,54 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  /* Zero the inter-row gap so each row's hairline divider butts into the next
+     into one continuous ruled list (mirrors My Tasks #220 / Calendar #221 / the
+     List view #109). */
+  gap: 0;
 }
 
 .search__hit {
+  /* A search result reads as a dense ruled LIST row (Asana-style), not a floating
+     card: title on the left + meta (project chip / due / avatar) at the trailing
+     edge on one line, a hairline divider + hover highlight instead of the board
+     card's border/shadow/radius. Keeps results scannable — more per screen, no
+     empty right region. */
   width: 100%;
   display: flex;
-  flex-direction: column;
-  gap: 6px;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
   text-align: left;
-  background: var(--tf-surface);
-  border: 1px solid var(--tf-border);
-  border-radius: var(--tf-radius-sm);
-  box-shadow: var(--tf-shadow);
-  padding: 14px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--tf-border);
+  padding: 8px 6px;
   font-size: 0.95rem;
   font-weight: 500;
   color: var(--tf-text);
   cursor: pointer;
+  transition: background 0.1s ease;
+}
+
+.search__hit:hover {
+  background: var(--tf-surface-2);
+}
+
+/* Title takes the row; the meta cluster sits at the trailing edge. */
+.search__hit-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .search__hit-meta {
+  flex: none;
   display: flex;
   flex-wrap: wrap;
   align-items: center;
+  justify-content: flex-end;
   gap: 8px;
 }
 
