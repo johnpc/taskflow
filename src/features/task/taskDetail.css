@@ -332,7 +332,9 @@
   color: var(--tf-priority-medium);
 }
 
-/* Undated + editable: a subtle "Due date" affordance, revealed clearly on hover. */
+/* Undated + editable: a subtle "Due date" affordance. Hidden at rest on hover
+   pointers (revealed on row hover — see the @media block below) so a resting
+   checklist reads as just check + title; touch keeps it visible. */
 .subtask__due--none {
   color: var(--tf-text-muted);
   opacity: 0.6;
@@ -374,6 +376,24 @@
   color: var(--tf-text-muted);
   font-size: 0.85rem;
   line-height: 1;
+}
+
+/* Calm checklist: on hover pointers, an EMPTY subtask's "Due date" text and the
+   unassigned "+" avatar stay hidden until the row is hovered/focused, so a
+   resting checklist is just check + title (Asana-clean). Set dates + real
+   assignees always show. Touch keeps the affordances (no hover to reveal). */
+@media (hover: hover) and (pointer: fine) {
+  .subtask .subtask__due--none,
+  .subtask .subtask__assignee-add {
+    opacity: 0;
+    transition: opacity 0.12s ease;
+  }
+  .subtask:hover .subtask__due--none,
+  .subtask:focus-within .subtask__due--none,
+  .subtask:hover .subtask__assignee-add,
+  .subtask:focus-within .subtask__assignee-add {
+    opacity: 0.6;
+  }
 }
 
 .subtask__assignee-input {
