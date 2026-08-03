@@ -280,6 +280,20 @@
   .task-card .quick-edit__date::-webkit-calendar-picker-indicator {
     opacity: 0.55;
   }
+
+  /* Touch has no hover, so a board card's multi-select checkbox is always in the
+     lead — two look-alike circles (square select + round complete ring) competing
+     for "which one completes this?". De-emphasize the SECONDARY multi-select at
+     rest so the primary complete ring leads; it snaps back to full strength once a
+     selection is active. Opacity only — the tap target is unchanged, so bulk
+     select stays reachable. Mirrors the list-row treatment (see board.css). Scoped
+     to .board-col__list so list rows (handled there) aren't double-dimmed. */
+  .board-col__list .task-card__select {
+    opacity: 0.35;
+  }
+  .board-col__list .task-card[data-selected='true'] .task-card__select {
+    opacity: 1;
+  }
 }
 
 /* Overdue/due-today quick-edit date reads red/amber, matching the card chip. */
