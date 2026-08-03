@@ -166,23 +166,43 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  /* Zero the inter-row gap so each row's hairline divider butts into the next
+     into one continuous ruled list within a day (mirrors My Tasks #220 / the
+     List view #109). Days stay separated by the .calendar__days gap + day-head. */
+  gap: 0;
 }
 
 .calendar__task {
+  /* A calendar agenda entry reads as a dense ruled LIST row (Asana-style), not a
+     floating card: title + project chip + avatar on one line, a hairline divider
+     + hover highlight instead of the board card's border/shadow/radius. Keeps the
+     agenda scannable — more tasks per screen, no empty right region. */
   width: 100%;
   display: flex;
-  flex-direction: column;
-  align-items: flex-start;
-  gap: 6px;
+  flex-direction: row;
+  align-items: center;
+  gap: 10px;
   text-align: left;
-  background: var(--tf-surface);
-  border: 1px solid var(--tf-border);
-  border-radius: var(--tf-radius-sm);
-  box-shadow: var(--tf-shadow);
-  padding: 12px 14px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--tf-border);
+  padding: 8px 6px;
   font-size: 0.95rem;
   font-weight: 500;
   color: var(--tf-text);
   cursor: pointer;
+  transition: background 0.1s ease;
+}
+
+.calendar__task:hover {
+  background: var(--tf-surface-2);
+}
+
+/* Title takes the row; the project chip + avatar sit at the trailing edge. */
+.calendar__task-title {
+  flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
