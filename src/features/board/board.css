@@ -93,6 +93,14 @@
   }
 }
 
+/* A completed board card recedes (whole card dimmed), matching the List view's
+   done rows — before, only the title was struck through while the card + its
+   chips stayed full-strength, so a done card competed with open ones. Scoped to
+   .board-col__list so list rows (which dim themselves) aren't double-faded. */
+.board-col__list .task-card--done {
+  opacity: 0.6;
+}
+
 .add-card {
   display: inline-flex;
   align-items: center;
