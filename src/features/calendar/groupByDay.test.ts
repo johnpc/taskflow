@@ -30,6 +30,16 @@ describe('groupByDay', () => {
     expect(out.map((d) => d.date)).toEqual(['2026-07-30', '2026-08-01']);
   });
 
+  it('flags only the today group as isToday', () => {
+    const out = groupByDay(
+      [task({ id: 'a', dueDate: '2026-07-30' }), task({ id: 'b', dueDate: '2026-08-01' })],
+      today,
+      tomorrow,
+      horizon,
+    );
+    expect(out.map((d) => d.isToday)).toEqual([true, false]);
+  });
+
   it('excludes done, undated, out-of-window, and overdue tasks', () => {
     const out = groupByDay(
       [

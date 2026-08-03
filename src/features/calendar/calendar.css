@@ -170,6 +170,15 @@
   border-bottom: 1px solid var(--tf-border);
 }
 
+/* "Today" is the group users open the agenda to see, so accent it — the header
+   text + underline pick up the accent (matching the month grid's today-cell
+   accent border and the timeline's Today pill), instead of reading identical to
+   every other day. Token-only; no other day-head is affected. */
+.calendar__day-head--today {
+  color: var(--tf-accent-strong);
+  border-bottom-color: var(--tf-accent);
+}
+
 .calendar__list {
   list-style: none;
   margin: 0;
