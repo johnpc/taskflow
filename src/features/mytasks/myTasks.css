@@ -70,6 +70,19 @@
   gap: 0;
 }
 
+/* Dashed drop-zone shown in an EMPTY focus bucket (Today/Upcoming/Later) so the
+   drag-to-refile target is visible — mirrors the board's empty-column CTA. */
+.mytasks__drop-hint {
+  margin: 4px 0 0;
+  padding: 12px;
+  border: 1px dashed var(--tf-border);
+  border-radius: var(--tf-radius-sm);
+  text-align: center;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--tf-text-muted);
+}
+
 .mytasks__row {
   display: flex;
   align-items: center;

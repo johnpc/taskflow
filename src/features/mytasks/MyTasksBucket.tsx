@@ -53,6 +53,15 @@ export function MyTasksBucket({
           <span className="mytasks__bucket-count">{bucket.tasks.length}</span>
         </button>
       </h2>
+      {open && showFocusPicker && bucket.tasks.length === 0 && (
+        // Focus buckets are drop targets (drag a task onto one to re-file it),
+        // but an empty bucket rendered nothing — so the drop target was invisible
+        // and the drag-to-focus feature undiscoverable. Show a dashed drop-zone
+        // hint (mirrors the board's empty-column CTA) so it reads as "drop here".
+        <p className="mytasks__drop-hint" data-testid={`bucket-empty-${bucket.key}`}>
+          Drop a task here
+        </p>
+      )}
       {open && (
         <ul className="mytasks__list">
           {bucket.tasks.map((task) => (
