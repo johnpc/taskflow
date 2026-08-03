@@ -154,6 +154,31 @@
   font-family: var(--tf-font-sans);
 }
 
+/* Due date + time on one line: the date flexes to fill, the time is a compact
+   adjunct beside it (Asana-style) rather than a co-equal full-width field. */
+.task-fields__due {
+  display: flex;
+  gap: 8px;
+  align-items: stretch;
+}
+
+.task-fields__due-date {
+  flex: 1;
+  min-width: 0;
+}
+
+.task-fields__due-time {
+  flex: none;
+}
+
+/* No due date yet → time can't be set; recede it so an empty "--:-- --" box
+   doesn't compete with the date input for attention. */
+.task-fields__due-time:disabled {
+  opacity: 0.45;
+  background: var(--tf-surface-2);
+  cursor: not-allowed;
+}
+
 /* Overdue/due-today date reads red/amber, matching cards + list + search. */
 .task-fields__date--overdue {
   color: var(--tf-overdue);
