@@ -59,7 +59,15 @@ export function CalendarList() {
         <div className="calendar__days">
           {days.map((day) => (
             <section key={day.date} className="calendar__day" data-testid={`day-${day.date}`}>
-              <h2 className="calendar__day-head">{day.label}</h2>
+              <h2
+                className={
+                  day.isToday
+                    ? 'calendar__day-head calendar__day-head--today'
+                    : 'calendar__day-head'
+                }
+              >
+                {day.label}
+              </h2>
               <ul className="calendar__list">
                 {day.tasks.map((task) => (
                   <li key={task.id}>

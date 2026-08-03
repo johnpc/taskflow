@@ -6,6 +6,8 @@ export interface DayGroup {
   date: string;
   /** Friendly label: "Today", "Tomorrow", or "Mon, Aug 3". */
   label: string;
+  /** True when this group is the current day — the agenda accents its header. */
+  isToday: boolean;
   tasks: TaskRecord[];
 }
 
@@ -43,6 +45,7 @@ export function groupByDay(
     .map((date) => ({
       date,
       label: dayLabel(date, today, tomorrow),
+      isToday: date === today,
       tasks: byDate.get(date)!.sort((a, b) => (a.title ?? '').localeCompare(b.title ?? '')),
     }));
 }
