@@ -21,13 +21,13 @@
   gap: 10px;
 }
 
-/* Like (heart) toggle — sits under the header, self-aligned left. */
+/* Like (heart) toggle — sits in its own labeled "Like" row (see TaskSocial),
+   left-aligned like the Follow button below it. */
 .task-like {
   align-self: flex-start;
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  margin-top: -12px;
   background: var(--tf-surface-2);
   border: 1px solid var(--tf-border);
   border-radius: 999px;

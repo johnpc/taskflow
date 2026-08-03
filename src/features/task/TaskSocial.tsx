@@ -17,13 +17,19 @@ export function TaskSocial({
 }) {
   return (
     <>
-      <LikeButton
-        likedBy={task.likedBy}
-        currentEmail={currentEmail}
-        onToggle={() =>
-          currentEmail && onPatch({ likedBy: toggleLike(task.likedBy, currentEmail) })
-        }
-      />
+      {/* A labeled row (eyebrow + control) so the like reads as a section like
+          Followers below it, instead of a bare heart pill floating between the
+          comments and followers with a negative-margin hack. */}
+      <div className="task-fields__row">
+        <span className="task-fields__label">Like</span>
+        <LikeButton
+          likedBy={task.likedBy}
+          currentEmail={currentEmail}
+          onToggle={() =>
+            currentEmail && onPatch({ likedBy: toggleLike(task.likedBy, currentEmail) })
+          }
+        />
+      </div>
       <TaskFollowers
         task={task}
         currentEmail={currentEmail}
