@@ -1,10 +1,12 @@
 import { useHistory } from 'react-router-dom';
+import { gitBranchOutline } from 'ionicons/icons';
 import { horizonDates } from '../calendar/horizon';
 import { todayISO } from '../task/today';
 import { timelineLayout } from './timelineLayout';
 import { useTimelineDrag } from './useTimelineDrag';
 import { TimelineHead } from './TimelineHead';
 import { prioClass } from './timelineBarClass';
+import { EmptyState } from '../shell/EmptyState';
 import type { Column } from '../board/taskGrouping';
 import './timeline.css';
 
@@ -38,9 +40,12 @@ export function TimelineView({
     <div className="timeline" data-testid="timeline-view">
       <TimelineHead days={days} today={start} cols={cols} onDropOnDay={drag.onDropOnDay} />
       {bars.length === 0 ? (
-        <p className="timeline__empty" data-testid="timeline-empty">
-          No dated tasks in the next two weeks.
-        </p>
+        <EmptyState
+          icon={gitBranchOutline}
+          title="Nothing on the timeline"
+          message="Tasks with a due date in the next two weeks appear here."
+          testId="timeline-empty"
+        />
       ) : (
         <div className="timeline__rows">
           {bars.map((b) => (
