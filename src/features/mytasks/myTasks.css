@@ -115,11 +115,14 @@
 
 /* Calm, sentence-case group-by tabs. Ionic's segment button defaults to
    ALL-CAPS + wide letter-spacing, which reads shouty/dated next to the app's
-   sentence-case UI. Restore normal casing + a lighter weight (Asana-like). */
+   sentence-case UI. Restore normal casing + a lighter weight (Asana-like).
+   Also drop Ionic's iOS inter-tab divider lines (its --border-color prop) —
+   they read as stray vertical rules in this pill-style segment. */
 .mytasks__group ion-segment-button {
   text-transform: none;
   letter-spacing: normal;
   font-weight: 600;
+  --border-color: transparent;
 }
 
 .mytasks__show-done {
