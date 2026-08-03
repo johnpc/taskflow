@@ -240,11 +240,17 @@
   border-color: var(--tf-text);
 }
 
+/* Section headings (Labels / Blocked by / Subtasks / Comments) match the
+   small-caps eyebrow style used by the field labels above them (.task-fields__
+   label), so the whole detail column has one consistent heading rhythm instead
+   of two competing treatments (big dark title-case vs muted eyebrow). */
 .subtasks__head,
 .comments__head {
-  font-size: 1rem;
+  font-size: 0.78rem;
   font-weight: 700;
-  color: var(--tf-text);
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--tf-text-muted);
   display: flex;
   align-items: center;
   gap: 10px;
