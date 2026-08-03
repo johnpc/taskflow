@@ -10,6 +10,7 @@
    columns + bars, instead of cramming into the viewport. */
 @media (max-width: 600px) {
   .timeline__head,
+  .timeline__rows,
   .timeline__row {
     min-width: 720px;
   }
@@ -17,7 +18,11 @@
 
 .timeline__head {
   display: grid;
-  gap: 2px;
+  /* No inter-column gap: the day headers, the bars, and the .timeline__rows
+     gridlines (drawn every 100%/14) must share identical column boundaries — a
+     gap here shifts the headers/bars off the gridlines by an accumulating few px
+     across 14 columns. */
+  gap: 0;
   margin-bottom: 8px;
   border-bottom: 1px solid var(--tf-border);
   padding-bottom: 4px;
@@ -56,7 +61,10 @@
 
 .timeline__row {
   display: grid;
-  gap: 2px;
+  /* Match .timeline__head: no inter-column gap so bars land exactly on the
+     day-column gridlines (drawn every 100%/14 on .timeline__rows). The bar's own
+     border-radius/padding keep adjacent bars visually distinct. */
+  gap: 0;
 }
 
 .timeline__bar {
