@@ -131,6 +131,19 @@
   /* Scrollable segment (5 tabs); cap on wide screens but let each tab label
      show in full — a 360px cap truncated "Project" to "PROJE". */
   max-width: 560px;
+  /* Drive Ionic's segment colors from the app tokens so the selected pill and
+     track follow light/dark (Ionic's defaults render a bright near-white pill in
+     dark mode). Mirrors the .view-toggle treatment: surface-2 track, surface
+     pill, accent-strong selected label. */
+  --background: var(--tf-surface-2);
+  border-radius: 999px;
+}
+
+.mytasks__group ion-segment-button {
+  --background-checked: var(--tf-surface);
+  --indicator-color: var(--tf-surface);
+  --color: var(--tf-text-muted);
+  --color-checked: var(--tf-accent-strong);
 }
 
 /* Calm, sentence-case group-by tabs. Ionic's segment button defaults to
