@@ -17,25 +17,41 @@
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  /* Zero the inter-row gap so each row's hairline divider butts into the next
+     into one continuous ruled list (mirrors My Tasks #220 / Calendar #221 /
+     Search #222 / the List view #109). */
+  gap: 0;
   /* Centered reading column on wide desktops, consistent with My Tasks / Home /
      Calendar / Search; full-width on narrow screens. */
   max-width: var(--tf-list-max);
 }
 
 .completed__row {
+  /* A completed task reads as a dense ruled LIST row (Asana-style), not a
+     floating card: title on the left + timestamp/reopen at the trailing edge on
+     one line, a hairline divider + hover highlight instead of the board card's
+     border/shadow/radius. Keeps the archive scannable — consistent with every
+     other task-list surface in the app. */
   display: flex;
   align-items: center;
   gap: 10px;
-  background: var(--tf-surface);
-  border: 1px solid var(--tf-border);
-  border-radius: var(--tf-radius-sm);
-  box-shadow: var(--tf-shadow);
-  padding: 12px 14px;
+  background: transparent;
+  border: none;
+  border-bottom: 1px solid var(--tf-border);
+  padding: 8px 6px;
+  transition: background 0.1s ease;
+}
+
+.completed__row:hover {
+  background: var(--tf-surface-2);
 }
 
 .completed__title {
   flex: 1;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
   color: var(--tf-text-muted);
   text-decoration: line-through;
   font-size: 0.95rem;
