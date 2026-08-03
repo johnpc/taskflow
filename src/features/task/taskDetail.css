@@ -182,10 +182,34 @@
   cursor: pointer;
 }
 
+/* Selected priority defaults to the accent (used by "No priority"). High /
+   Medium / Low override it with the app's priority color language — red / amber /
+   blue — so the detail pill matches the priority chips on cards, list rows, and
+   search results instead of reading generic indigo. Per-priority selectors are
+   compounded (.--on.--high) so they beat the plain .--on above at higher
+   specificity. */
 .task-fields__prio--on {
   background: var(--tf-accent-soft);
   border-color: var(--tf-accent);
   color: var(--tf-accent-strong);
+}
+
+.task-fields__prio--on.task-fields__prio--high {
+  background: color-mix(in srgb, var(--tf-priority-high) 15%, transparent);
+  border-color: var(--tf-priority-high);
+  color: var(--tf-priority-high);
+}
+
+.task-fields__prio--on.task-fields__prio--medium {
+  background: color-mix(in srgb, var(--tf-priority-medium) 18%, transparent);
+  border-color: var(--tf-priority-medium);
+  color: var(--tf-priority-medium);
+}
+
+.task-fields__prio--on.task-fields__prio--low {
+  background: color-mix(in srgb, var(--tf-priority-low) 15%, transparent);
+  border-color: var(--tf-priority-low);
+  color: var(--tf-priority-low);
 }
 
 .task-milestone__btn {

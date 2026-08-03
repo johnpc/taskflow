@@ -70,7 +70,7 @@ export function TaskFields({
               data-testid={`priority-${p.toLowerCase()}`}
               className={
                 task.priority === p
-                  ? 'task-fields__prio task-fields__prio--on'
+                  ? `task-fields__prio task-fields__prio--on task-fields__prio--${p.toLowerCase()}`
                   : 'task-fields__prio'
               }
               aria-pressed={task.priority === p}
