@@ -26,7 +26,10 @@ describe('ProjectCard', () => {
     expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '75');
   });
 
-  it('omits the progress bar when the project has no tasks', () => {
+  it('shows a "No tasks yet" progress row when the project has no tasks', () => {
+    // The progress region always renders (even at 0 tasks) so every project row
+    // is a uniform height — an empty project reads "No tasks yet" with an empty
+    // bar rather than collapsing to a shorter, jagged row.
     renderWithProviders(
       <ProjectCard
         project={project({})}
@@ -34,7 +37,14 @@ describe('ProjectCard', () => {
         onToggleFavorite={vi.fn()}
       />,
     );
-    expect(screen.queryByTestId('project-progress')).not.toBeInTheDocument();
+    expect(screen.getByTestId('project-progress')).toBeInTheDocument();
+    expect(screen.getByTestId('project-progress-label')).toHaveTextContent('No tasks yet');
+    expect(screen.getByRole('progressbar')).toHaveAttribute('aria-valuenow', '0');
+  });
+
+  it('renders the progress region even when progress is undefined', () => {
+    renderWithProviders(<ProjectCard project={project({})} onToggleFavorite={vi.fn()} />);
+    expect(screen.getByTestId('project-progress-label')).toHaveTextContent('No tasks yet');
   });
 
   it('reflects favorite state', () => {

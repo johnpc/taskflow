@@ -22,6 +22,7 @@ export function ProjectCard({
   onToggleFavorite: (project: ProjectRecord) => void;
 }) {
   const fav = !!project.favorite;
+  const total = progress?.total ?? 0;
   const pct = progress ? progressPercent(progress) : 0;
   return (
     <li className="project-card" data-testid="project-card">
@@ -52,16 +53,17 @@ export function ProjectCard({
       >
         <IonIcon icon={fav ? star : starOutline} />
       </button>
-      {progress && progress.total > 0 && (
-        <div className="project-card__progress" data-testid="project-progress">
-          <div className="project-card__bar" role="progressbar" aria-valuenow={pct}>
-            <span className="project-card__bar-fill" style={{ width: `${pct}%` }} />
-          </div>
-          <span className="project-card__progress-label" data-testid="project-progress-label">
-            {progress.done} of {progress.total} done
-          </span>
+      {/* Always render the progress region so every project row is the SAME
+          height — an empty project shows an empty bar + "No tasks yet" instead
+          of collapsing to a shorter row, which made the list rhythm jagged. */}
+      <div className="project-card__progress" data-testid="project-progress">
+        <div className="project-card__bar" role="progressbar" aria-valuenow={pct}>
+          <span className="project-card__bar-fill" style={{ width: `${pct}%` }} />
         </div>
-      )}
+        <span className="project-card__progress-label" data-testid="project-progress-label">
+          {total > 0 ? `${progress!.done} of ${total} done` : 'No tasks yet'}
+        </span>
+      </div>
     </li>
   );
 }
