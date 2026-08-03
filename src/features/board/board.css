@@ -905,6 +905,21 @@ li.list-row.task-card--done {
   margin-bottom: 14px;
 }
 
+/* On a phone the 7 bulk actions overflowed the bar and were clipped off the
+   right edge — Delete and the clear (✕) were completely unreachable. Wrap the
+   bar so every action stays on-screen; the "N selected" count takes its own
+   line (drop its auto right-margin, which would otherwise force a gap) so the
+   action pills wrap into a tidy grid below it. */
+@media (max-width: 600px) {
+  .selection-bar {
+    flex-wrap: wrap;
+  }
+  .selection-bar__count {
+    flex-basis: 100%;
+    margin-right: 0;
+  }
+}
+
 .selection-bar__count {
   font-weight: 700;
   font-size: 0.85rem;
