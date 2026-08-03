@@ -12,6 +12,7 @@ import { IonIcon } from '@ionic/react';
 import { arrowUndoOutline } from 'ionicons/icons';
 import { useCompleted } from './useCompleted';
 import { LoadState } from '../shell/LoadState';
+import { SkeletonRows } from '../shell/SkeletonRows';
 import { useDocumentTitle } from '../shell/useDocumentTitle';
 import { nowISO } from '../task/today';
 import { relativeTime } from '../task/relativeTime';
@@ -40,6 +41,7 @@ export function Completed() {
           isError={query.isError}
           isEmpty={done.length === 0}
           onRetry={query.refetch}
+          skeleton={<SkeletonRows variant="row" />}
           emptyTitle="Nothing completed yet"
           emptyMessage="Tasks you complete in this project show up here."
         >

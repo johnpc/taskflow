@@ -9,6 +9,7 @@ import { useQuickAdd } from './useQuickAdd';
 import { useProjects } from '../projects/useProjects';
 import { useProjectsById } from '../projects/useProjectsById';
 import { LoadState } from '../shell/LoadState';
+import { SkeletonRows } from '../shell/SkeletonRows';
 import { TabBar } from '../shell/TabBar';
 import { useDocumentTitle } from '../shell/useDocumentTitle';
 import './myTasks.css';
@@ -73,6 +74,7 @@ export function MyTasks() {
           isError={query.isError}
           isEmpty={buckets.length === 0}
           onRetry={query.refetch}
+          skeleton={<SkeletonRows variant="row" />}
           emptyTitle="You’re all caught up"
           emptyMessage="No open tasks. Add tasks in a project and they’ll show up here."
         >

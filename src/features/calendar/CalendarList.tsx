@@ -3,6 +3,7 @@ import { useCalendar } from './useCalendar';
 import { CalendarTask } from './CalendarTask';
 import { useProjectsById } from '../projects/useProjectsById';
 import { LoadState } from '../shell/LoadState';
+import { SkeletonRows } from '../shell/SkeletonRows';
 
 /** The two-week list view: the owner's dated open tasks grouped by day, with
  * week paging. Split from Calendar so the screen shell can toggle it with the
@@ -51,6 +52,7 @@ export function CalendarList() {
         isError={query.isError}
         isEmpty={days.length === 0}
         onRetry={query.refetch}
+        skeleton={<SkeletonRows variant="row" />}
         emptyTitle="Nothing scheduled"
         emptyMessage="Tasks with a due date in the next two weeks show up here."
       >
