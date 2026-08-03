@@ -1,7 +1,6 @@
 import type { TaskRecord } from '../../lib/dataClient';
-import { PRIORITY_META, dueStatus, isDone, type Priority } from './taskMeta';
-import { todayISO } from './today';
-import { DuePresetButtons } from './DuePresetButtons';
+import { PRIORITY_META, type Priority } from './taskMeta';
+import { DueDateRow } from './DueDateRow';
 import { NotesPreview } from './NotesPreview';
 import { hasRichNotes } from './parseNotes';
 import './taskDetail.css';
@@ -20,11 +19,6 @@ export function TaskFields({
     patch: Partial<Pick<TaskRecord, 'startDate' | 'dueDate' | 'dueTime' | 'priority' | 'notes'>>,
   ) => void;
 }) {
-  // Flag an overdue/due-today date red/amber on the input, matching the cards,
-  // list, and search — the same dueStatus the rest of the app uses.
-  const dueKind = dueStatus(task.dueDate, todayISO(), isDone(task));
-  const dueClass =
-    dueKind === 'overdue' || dueKind === 'today' ? ` task-fields__date--${dueKind}` : '';
   return (
     <div className="task-fields">
       <div className="task-fields__row">
@@ -39,26 +33,7 @@ export function TaskFields({
         />
       </div>
 
-      <div className="task-fields__row">
-        <span className="task-fields__label">Due date</span>
-        <input
-          type="date"
-          className={`task-fields__date${dueClass}`}
-          data-testid="task-due-input"
-          value={task.dueDate ?? ''}
-          onChange={(e) => onPatch({ dueDate: e.target.value || null, dueTime: null })}
-        />
-        <input
-          type="time"
-          className="task-fields__date"
-          data-testid="task-due-time"
-          aria-label="Due time"
-          value={task.dueTime ?? ''}
-          disabled={!task.dueDate}
-          onChange={(e) => onPatch({ dueTime: e.target.value || null })}
-        />
-        <DuePresetButtons onPick={(date) => onPatch({ dueDate: date })} />
-      </div>
+      <DueDateRow task={task} onPatch={onPatch} />
 
       <div className="task-fields__row">
         <span className="task-fields__label">Priority</span>
