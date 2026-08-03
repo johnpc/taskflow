@@ -47,9 +47,19 @@
   padding: 5px 6px;
 }
 
+/* Spill-over days (prev/next month) recede toward the PAGE background so the
+   month boundary reads in both themes. `--tf-surface-2` was lighter than the
+   `--tf-surface` cell in dark mode, so muted cells stood out MORE (inverted) —
+   `--tf-bg` is darker than the cell in dark and greyer than white in light, so
+   it de-emphasizes correctly either way. Muted the day number instead of the
+   whole cell (opacity on the cell also faded any task chips). */
 .calendar-cell--muted {
-  background: var(--tf-surface-2);
-  opacity: 0.6;
+  background: var(--tf-bg);
+  border-color: transparent;
+}
+
+.calendar-cell--muted .calendar-cell__day {
+  opacity: 0.5;
 }
 
 .calendar-cell--today {
