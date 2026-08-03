@@ -905,7 +905,12 @@
 }
 
 .custom-fields__add {
-  display: inline-flex;
+  /* Wrap the composer (icon + name + type select + Add) so on a narrow phone the
+     Add button drops to the next line instead of being clipped off the right
+     edge of the viewport — it was overflowing because the row was a no-wrap
+     inline-flex and the name input took its full intrinsic width. */
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
   gap: 6px;
   color: var(--tf-text-muted);
@@ -913,6 +918,11 @@
 }
 
 .custom-fields__name {
+  /* Grow to fill the row but allow shrinking (min-width: 0) so the fixed-width
+     type select + Add button always fit; a small basis keeps it from forcing an
+     overflow on mobile. */
+  flex: 1 1 8rem;
+  min-width: 0;
   border: none;
   background: transparent;
   color: var(--tf-text);
