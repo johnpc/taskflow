@@ -205,7 +205,11 @@ npx ampx sandbox       # personal cloud backend sandbox
 
 - **Repo:** `johnpc/taskflow`. **Bundle id:** `com.johncorser.taskflow`. Region `us-west-2`, AWS
   profile `personal`.
-- **Sandbox stack:** `amplify-taskflow-xss-sandbox-86303460ee` (wired into `package.json` `e2e-config`).
+- **Sandbox:** local dev uses your personal sandbox (`npx ampx sandbox`; `npm run e2e-config`
+  resolves it from `SANDBOX_IDENTIFIER` or your username — `xss` → `amplify-taskflow-xss-sandbox-86303460ee`).
+  **CI never uses it:** every CI run deploys its own `ci-<run_id>` sandbox, creates the test user
+  in its fresh Cognito pool, seeds, tests, and an `if: always()` `teardown` job deletes it
+  (`scripts/sandbox.mjs`). `sandbox-cleanup.yml` sweeps leaked `ci<digits>` stacks older than 6h.
 - **Cognito test user:** `test@example.com` (see `.env.local`, git-ignored). Also GH secrets
   `TEST_USERNAME`/`TEST_PASSWORD`.
 - **CI:** `.github/workflows/ci.yml` (quality + Gherkin acceptance matrix, one area per feature) blocks
