@@ -36,7 +36,12 @@ jobs:
     # holds the Amplify Hosting app id. Until it's set (the app isn't hosted
     # yet), skip cleanly — prod-config has nothing to pull, so a build would
     # only fail. Set it: Settings → Secrets and variables → Actions → Variables.
-    if: ${{ vars.TASKFLOW_APP_ID != '' && (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success') }}
+    #
+    # iOS also needs an App Store Connect app record for com.johncorser.taskflow,
+    # which doesn't exist yet (taskflow is web/Android-only for now), so every
+    # upload would fail with "App record ... not found". Set the repo variable
+    # TASKFLOW_IOS_ENABLED=1 once the app record is created.
+    if: ${{ vars.TASKFLOW_APP_ID != '' && vars.TASKFLOW_IOS_ENABLED == '1' && (github.event_name == 'workflow_dispatch' || github.event.workflow_run.conclusion == 'success') }}
     env:
       TASKFLOW_APP_ID: ${{ vars.TASKFLOW_APP_ID }}
     steps:
