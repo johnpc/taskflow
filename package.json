@@ -101,5 +101,12 @@
     "vite": "^5.0.0",
     "vitest": "^0.34.6"
   },
-  "description": "Taskflow — a fast, focused project & task manager for teams (an Asana-style workspace)"
+  "description": "Taskflow — a fast, focused project & task manager for teams (an Asana-style workspace)",
+  "allowScripts": {
+    "esbuild": true,
+    "sharp": true,
+    "fsevents": true,
+    "@parcel/watcher": true,
+    "core-js": false
+  }
 }
