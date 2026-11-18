@@ -53,3 +53,6 @@ tmp/
 # throwaway design-screenshot harness (not app code)
 shots.config.ts
 e2e/shots.spec.ts
+
+# iOS launch smoke output (scripts/ios-launch-smoke.sh)
+ios-smoke-output/
