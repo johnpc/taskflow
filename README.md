@@ -9,10 +9,13 @@
 
 # Taskflow
 
+> **Platform status: web only (for now).** The web app (and its installable PWA) is the supported
+> platform. The iOS and Android projects stay in this repo but are not published or deployed; the
+> `iOS Deploy` and `Android Deploy` workflows are disabled (re-enable with `gh workflow enable`).
+
 **A fast, focused project & task manager for getting things done.** Plan work on a board, work
 through it in a list, and always know what's next — projects, sections, tasks, subtasks, priorities,
-due dates, and comments, in a clean app that works on the web, as an installable PWA, and natively on
-iOS and Android.
+due dates, and comments, in a clean app that works on the web and as an installable PWA.
 
 > Create an account, and your workspace is private to you and synced across every device.
 
